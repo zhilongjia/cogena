@@ -1,13 +1,40 @@
-#' heatmap.PEI
+#' heatmap of the gene set enrichment index.
 #'
-#' heatmap.PEI
-#' @param object a clean object
-#' @param orderMethod the criterion of ordering the heatmap. The default is max, the other options is mean
-#' @method heatmap.PEI
-#' @export heatmap.PEI
-setMethod("heatmap.PEI", signature(object="clena"),
+#' heatmap of the gene set enrichment index. After obtaining the ennrichemt of 
+#' clusters in the gene sets, the heatmapPEI will show it as a heatmap with an
+#' order.
+#'
+#' @inheritParams enrichment
+#' @param CutoffNumGeneset the cutoff of the number of gene sets. The default is
+#' 25. This is helpful if the number of genesets is large.
+#' @param orderMethod the criterion of ordering the heatmap. The default is "max"
+#' , the other options is "mean".
+#' @param low colour for low end of gradient.
+#' @param high colour for high end of gradient.
+#' @param na.value Colour to use for missing values.
+#' @usage heatmapPEI(object, method, nClusters=, CutoffNumGeneset=25, 
+#' orderMethod="max", low="green", high="red", na.value="white")
+#' @seealso \code{\link{clena}} and \code{\link{heatmapCluster}}
+#' @export
+#' @docType methods
+#' @rdname heatmapPEI
+#' @examples
+#' #summay this clena object
+#' summary(GSE7621.SAM.clena.cluster)
+#' 
+#' #heatmapPEI
+#' heatmapPEI(GSE7621.SAM.clena.cluster, "sota", "12", orderMethod="mean")
+#' heatmapPEI(GSE7621.SAM.clena.cluster, "diana", "20", CutoffNumGeneset=20, 
+#'           low = "#132B43", high = "#56B1F7", na.value = "grey50")
+setGeneric("heatmapPEI", function(object, ...) standardGeneric("heatmapPEI"))
+
+
+#' @aliases heatmapPEI,clena
+setMethod("heatmapPEI", signature(object="clena"),
           function(object, method=clusterMethods(object), 
-                   nClusters=nClusters(object), CutoffNumGeneset=25, orderMethod="max") {
+                   nClusters=nClusters(object), CutoffNumGeneset=25, 
+                   orderMethod="max",
+                   low="green", high="red", na.value="white") {
               method <- match.arg(method, clusterMethods(object))
               nClusters <- match.arg(nClusters, as.character(nClusters(object)))
               enrichment <- enrichment(object, method, nClusters)
@@ -48,7 +75,7 @@ setMethod("heatmap.PEI", signature(object="clena"),
               enrichment <- reshape2::melt(enrichment)
               ggplot(enrichment, aes(as.factor(Var1), Var2)) + 
                   geom_tile(aes(fill = value)) + 
-                  scale_fill_gradient(low="green", high="red", na.value="white") +
+                  scale_fill_gradient(low=low, high=high, na.value=na.value) +
                   geom_text(aes(fill=value, label=value),size=4, na.rm=TRUE) +
                   labs(list(title = paste(method, nClusters,"Clusters-Set-Analysis"), x = "Cluster", y = "Set")) +
                   theme(axis.text.y = element_text(size = rel(1.4), face="bold")) +
