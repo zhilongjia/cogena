@@ -1,5 +1,22 @@
-setGeneric("geneInCluster", function(object, ...) standardGeneric("geneInCluster"))
-#' @export geneInCluster
+#' Show gene names in certain cluster.
+#' 
+#' Show gene names in certain cluster.
+#'
+#' @inheritParams enrichment
+#' @param ith the ith cluster.
+#' @return a character vector.
+#' @docType methods
+#' @rdname geneInCluster
+#' 
+#' @seealso \code{\link{clena}}
+#' @examples ##
+#' 
+#' @export
+setGeneric("geneInCluster", function(object, method, nClusters, ith, ...) standardGeneric("geneInCluster"))
+
+
+#' @exportMethod
+#' @aliases geneInCluster
 setMethod("geneInCluster", signature(object="clena"),
           function (object, method=clusterMethods(object), nClusters=nClusters(object), ith){
               #ith is the ith cluster enquerying

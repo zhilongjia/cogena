@@ -204,10 +204,3 @@ setMethod("summary","clena",
           })
 
 
-#' heatmap.PEI
-#'
-#' heatmap.PEI
-#' @method heatmap.PEI
-#' @rdname clena
-#' @export heatmap.PEI
-setGeneric("heatmap.PEI", function(object, ...) standardGeneric("heatmap.PEI"))
