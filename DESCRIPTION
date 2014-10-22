@@ -1,0 +1,35 @@
+Package: clena
+Version: 0.1-2
+Date: 2014-10-01
+Title: Enrichment Analysis of Clustering Results
+Authors@R: c( person("Zhilong", "Jia", email = "zhilongjia@gmail.com", role =
+    c("aut", "cre")), person("Michael", "Barnes", email =
+    "m.r.barnes@qmul.ac.uk", role = "aut"))
+Depends:
+    R (>= 2.0),
+    cluster,
+    ggplot2,
+    doMC,
+    fastcluster,
+    amap
+Imports:
+    methods,
+    class,
+    reshape2
+Suggests:
+    Biobase,
+    annotate,
+    kohonen,
+    mclust,
+    knitr,
+    testthat
+Description: Gene sets Enrichment Analysis of cluster of gene expression
+    profilings.
+License: LGPL-3
+LazyData: true
+URL: http://github
+Packaged: 2014-10-30 20:11:06 UTC; zjia
+NeedsCompilation: no
+Repository: CRAN
+Date/Publication: 2014-11-01
+VignetteBuilder: knitr
