@@ -1,6 +1,6 @@
-#' Annotaion of gene sets.
+#' gene sets.
 #'
-#' annotation datasets containing the SYMBOL genes and gene sets, such as pathway, GO.
+#' genesets datasets containing the SYMBOL genes and gene sets, such as pathway, GO.
 #' other gmt files or user-defined gene-sets file could also be used.
 #' They are as follows:
 #'
@@ -15,8 +15,8 @@
 #'
 #' @docType data
 #' @keywords datasets
-#' @name annotation
-#' @usage data(annotation)
+#' @name genesets
+#' @usage data(genesets)
 #' @format GMT
 #' @source \url{http://www.broadinstitute.org/gsea/downloads.jsp}
 NULL

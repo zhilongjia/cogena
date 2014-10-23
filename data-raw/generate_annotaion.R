@@ -11,4 +11,4 @@ gmt2anno <- function(gmt_fns) {
 gmt_fns <- c("c2.cgp.v4.0.symbols.gmt", "c2.cp.kegg.v4.0.symbols.gmt", "c2.cp.reactome.v4.0.symbols.gmt", 
 	"c2.cp.v4.0.symbols.gmt", "c5.bp.v4.0.symbols.gmt", "c6.all.v4.0.symbols.gmt")
 gmt2anno(gmt_fns)
-save.image("annotation.RData")
+save.image("genesets.RData")

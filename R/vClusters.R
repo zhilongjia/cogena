@@ -12,7 +12,7 @@ vClusters <- function(mat, clMethod, nClust, method,
     meausres <- matrix(NA, nrow=length(nClust), ncol=ncol(annotation))
     
     #parallel the dist using amap::Dist 
-    Distmat <- Dist(mat, method=metric, nbproc=ncore)
+    Distmat <- amap::Dist(mat, method=metric, nbproc=ncore)
     
     #cluster init
     switch(clMethod,

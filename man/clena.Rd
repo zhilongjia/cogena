@@ -5,7 +5,6 @@
 \alias{clusterMethods,clena-method}
 \alias{clusters,clena-method}
 \alias{enrichment,clena-method}
-\alias{heatmap.PEI}
 \alias{mat,clena-method}
 \alias{nClusters,clena-method}
 \alias{summary,clena-method}
@@ -27,8 +26,6 @@ clena(obj, nClust, clMethods = "hierarchical", metric = "correlation",
   nClusters = nClusters(object))
 
 \S4method{summary}{clena}(object, digits = max(3, getOption("digits") - 3))
-
-heatmap.PEI(object, ...)
 }
 \arguments{
 \item{obj}{Differentially expressed gene expression profilings. Either a
@@ -52,7 +49,7 @@ amap::Dist. Some of the cluster methods could use only part of the metric.}
 
 \item{method}{For hierarchical clustering (hierarchical and agnes), the agglomeration
 method used. The default is "complete". Available choices are "ward", "single",
-"complete", and "average". ####weighted}
+"complete", and "average".}
 
 \item{annotation}{logical matrix of biological annotation with row be DE gene,
 column be gene sets and value be logical.}
@@ -67,24 +64,61 @@ all genes, column be gene sets and value be logical.}
 \item{verbose}{verbose.}
 }
 \value{
-a clean object
+a clena object
 }
 \description{
 clena : Gene sets enrichment analysis for the cluster of gene expression profilings.
 Gene sets could be pathway, GO etc.
 
 summary : a summary of clena object.
-
-heatmap.PEI
 }
 \details{
-For metric, "hierarchical","kmeans","diana","fanny","pam" and "agnes" can use
+For metric parameter, "hierarchical","kmeans","diana","fanny","pam" and "agnes" can use
 all the metrics.
 "clara” uses "manhattan" or "euclidean", other metric will be changed as "euclidean".
 "sota" uses "correlation" or "euclidean", other metric will be changed as "euclidean".
 "model" uses its own metric and "som" uses euclidean only, which is irrelative with metric.
+
+method:
+Available distance measures are (written for two vectors x and y):
+\itemize{
+\item euclidean Usual square distance between the two vectors (2 norm).
+\item maximum Maximum distance between two components of x and y (supremum norm).
+\item manhattan Absolute distance between the two vectors (1 norm).
+\item canberra sum(|x_i - y_i| / |x_i + y_i|) Terms with zero numerator and denominator are omitted from the sum and treated as if the values were missing.
+\item binary (aka asymmetric binary): The vectors are regarded as binary bits, so non-zero elements are ‘on’ and zero elements are ‘off’. The distance is the proportion of bits in which only one is on amongst those in which at least one is on.
+\item pearson Also named "not centered Pearson" 1 - sum(x_i y_i) / sqrt [sum(x_i^2) sum(y_i^2)].
+\item abspearson Absolute Pearson 1 - |sum(x_i y_i) / sqrt [sum(x_i^2) sum(y_i^2)] |.
+\item correlation Also named "Centered Pearson" 1 - corr(x,y).
+\item abscorrelation Absolute correlation 1 - | corr(x,y) |.
+\item spearman Compute a distance based on rank.
+\item kendall Compute a distance based on rank. ∑_{i,j} K_{i,j}(x,y) with K_{i,j}(x,y) is 0 if x_i, x_j in same order as y_i,y_j, 1 if not.
+}
 }
 \examples{
-###
+data("PD")
+
+#annotaion
+annoGMT <- "c2.cp.v4.0.symbols.gmt"
+#annoGMT <- "~/clena/data-raw/c2.cp.biocarta.v4.0.symbols.gmt"
+anno = gene2set(anno=annoGMT, difSAM_GSE7621_DEG, TermFreq=0)
+annotationGenesPop = gene2set(anno=annoGMT, rownames(GSE7621.filtered.expr), TermFreq=0)
+annotationGenesPop <- annotationGenesPop[,colnames(anno)]
+
+#clena parameters
+nClust <- 2:4
+ncore <- 3
+clMethods <- c("hierarchical","kmeans","diana","fanny","som","model","sota","pam","clara","agnes")
+
+GSE7621.clena.cluster <- clena(GSE7621.SAM.DEG.expr,
+                              nClust=nClust,
+                              clMethods=clMethods,
+                              metric="spearman",
+                              method="complete",
+                              annotation=anno,
+                              sampleLabel=sampleLabel.GSE7621,
+                              ncore=ncore,
+                              annotationGenesPop=annotationGenesPop,
+                              verbose=TRUE)
 }
 

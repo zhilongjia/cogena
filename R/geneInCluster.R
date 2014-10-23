@@ -9,7 +9,12 @@
 #' @rdname geneInCluster
 #' 
 #' @seealso \code{\link{clena}}
-#' @examples ##
+#' @examples 
+#' #summay this clena object
+#' summary(GSE7621.SAM.clena.cluster)
+#' 
+#' #geneInCluster
+#' geneInCluster(GSE7621.SAM.clena.cluster, "sota", "12", "2")
 #' 
 #' @export
 setGeneric("geneInCluster", function(object, method, nClusters, ith, ...) standardGeneric("geneInCluster"))

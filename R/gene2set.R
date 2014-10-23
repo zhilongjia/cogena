@@ -16,9 +16,8 @@
 #' 
 #' @examples
 #' data(PD)
-#' annoGMT <- "c2.cp.v4.0.symbols.gmt"
-#' #Or the gmt format file
-#' #annoGMT <- "~/clena/data-raw/c2.cp.biocarta.v4.0.symbols.gmt"
+#' annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
+#' annoGMT <- system.file("data", annoGMT, package="clena")
 #' anno = gene2set(anno=annoGMT, difSAM_GSE7621_DEG, TermFreq=0)
 #' annotationGenesPop = gene2set(anno=annoGMT, rownames(GSE7621.filtered.expr), TermFreq=0)
 #' annotationGenesPop <- annotationGenesPop[,colnames(anno)]
@@ -28,17 +27,11 @@
 gene2set <- function(anno, genenames, TermFreq=0) {
     if (is.null(anno)) {
         anno <- "c2.cp.v4.0.symbols.gmt"
-        annoMarix = annotationListToMatrix(get(anno), genenames)
+        annofile <- system.file("data", annoGMT, package="clena")
     }
-    else if (anno %in% c("c2.cgp.v4.0.symbols.gmt",  
-                         "c2.cp.reactome.v4.0.symbols.gmt", "c2.cp.v4.0.symbols.gmt", "c5.bp.v4.0.symbols.gmt", 
-                         "c6.all.v4.0.symbols.gmt")) {
-        data(genesets, package="clena")
-        annoMarix = annotationListToMatrix(get(anno), genenames)
-    } else{
-        annoList <- GSEABase::geneIds(GSEABase::getGmt(anno))
-        annoMarix = annotationListToMatrix(annoList, genenames)
-    }
+    
+    annoList <- GSEABase::geneIds(GSEABase::getGmt(anno))
+    annoMarix = annotationListToMatrix(annoList, genenames)
     anno = subset(annoMarix, select=names(which( colSums(annoMarix)/sapply(anno, length)>=TermFreq )))
 }
 
