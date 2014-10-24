@@ -8,13 +8,20 @@
 #' @param CutoffNumGeneset the cutoff of the number of gene sets. The default is
 #' 25. This is helpful if the number of genesets is large.
 #' @param orderMethod the criterion of ordering the heatmap. The default is "max"
-#' , the other options is "mean".
+#' , the other options are "mean" and "all".
 #' @param low colour for low end of gradient.
 #' @param high colour for high end of gradient.
 #' @param na.value Colour to use for missing values.
-#' @usage heatmapPEI(object, method, nClusters=, CutoffNumGeneset=25, 
+#' @usage heatmapPEI(object, method, nClusters, CutoffNumGeneset=25, 
 #' orderMethod="max", low="green", high="red", na.value="white")
 #' @seealso \code{\link{clena}} and \code{\link{heatmapCluster}}
+#' 
+#' @details
+#' orderMethod:
+#' \itemize{
+#' \item max. ordered by the max value in clusters except all
+#' \item mean. ordered by the mean value in clusters except all
+#' \item all. ordered by all genes}
 #' @export
 #' @docType methods
 #' @rdname heatmapPEI
@@ -50,6 +57,7 @@ setMethod("heatmapPEI", signature(object="clena"),
               }
               cat ("#Gene In each Cluster:")
               cat (NumGeneInCluster)
+              #print(rownames(enrichment))
               
               # the orderMethod options to order the enrichment: mean and max
               if (orderMethod == "mean") {
@@ -57,6 +65,8 @@ setMethod("heatmapPEI", signature(object="clena"),
               } else if (orderMethod == "max") {
                   colMax <- function(X) {suppressWarnings(apply(X, 2, max, na.rm=TRUE))}
                   enrichment = enrichment[,order(colMax(enrichment[-nrow(enrichment),]), decreasing=TRUE)]
+              } else if (orderMethod == "all") {
+                  enrichment = enrichment[, order(enrichment["All",], decreasing=TRUE)]
               } else {
                   warning(paste("\n wrong orderMethod:", orderMethod)); break
               }

@@ -4,7 +4,7 @@
 \alias{heatmapPEI}
 \title{heatmap of the gene set enrichment index.}
 \usage{
-heatmapPEI(object, method, nClusters=, CutoffNumGeneset=25,
+heatmapPEI(object, method, nClusters, CutoffNumGeneset=25,
 orderMethod="max", low="green", high="red", na.value="white")
 }
 \arguments{
@@ -14,7 +14,7 @@ orderMethod="max", low="green", high="red", na.value="white")
 25. This is helpful if the number of genesets is large.}
 
 \item{orderMethod}{the criterion of ordering the heatmap. The default is "max"
-, the other options is "mean".}
+, the other options are "mean" and "all".}
 
 \item{low}{colour for low end of gradient.}
 
@@ -26,6 +26,13 @@ orderMethod="max", low="green", high="red", na.value="white")
 heatmap of the gene set enrichment index. After obtaining the ennrichemt of
 clusters in the gene sets, the heatmapPEI will show it as a heatmap with an
 order.
+}
+\details{
+orderMethod:
+\itemize{
+\item max. ordered by the max value in clusters except all
+\item mean. ordered by the mean value in clusters except all
+\item all. ordered by all genes}
 }
 \examples{
 #summay this clena object

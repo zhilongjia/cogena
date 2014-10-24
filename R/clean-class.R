@@ -33,4 +33,5 @@ setClass("clena",representation(mat="matrix",
                                 method="character",
                                 annotation="matrix", 
                                 sampleLabel="character",
+                                ncore="numeric",
                                 call="call"))

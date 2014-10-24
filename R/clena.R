@@ -164,7 +164,7 @@ clena <- function(obj, nClust, clMethods="hierarchical",
   new("clena", mat=mat, clusterObjs=clusterObjs, measures=validMeasures,
       clMethods=clMethods, labels=rownames(mat), nClust=nClust, 
       metric=metric, method=method, annotation=annotation, 
-      sampleLabel=sampleLabel, call=match.call())
+      sampleLabel=sampleLabel, ncore=ncore, call=match.call())
 }
 
 
