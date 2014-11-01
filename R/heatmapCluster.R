@@ -32,9 +32,15 @@ setMethod("heatmapCluster", signature(object="clena"),
 
               method <- match.arg(method, clusterMethods(object))
               nClusters <- match.arg(nClusters, as.character(nClusters(object)))
-              ColSideColors <- map2col(as.numeric(as.factor(object@sampleLabel)), sampleColor)
+              
               mat <- mat(object)
-              colnames(mat) <- paste(colnames(mat), object@sampleLabel, sep="_")
+
+              #reorder the column of mat
+              sampleLabel <- sort(object@sampleLabel)
+              mat <- mat[, names(sampleLabel)]
+              colnames(mat) <- paste(colnames(mat), sampleLabel, sep="_")
+              ColSideColors <- map2col(as.numeric(as.factor(sampleLabel)), sampleColor)
+
               clusterColor=rainbow(nClusters)
               
               if (method %in% c("hierarchical", "diana", "agnes")) {

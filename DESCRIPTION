@@ -1,5 +1,5 @@
 Package: clena
-Version: 0.1-4
+Version: 0.1-5
 Date: 2014-10-01
 Title: Enrichment Analysis of Clustering Results
 Authors@R: c( person("Zhilong", "Jia", email = "zhilongjia@gmail.com", role =
