@@ -21,6 +21,7 @@ setGeneric("heatmapCluster",
            function(object, method, nClusters, sampleColor=c("darkblue", "cyan"), 
                     clusterColor, ...) standardGeneric("heatmapCluster"))
 
+#load("/home/zjia/data/Jobbing/PD/result/PD_clena_analysis.c2.cp.kegg.v4.0.symbols.gmt.RData")
 
 # @rdname heatmapCluster
 #' @exportMethod heatmapCluster
@@ -29,48 +30,50 @@ setMethod("heatmapCluster", signature(object="clena"),
           function (object, method=clusterMethods(object), nClusters=nClusters(object),
                     sampleColor=c("darkblue", "cyan"), 
                     clusterColor, ...){
-
+              
+              #get the parameters
               method <- match.arg(method, clusterMethods(object))
               nClusters <- match.arg(nClusters, as.character(nClusters(object)))
-              
               mat <- mat(object)
-
-              #reorder the column of mat
-              sampleLabel <- sort(object@sampleLabel)
-              mat <- mat[, names(sampleLabel)]
-              colnames(mat) <- paste(colnames(mat), sampleLabel, sep="_")
-              ColSideColors <- map2col(as.numeric(as.factor(sampleLabel)), sampleColor)
-
-              clusterColor=rainbow(nClusters)
               
               if (method %in% c("hierarchical", "diana", "agnes")) {
-                  print (table(cutree(clusters(object, method), nClusters)))
-                  mat <- mat[order(cutree(clusters(object, method), nClusters), decreasing=TRUE),]
-                  heatmap(mat, Rowv=NA, Colv=NA, labRow=NA,
-                          ColSideColors=ColSideColors, ylab="Genes", 
-                          main=paste(method, nClusters, "clusters",sep="_"),
-                          RowSideColors=map2col(sort(cutree(clusters(object, method), nClusters), decreasing=TRUE), clusterColor),
-                          ...)
+                  cluster_size <- cutree(clusters(object, method), nClusters)
               } else {
-                  print (table(clusters(object, method)[[nClusters]]$cluster))
-                  #kck <- clusters(object, method)[[nClusters]]$cluster
-                  #print(method); print (kck[head(rownames(mat))]); print (kck[tail(rownames(mat))])
-                  #head1 <- head(rownames(mat)); tail1 <- tail(rownames(mat))
-                  #mat <- mat[names(sort(clusters(object, method)[[nClusters]]$cluster, decreasing=TRUE)),]
-                  mat <- mat[order(clusters(object, method)[[nClusters]]$cluster, decreasing=TRUE),]
-                  #mat_old <- mat
-                  
-                  #kck1 <- order(clusters(object, method)[[nClusters]]$cluster)
-                  #mat <- mat[kck1,]
-                  #print (kck[head1]); print (kck[tail1])
-                  
-                  heatmap(mat, Rowv=NA, Colv=NA, labRow=NA,
-                          ColSideColors=ColSideColors, ylab="Genes", 
-                          main=paste(method, nClusters, "clusters",sep="_"),
-                          RowSideColors=map2col(sort(clusters(object, method)[[nClusters]]$cluster, decreasing=TRUE), clusterColor),
-                          ...)
+                  cluster_size = clusters(object, method)[[nClusters]]$cluster
               }
+              
+              print (table(cluster_size))
+
+              #reorder the mat based on the clustering and type of sample.
+              sampleLabel <- sort(object@sampleLabel)
+              mat <- mat[order(cluster_size, decreasing=FALSE), names(sampleLabel)]
+              #add the type of sample into the colnames
+              #colnames(mat) <- paste(colnames(mat), sampleLabel, sep="_")
+              
+              #color setting
+              ColSideColors <- map2col(as.numeric(as.factor(sampleLabel)), sampleColor)
+              clusterColor <- sample(rainbow(nClusters))
+              #make the neighboor colors different
+              #clusterColor <- clusterColor[clusterColor]
+              
+              RowSideColors <- map2col(sort(cluster_size, decreasing=FALSE), clusterColor)
+              
+              heatmap.2(mat, col=redgreen(75) , trace="none", scale="row", 
+                        Rowv=FALSE, Colv=FALSE, dendrogram="none", labRow=NA, 
+                        colsep=length(which(sampleLabel==sampleLabel[1])), 
+                        rowsep=cumsum( table(cluster_size)), adjCol=c(0.8,0),
+                        sepcolor="white", sepwidth=c(0.05,1),
+                        key=TRUE, symkey=FALSE, density.info="none", keysize=1.5, 
+                        main=paste(method, nClusters, "clusters",sep="_"),
+                        ColSideColors=ColSideColors, ylab="Genes", cexCol=0.8,
+                        RowSideColors=RowSideColors)
+              par(lend = 0, xpd=TRUE)
+              legend("left", legend = paste0(1:nClusters),
+                         col = clusterColor, lty= 1, lwd = 20, bty = "n", title = "Clusters")
+              legend("top", legend = names(table(sampleLabel)), col = sampleColor, 
+                     lty=1, lwd=20, bty = "n", title = "Type of Sample")
           })
+
 
 ################################################################################
 #map2color: get the color vector from the numeric vector x using pal, such as, rainbow(200)

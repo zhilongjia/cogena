@@ -5,15 +5,13 @@
 #' These functions are not to be called directly by the user. Paralleled 
 #' clustering with different clustering methods and different number of clusters.
 
-vClusters <- function(mat, clMethod, nClust, method, 
+vClusters <- function(mat, Distmat, clMethod, nClust, method, 
                       metric, annotation, ncore, annotationGenesPop, 
                       verbose, ...) {
 
     meausres <- matrix(NA, nrow=length(nClust), ncol=ncol(annotation))
     
-    #parallel the dist using amap::Dist
-    Distmat <- amap::Dist(mat, method=metric, nbproc=ncore)
-    
+
     #cluster init
     switch(clMethod,
            hierarchical = {
@@ -52,8 +50,9 @@ vClusters <- function(mat, clMethod, nClust, method,
                        initial[dupi,] <- initial[dupi,] + jitter(initial[dupi,])
                }
                dimnames(initial) <- list(NULL,dimnames(mat)[[2]])
+               
                #amap::Kmeans can use other distance metric besides euclidean.
-               clusterObj <- Kmeans(mat, centers=initial, method=metric,...)
+               clusterObj <- Kmeans(mat, centers=initial, iter.max=100, method=ifelse((metric=="MI" || metric=="MI"), "euclidean", metric),...)
            },
            fanny = {
                #              clusterObj <- fanny(Distmat, nc)
@@ -88,8 +87,10 @@ vClusters <- function(mat, clMethod, nClust, method,
            ## otherwise - hierarchical, diana, agnes
            {cluster <- cutree(clusterObj, nc)})
 
-      if (!exists("cluster")) {cluster <- clusterObj$cluster}
+      #if (!exists("cluster")) {cluster <- clusterObj$cluster}
+      if (!is.vector(cluster)) {cluster <- clusterObj$cluster}
       if (is.null(names(cluster))) {names(cluster) <- rownames(mat)}
+      #print (cluster)
       if (verbose) {print (paste(clMethod, "nClust:", nc, "End"))}
 
       ## Gene sets enrichment measures

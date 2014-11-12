@@ -39,7 +39,7 @@ setGeneric("heatmapPEI", function(object, ...) standardGeneric("heatmapPEI"))
 #' @aliases heatmapPEI,clena
 setMethod("heatmapPEI", signature(object="clena"),
           function(object, method=clusterMethods(object), 
-                   nClusters=nClusters(object), CutoffNumGeneset=25, 
+                   nClusters=nClusters(object), CutoffNumGeneset=20, 
                    orderMethod="max",
                    low="green", high="red", na.value="white") {
               method <- match.arg(method, clusterMethods(object))
@@ -101,12 +101,14 @@ setGeneric("enrichment0", function(object, ...) standardGeneric("enrichment0"))
 #' @exportMethod enrichment0
 setMethod("enrichment0", signature(object="clena"),
           function(object, method=clusterMethods(object), 
-                   nClusters=nClusters(object), CutoffNumGeneset=25, 
-                   orderMethod="max") {
+                   nClusters=nClusters(object), CutoffNumGeneset=Inf, 
+                   orderMethod="max", roundvalue=TRUE) {
           	  method <- match.arg(method, clusterMethods(object))
               nClusters <- match.arg(nClusters, as.character(nClusters(object)))
               enrichment <- enrichment(object, method, nClusters)
-              
+              if (is.logical(enrichment)){
+                  return (enrichment)
+              }
               #annotate the cluster with number of genes
               #NumGeneInCluster <- vector(mode="character",length=nClusters+1)
               if (method %in% c("hierarchical", "diana", "agnes")) {
@@ -116,8 +118,9 @@ setMethod("enrichment0", signature(object="clena"),
               { NumGeneInCluster <- as.vector(table(clusters(object, method)[[nClusters]]$cluster))
                 NumGeneInCluster <- c(NumGeneInCluster, length(clusters(object, method)[[nClusters]]$cluster))
               }
-              cat ("#Gene In each Cluster:")
-              cat (NumGeneInCluster)
+              #cat ("#Gene In each Cluster:")
+              #cat (NumGeneInCluster)
+              
               #print(rownames(enrichment))
               
               # the orderMethod options to order the enrichment: mean and max
@@ -131,8 +134,17 @@ setMethod("enrichment0", signature(object="clena"),
               } else {
                   warning(paste("\n wrong orderMethod:", orderMethod)); break
               }
-              #Trim the NO. of Geneset no more than CutoffNumGeneset
-              if (ncol(enrichment)>CutoffNumGeneset) {enrichment = enrichment[,1:CutoffNumGeneset]}
+              #Trim the NO. of Geneset no more than CutoffNumGeneset and delete the all NAs
+              
+              if (ncol(enrichment)==0) {stop ("NO enrichment for these gene sets! The number of differentially expressed gene is a few or there is no coverage of gene sets.")}
+
+              if (ncol(enrichment)>CutoffNumGeneset) {
+                  
+                  if (length(which(apply(enrichment, 2, max, na.rm=TRUE)[-(1:CutoffNumGeneset)] > -log2(0.05))) == 0){
+                      
+                  }
+                  enrichment = enrichment[,c(1:CutoffNumGeneset, which(apply(enrichment, 2, max, na.rm=TRUE)[-(1:CutoffNumGeneset)] > -log2(0.05)))]
+              }
               
               # if (ncol(enrichment)>CutoffNumGeneset) {
               # 	colMax <- function(X) {apply(X, 2, max, na.rm=TRUE)}
@@ -142,6 +154,11 @@ setMethod("enrichment0", signature(object="clena"),
               enrichment <- enrichment[,ncol(enrichment):1]
               colnames(enrichment) <- tolower(strtrim(colnames(enrichment), 60))
               rownames(enrichment) <- paste(rownames(enrichment), as.character(NumGeneInCluster), sep="#")
-              enrichment <- ifelse(round(enrichment,1)==0, NA, round(enrichment,1))
+              if (roundvalue){
+                enrichment <- ifelse(round(enrichment,1)==0, NA, round(enrichment,1))
+              }
+
+              enrichment <- enrichment[,which(apply(enrichment, 2, sum, na.rm=TRUE)>0)]
+
               return (enrichment)
           	})

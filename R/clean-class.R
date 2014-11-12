@@ -5,6 +5,7 @@
 #' contain all numeric columns. In all cases, the rows are the items to be 
 #' clustered (e.g., genes), and the columns are the samples.
 #' @slot clusterObjs a list contains clustering results.
+#' @slot Distmat the distance matrix.
 #' @slot measures a list of the enrichment results.
 #' @slot clMethods clustering method.
 #' @slot labels the row (gene) names of the mat.
@@ -25,6 +26,7 @@
 
 setClass("clena",representation(mat="matrix",
                                 clusterObjs="list",
+                                Distmat="dist",
                                 measures="list",
                                 clMethods="character",
                                 labels="character",

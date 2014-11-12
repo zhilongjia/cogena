@@ -32,7 +32,7 @@ setMethod("hubgeneInCluster", signature(object="clena"),
               
               geneincluster <- geneInCluster (object, method, nClusters, as.character(ith))
               #geneDist <- amap::Dist(mat(object)[geneincluster,], method=object@metric, nbproc=object@ncore)
-              geneDist <- amap::Dist(mat(object)[geneincluster,], method=object@metric, nbproc=7)
+              geneDist <- object@Distmat
               geneAdjacency <- (1 - as.matrix(geneDist))
               geneAdjacency <- geneAdjacency[]
               names(which.max(colSums(geneAdjacency)))

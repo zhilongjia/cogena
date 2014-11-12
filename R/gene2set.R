@@ -31,8 +31,12 @@ gene2set <- function(anno, genenames, TermFreq=0) {
     }
     
     annoList <- GSEABase::geneIds(GSEABase::getGmt(anno))
-    annoMarix = annotationListToMatrix(annoList, genenames)
-    anno = subset(annoMarix, select=names(which( colSums(annoMarix)/sapply(anno, length)>=TermFreq )))
+    annoMatrix <- annotationListToMatrix(annoList, genenames)
+    # annoMatrix <- annoMatrix[which(apply(annoMatrix, 1, sum)>0),]
+    # if (nrwo(annoMatrix) < length(genenames)){
+    #     warning("Some genes does NOT exist in the gene sets. Please revise the expression profilings.") 
+    # }
+    anno = subset(annoMatrix, select=names(which( colSums(annoMatrix)/sapply(anno, length)>=TermFreq )))
 }
 
 

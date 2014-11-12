@@ -11,17 +11,21 @@ Depends:
     ggplot2,
     doMC,
     fastcluster,
+    gplots,
     amap
 Imports:
     methods,
     class,
     reshape2,
-    GSEABase
+    GSEABase,
+    devtools
 Suggests:
     Biobase,
     annotate,
     kohonen,
     mclust,
+    infotheo,
+    biwt,
     knitr,
     testthat
 Description: Gene sets Enrichment Analysis of cluster of gene expression

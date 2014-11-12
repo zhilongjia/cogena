@@ -23,6 +23,8 @@
 #' \item abscorrelation Absolute correlation 1 - | corr(x,y) |.
 #' \item spearman Compute a distance based on rank.
 #' \item kendall Compute a distance based on rank. ∑_{i,j} K_{i,j}(x,y) with K_{i,j}(x,y) is 0 if x_i, x_j in same order as y_i,y_j, 1 if not.
+#' \item MI mutual information.
+#' \item biwt  a weighted correlation based on Tukey’s biweight
 #' }
 #' 
 #' @param obj Differentially expressed gene expression profilings. Either a 
@@ -37,7 +39,7 @@
 #' with multiple choices allowed.
 #' @param metric the distance measure to be used. This must be one of "euclidean",
 #' "maximum", "manhattan", "canberra", "binary", "pearson", "abspearson", 
-#' "correlation", "abscorrelation", "spearman" or "kendall". Any unambiguous 
+#' "correlation", "abscorrelation", "MI", "biwt", "spearman" or "kendall". Any unambiguous 
 #' substring can be given. In detail, please reference the parameter method in 
 #' amap::Dist. Some of the cluster methods could use only part of the metric.
 #' @param method For hierarchical clustering (hierarchical and agnes), the agglomeration 
@@ -101,7 +103,21 @@ clena <- function(obj, nClust, clMethods="hierarchical",
   
   ## used for hierarchical, kmeans, diana, fanny, agnes, pam
   metric <- match.arg(metric,c("euclidean", "correlation", "abscorrelation", "manhattan", 
-  "spearman", "maximum", "kendall", "canberra", "binary", "pearson", "abspearson")) 
+  "spearman", "maximum", "kendall", "canberra", "binary", "pearson", "abspearson",
+  "MI", "biwt"))
+  
+  if("MI" %in% metric){
+#       if(!require(infotheo)) {
+#           stop("package 'infotheo' required for mutual information metric")
+      devtools::install_github("zhilongjia/infotheo")
+      require(infotheo)
+  }
+  
+  if ("biwt" %in% metric){
+      if(!require(biwt)) {
+          stop("package 'biwt' required for weighted correlation based on Tukey’s biweight")
+      }
+  }
   
   ## for hclust, agnes
   method <- match.arg(method,c("ward", "single", "complete", "average")) 
@@ -136,6 +152,20 @@ clena <- function(obj, nClust, clMethods="hierarchical",
   if (any(nClust<1))
     stop("argument 'nClust' must be a positive integer vector")
 
+    #Dist caculation
+    if (verbose) {print("Dist caculation")}
+    if (metric == "biwt") {
+        Distmat <- as.dist(biwt.cor(mat, output="distance"))
+    } else if (metric == "MI") {
+        #NMI from infotheo package
+        nmi <- infotheo::NMI(infotheo::discretize(t(mat)), method= "emp")
+        Distmat <- as.dist(1-nmi)
+        #Distmat <- as.dist(1- (nmi-min(nmi))/(max(nmi)-min(nmi)) )
+    } else {
+    Distmat <- amap::Dist(mat, method=metric, nbproc=ncore)
+    }
+    if (verbose) {print("Dist caculation done")}
+
   ##################################################################
   
   clusterObjs <- vector("list",length(clMethods))
@@ -148,9 +178,9 @@ clena <- function(obj, nClust, clMethods="hierarchical",
   for (i in 1:length(clMethods)) {
     if (verbose) print(paste("##### The clMethod,", clMethods[i], "starts #####"))
     
-    cvalid <- vClusters(mat, clMethods[i], nClust, method=method, 
+    cvalid <- vClusters(mat, Distmat , clMethods[i], nClust, method=method, 
                         metric=metric, annotation=annotation,
-                      ncore=ncore, annotationGenesPop, verbose=verbose)
+                        ncore=ncore, annotationGenesPop, verbose=verbose)
     clusterObjs[[i]] <- cvalid$clusterObj
     validMeasures[[i]] <- cvalid$measures
     if (verbose) print(paste("The clMethod,", clMethods[i], "done"))
@@ -161,7 +191,7 @@ clena <- function(obj, nClust, clMethods="hierarchical",
     warning("rownames for data not specified, using 1:nrow(data)")
   }
 
-  new("clena", mat=mat, clusterObjs=clusterObjs, measures=validMeasures,
+  new("clena", mat=mat, Distmat=Distmat, clusterObjs=clusterObjs, measures=validMeasures,
       clMethods=clMethods, labels=rownames(mat), nClust=nClust, 
       metric=metric, method=method, annotation=annotation, 
       sampleLabel=sampleLabel, ncore=ncore, call=match.call())
@@ -226,8 +256,12 @@ setMethod("enrichment",signature(object="clena"),
               method <- match.arg(method, clusterMethods(object))
               nClusters <- match.arg(nClusters, as.character(nClusters(object)))
               enrichment <- object@measures[[method]][[nClusters]]
-              colnames(enrichment) <- tolower(colnames(enrichment))
-              enrichment <- enrichment[rownames(enrichment),]
+              if (is.logical(enrichment)) {
+                  warning(paste("For", method, ", the number of clusters:", nClusters, "Nonexists!"))
+              } else {
+                  colnames(enrichment) <- tolower(colnames(enrichment))
+                  enrichment <- enrichment[rownames(enrichment),]
+              }
               #enrichment <- enrichment[order(rownames(enrichment)),]
               return (enrichment)
           })
