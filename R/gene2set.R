@@ -2,15 +2,7 @@
 #' 
 #' Generate relationship between genes (SYMBOL) and gene sets, such as Pathway or GO.
 #' 
-#' The gene sets could be gmt format. Options could be c2.cgp.v4.0.symbols.gmt,
-#' c2.cp.reactome.v4.0.symbols.gmt,  c5.bp.v4.0.symbols.gmt, 
-#' c2.cp.kegg.v4.0.symbols.gmt  c2.cp.v4.0.symbols.gmt, c6.all.v4.0.symbols.gmt,
-#' msigdb.v4.0.symbols.gmt. Or a user-defined gene sets gmt file.
-#' 
-#' @param anno a string or a gmt file. The default is "c2.cp.v4.0.symbols.gmt"
-#' from MSigDB Collections. Others like "c2.cgp.v4.0.symbols.gmt", 
-#' "c2.cp.kegg.v4.0.symbols.gmt", "c2.cp.reactome.v4.0.symbols.gmt", 
-#' "c5.bp.v4.0.symbols.gmt", "c6.all.v4.0.symbols.gmt". Or a gmt format file.
+#' @inheritParams gmt2list
 #' @param genenames a SYMBOL gene names charactic vector.
 #' @param TermFreq a threshold for the Term Frequence. Default is zero.
 #' 
@@ -29,8 +21,9 @@ gene2set <- function(anno, genenames, TermFreq=0) {
         anno <- "c2.cp.v4.0.symbols.gmt"
         annofile <- system.file("data", annoGMT, package="clena")
     }
-    
-    annoList <- GSEABase::geneIds(GSEABase::getGmt(anno))
+
+    annoList <- gmt2list(anno)
+    #annoList <- GSEABase::geneIds(GSEABase::getGmt(anno))
     annoMatrix <- annotationListToMatrix(annoList, genenames)
     # annoMatrix <- annoMatrix[which(apply(annoMatrix, 1, sum)>0),]
     # if (nrwo(annoMatrix) < length(genenames)){
@@ -40,7 +33,7 @@ gene2set <- function(anno, genenames, TermFreq=0) {
 }
 
 
-
+#' @rdname gene2set
 annotationListToMatrix <- function(annotation, genenames) {
     annotation.matrix <- matrix(FALSE, ncol=length(annotation), nrow=length(genenames))
     colnames(annotation.matrix) <- names(annotation)

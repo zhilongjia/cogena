@@ -31,9 +31,10 @@ setMethod("geneInCluster", signature(object="clena"),
               ith <- match.arg(ith, as.character(seq(1: as.numeric(nClusters))))
               ith <- as.numeric(ith)
               if (method %in% c("hierarchical", "diana", "agnes")) {
-                  gene <- names(which (cutree(clusters(object, method), k=nClusters)==ith))
+                  cluster_size <- cutree(clusters(object, method), k=nClusters)
               } else {
-                  gene <- names(which(clusters(object, method)[[nClusters]]$cluster==ith))
+                  cluster_size <- clusters(object, method)[[nClusters]]$cluster
               }
-              return (gene)
+              names(cluster_size) <- rownames(object@mat)
+              names(which(cluster_size==ith))
           })

@@ -244,28 +244,6 @@ setMethod("mat",signature(object="clena"),
           function(object) return(object@mat))
 
 
-#' get the enrichment table from a clena object.
-#' @inheritParams clusters
-#' @param nClusters as nClust in clena function.
-setGeneric("enrichment", function(object, method, nClusters, ...) standardGeneric("enrichment"))
-#' @method enrichment
-#' @rdname clena
-#' @exportMethod enrichment
-setMethod("enrichment",signature(object="clena"),
-          function(object,method=clusterMethods(object), nClusters=nClusters(object)) {
-              method <- match.arg(method, clusterMethods(object))
-              nClusters <- match.arg(nClusters, as.character(nClusters(object)))
-              enrichment <- object@measures[[method]][[nClusters]]
-              if (is.logical(enrichment)) {
-                  warning(paste("For", method, ", the number of clusters:", nClusters, "Nonexists!"))
-              } else {
-                  colnames(enrichment) <- tolower(colnames(enrichment))
-                  enrichment <- enrichment[rownames(enrichment),]
-              }
-              #enrichment <- enrichment[order(rownames(enrichment)),]
-              return (enrichment)
-          })
-
 #' summary : a summary of clena object.
 #' @method summary
 #' @rdname clena

@@ -52,43 +52,49 @@ vClusters <- function(mat, Distmat, clMethod, nClust, method,
                dimnames(initial) <- list(NULL,dimnames(mat)[[2]])
                
                #amap::Kmeans can use other distance metric besides euclidean.
-               clusterObj <- Kmeans(mat, centers=initial, iter.max=100, method=ifelse((metric=="MI" || metric=="MI"), "euclidean", metric),...)
+               clusterObj <- Kmeans(mat, centers=initial, iter.max=100, method=ifelse((metric=="MI" || metric=="biwt"), "correlation", metric),...)
+               cluster <- clusterObj$cluster
            },
            fanny = {
                #              clusterObj <- fanny(Distmat, nc)
                clusterObj <- fanny(Distmat, nc, ...)
                clusterObj$cluster <- clusterObj$clustering
+               cluster <- clusterObj$cluster
            },
            model = {
                #              clusterObj <- Mclust(mat,nc)
                clusterObj <- Mclust(mat,nc, ...)
                clusterObj$cluster <- clusterObj$classification
+               cluster <- clusterObj$cluster
            },
            som = {
                #              clusterObj <- som(mat, grid=somgrid(1,nc))
                clusterObj <- som(mat, grid=somgrid(1,nc), ...)
                clusterObj$cluster <- clusterObj$unit.classif
                names(clusterObj$cluster) <- rownames(mat)
+               cluster <- clusterObj$cluster
            },
            pam = {
                #              clusterObj <- pam(Distmat, nc)
                clusterObj <- pam(Distmat, nc, ...)
                clusterObj$cluster <- clusterObj$clustering
+               cluster <- clusterObj$cluster
            },
            clara = {
                #              clusterObj <- clara(mat, nc, metric=ifelse(metric=="correlation","euclidean",metric))
                clusterObj <- clara(mat, nc, metric=ifelse(metric=="manhattan", metric, "euclidean"), ...)
                clusterObj$cluster <- clusterObj$clustering
+               cluster <- clusterObj$cluster
            },
            sota = {
-               clusterObj <- sota(mat,nc-1)
-               #cluster <- clusterObj$cluster
+               clusterObj <- sota(mat, nc-1, distance=ifelse(metric=="euclidean", metric, "correlation"))
+               cluster <- clusterObj$cluster
            },
            ## otherwise - hierarchical, diana, agnes
            {cluster <- cutree(clusterObj, nc)})
 
       #if (!exists("cluster")) {cluster <- clusterObj$cluster}
-      if (!is.vector(cluster)) {cluster <- clusterObj$cluster}
+      #if (!is.vector(cluster)) {cluster <- clusterObj$cluster}
       if (is.null(names(cluster))) {names(cluster) <- rownames(mat)}
       #print (cluster)
       if (verbose) {print (paste(clMethod, "nClust:", nc, "End"))}
