@@ -12,6 +12,7 @@ Depends:
     doMC,
     fastcluster,
     gplots,
+    heatmap.plus,
     amap
 Imports:
     methods,

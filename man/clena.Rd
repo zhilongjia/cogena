@@ -4,7 +4,6 @@
 \alias{clena}
 \alias{clusterMethods,clena-method}
 \alias{clusters,clena-method}
-\alias{enrichment,clena-method}
 \alias{mat,clena-method}
 \alias{nClusters,clena-method}
 \alias{summary,clena-method}
@@ -21,9 +20,6 @@ clena(obj, nClust, clMethods = "hierarchical", metric = "correlation",
 \S4method{clusters}{clena}(object, method = clusterMethods(object))
 
 \S4method{mat}{clena}(object)
-
-\S4method{enrichment}{clena}(object, method = clusterMethods(object),
-  nClusters = nClusters(object))
 
 \S4method{summary}{clena}(object, digits = max(3, getOption("digits") - 3))
 }
@@ -43,7 +39,7 @@ with multiple choices allowed.}
 
 \item{metric}{the distance measure to be used. This must be one of "euclidean",
 "maximum", "manhattan", "canberra", "binary", "pearson", "abspearson",
-"correlation", "abscorrelation", "spearman" or "kendall". Any unambiguous
+"correlation", "abscorrelation", "MI", "biwt", "spearman" or "kendall". Any unambiguous
 substring can be given. In detail, please reference the parameter method in
 amap::Dist. Some of the cluster methods could use only part of the metric.}
 
@@ -93,6 +89,8 @@ Available distance measures are (written for two vectors x and y):
 \item abscorrelation Absolute correlation 1 - | corr(x,y) |.
 \item spearman Compute a distance based on rank.
 \item kendall Compute a distance based on rank. ∑_{i,j} K_{i,j}(x,y) with K_{i,j}(x,y) is 0 if x_i, x_j in same order as y_i,y_j, 1 if not.
+\item MI mutual information.
+\item biwt  a weighted correlation based on Tukey’s biweight
 }
 }
 \examples{

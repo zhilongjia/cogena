@@ -16,6 +16,8 @@ clustered (e.g., genes), and the columns are the samples.}
 
 \item{\code{clusterObjs}}{a list contains clustering results.}
 
+\item{\code{Distmat}}{the distance matrix.}
+
 \item{\code{measures}}{a list of the enrichment results.}
 
 \item{\code{clMethods}}{clustering method.}

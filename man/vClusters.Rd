@@ -3,7 +3,7 @@
 \alias{vClusters}
 \title{paralleled clustering}
 \usage{
-vClusters(mat, clMethod, nClust, method, metric, annotation, ncore,
+vClusters(mat, Distmat, clMethod, nClust, method, metric, annotation, ncore,
   annotationGenesPop, verbose, ...)
 }
 \description{
