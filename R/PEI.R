@@ -1,8 +1,21 @@
-#' Pathway enrichment index
+#' Significance Gene sets enrichment.
 #' 
-#' Internal clena functions.
+#' Caculating the significance of Gene sets enrichment based on the hypergeometric test.
+#' This function is mainly used internally. But it can be also used directly.
+#' 
+#' Here the genes in annotation can be a varity of types. like all the DEG, up-regualted genes
+#' or genes in a cluster. the gene names should be consistent with the genes in the gene sets.
+#' 
+#' 
+#' @param genenames a vector of gene names.
+#' @param annotation data.frame with the gene (like all the differentially 
+#' expressed genes) in row, gene set in column.
+#' @param annotationGenesPop data.frame with the gene in row, gene set in column.
+#'  Here genes are genes in population with filering the non-nformative genes better.
+#' @return a vector with P-values.
+#' @export
 
-PEI <- function(genenames, annotation, annotationGenesPop, verbose=FALSE) {
+PEI <- function(genenames, annotation, annotationGenesPop) {
 
     ######################################################################################
     # presteps for calculating p-value
