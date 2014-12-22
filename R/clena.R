@@ -164,6 +164,8 @@ clena <- function(obj, nClust, clMethods="hierarchical",
     } else {
     Distmat <- amap::Dist(mat, method=metric, nbproc=ncore)
     }
+    #convert the NA to max of the Distmat
+    #Distmat[which(is.na(Distmat))]= max(Distmat, na.rm=T)
     if (verbose) {print("Dist caculation done")}
 
   ##################################################################
