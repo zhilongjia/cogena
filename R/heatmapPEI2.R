@@ -5,7 +5,7 @@
 #' heatmapPEI2 will show it as a heatmap.
 #' 
 #' @inheritParams heatmapPEI
-#' @whichCluster which cluster should be based to filter, value like "2#68".
+#' @param which cluster should be based to filter, value like "2#68".
 #' 
 #' @details
 #' This function aims to heatmap the enrichment_score directly. This is helpful
