@@ -31,7 +31,7 @@ There is an example data in `clena` package. This dataset, from [GSE20163](http:
 we have normalised the expression profling using `rma` method, filtered some non-informative genes using `MetaDE` package and analysed the differentially
 expressed genes using `limma` package with the p-value 0.05.
 
-```{r import_data}
+```{r import_data, message=FALSE}
 library(devtools)
 load_all("~/clena")
 data(PD)
@@ -84,8 +84,8 @@ clena_result <- clena(DEexprs, nClust=nClust, clMethods=clMethods, metric=metric
 
 
 ## Analysing result of clena
-    After completing the clena analysis, user can use `summary` to see the summary 
-    of the result of clena.
+After completing the clena analysis, user can use `summary` to see the summary 
+of the result of clena.
     
 
 ```{r clena_result_analysis}
@@ -114,7 +114,19 @@ the heatmap of expression profiling with clusters is plotted by `heatmapCluster`
 heatmapCluster(clena_result, "kmeans", "3")
 ```
 
+The genes in certain cluster
+```{r geneInCluster}
+head(geneInCluster(clena_result, "kmeans", "3", "3"))
+```
+
 ## Bug Report
     github
 
+
+
+##Other Information
+System info
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
 The END

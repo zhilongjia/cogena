@@ -29,10 +29,10 @@ Suggests:
     testthat
 Description: Coexpression gene-sets Enrichment Analysis of cluster of gene
     expression profilings.
-License: LGPL-3
 Collate:
-    'dist-class.R'
-    'clena-class.R'
+    dist_class.R
+    clena_class.R
+License: LGPL-3
 LazyData: true
 OS_type: unix
 URL: http://github
