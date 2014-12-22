@@ -110,12 +110,12 @@ vClusters <- function(mat, Distmat, clMethod, nClust, method,
             colnames(pei) <- colnames(annotation)
       for (k in unique(cluster)) {
           genenames <- names(which(cluster==k))
-          pei[k,] <- PEI(genenames, annotation=annotation, annotationGenesPop=annotationGenesPop, verbose=TRUE)}
+          pei[k,] <- PEI(genenames, annotation=annotation, annotationGenesPop=annotationGenesPop)}
       }
       
      #calculate the enrichment of the All genes of all cluster
      #if (verbose) print ("pei cluster done")
-     All <- PEI(names(cluster), annotation=annotation, annotationGenesPop=annotationGenesPop, verbose=TRUE)
+     All <- PEI(names(cluster), annotation=annotation, annotationGenesPop=annotationGenesPop)
      pei <- rbind(pei, All)
      
      #negative log p value
