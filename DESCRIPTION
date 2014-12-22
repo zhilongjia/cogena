@@ -30,6 +30,9 @@ Suggests:
 Description: Coexpression gene-sets Enrichment Analysis of cluster of gene
     expression profilings.
 License: LGPL-3
+Collate:
+    'dist-class.R'
+    'clena-class.R'
 LazyData: true
 OS_type: unix
 URL: http://github
