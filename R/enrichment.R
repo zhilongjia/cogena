@@ -5,7 +5,7 @@
 #' @inheritParams clusters
 #' @param nClusters as nClust in clena function.
 #' @param CutoffNumGeneset the cut-off of the number of gene sets in the return table
-#' @param CutoffPVal the cut-off of p-value
+#' @param CutoffPVal the cut-off of p-value. The default is 0.05.
 #' @param orderMethod the order method, default is max, other options are "mean" and "all"
 #' @param roundvalue whether or not round the data. such as round(1.54, 1)=1.5
 #' 
@@ -19,13 +19,17 @@
 #' @export
 #' @docType methods
 #' @rdname enrichment
+#' @return a matrix with clusters in row and gene-sets in column.
 #' @examples
-#' ##
+#' data(PD)
+#' enrichment.table1 <- enrichment(clena_result, "kmeans", "3")
+#' enrichment.table2 <- enrichment(clena_result, "kmeans", "3", 
+#'                                 CutoffNumGeneset=10, orderMethod="mean")
 setGeneric("enrichment", function(object, method, nClusters, CutoffNumGeneset=Inf, 
                                   CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE) standardGeneric("enrichment"))
 
 
-#' @aliases enrichment, clena
+#' @aliases enrichment,clena_methods
 setMethod("enrichment", signature(object="clena"),
           function(object, method=clusterMethods(object), nClusters=nClusters(object), 
                    CutoffNumGeneset=Inf, CutoffPVal=0.05,
@@ -125,68 +129,3 @@ setMethod("enrichment", signature(object="clena"),
 
               return (score)
           })
-          #     score <- object@measures[[method]][[nClusters]]
-              
-              
-              
-          #     if (is.logical(score)){
-          #         warning(paste("For", method, ", the number of clusters:", nClusters, "Nonexists!"))
-          #         return (score)
-          #     }
-              
-              
-          #     colnames(score) <- tolower(colnames(score))
-          #     #score <- score[rownames(score),]
-
-          #     if (method %in% c("hierarchical", "diana", "agnes")) {
-          #         NumGeneInCluster <- as.vector(table(cutree(clusters(object, method), k=nClusters)))
-          #         NumGeneInCluster <- c(NumGeneInCluster, length(cutree(clusters(object, method), k=nClusters)))
-          #     } else 
-          #     { NumGeneInCluster <- as.vector(table(clusters(object, method)[[nClusters]]$cluster))
-          #       NumGeneInCluster <- c(NumGeneInCluster, length(clusters(object, method)[[nClusters]]$cluster))
-          #     }
-              
-          #     # the orderMethod options to order the score: mean, all and max
-          #     if (orderMethod == "mean") {
-          #         #score = score[,order(colMeans(score[-nrow(score),], na.rm=TRUE), decreasing=TRUE)]
-          #         score = score[,order(colMeans(score, na.rm=TRUE), decreasing=TRUE)]
-          #     } else if (orderMethod == "max") {
-          #         colMax <- function(X) {suppressWarnings(apply(X, 2, max, na.rm=TRUE))}
-          #         score = score[,order(colMax(score), decreasing=TRUE)]
-          #         #score = score[,order(colMax(score[-nrow(score),]), decreasing=TRUE)]
-          #     } else if (orderMethod == "all") {
-          #         score = score[, order(score["All",], decreasing=TRUE)]
-          #     } else {
-          #         warning(paste("\n wrong orderMethod:", orderMethod)); break
-          #     }
-              
-          #     #Trim the NO. of Geneset no more than CutoffNumGeneset and delete the all NAs
-          #     index_above_cutoffPVal <- which(suppressWarnings(apply(score, 2, max, na.rm=TRUE)) > -log2(CutoffPVal))
-          #     if (length(index_above_cutoffPVal) > CutoffNumGeneset){
-          #         score <- score[,c(1:CutoffNumGeneset)]
-          #     } else if (length(index_above_cutoffPVal) == 0){
-          #         score <- NA
-          #         return (score)
-          #     } else {
-          #         #drop para used as length(index_above_cutoffPVal)==1.
-          #         score <- score[,index_above_cutoffPVal, drop=FALSE]
-          #     }
-
-          #     #drop para used as length(index_above_cutoffPVal)==1.
-          #     score <- score[,ncol(score):1, drop=FALSE]
-
-          #     #order the rownames of score
-          #     suppressWarnings(score <- score[order(as.numeric(rownames(score))),,drop=FALSE])
-              
-          #     colnames(score) <- tolower(strtrim(colnames(score), 60))
-          #     rownames(score) <- paste(rownames(score), as.character(NumGeneInCluster), sep="#")
-              
-          #     if (roundvalue){
-          #         #-log2(0.5)=1
-          #         #score <- ifelse(round(score,1) < 1, NA, round(score,1))
-          #         score <- round(score,1)
-          #     }
-
-              
-          #     return (score)
-          # })
