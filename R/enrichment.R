@@ -37,12 +37,12 @@ setMethod("enrichment", signature(object="clena"),
               score2 <- object@measures[[method]][["2"]]
 
               if (is.logical(score1)){
-                  warning(paste("For", method, ", the number of clusters:", nClusters, "Nonexists!"))
+                  #warning(paste("For", method, ", the number of clusters:", nClusters, "Nonexists!"))
                   return (score1)
               }
 
               if (is.logical(score2)){
-                  warning(paste("For", method, ", the number of clusters: 2 Nonexists!"))
+                  #warning(paste("For", method, ", the number of clusters: 2 Nonexists!"))
                   return (score1)
               }
 
