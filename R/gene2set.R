@@ -7,13 +7,7 @@
 #' @param TermFreq a threshold for the Term Frequence. Default is zero.
 #' 
 #' @examples
-#' data(PD)
-#' annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
-#' annoGMT <- system.file("data", annoGMT, package="clena")
-#' anno = gene2set(anno=annoGMT, difSAM_GSE7621_DEG, TermFreq=0)
-#' annotationGenesPop = gene2set(anno=annoGMT, rownames(GSE7621.filtered.expr), TermFreq=0)
-#' annotationGenesPop <- annotationGenesPop[,colnames(anno)]
-#' 
+#' please ?clena
 #' @export
 #' @rdname gene2set
 gene2set <- function(anno, genenames, TermFreq=0) {
@@ -23,12 +17,7 @@ gene2set <- function(anno, genenames, TermFreq=0) {
     }
 
     annoList <- gmt2list(anno)
-    #annoList <- GSEABase::geneIds(GSEABase::getGmt(anno))
     annoMatrix <- annotationListToMatrix(annoList, genenames)
-    # annoMatrix <- annoMatrix[which(apply(annoMatrix, 1, sum)>0),]
-    # if (nrwo(annoMatrix) < length(genenames)){
-    #     warning("Some genes does NOT exist in the gene sets. Please revise the expression profilings.") 
-    # }
     anno = subset(annoMatrix, select=names(which( colSums(annoMatrix)/sapply(anno, length)>=TermFreq )))
 }
 

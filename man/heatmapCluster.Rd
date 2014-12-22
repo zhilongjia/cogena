@@ -18,17 +18,17 @@ clusterColor = rainbow(nClusters), ...)
 
 \item{clusterColor}{a color vector with the cluster length. The default is rainbow(nClusters(object)).}
 
-\item{...}{other parameters to stats::heatmap, such as col=topo.colors(100).}
+\item{...}{other parameters to heatmap.3.}
 }
 \description{
 heatmap of gene expression profilings with cluster-based color indication.
 }
 \examples{
 #summay this clena object
-summary(GSE7621.SAM.clena.cluster)
+summary(clena_result)
 
 #heatmapCluster
-heatmapCluster(GSE7621.SAM.clena.cluster, "hierarchical", "12", col=topo.colors(100))
+heatmapCluster(clena_result, "hierarchical", "3")
 }
 \seealso{
 \code{\link{clena}} and \code{\link{heatmapPEI}}

@@ -60,7 +60,7 @@ setMethod("clusters",signature(object="clena"),
 #' @examples
 #' mat(clena_result)
 #' @return mat: a matrix
-#' @export clusters
+#' @export mat
 #' @docType methods
 #' @rdname clena_methods
 setGeneric("mat", function(object) standardGeneric("mat"))

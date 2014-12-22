@@ -13,6 +13,16 @@
 #' @param annotationGenesPop data.frame with the gene in row, gene set in column.
 #'  Here genes are genes in population with filering the non-nformative genes better.
 #' @return a vector with P-values.
+#' @examples
+#' annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
+#' annofile <- system.file("data", annoGMT, package="clena")
+#' # the DEG gene-sets matrix
+#' anno <- gene2set(annofile, rownames(DEexprs))
+#' # the background gene gene-sets matrix
+#' annotationGenesPop <- gene2set(annofile, BGgenes)
+#' annotationGenesPop <- annotationGenesPop[,colnames(anno)]
+#' 
+#' PEI(rownames(DEexprs), anno, annotationGenesPop)
 #' @export
 
 PEI <- function(genenames, annotation, annotationGenesPop) {

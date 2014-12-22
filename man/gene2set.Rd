@@ -9,10 +9,8 @@ gene2set(anno, genenames, TermFreq = 0)
 annotationListToMatrix(annotation, genenames)
 }
 \arguments{
-\item{anno}{a gmt file. Examples are from MSigDB Collections.
-The default is c2.cp.v4.0.symbols.gmt. Others like c2.cgp.v4.0.symbols.gmt,
-c2.cp.kegg.v4.0.symbols.gmt, c2.cp.reactome.v4.0.symbols.gmt,
-c5.bp.v4.0.symbols.gmt, c6.all.v4.0.symbols.gmt. Or a gmt format file.}
+\item{anno}{a gmt file. Examples are from MSigDB Collections or Enrichr.
+A list of gene set could be find in the vignette of clena.}
 
 \item{genenames}{a SYMBOL gene names charactic vector.}
 
@@ -22,11 +20,6 @@ c5.bp.v4.0.symbols.gmt, c6.all.v4.0.symbols.gmt. Or a gmt format file.}
 Generate relationship between genes (SYMBOL) and gene sets, such as Pathway or GO.
 }
 \examples{
-data(PD)
-annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
-annoGMT <- system.file("data", annoGMT, package="clena")
-anno = gene2set(anno=annoGMT, difSAM_GSE7621_DEG, TermFreq=0)
-annotationGenesPop = gene2set(anno=annoGMT, rownames(GSE7621.filtered.expr), TermFreq=0)
-annotationGenesPop <- annotationGenesPop[,colnames(anno)]
+please ?clena
 }
 

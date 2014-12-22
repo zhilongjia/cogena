@@ -10,7 +10,7 @@ vClusters(mat, Distmat, clMethod, nClust, method, metric, annotation, ncore,
 Internal clena functions.
 }
 \details{
-These functions are not to be called directly by the user. Paralleled
-clustering with different clustering methods and different number of clusters.
+Paralleled clustering with different clustering methods and different number
+of clusters. These functions should not be called directly by the user.
 }
 

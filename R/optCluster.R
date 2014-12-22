@@ -8,11 +8,13 @@
 #' @docType methods
 #' @rdname optCluster
 #' @examples
-#' ##
+#' summary(clena_result)
+#' score <- optCluster(clena_result)
+#' 
 setGeneric("optCluster", function(object) standardGeneric("optCluster"))
 
 
-#' @aliases optCluster, clena
+#' @aliases optCluster,clena
 setMethod("optCluster", signature(object="clena"),
     function(object){
     score <- matrix(NA, nrow=length(clusterMethods(object)), ncol=length(nClusters(object)), dimnames=list(clusterMethods(object), nClusters(object)))

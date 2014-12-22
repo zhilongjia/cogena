@@ -6,10 +6,8 @@
 gmt2list(anno)
 }
 \arguments{
-\item{anno}{a gmt file. Examples are from MSigDB Collections.
-The default is c2.cp.v4.0.symbols.gmt. Others like c2.cgp.v4.0.symbols.gmt,
-c2.cp.kegg.v4.0.symbols.gmt, c2.cp.reactome.v4.0.symbols.gmt,
-c5.bp.v4.0.symbols.gmt, c6.all.v4.0.symbols.gmt. Or a gmt format file.}
+\item{anno}{a gmt file. Examples are from MSigDB Collections or Enrichr.
+A list of gene set could be find in the vignette of clena.}
 }
 \description{
 read Gene MatriX (gmt) file and output a list with the the first column as

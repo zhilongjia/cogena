@@ -16,11 +16,14 @@ enrichment(object, method, nClusters, CutoffNumGeneset = Inf,
 
 \item{CutoffNumGeneset}{the cut-off of the number of gene sets in the return table}
 
-\item{CutoffPVal}{the cut-off of p-value}
+\item{CutoffPVal}{the cut-off of p-value. The default is 0.05.}
 
 \item{orderMethod}{the order method, default is max, other options are "mean" and "all"}
 
 \item{roundvalue}{whether or not round the data. such as round(1.54, 1)=1.5}
+}
+\value{
+a matrix with clusters in row and gene-sets in column.
 }
 \description{
 get the enrichment table from a clena object with certain clustering methods and number of clusters.
@@ -33,6 +36,9 @@ orderMethod:
 \item all. ordered by all genes}
 }
 \examples{
-##
+data(PD)
+enrichment.table1 <- enrichment(clena_result, "kmeans", "3")
+enrichment.table2 <- enrichment(clena_result, "kmeans", "3",
+                                CutoffNumGeneset=10, orderMethod="mean")
 }
 

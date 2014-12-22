@@ -4,7 +4,7 @@
 #' @inheritParams enrichment
 #' @param sampleColor a color vector with the sample length. The default is c("darkblue", "cyan").
 #' @param clusterColor a color vector with the cluster length. The default is rainbow(nClusters(object)).
-#' @param ... other parameters to stats::heatmap, such as col=topo.colors(100).
+#' @param ... other parameters to heatmap.3.
 #' @export
 #' @docType methods
 #' @usage heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"), 
@@ -12,19 +12,16 @@
 #' @seealso \code{\link{clena}} and \code{\link{heatmapPEI}}
 #' @examples 
 #' #summay this clena object
-#' summary(GSE7621.SAM.clena.cluster)
+#' summary(clena_result)
 #'
 #' #heatmapCluster
-#' heatmapCluster(GSE7621.SAM.clena.cluster, "hierarchical", "12", col=topo.colors(100))
+#' heatmapCluster(clena_result, "hierarchical", "3")
 #' 
 setGeneric("heatmapCluster", 
            function(object, method, nClusters, sampleColor=c("darkblue", "cyan"), 
                     clusterColor, ...) standardGeneric("heatmapCluster"))
 
-#load("/home/zjia/data/Jobbing/PD/result/PD_clena_analysis.c2.cp.kegg.v4.0.symbols.gmt.RData")
 
-# @rdname heatmapCluster
-#' @exportMethod heatmapCluster
 #' @aliases heatmapCluster
 setMethod("heatmapCluster", signature(object="clena"),
           function (object, method=clusterMethods(object), nClusters=nClusters(object),
@@ -83,7 +80,7 @@ setMethod("heatmapCluster", signature(object="clena"),
                         key=TRUE, symkey=FALSE, density.info="none", keysize=1.5, 
                         main=paste(method, nClusters, "clusters",sep="_"),
                         ColSideColors=as.matrix(ColSideColors), ylab="Genes", cexCol=0.8,
-                        RowSideColors=RowSideColors, RowSideColorsSize=ifelse(nClusters!=2,2,1))
+                        RowSideColors=RowSideColors, RowSideColorsSize=ifelse(nClusters!=2,2,1), ...)
               par(lend = 0, xpd=TRUE)
               legend("left", legend = paste0(1:nClusters),
                          col = clusterColor, lty= 1, lwd = 20, bty = "n", title = paste(nClusters, "Clusters"))

@@ -2,8 +2,8 @@
 #'
 #' Internal clena functions.
 #'
-#' These functions are not to be called directly by the user. Paralleled 
-#' clustering with different clustering methods and different number of clusters.
+#' Paralleled clustering with different clustering methods and different number
+#' of clusters. These functions should not be called directly by the user. 
 
 vClusters <- function(mat, Distmat, clMethod, nClust, method, 
                       metric, annotation, ncore, annotationGenesPop, 
@@ -52,7 +52,7 @@ vClusters <- function(mat, Distmat, clMethod, nClust, method,
                dimnames(initial) <- list(NULL,dimnames(mat)[[2]])
                
                #amap::Kmeans can use other distance metric besides euclidean.
-               clusterObj <- Kmeans(mat, centers=initial, iter.max=100, method=ifelse((metric=="MI" || metric=="biwt"), "correlation", metric),...)
+               clusterObj <- Kmeans(mat, centers=initial, iter.max=100, method=ifelse((metric=="NMI" || metric=="biwt"), "correlation", metric),...)
                cluster <- clusterObj$cluster
            },
            fanny = {

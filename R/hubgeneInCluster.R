@@ -11,10 +11,10 @@
 #' @seealso \code{\link{clena}} and \code{\link{geneInCluster}}
 #' @examples 
 #' #summay this clena object
-#' summary(GSE7621.SAM.clena.cluster)
+#' summary(clena_result)
 #' 
 #' #hubgeneInCluster
-#' hubgeneInCluster(GSE7621.SAM.clena.cluster, "sota", "12", "2")
+#' hubgeneInCluster(clena_result, "kmeans", "3", "2")
 #' 
 #' @export
 setGeneric("hubgeneInCluster", function(object, method, nClusters, ith, ...) standardGeneric("hubgeneInCluster"))

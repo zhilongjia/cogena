@@ -1,6 +1,8 @@
 #' heatmap.3
-#'
-#' export
+#' An improved heatmap plotting
+#' 
+#' The code is from \url{https://github.com/obigriffith/biostar-tutorials/tree/master/Heatmaps}
+#' @author Obi Griffith
 heatmap.3 <- function(x,
                       Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE,
                       distfun = dist,

@@ -4,10 +4,24 @@
 \alias{heatmapPEI2}
 \title{heatmap of the gene set enrichment_score matrix directly}
 \usage{
-heatmapPEI2(object, enrichment_score, ...)
+heatmapPEI2(object, enrichment_score, method, nClusters, whichCluster,
+  CutoffNumGeneset = 60, low = "grey", high = "red", na.value = "white",
+  ...)
 }
 \arguments{
 \item{object}{a clena object}
+
+\item{method}{as clMethods in clena function}
+
+\item{nClusters}{as nClust in clena function.}
+
+\item{CutoffNumGeneset}{the cut-off of the number of gene sets in the return table}
+
+\item{low}{colour for low end of gradient.}
+
+\item{high}{colour for high end of gradient.}
+
+\item{na.value}{Colour to use for missing values.}
 
 \item{which}{cluster should be based to filter, value like "2#68".}
 }
@@ -22,6 +36,9 @@ on condition that there are so many enriched gene sets and you can filter the
 enrichment_score based on a criteria, like just one cluster.
 }
 \examples{
-##
+data(PD)
+summary(clena_result)
+enrichment.table <- enrichment(clena_result, "kmeans", "3")
+heatmapPEI2(clena_result, enrichment.table, "kmeans", "3", "1")
 }
 

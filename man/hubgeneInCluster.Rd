@@ -23,10 +23,10 @@ Show hub gene names in certain cluster.
 }
 \examples{
 #summay this clena object
-summary(GSE7621.SAM.clena.cluster)
+summary(clena_result)
 
 #hubgeneInCluster
-hubgeneInCluster(GSE7621.SAM.clena.cluster, "sota", "12", "2")
+hubgeneInCluster(clena_result, "kmeans", "3", "2")
 }
 \seealso{
 \code{\link{clena}} and \code{\link{geneInCluster}}

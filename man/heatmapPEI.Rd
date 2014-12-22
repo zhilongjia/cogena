@@ -2,13 +2,26 @@
 \docType{methods}
 \name{heatmapPEI}
 \alias{heatmapPEI}
-\title{heatmap of the gene set enrichment index.}
+\title{heatmap of the gene set enrichment.}
 \usage{
-heatmapPEI(object, method, nClusters, CutoffNumGeneset=20, CutoffPVal=0.05,
-orderMethod="max", low="green", high="red", na.value="white")
+heatmapPEI(object, method, nClusters, CutoffNumGeneset = 20,
+  CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE,
+  low = "green", high = "red", na.value = "white", ...)
 }
 \arguments{
 \item{object}{a clena object}
+
+\item{method}{as clMethods in clena function}
+
+\item{nClusters}{as nClust in clena function.}
+
+\item{CutoffNumGeneset}{the cut-off of the number of gene sets in the return table}
+
+\item{CutoffPVal}{the cut-off of p-value. The default is 0.05.}
+
+\item{orderMethod}{the order method, default is max, other options are "mean" and "all"}
+
+\item{roundvalue}{whether or not round the data. such as round(1.54, 1)=1.5}
 
 \item{low}{colour for low end of gradient.}
 
@@ -30,11 +43,11 @@ orderMethod:
 }
 \examples{
 #summay this clena object
-summary(GSE7621.SAM.clena.cluster)
+summary(clena_result)
 
 #heatmapPEI
-heatmapPEI(GSE7621.SAM.clena.cluster, "sota", "12", orderMethod="mean")
-heatmapPEI(GSE7621.SAM.clena.cluster, "diana", "20", CutoffNumGeneset=20,
+heatmapPEI(clena_result, "kmeans", "2", orderMethod="mean")
+heatmapPEI(clena_result, "kmeans", "3", CutoffNumGeneset=20,
           low = "#132B43", high = "#56B1F7", na.value = "grey50")
 }
 \seealso{

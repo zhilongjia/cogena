@@ -12,11 +12,17 @@
 #' on condition that there are so many enriched gene sets and you can filter the
 #' enrichment_score based on a criteria, like just one cluster. 
 #' @examples
-#' ##
-#' @export
+#' data(PD)
+#' summary(clena_result)
+#' enrichment.table <- enrichment(clena_result, "kmeans", "3")
+#' heatmapPEI2(clena_result, enrichment.table, "kmeans", "3", "1")
+#' @export heatmapPEI2
 #' @docType methods
 #' @rdname heatmapPEI2
-setGeneric("heatmapPEI2", function(object, enrichment_score, ...) standardGeneric("heatmapPEI2"))
+setGeneric("heatmapPEI2", function(object, enrichment_score, method, nClusters, 
+                                   whichCluster, CutoffNumGeneset=60, low="grey",
+                                   high="red", na.value="white",...) 
+    standardGeneric("heatmapPEI2"))
 
 
 #' @aliases heatmapPEI2,clena
@@ -25,7 +31,7 @@ setMethod("heatmapPEI2", signature(object="clena"),
                    CutoffNumGeneset=60, 
                    #CutoffPVal=0.05,
                    #orderMethod="max", roundvalue=TRUE,
-                   low="grey", high="red", na.value="white") {
+                   low="grey", high="red", na.value="white",...) {
               
               method <- match.arg(method, clusterMethods(object))
               nClusters <- match.arg(nClusters, as.character(nClusters(object)))
@@ -50,7 +56,7 @@ setMethod("heatmapPEI2", signature(object="clena"),
                   breaks <- NULL
                   
               }
-              ggplot(enrichment_score, aes(as.factor(Var1), Var2)) + 
+              ggplot(enrichment_score, aes(as.factor(Var1), Var2),...) + 
                   geom_tile(aes(fill = value)) + 
                   scale_fill_gradient2("score",  mid=low, midpoint=4, low=low, high=high, na.value=na.value, breaks=breaks) +
                   geom_text(aes(fill=value, label=value),size=4, na.rm=TRUE) +

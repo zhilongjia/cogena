@@ -78,7 +78,8 @@ original order.}
 }
 \description{
 Computes a Self-organizing Tree Algorithm (SOTA) clustering of a dataset
-returning a SOTA object.
+returning a SOTA object. This function comes from \code{\link[clValid]{sota}}
+in the clValid package with litter change.
 }
 \details{
 The Self-Organizing Tree Algorithm (SOTA) is an unsupervised neural network
@@ -92,7 +93,7 @@ Diversity within the cluster and so on. Further details regarding the inner
 workings of the algorithm can be found in the paper listed in the Reference section.
 }
 \examples{
-please ref the manual of clValid::sota \\code{\\link[clValid]{sota}}.
+please ref the manual of clValid::sota.
 }
 \author{
 Vasyl Pihur, Guy Brock, Susmita Datta, Somnath Datta

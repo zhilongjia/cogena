@@ -1,27 +1,25 @@
-#' Show gene names in certain cluster.
+#' Get gene names in certain cluster.
 #' 
-#' Show gene names in certain cluster.
+#' Get gene names in certain cluster. This is helpful if user want to get the
+#' detail of a cluster.
 #'
 #' @inheritParams enrichment
 #' @param ith the ith cluster.
-#' @return a character vector.
-#' @docType methods
+#' @return a character vector containing the gene names.
 #' @rdname geneInCluster
 #' @export
 #' @seealso \code{\link{clena}}
 #' @examples 
 #' #summay this clena object
-#' summary(GSE7621.SAM.clena.cluster)
+#' summary(clena_result)
 #' 
 #' #geneInCluster
-#' geneInCluster(GSE7621.SAM.clena.cluster, "sota", "12", "2")
+#' geneInCluster(clena_result, "kmeans", "3", "2")
 #' 
-#' 
-setGeneric("geneInCluster", function(object, method, nClusters, ith, ...) standardGeneric("geneInCluster"))
+setGeneric("geneInCluster", function(object, method, nClusters, ith) standardGeneric("geneInCluster"))
 
 
-#' @exportMethod geneInCluster
-#' @aliases geneInCluster
+#' @aliases geneInCluster,clena_methods
 setMethod("geneInCluster", signature(object="clena"),
           function (object, method=clusterMethods(object), nClusters=nClusters(object), ith){
               #ith is the ith cluster enquerying

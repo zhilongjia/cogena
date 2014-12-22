@@ -14,6 +14,7 @@ get the best clustering methods and the number of clusters, based that the numbe
 of gene sets which are signifigant should be maxium.
 }
 \examples{
-##
+summary(clena_result)
+score <- optCluster(clena_result)
 }
 

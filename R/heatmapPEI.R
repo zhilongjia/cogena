@@ -1,15 +1,14 @@
-#' heatmap of the gene set enrichment index.
+#' heatmap of the gene set enrichment.
 #'
 #' heatmap of the gene set enrichment index. After obtaining the ennrichemt of 
 #' clusters in the gene sets, the heatmapPEI will show it as a heatmap with an
 #' order.
 #'
+#' @inheritParams enrichment
 #' @param low colour for low end of gradient.
 #' @param high colour for high end of gradient.
 #' @param na.value Colour to use for missing values.
-#' @inheritParams enrichment
-#' @usage heatmapPEI(object, method, nClusters, CutoffNumGeneset=20, CutoffPVal=0.05,
-#' orderMethod="max", low="green", high="red", na.value="white")
+#' 
 #' @seealso \code{\link{clena}} and \code{\link{heatmapCluster}}
 #' 
 #' @details
@@ -24,13 +23,16 @@
 #' @rdname heatmapPEI
 #' @examples
 #' #summay this clena object
-#' summary(GSE7621.SAM.clena.cluster)
+#' summary(clena_result)
 #' 
 #' #heatmapPEI
-#' heatmapPEI(GSE7621.SAM.clena.cluster, "sota", "12", orderMethod="mean")
-#' heatmapPEI(GSE7621.SAM.clena.cluster, "diana", "20", CutoffNumGeneset=20, 
+#' heatmapPEI(clena_result, "kmeans", "2", orderMethod="mean")
+#' heatmapPEI(clena_result, "kmeans", "3", CutoffNumGeneset=20, 
 #'           low = "#132B43", high = "#56B1F7", na.value = "grey50")
-setGeneric("heatmapPEI", function(object, ...) standardGeneric("heatmapPEI"))
+setGeneric("heatmapPEI", function(object, method, nClusters, CutoffNumGeneset=20,
+                                  CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE,
+                                  low="green", high="red", na.value="white",...) 
+    standardGeneric("heatmapPEI"))
 
 
 #' @aliases heatmapPEI,clena
@@ -39,7 +41,7 @@ setMethod("heatmapPEI", signature(object="clena"),
                    nClusters=nClusters(object), 
                    CutoffNumGeneset=20, CutoffPVal=0.05,
                    orderMethod="max", roundvalue=TRUE,
-                   low="grey", high="red", na.value="white") {
+                   low="grey", high="red", na.value="white",...) {
               method <- match.arg(method, clusterMethods(object))
               nClusters <- match.arg(nClusters, as.character(nClusters(object)))
               
@@ -54,7 +56,7 @@ setMethod("heatmapPEI", signature(object="clena"),
               } else {
                   breaks <- NULL
               }
-              ggplot(enrichment, aes(as.factor(Var1), Var2)) + 
+              ggplot(enrichment, aes(as.factor(Var1), Var2) ,...) + 
                   geom_tile(aes(fill = value)) + 
                   scale_fill_gradient2("score",  mid=low, midpoint=4, low=low, high=high, na.value=na.value, breaks=c(4.32, breaks)) +
                   geom_text(aes(fill=value, label=value),size=4, na.rm=TRUE) +

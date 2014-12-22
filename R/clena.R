@@ -1,7 +1,7 @@
-#' cluster enrichment analysis
+#' coexpression gene-sets enrichment analysis
 #' 
 #' clena : Gene sets enrichment analysis for the cluster of gene expression profilings.
-#' Gene sets could be pathway, GO etc.
+#' Gene sets could be Pathway, GO etc.
 #' 
 #' For metric parameter, "hierarchical","kmeans","diana","fanny","pam" and "agnes" can use
 #' all the metrics.
@@ -23,7 +23,7 @@
 #' \item abscorrelation Absolute correlation 1 - | corr(x,y) |.
 #' \item spearman Compute a distance based on rank.
 #' \item kendall Compute a distance based on rank. ∑_{i,j} K_{i,j}(x,y) with K_{i,j}(x,y) is 0 if x_i, x_j in same order as y_i,y_j, 1 if not.
-#' \item MI mutual information.
+#' \item NMI normalised mutual information.
 #' \item biwt  a weighted correlation based on Tukey’s biweight
 #' }
 #' 
@@ -37,9 +37,9 @@
 #' default is "hierarchical". Available options are "hierarchical", "kmeans", 
 #' "diana", "fanny", "som", "model", "sota", "pam", "clara", and "agnes", 
 #' with multiple choices allowed.
-#' @param metric the distance measure to be used. This must be one of "euclidean",
+#' @param metric the distance measure to be used. This should be one of "euclidean",
 #' "maximum", "manhattan", "canberra", "binary", "pearson", "abspearson", 
-#' "correlation", "abscorrelation", "MI", "biwt", "spearman" or "kendall". Any unambiguous 
+#' "correlation", "abscorrelation", "NMI", "biwt", "spearman" or "kendall". Any unambiguous 
 #' substring can be given. In detail, please reference the parameter method in 
 #' amap::Dist. Some of the cluster methods could use only part of the metric.
 #' @param method For hierarchical clustering (hierarchical and agnes), the agglomeration 
@@ -52,32 +52,36 @@
 #' @param annotationGenesPop logical matrix of biological annotation with row be 
 #' all genes, column be gene sets and value be logical.
 #' @param verbose verbose.
+#' @param ... to function vClusters.
 #' @return a clena object
 #' @examples
 #' data("PD")
 #' 
 #' #annotaion
-#' annoGMT <- "c2.cp.v4.0.symbols.gmt"
-#' #annoGMT <- "~/clena/data-raw/c2.cp.biocarta.v4.0.symbols.gmt"
-#' anno = gene2set(anno=annoGMT, difSAM_GSE7621_DEG, TermFreq=0)
-#' annotationGenesPop = gene2set(anno=annoGMT, rownames(GSE7621.filtered.expr), TermFreq=0)
+#' annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
+#' annofile <- system.file("data", annoGMT, package="clena")
+#' # the DEG gene-sets matrix
+#' anno <- gene2set(annofile, rownames(DEexprs))
+#' # the background gene gene-sets matrix
+#' annotationGenesPop <- gene2set(annofile, BGgenes)
 #' annotationGenesPop <- annotationGenesPop[,colnames(anno)]
 #' 
 #' #clena parameters
-#' nClust <- 2:4
-#' ncore <- 3
-#' clMethods <- c("hierarchical","kmeans","diana","fanny","som","model","sota","pam","clara","agnes")
-#'
-#' GSE7621.clena.cluster <- clena(GSE7621.SAM.DEG.expr, 
-#'                               nClust=nClust, 
-#'                               clMethods=clMethods, 
-#'                               metric="spearman", 
-#'                               method="complete",  
-#'                               annotation=anno,  
-#'                               sampleLabel=sampleLabel.GSE7621, 
-#'                               ncore=ncore, 
-#'                               annotationGenesPop=annotationGenesPop, 
-#'                               verbose=TRUE)
+#' # the number of clusters. A vector.
+#' nClust <- 2:3
+#' # the number of cores. 
+#' ncore <- 2
+#' # the clustering methods
+#' clMethods <- c("hierarchical","kmeans")
+#' # the distance metric
+#' metric <- "correlation"
+#' # the agglomeration method used for hierarchical clustering (hierarchical and agnes)
+#' method <- "complete"
+#' 
+#' # the clena analysis
+#' clena_result <- clena(DEexprs, nClust=nClust, clMethods=clMethods, metric=metric,
+#'                       method=method,  annotation=anno, sampleLabel=sampleLabel, 
+#'                       ncore=ncore, annotationGenesPop=annotationGenesPop, verbose=TRUE)
 #'
 #' @export
 
@@ -104,9 +108,9 @@ clena <- function(obj, nClust, clMethods="hierarchical",
   ## used for hierarchical, kmeans, diana, fanny, agnes, pam
   metric <- match.arg(metric,c("euclidean", "correlation", "abscorrelation", "manhattan", 
   "spearman", "maximum", "kendall", "canberra", "binary", "pearson", "abspearson",
-  "MI", "biwt"))
+  "NMI", "biwt"))
   
-  if("MI" %in% metric){
+  if("NMI" %in% metric){
 #       if(!require(infotheo)) {
 #           stop("package 'infotheo' required for mutual information metric")
       devtools::install_github("zhilongjia/infotheo")
@@ -156,7 +160,7 @@ clena <- function(obj, nClust, clMethods="hierarchical",
     if (verbose) {print("Dist caculation")}
     if (metric == "biwt") {
         Distmat <- as.dist(biwt.cor(mat, output="distance"))
-    } else if (metric == "MI") {
+    } else if (metric == "NMI") {
         #NMI from infotheo package
         nmi <- infotheo::NMI(infotheo::discretize(t(mat)), method= "emp")
         Distmat <- as.dist(1-nmi)
@@ -182,7 +186,7 @@ clena <- function(obj, nClust, clMethods="hierarchical",
     
     cvalid <- vClusters(mat, Distmat , clMethods[i], nClust, method=method, 
                         metric=metric, annotation=annotation,
-                        ncore=ncore, annotationGenesPop, verbose=verbose)
+                        ncore=ncore, annotationGenesPop, verbose=verbose, ...)
     clusterObjs[[i]] <- cvalid$clusterObj
     validMeasures[[i]] <- cvalid$measures
     if (verbose) print(paste("The clMethod,", clMethods[i], "done"))
@@ -200,62 +204,5 @@ clena <- function(obj, nClust, clMethods="hierarchical",
 }
 
 
-#' clusterMethods : Methods of cluster.
-#' @param object a clena object
-setGeneric("clusterMethods", function(object, ...) standardGeneric("clusterMethods"))
-#' @method clusterMethods
-#' @rdname clena
-#' @exportMethod clusterMethods
-setMethod("clusterMethods",signature(object="clena"),
-          function(object) return(object@clMethods))
-
-
-#' get the number of clusters.
-#' @inheritParams clusterMethods
-## number of clusters accessor
-setGeneric("nClusters", function(object, ...) standardGeneric("nClusters"))
-#' @method nClusters
-#' @rdname clena
-#' @exportMethod nClusters
-setMethod("nClusters",signature(object="clena"),
-          function(object) return(object@nClust))
-
-
-#' get the cluster of certain clustering method.
-#' @inheritParams clusterMethods
-#' @param method as clMethods in clena function
-## clusters accessor
-setGeneric("clusters", function(object, method, ...) standardGeneric("clusters"))
-#' @method clusters
-#' @rdname clena
-#' @exportMethod clusters
-setMethod("clusters",signature(object="clena"),
-          function(object, method=clusterMethods(object)) {
-              method <- match.arg(method, clusterMethods(object))
-              return(object@clusterObjs[[method]])})
-
-
-#' get the original data from a clena object.
-#' @inheritParams clusterMethods
-#' @return a matrix
-setGeneric("mat", function(object, ...) standardGeneric("mat"))
-#' @method : mat
-#' @rdname clena
-#' @exportMethod mat
-setMethod("mat",signature(object="clena"),
-          function(object) return(object@mat))
-
-
-#' summary : a summary of clena object.
-#' @method summary
-#' @rdname clena
-#' @exportMethod summary
-setMethod("summary","clena",
-          function(object, digits = max(3,getOption("digits")-3)) {
-              cat("\nClustering Methods:\n",clusterMethods(object),"\n\n")
-              cat("The Number of Clusters:\n",nClusters(object),"\n\n")
-              cat("Metric of Distance Matrix:\n", object@metric, "\n\n")
-              cat("Agglomeration method for hierarchical clustering (hclust and agnes):\n", object@method, "\n\n")
-          })
 
 
