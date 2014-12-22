@@ -26,16 +26,17 @@
 
 setOldClass("dist")
 
-setClass("clena", slots=c(mat="matrix",
-                                clusterObjs="list",
-                                Distmat="dist",
-                                measures="list",
-                                clMethods="character",
-                                labels="character",
-                                nClust="numeric",
-                                metric="character", 
-                                method="character",
-                                annotation="matrix", 
-                                sampleLabel="character",
-                                ncore="numeric",
-                                call="call"))
+setClass("clena", slots= list(mat="matrix",
+                          clusterObjs="list",
+                          Distmat="dist",
+                          measures="list",
+                          clMethods="character",
+                          labels="character",
+                          nClust="numeric",
+                          metric="character", 
+                          method="character",
+                          annotation="matrix", 
+                          sampleLabel="character",
+                          ncore="numeric",
+                          call="call"))
+

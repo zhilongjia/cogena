@@ -20,7 +20,7 @@
 setGeneric("hubgeneInCluster", function(object, method, nClusters, ith, ...) standardGeneric("hubgeneInCluster"))
 
 
-#' @exportMethod
+#' @exportMethod hubgeneInCluster
 #' @aliases hubgeneInCluster
 setMethod("hubgeneInCluster", signature(object="clena"),
           function (object, method=clusterMethods(object), nClusters=nClusters(object), ith){

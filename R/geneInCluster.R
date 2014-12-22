@@ -7,7 +7,7 @@
 #' @return a character vector.
 #' @docType methods
 #' @rdname geneInCluster
-#' 
+#' @export
 #' @seealso \code{\link{clena}}
 #' @examples 
 #' #summay this clena object
@@ -16,11 +16,11 @@
 #' #geneInCluster
 #' geneInCluster(GSE7621.SAM.clena.cluster, "sota", "12", "2")
 #' 
-#' @export
+#' 
 setGeneric("geneInCluster", function(object, method, nClusters, ith, ...) standardGeneric("geneInCluster"))
 
 
-#' @exportMethod
+#' @exportMethod geneInCluster
 #' @aliases geneInCluster
 setMethod("geneInCluster", signature(object="clena"),
           function (object, method=clusterMethods(object), nClusters=nClusters(object), ith){
