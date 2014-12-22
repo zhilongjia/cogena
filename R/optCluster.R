@@ -50,7 +50,7 @@ setMethod("optCluster", signature(object="clena"),
             }
         }
         # if the 2 clusters have a negative value, all other clusters in this method will have a negative value or NA.
-        if (score[i,"2"] < 0){
+        if (!is.na(score[i,"2"]) && score[i,"2"] < 0){
         	for (j in as.character(nClusters(object))){
         		if (!is.na(score[i,j]) && score[i,j] >0){
         			score[i,j] <- -score[i,j]
@@ -63,5 +63,5 @@ setMethod("optCluster", signature(object="clena"),
 
 
 upORdn <- function (dat, Label){
-    ifelse (mean(dat[which(Label==names(table(Lable)[1]))])< mean(dat[which(Label==names(table(Lable)[2]))]), 1,-1)
+    ifelse (mean(dat[which(Label==names(table(Label)[1]))])< mean(dat[which(Label==names(table(Label)[2]))]), 1,-1)
 }
