@@ -27,7 +27,8 @@ Suggests:
     biwt,
     knitr,
     testthat
-Description: Coexpression gene-sets Enrichment Analysis of cluster of gene expression profilings.
+Description: Coexpression gene-sets Enrichment Analysis of cluster of gene
+    expression profilings.
 License: LGPL-3
 LazyData: true
 OS_type: unix

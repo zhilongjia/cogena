@@ -2,9 +2,9 @@
 \docType{class}
 \name{clena-class}
 \alias{clena-class}
-\title{An S4 class to represent geneset clustering result.}
+\title{An S4 class to represent coexpression gene-sets clustering result.}
 \description{
-An S4 class to represent geneset clustering result.
+An S4 class to represent coexpression gene-sets clustering result.
 }
 \section{Slots}{
 

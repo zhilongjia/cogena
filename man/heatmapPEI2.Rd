@@ -2,22 +2,24 @@
 \docType{methods}
 \name{heatmapPEI2}
 \alias{heatmapPEI2}
-\title{heatmap of the gene set enrichment matrix directly}
+\title{heatmap of the gene set enrichment_score matrix directly}
 \usage{
-heatmapPEI2(object, enrichment, ...)
+heatmapPEI2(object, enrichment_score, ...)
 }
 \arguments{
 \item{object}{a clena object}
+
+\item{which}{cluster should be based to filter, value like "2#68".}
 }
 \description{
-heatmap of the gene set enrichment matrix directly. After obtaining the
+heatmap of the gene set enrichment_score matrix directly. After obtaining the
 ennrichemt of clusters in the gene sets via \code{\link{enrichment}}, the
 heatmapPEI2 will show it as a heatmap.
 }
 \details{
-This function aims to heatmap the enrichment score directly. This is helpful
+This function aims to heatmap the enrichment_score directly. This is helpful
 on condition that there are so many enriched gene sets and you can filter the
-enrichment score based on a criteria, like just one cluster.
+enrichment_score based on a criteria, like just one cluster.
 }
 \examples{
 ##
