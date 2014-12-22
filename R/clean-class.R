@@ -1,4 +1,4 @@
-#' An S4 class to represent geneset clustering result.
+#' An S4 class to represent coexpression gene-sets clustering result.
 #'
 #' @slot mat Differentially expressed gene expression profilings. Either a 
 #' numeric matrix, a data.frame, or an ExpressionSet object. Data frames must
@@ -24,7 +24,9 @@
 #' @slot sampleLabel character vector with names are sample names. only used for plotting.
 #' @exportClass clena
 
-setClass("clena",representation(mat="matrix",
+setOldClass("dist")
+
+setClass("clena", slots=c(mat="matrix",
                                 clusterObjs="list",
                                 Distmat="dist",
                                 measures="list",
