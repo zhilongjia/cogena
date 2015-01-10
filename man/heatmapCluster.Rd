@@ -8,11 +8,11 @@ heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"),
 clusterColor = rainbow(nClusters), ...)
 }
 \arguments{
-\item{object}{a clena object}
+\item{object}{a cogena object}
 
-\item{method}{as clMethods in clena function}
+\item{method}{as clMethods in cogena function}
 
-\item{nClusters}{as nClust in clena function.}
+\item{nClusters}{as nClust in cogena function.}
 
 \item{sampleColor}{a color vector with the sample length. The default is c("darkblue", "cyan").}
 
@@ -24,13 +24,13 @@ clusterColor = rainbow(nClusters), ...)
 heatmap of gene expression profilings with cluster-based color indication.
 }
 \examples{
-#summay this clena object
-summary(clena_result)
+#summay this cogena object
+summary(cogena_result)
 
 #heatmapCluster
-heatmapCluster(clena_result, "hierarchical", "3")
+heatmapCluster(cogena_result, "hierarchical", "3")
 }
 \seealso{
-\code{\link{clena}} and \code{\link{heatmapPEI}}
+\code{\link{cogena}}, \code{\link{heatmap.3}} and \code{\link{heatmapPEI}}
 }
 

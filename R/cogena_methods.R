@@ -1,0 +1,86 @@
+#' Basic methods for a cogena object.
+#' 
+#' clusterMethods: get the methods of clustering used.
+#' @param object a cogena object
+#' @export clusterMethods
+#' @docType methods
+#' @rdname cogena_methods
+#' @return clusterMethods: a character vector.
+#' @examples
+#' data(PD)
+#' clusterMethods(cogena_result)
+#' 
+setGeneric("clusterMethods", function(object) standardGeneric("clusterMethods"))
+
+
+#' @aliases clusterMethods,cogena_methods
+setMethod("clusterMethods",signature(object="cogena"),
+          function(object) return(object@clMethods))
+
+
+#' nClusters: get the number of clusters from a cogena object.
+#' @inheritParams clusterMethods
+#' @examples
+#' nClusters(cogena_result)
+#' @return nClusters: a numeric vector.
+#' @export nClusters
+#' @docType methods
+#' @rdname cogena_methods
+setGeneric("nClusters", function(object) standardGeneric("nClusters"))
+
+
+#' @aliases nClusters,cogena_methods
+setMethod("nClusters",signature(object="cogena"),
+          function(object) return(object@nClust))
+
+
+
+#' clusters: get the cluster of a certain clustering method.
+#' @inheritParams clusterMethods
+#' @param method as clMethods in cogena function
+#' @return clusters: a list or hclust depends on the method
+#' @examples
+#' clusters(cogena_result, "kmeans")
+#' clusters(cogena_result, "hierarchical")
+#' @export clusters
+#' @docType methods
+#' @rdname cogena_methods
+setGeneric("clusters", function(object, method) standardGeneric("clusters"))
+
+
+#' @aliases clusters,cogena_methods
+setMethod("clusters",signature(object="cogena"),
+          function(object, method=clusterMethods(object)) {
+              method <- match.arg(method, clusterMethods(object))
+              return(object@clusterObjs[[method]])})
+
+
+#' mat: get the original data from a cogena object.
+#' @inheritParams clusterMethods
+#' @examples
+#' mat(cogena_result)
+#' @return mat: a matrix
+#' @export mat
+#' @docType methods
+#' @rdname cogena_methods
+setGeneric("mat", function(object) standardGeneric("mat"))
+
+
+#' @aliases mat,cogena_methods
+setMethod("mat",signature(object="cogena"),
+          function(object) return(object@mat))
+
+
+#' summary: a summary of a cogena object.
+#' @return summary: a summary of a cogena object.
+#' @examples
+#' summary(cogena_result)
+#' @rdname cogena_methods
+#' @exportMethod summary
+setMethod("summary","cogena",
+          function(object, digits = max(3,getOption("digits")-3)) {
+              cat("\nClustering Methods:\n",clusterMethods(object),"\n\n")
+              cat("The Number of Clusters:\n",nClusters(object),"\n\n")
+              cat("Metric of Distance Matrix:\n", object@metric, "\n\n")
+              cat("Agglomeration method for hierarchical clustering (hclust and agnes):\n", object@method, "\n\n")
+          })

@@ -1,15 +1,14 @@
-#' heatmap of the gene set enrichment.
+#' heatmap of the gene set enrichment from a cogena object.
 #'
 #' heatmap of the gene set enrichment index. After obtaining the ennrichemt of 
-#' clusters in the gene sets, the heatmapPEI will show it as a heatmap with an
-#' order.
+#' clusters in the gene sets, the heatmapPEI will show it as a heatmap with order.
 #'
 #' @inheritParams enrichment
 #' @param low colour for low end of gradient.
 #' @param high colour for high end of gradient.
 #' @param na.value Colour to use for missing values.
 #' 
-#' @seealso \code{\link{clena}} and \code{\link{heatmapCluster}}
+#' @seealso \code{\link{cogena}} and \code{\link{heatmapCluster}}
 #' 
 #' @details
 #' orderMethod:
@@ -22,12 +21,12 @@
 #' @docType methods
 #' @rdname heatmapPEI
 #' @examples
-#' #summay this clena object
-#' summary(clena_result)
+#' #summay this cogena object
+#' summary(cogena_result)
 #' 
 #' #heatmapPEI
-#' heatmapPEI(clena_result, "kmeans", "2", orderMethod="mean")
-#' heatmapPEI(clena_result, "kmeans", "3", CutoffNumGeneset=20, 
+#' heatmapPEI(cogena_result, "kmeans", "2", orderMethod="mean")
+#' heatmapPEI(cogena_result, "kmeans", "3", CutoffNumGeneset=20, 
 #'           low = "#132B43", high = "#56B1F7", na.value = "grey50")
 setGeneric("heatmapPEI", function(object, method, nClusters, CutoffNumGeneset=20,
                                   CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE,
@@ -35,8 +34,8 @@ setGeneric("heatmapPEI", function(object, method, nClusters, CutoffNumGeneset=20
     standardGeneric("heatmapPEI"))
 
 
-#' @aliases heatmapPEI,clena
-setMethod("heatmapPEI", signature(object="clena"),
+#' @aliases heatmapPEI,cogena
+setMethod("heatmapPEI", signature(object="cogena"),
           function(object, method=clusterMethods(object), 
                    nClusters=nClusters(object), 
                    CutoffNumGeneset=20, CutoffPVal=0.05,

@@ -7,14 +7,14 @@
 optCluster(object)
 }
 \arguments{
-\item{object}{a clena object}
+\item{object}{a cogena object}
 }
 \description{
 get the best clustering methods and the number of clusters, based that the number
-of gene sets which are signifigant should be maxium.
+of gene sets which are signifigant should be maximum.
 }
 \examples{
-summary(clena_result)
-score <- optCluster(clena_result)
+summary(cogena_result)
+score <- optCluster(cogena_result)
 }
 

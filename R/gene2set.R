@@ -1,19 +1,19 @@
-#' generate relationship between genes and gene sets
+#' generate relationship between genes and gene-sets
 #' 
-#' Generate relationship between genes (SYMBOL) and gene sets, such as Pathway or GO.
+#' Generate relationship between genes (gene SYMBOL) and gene-sets, such as Pathway or GO.
 #' 
 #' @inheritParams gmt2list
 #' @param genenames a SYMBOL gene names charactic vector.
 #' @param TermFreq a threshold for the Term Frequence. Default is zero.
 #' 
 #' @examples
-#' please ?clena
+#' please ?cogena
 #' @export
 #' @rdname gene2set
 gene2set <- function(anno, genenames, TermFreq=0) {
     if (is.null(anno)) {
         anno <- "c2.cp.v4.0.symbols.gmt"
-        annofile <- system.file("data", annoGMT, package="clena")
+        annofile <- system.file("data", annoGMT, package="cogena")
     }
 
     annoList <- gmt2list(anno)

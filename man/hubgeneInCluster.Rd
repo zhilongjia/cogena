@@ -7,11 +7,11 @@
 hubgeneInCluster(object, method, nClusters, ith, ...)
 }
 \arguments{
-\item{object}{a clena object}
+\item{object}{a cogena object}
 
-\item{method}{as clMethods in clena function}
+\item{method}{as clMethods in cogena function}
 
-\item{nClusters}{as nClust in clena function.}
+\item{nClusters}{as nClust in cogena function.}
 
 \item{ith}{the ith cluster.}
 }
@@ -22,13 +22,13 @@ a character vector.
 Show hub gene names in certain cluster.
 }
 \examples{
-#summay this clena object
-summary(clena_result)
+#summay this cogena object
+summary(cogena_result)
 
 #hubgeneInCluster
-hubgeneInCluster(clena_result, "kmeans", "3", "2")
+hubgeneInCluster(cogena_result, "kmeans", "3", "2")
 }
 \seealso{
-\code{\link{clena}} and \code{\link{geneInCluster}}
+\code{\link{cogena}} and \code{\link{geneInCluster}}
 }
 

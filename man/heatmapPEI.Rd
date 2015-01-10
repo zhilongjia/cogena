@@ -2,18 +2,18 @@
 \docType{methods}
 \name{heatmapPEI}
 \alias{heatmapPEI}
-\title{heatmap of the gene set enrichment.}
+\title{heatmap of the gene set enrichment from a cogena object.}
 \usage{
 heatmapPEI(object, method, nClusters, CutoffNumGeneset = 20,
   CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE,
   low = "green", high = "red", na.value = "white", ...)
 }
 \arguments{
-\item{object}{a clena object}
+\item{object}{a cogena object}
 
-\item{method}{as clMethods in clena function}
+\item{method}{as clMethods in cogena function}
 
-\item{nClusters}{as nClust in clena function.}
+\item{nClusters}{as nClust in cogena function.}
 
 \item{CutoffNumGeneset}{the cut-off of the number of gene sets in the return table}
 
@@ -21,7 +21,7 @@ heatmapPEI(object, method, nClusters, CutoffNumGeneset = 20,
 
 \item{orderMethod}{the order method, default is max, other options are "mean" and "all"}
 
-\item{roundvalue}{whether or not round the data. such as round(1.54, 1)=1.5}
+\item{roundvalue}{The default is TRUE. whether or not round the data. such as round(1.54, 1)=1.5}
 
 \item{low}{colour for low end of gradient.}
 
@@ -31,8 +31,7 @@ heatmapPEI(object, method, nClusters, CutoffNumGeneset = 20,
 }
 \description{
 heatmap of the gene set enrichment index. After obtaining the ennrichemt of
-clusters in the gene sets, the heatmapPEI will show it as a heatmap with an
-order.
+clusters in the gene sets, the heatmapPEI will show it as a heatmap with order.
 }
 \details{
 orderMethod:
@@ -42,15 +41,15 @@ orderMethod:
 \item all. ordered by all genes}
 }
 \examples{
-#summay this clena object
-summary(clena_result)
+#summay this cogena object
+summary(cogena_result)
 
 #heatmapPEI
-heatmapPEI(clena_result, "kmeans", "2", orderMethod="mean")
-heatmapPEI(clena_result, "kmeans", "3", CutoffNumGeneset=20,
+heatmapPEI(cogena_result, "kmeans", "2", orderMethod="mean")
+heatmapPEI(cogena_result, "kmeans", "3", CutoffNumGeneset=20,
           low = "#132B43", high = "#56B1F7", na.value = "grey50")
 }
 \seealso{
-\code{\link{clena}} and \code{\link{heatmapCluster}}
+\code{\link{cogena}} and \code{\link{heatmapCluster}}
 }
 

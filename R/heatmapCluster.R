@@ -9,13 +9,13 @@
 #' @docType methods
 #' @usage heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"), 
 #' clusterColor = rainbow(nClusters), ...)
-#' @seealso \code{\link{clena}} and \code{\link{heatmapPEI}}
+#' @seealso \code{\link{cogena}}, \code{\link{heatmap.3}} and \code{\link{heatmapPEI}}
 #' @examples 
-#' #summay this clena object
-#' summary(clena_result)
+#' #summay this cogena object
+#' summary(cogena_result)
 #'
 #' #heatmapCluster
-#' heatmapCluster(clena_result, "hierarchical", "3")
+#' heatmapCluster(cogena_result, "hierarchical", "3")
 #' 
 setGeneric("heatmapCluster", 
            function(object, method, nClusters, sampleColor=c("darkblue", "cyan"), 
@@ -23,7 +23,7 @@ setGeneric("heatmapCluster",
 
 
 #' @aliases heatmapCluster
-setMethod("heatmapCluster", signature(object="clena"),
+setMethod("heatmapCluster", signature(object="cogena"),
           function (object, method=clusterMethods(object), nClusters=nClusters(object),
                     sampleColor=c("darkblue", "cyan"), 
                     clusterColor, ...){
@@ -95,7 +95,7 @@ setMethod("heatmapCluster", signature(object="clena"),
 
 ################################################################################
 #map2color: get the color vector from the numeric vector x using pal, such as, rainbow(200)
-#Example: map2color(cutree(clusters(GSE48350.clena.cluster, "hierarchical"), 3),rainbow(200))
+#Example: map2color(cutree(clusters(GSE48350.cogena.cluster, "hierarchical"), 3),rainbow(200))
 #http://stackoverflow.com/questions/15006211/how-do-i-generate-a-mapping-from-numbers-to-colors-in-r
 ##############################################################################
 map2col<-function(x,pal,limits=NULL){

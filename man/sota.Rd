@@ -91,6 +91,9 @@ behavior is achieved with setting the unrest.growth parameter to TRUE. Growth
 of the tree can be stopped based on other criteria, like the allowed maximum
 Diversity within the cluster and so on. Further details regarding the inner
 workings of the algorithm can be found in the paper listed in the Reference section.
+
+Please note the 'euclidean' is the default distance metric different from
+\code{\link[clValid]{sota}}
 }
 \examples{
 please ref the manual of clValid::sota.

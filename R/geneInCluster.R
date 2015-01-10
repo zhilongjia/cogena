@@ -1,6 +1,6 @@
-#' Get gene names in certain cluster.
+#' Get gene names in a certain cluster.
 #' 
-#' Get gene names in certain cluster. This is helpful if user want to get the
+#' Get gene names in a certain cluster. This is helpful if user want to get the
 #' detail of a cluster.
 #'
 #' @inheritParams enrichment
@@ -8,19 +8,20 @@
 #' @return a character vector containing the gene names.
 #' @rdname geneInCluster
 #' @export
-#' @seealso \code{\link{clena}}
-#' @examples 
-#' #summay this clena object
-#' summary(clena_result)
+#' @seealso \code{\link{cogena}}
+#' @examples
+#' \dontrun{
+#' #summay this cogena object
+#' summary(cogena_result)
 #' 
 #' #geneInCluster
-#' geneInCluster(clena_result, "kmeans", "3", "2")
-#' 
+#' geneInCluster(cogena_result, "kmeans", "3", "2")
+#' }
 setGeneric("geneInCluster", function(object, method, nClusters, ith) standardGeneric("geneInCluster"))
 
 
-#' @aliases geneInCluster,clena_methods
-setMethod("geneInCluster", signature(object="clena"),
+#' @aliases geneInCluster,cogena_methods
+setMethod("geneInCluster", signature(object="cogena"),
           function (object, method=clusterMethods(object), nClusters=nClusters(object), ith){
               #ith is the ith cluster enquerying
               method <- match.arg(method, clusterMethods(object))

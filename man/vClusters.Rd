@@ -7,7 +7,7 @@ vClusters(mat, Distmat, clMethod, nClust, method, metric, annotation, ncore,
   annotationGenesPop, verbose, ...)
 }
 \description{
-Internal clena functions.
+Internal cogena functions.
 }
 \details{
 Paralleled clustering with different clustering methods and different number

@@ -1,7 +1,7 @@
-Package: clena
-Version: 0.1-5
-Date: 2014-10-01
-Title: Coexpression gene-sets enrichment analysis
+Package: cogena
+Version: 0.2-0
+Date: 2014-10-10
+Title: co-expressed gene-set enrichment analysis
 Authors@R: c( person("Zhilong", "Jia", email = "zhilongjia@gmail.com", role =
     c("aut", "cre")), person("Michael", "Barnes", email =
     "m.r.barnes@qmul.ac.uk", role = "aut"))
@@ -27,17 +27,33 @@ Suggests:
     biwt,
     knitr,
     testthat
-Description: Coexpression gene-sets Enrichment Analysis of cluster of gene
-    expression profilings.
+Description: co-expressed gene-set enrichment analysis.
 Collate:
     dist_class.R
-    clena_class.R
+    cogena_class.R
+    PD.R
+    PEI.R
+    cogena.R
+    cogena_methods.R
+    enrichment.R
+    gene2set.R
+    geneInCluster.R
+    geneExpInCluster.R
+    gmt2list.R
+    heatmap.3.R
+    heatmapCluster.R
+    heatmapPEI.R
+    heatmapPEI2.R
+    hubgeneInCluster.R
+    optCluster.R
+    sota.R
+    vClusters.R
 License: LGPL-3
 LazyData: true
 OS_type: unix
-URL: http://github
+URL: https://github.com/zhilongjia/cogena
 Packaged: 2014-10-30 20:11:06 UTC; zjia
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2014-11-01
+Date/Publication: 2015-01-20
 VignetteBuilder: knitr

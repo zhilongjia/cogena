@@ -9,11 +9,11 @@ heatmapPEI2(object, enrichment_score, method, nClusters, whichCluster,
   ...)
 }
 \arguments{
-\item{object}{a clena object}
+\item{object}{a cogena object}
 
-\item{method}{as clMethods in clena function}
+\item{method}{as clMethods in cogena function}
 
-\item{nClusters}{as nClust in clena function.}
+\item{nClusters}{as nClust in cogena function.}
 
 \item{CutoffNumGeneset}{the cut-off of the number of gene sets in the return table}
 
@@ -37,8 +37,8 @@ enrichment_score based on a criteria, like just one cluster.
 }
 \examples{
 data(PD)
-summary(clena_result)
-enrichment.table <- enrichment(clena_result, "kmeans", "3")
-heatmapPEI2(clena_result, enrichment.table, "kmeans", "3", "1")
+summary(cogena_result)
+enrichment.table <- enrichment(cogena_result, "kmeans", "3")
+heatmapPEI2(cogena_result, enrichment.table, "kmeans", "3", "1")
 }
 

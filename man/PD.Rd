@@ -11,8 +11,10 @@ data(PD)
 }
 \description{
 an example dataset of Parkinson's Disease. This dataset is used for
-illustration of usage clena package. Please see the vignette for the
-detailed the preprocessing steps.
+illustration of the usage of \code{cogena} package. It has been normalised
+the expression profling using \code{rma} method, filtered some non-informative
+genes using \code{MetaDE} package and analysed the differentially expressed
+genes using \code{limma} package with the p-value 0.05.
 }
 \details{
 There are four objects.
@@ -20,7 +22,7 @@ There are four objects.
  \item DEexprs. expression of DEG. There are 1243 DEGs and 17 samples.
  \item BGgenes. the 6122 background gene names.
  \item sampleLabel. the label of sample, There are 9 control and 8 PD.
- \item clena_result. an example of clena result.
+ \item cogena_result. an example of cogena result.
 }
 }
 \keyword{datasets}

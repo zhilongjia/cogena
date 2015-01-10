@@ -8,13 +8,13 @@
 #' @docType methods
 #' @rdname hubgeneInCluster
 #' 
-#' @seealso \code{\link{clena}} and \code{\link{geneInCluster}}
+#' @seealso \code{\link{cogena}} and \code{\link{geneInCluster}}
 #' @examples 
-#' #summay this clena object
-#' summary(clena_result)
+#' #summay this cogena object
+#' summary(cogena_result)
 #' 
 #' #hubgeneInCluster
-#' hubgeneInCluster(clena_result, "kmeans", "3", "2")
+#' hubgeneInCluster(cogena_result, "kmeans", "3", "2")
 #' 
 #' @export
 setGeneric("hubgeneInCluster", function(object, method, nClusters, ith, ...) standardGeneric("hubgeneInCluster"))
@@ -22,7 +22,7 @@ setGeneric("hubgeneInCluster", function(object, method, nClusters, ith, ...) sta
 
 #' @exportMethod hubgeneInCluster
 #' @aliases hubgeneInCluster
-setMethod("hubgeneInCluster", signature(object="clena"),
+setMethod("hubgeneInCluster", signature(object="cogena"),
           function (object, method=clusterMethods(object), nClusters=nClusters(object), ith){
               #ith is the ith cluster enquerying
               method <- match.arg(method, clusterMethods(object))

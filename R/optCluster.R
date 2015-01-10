@@ -1,21 +1,21 @@
 #' get the best clustering methods and the number of clusters
 #' 
 #' get the best clustering methods and the number of clusters, based that the number
-#' of gene sets which are signifigant should be maxium.
+#' of gene sets which are signifigant should be maximum.
 #'
 #' @inheritParams clusterMethods
 #' @export
 #' @docType methods
 #' @rdname optCluster
 #' @examples
-#' summary(clena_result)
-#' score <- optCluster(clena_result)
+#' summary(cogena_result)
+#' score <- optCluster(cogena_result)
 #' 
 setGeneric("optCluster", function(object) standardGeneric("optCluster"))
 
 
-#' @aliases optCluster,clena
-setMethod("optCluster", signature(object="clena"),
+#' @aliases optCluster,cogena
+setMethod("optCluster", signature(object="cogena"),
     function(object){
     score <- matrix(NA, nrow=length(clusterMethods(object)), ncol=length(nClusters(object)), dimnames=list(clusterMethods(object), nClusters(object)))
     for (i in clusterMethods(object)){

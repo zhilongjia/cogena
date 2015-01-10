@@ -13,9 +13,9 @@
 #' enrichment_score based on a criteria, like just one cluster. 
 #' @examples
 #' data(PD)
-#' summary(clena_result)
-#' enrichment.table <- enrichment(clena_result, "kmeans", "3")
-#' heatmapPEI2(clena_result, enrichment.table, "kmeans", "3", "1")
+#' summary(cogena_result)
+#' enrichment.table <- enrichment(cogena_result, "kmeans", "3")
+#' heatmapPEI2(cogena_result, enrichment.table, "kmeans", "3", "1")
 #' @export heatmapPEI2
 #' @docType methods
 #' @rdname heatmapPEI2
@@ -25,8 +25,8 @@ setGeneric("heatmapPEI2", function(object, enrichment_score, method, nClusters,
     standardGeneric("heatmapPEI2"))
 
 
-#' @aliases heatmapPEI2,clena
-setMethod("heatmapPEI2", signature(object="clena"),
+#' @aliases heatmapPEI2,cogena
+setMethod("heatmapPEI2", signature(object="cogena"),
           function(object, enrichment_score, method, nClusters, whichCluster,
                    CutoffNumGeneset=60, 
                    #CutoffPVal=0.05,

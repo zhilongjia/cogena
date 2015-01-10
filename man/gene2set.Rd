@@ -2,14 +2,14 @@
 \name{gene2set}
 \alias{annotationListToMatrix}
 \alias{gene2set}
-\title{generate relationship between genes and gene sets}
+\title{generate relationship between genes and gene-sets}
 \usage{
 gene2set(anno, genenames, TermFreq = 0)
 
 annotationListToMatrix(annotation, genenames)
 }
 \arguments{
-\item{anno}{a gmt file. Examples are from MSigDB Collections or Enrichr.
+\item{anno}{a gmt file. Examples are from MSigDB Collections.
 A list of gene set could be find in the vignette of clena.}
 
 \item{genenames}{a SYMBOL gene names charactic vector.}
@@ -17,9 +17,9 @@ A list of gene set could be find in the vignette of clena.}
 \item{TermFreq}{a threshold for the Term Frequence. Default is zero.}
 }
 \description{
-Generate relationship between genes (SYMBOL) and gene sets, such as Pathway or GO.
+Generate relationship between genes (gene SYMBOL) and gene-sets, such as Pathway or GO.
 }
 \examples{
-please ?clena
+please ?cogena
 }
 

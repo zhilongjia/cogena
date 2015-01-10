@@ -1,6 +1,6 @@
 #' paralleled clustering
 #'
-#' Internal clena functions.
+#' Internal cogena functions.
 #'
 #' Paralleled clustering with different clustering methods and different number
 #' of clusters. These functions should not be called directly by the user. 

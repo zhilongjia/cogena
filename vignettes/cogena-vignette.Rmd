@@ -1,0 +1,149 @@
+---
+title: "cogena, a tool for co-expressed gene-set enrichment analysis and visualization"
+author: "Zhilong Jia, Zhigang Luo and Michael Barnes"
+date: "`r Sys.Date()`"
+output: 
+#    rmarkdown::html_vignette:
+     pdf_document:
+        fig_caption: yes
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+---
+
+cogena can be used as gene set enrichment analysis of up or down regulated 
+genes as well as genes in clusters resulting from various clustering methods. 
+And the gene sets could be Pathway, Gene Ontology or user-defined gene-sets. 
+Accordingly, this tools can be used for pathway enrichment, GO enrichment 
+and so on.  
+
+## Input data
+    Note: all the gene names should be gene SYMBOLs since the gene-set files use gene SYMBOLs.
+    Other kind of gene names could be used according to the kind of gene names of user-defined
+    gene-set files.
+
+1. Input data needed.
+
+- the gene expression profiling of differentially expressed genes. It can be 
+matrix with gene in row and sample in column, data.frame or ExpressionSet object.
+- the background genes. Generally, these are genes in a microarray after filtering
+the non-informative genes. A vector.
+- the sample labels indicating the labels, like control and disease, of each 
+sample. A vector with sample name.
+
+2. Example dataset.
+
+    There is an example data in `cogena` package. This dataset, from [GSE20163](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163), is about Parkinson's disease. 
+    There are four objects in the PD dataset. See `?PD` for more details.
+
+```{r import_data, message=FALSE}
+library(devtools)
+load_all("~/cogena")
+data(PD)
+#   Four objects in the PD dataset.
+```
+```{r PD_data, echo=FALSE}
+ls()
+```
+
+## cogena analysis
+
+1.  Make Annotation
+
+    There are a variety of gene sets in the `cogena` package, collected from 
+    [MSigDB](http://www.broadinstitute.org/gsea/msigdb/index.jsp). They are `r dir(system.file("data", package="cogena"), pattern="*gmt")`. with gene-sets, user can get the genes-specific gene
+    sets matrix as showed in the following example. Here the gene-sets can be user-defined
+    gene-sets formatted gmt, too.
+    
+```{r gene_list_annotation}
+annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
+annofile <- system.file("data", annoGMT, package="cogena")
+# the DEG gene-sets matrix
+anno <- gene2set(annofile, rownames(DEexprs))
+# the background gene gene-sets matrix
+annotationGenesPop <- gene2set(annofile, BGgenes)
+annotationGenesPop <- annotationGenesPop[,colnames(anno)]
+```
+
+    
+2. Run cogena
+
+    Setting some parameters for cogena and run cogena analysis.
+```{r cogena, results="hide"}
+# the number of clusters. It could be a vector.
+nClust <- 2:8
+# the number of cores. As leveraging the `doMC` package, cogena can be used in
+# unix-like system only.
+ncore <- 4
+# the clustering methods
+clMethods <- c("hierarchical","kmeans")
+# the distance metric
+metric <- "correlation"
+# the agglomeration method used for hierarchical clustering (hierarchical and agnes)
+method <- "complete"
+
+# the cogena analysis
+cogena_result <- cogena(DEexprs, nClust=nClust, clMethods=clMethods, metric=metric,
+                      method=method,  annotation=anno, sampleLabel=sampleLabel, 
+                      ncore=ncore, annotationGenesPop=annotationGenesPop, verbose=TRUE)
+```
+
+
+## Analysing results of cogena
+1.  After completing the cogena analysis, user can use `summary` to see the summary 
+of the result of cogena. Since there are so many options of results, user can 
+`optCluster` caculate wchih clusering methods and the number of clusters are optimum, 
+and `enrichment` caculate the enrichment score of certain clustering methods and 
+certain number of cluster. 
+    
+
+```{r cogena_result_analysis}
+summary(cogena_result)
+score <- optCluster(cogena_result)
+```
+
+```{r score, echo=FALSE, results='asis'}
+knitr::kable(score)
+```
+
+```{r enrichment}
+enrichment.table <- enrichment(cogena_result, "hierarchical", "6")
+```
+
+2.  To show the enrichment graph, `heatmapPEI` can be used. see Figure 1. 
+See ?heatmapPEI for more details.
+
+```{r heatmapPEI, fig.width=10, fig.height=6, fig.cap="KEGG Pathway enrichment"}
+heatmapPEI(cogena_result, "hierarchical", "6")
+```
+
+3.  The heatmap of expression profiling with clusters is plotted by `heatmapCluster`. see Figure 2.
+User can know which cluster contains up-regulated or down-regulated genes.
+```{r heatmapCluster, fig.width=10, fig.height=7, fig.cap="Heatmap of expression profiling with clusters"}
+heatmapCluster(cogena_result, "hierarchical", "6")
+```
+
+4.  If interested genes in a certain cluster, user can obtain the genes in a certain
+cluster via `geneInCluster`.
+```{r geneInCluster}
+head(geneInCluster(cogena_result, "hierarchical", "6", "2"))
+```
+
+5.  The gene expression profilings with cluster infromation could be obtained by `geneExpInCluster`. There are two items, `clusterGeneExp` and `label`, in the returned object of `geneExpInCluster`. This can be used for other application.
+```{r geneExpInCluster}
+gec <- geneExpInCluster(cogena_result, "hierarchical", "6")
+head(gec$clusterGeneExp, 3)
+gec$label
+```
+## Bug Report
+    https://github.com/zhilongjia/cogena/issues
+
+
+
+##Other Information
+System info
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
+The END

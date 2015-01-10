@@ -14,6 +14,9 @@
 #' Diversity within the cluster and so on. Further details regarding the inner 
 #' workings of the algorithm can be found in the paper listed in the Reference section.
 #' 
+#' Please note the 'euclidean' is the default distance metric different from 
+#' \code{\link[clValid]{sota}}
+#' 
 #' @param data data matrix or data frame. Cannot have a profile ID as the first column.
 #' @param maxCycles integer value representing the maximum number of iterations 
 #' allowed. The resulting number of clusters returned by sota is maxCycles+1 
