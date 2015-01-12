@@ -16,6 +16,7 @@ Depends:
 Imports:
     methods,
     class,
+    corrplot,
     reshape2,
     devtools
 Suggests:
@@ -39,6 +40,7 @@ Collate:
     gene2set.R
     geneInCluster.R
     geneExpInCluster.R
+    corInCluster.R
     gmt2list.R
     heatmap.3.R
     heatmapCluster.R
