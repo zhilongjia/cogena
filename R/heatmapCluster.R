@@ -4,6 +4,8 @@
 #' @inheritParams enrichment
 #' @param sampleColor a color vector with the sample length. The default is c("darkblue", "cyan").
 #' @param clusterColor a color vector with the cluster length. The default is rainbow(nClusters(object)).
+#' @param clusterColor2 a color vector with 2 elements. The default is  c("coral3", "deepskyblue1").
+#' @param heatmapcol col for heatmap. The default is greenred(75).
 #' @param ... other parameters to heatmap.3.
 #' @export
 #' @docType methods
@@ -16,17 +18,19 @@
 #'
 #' #heatmapCluster
 #' heatmapCluster(cogena_result, "hierarchical", "3")
-#' 
+#' heatmapcol <- gplots::redgreen(75) 
+#' heatmapCluster(cogena_result, "hierarchical", "3", heatmapcol=heatmapcol)
 setGeneric("heatmapCluster", 
-           function(object, method, nClusters, sampleColor=c("darkblue", "cyan"), 
-                    clusterColor, ...) standardGeneric("heatmapCluster"))
+           function(object, method, nClusters, sampleColor=c("darkblue", "cyan"),
+                    clusterColor=NULL, clusterColor2=NULL, heatmapcol=NULL,
+                    ...) standardGeneric("heatmapCluster"))
 
 
 #' @aliases heatmapCluster
 setMethod("heatmapCluster", signature(object="cogena"),
           function (object, method=clusterMethods(object), nClusters=nClusters(object),
-                    sampleColor=c("darkblue", "cyan"), 
-                    clusterColor, ...){
+                    sampleColor=c("darkblue", "cyan"), clusterColor=NULL,
+                    clusterColor2=NULL, heatmapcol=NULL, ...){
               
               #get the parameters
               method <- match.arg(method, clusterMethods(object))
@@ -55,16 +59,23 @@ setMethod("heatmapCluster", signature(object="cogena"),
               
               #color setting
               ColSideColors <- map2col(as.numeric(as.factor(sampleLabel)), sampleColor)
+              
+              if (is.null(clusterColor)) {
+                  clusterColor <- sample(rainbow(nClusters, alpha = c(1, 0.6)))
+              }
+              if (is.null(clusterColor2)){
+                  clusterColor2 <- c("coral3", "deepskyblue1")
+              }
 
-              clusterColor <- sample(rainbow(nClusters, alpha = c(1, 0.6)))
-              clusterColor2 <- c("coral3", "deepskyblue1")#sample(rainbow(2, alpha = c(1, 0.6)))
               #clusterColor <- rainbow(nClusters, alpha = c(1, 0.6))
               #make the neighboor colors different
               #clusterColor <- clusterColor[clusterColor]
               
               RowSideColors <- map2col(sort(cluster_size, decreasing=FALSE), clusterColor)
               RowSideColors2 <- map2col(cluster_size2[names(sort(cluster_size, decreasing=FALSE))], clusterColor2)
-              
+              if (is.null(heatmapcol)) {
+                  heatmapcol <- greenred(75)
+              }
               if (nClusters != "2"){
                   RowSideColors <- t(cbind(RowSideColors2, RowSideColors))
                   rownames(RowSideColors) <- paste("Size:", c(2, nClusters))
@@ -72,7 +83,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
                   	RowSideColors <- t(as.matrix(RowSideColors))
                   }
 
-              heatmap.3(mat, col=redgreen(75) , trace="none", scale="row", 
+              heatmap.3(mat, col=heatmapcol, trace="none", scale="row", 
                         Rowv=FALSE, Colv=FALSE, dendrogram="none", labRow=NA, 
                         colsep=length(which(sampleLabel==sampleLabel[1])), 
                         rowsep=cumsum( table(cluster_size)), #adjCol=c(0.8,0),
@@ -80,7 +91,9 @@ setMethod("heatmapCluster", signature(object="cogena"),
                         key=TRUE, symkey=FALSE, density.info="none", keysize=1.5, 
                         main=paste(method, nClusters, "clusters",sep="_"),
                         ColSideColors=as.matrix(ColSideColors), ylab="Genes", cexCol=0.8,
-                        RowSideColors=RowSideColors, RowSideColorsSize=ifelse(nClusters!=2,2,1), ...)
+                        RowSideColors=RowSideColors, 
+                        RowSideColorsSize=ifelse(nClusters!=2,2,1),
+                        lhei=c(1.2, 4), ...)
               par(lend = 0, xpd=TRUE)
               legend("left", legend = paste0(1:nClusters),
                          col = clusterColor, lty= 1, lwd = 20, bty = "n", title = paste(nClusters, "Clusters"))
