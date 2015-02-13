@@ -2,7 +2,8 @@
 #' 
 #' Correlation in the cluster of a cogena object. This is helpful if the number 
 #' of genes in cluster are small.
-#' 
+#' @inheritParams clusterMethods
+#' @inheritParams enrichment
 #' @inheritParams geneInCluster
 #' @param corMethod a character string indicating which correlation coefficient 
 #' (or covariance) is to be computed. One of "pearson" (default), "kendall", or 

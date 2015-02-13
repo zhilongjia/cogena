@@ -6,6 +6,12 @@
 corInCluster(object, method, nClusters, ith, corMethod = "pearson", ...)
 }
 \arguments{
+\item{object}{a cogena object}
+
+\item{method}{as clMethods in cogena function}
+
+\item{nClusters}{as nClust in cogena function.}
+
 \item{ith}{the ith cluster.}
 
 \item{corMethod}{a character string indicating which correlation coefficient

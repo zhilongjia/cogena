@@ -2,9 +2,9 @@
 title: "cogena, a tool for co-expressed gene-set enrichment analysis and visualization"
 author: "Zhilong Jia, Zhigang Luo and Michael Barnes"
 date: "`r Sys.Date()`"
-output: 
+output:
 #    rmarkdown::html_vignette:
-     pdf_document:
+     word_document:
         fig_caption: yes
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -75,9 +75,9 @@ annotationGenesPop <- annotationGenesPop[,colnames(anno)]
 nClust <- 2:8
 # the number of cores. As leveraging the `doMC` package, cogena can be used in
 # unix-like system only.
-ncore <- 4
+ncore <- 5
 # the clustering methods
-clMethods <- c("hierarchical","kmeans")
+clMethods <- c("hierarchical","kmeans", "som")
 # the distance metric
 metric <- "correlation"
 # the agglomeration method used for hierarchical clustering (hierarchical and agnes)
@@ -95,7 +95,9 @@ cogena_result <- cogena(DEexprs, nClust=nClust, clMethods=clMethods, metric=metr
 of the result of cogena. Since there are so many options of results, user can 
 `optCluster` caculate wchih clusering methods and the number of clusters are optimum, 
 and `enrichment` caculate the enrichment score of certain clustering methods and 
-certain number of cluster. 
+certain number of cluster.
+
+    As so many clustering methods and a range of number of clusters available, by setting the threshold of adjusted p-value as 0.05 so as to obtain the number of significant gene sets, we recommend that one can choose the clustering methods and the number of clusters, which is intuitively considered as the optimum, on which the number of significant gene sets are local maximum. In other words, with the cut-off of adjusted p-value, the optimum should have as many as possible gene sets enriched in a local range of number of clusters. The reason why choosing local maximum is largely because when the number of cluster is large and all clusters have more gene sets enriched, some clusters are generated from cutting a cluster from smaller number of clusters, which are highly enriched with gene sets, into more clusters. We consider the number of significant gene sets with the cut-off 0.05 of p-value as the score. Moreover, for some clustering methods with a certain number of clusters, if over 75% clusters possess a mixed up-regulated and down-regulated genes, the score (except not available (NA)) will be changed to inverse number. In addition, if the number of cluster is 2 and there are mixed up-regulated and down-regulated genes in each clusters, the score (if positive and except not available (NA)) of the other number of cluster for the same clustering method will be changed to inverse number.
     
 
 ```{r cogena_result_analysis}
@@ -108,34 +110,48 @@ knitr::kable(score)
 ```
 
 ```{r enrichment}
+#Here we consider the "hierarchical" method and 6 clusters as the optimum.
+#Always make the number as charactor, please!
 enrichment.table <- enrichment(cogena_result, "hierarchical", "6")
 ```
 
 2.  To show the enrichment graph, `heatmapPEI` can be used. see Figure 1. 
 See ?heatmapPEI for more details.
 
-```{r heatmapPEI, fig.width=10, fig.height=6, fig.cap="KEGG Pathway enrichment"}
+```{r heatmapPEI, fig.width=10, fig.height=6, fig.cap="KEGG pathway enrichment"}
+#The values shown in Figure 1. is the -log2 (p-values).
+#Always make the number as charactor, please!
 heatmapPEI(cogena_result, "hierarchical", "6")
 ```
 
 3.  The heatmap of expression profiling with clusters is plotted by `heatmapCluster`. see Figure 2.
 User can know which cluster contains up-regulated or down-regulated genes.
 ```{r heatmapCluster, fig.width=10, fig.height=7, fig.cap="Heatmap of expression profiling with clusters"}
+#Always make the number as charactor, please!
 heatmapCluster(cogena_result, "hierarchical", "6")
 ```
 
 4.  If interested genes in a certain cluster, user can obtain the genes in a certain
 cluster via `geneInCluster`.
 ```{r geneInCluster}
+#Always make the number as charactor, please!
 head(geneInCluster(cogena_result, "hierarchical", "6", "2"))
 ```
 
 5.  The gene expression profilings with cluster infromation could be obtained by `geneExpInCluster`. There are two items, `clusterGeneExp` and `label`, in the returned object of `geneExpInCluster`. This can be used for other application.
 ```{r geneExpInCluster}
+#Always make the number as charactor, please!
 gec <- geneExpInCluster(cogena_result, "hierarchical", "6")
 head(gec$clusterGeneExp, 3)
 gec$label
 ```
+
+6. The correlation among one cluster could be shown via `corInCluster`. see Figure 3.
+```{r corInCluster, fig.width=6, fig.height=6, fig.cap="Correlation"}
+#Always make the number as charactor, please!
+corInCluster(cogena_result, "hierarchical", "8", "8")
+```
+
 ## Bug Report
     https://github.com/zhilongjia/cogena/issues
 

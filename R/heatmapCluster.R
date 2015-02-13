@@ -52,12 +52,13 @@ setMethod("heatmapCluster", signature(object="cogena"),
                 }
               #print (cluster_size)
               #reorder the mat based on the clustering and type of sample.
-              sampleLabel <- sort(object@sampleLabel)
-              mat <- mat[order(cluster_size, decreasing=FALSE), names(sampleLabel)]
+              
+              mat <- mat[order(cluster_size, decreasing=FALSE), order(object@sampleLabel)]
               #add the type of sample into the colnames
               #colnames(mat) <- paste(colnames(mat), sampleLabel, sep="_")
               
               #color setting
+              sampleLabel <- sort(object@sampleLabel)
               ColSideColors <- map2col(as.numeric(as.factor(sampleLabel)), sampleColor)
               
               if (is.null(clusterColor)) {

@@ -60,7 +60,7 @@ setMethod("heatmapPEI2", signature(object="cogena"),
                   geom_tile(aes(fill = value)) + 
                   scale_fill_gradient2("score",  mid=low, midpoint=4, low=low, high=high, na.value=na.value, breaks=breaks) +
                   geom_text(aes(fill=value, label=value),size=4, na.rm=TRUE) +
-                  labs(list(title = paste(method, nClusters,": co-expressed gene-sets enrichment analysis"), x = "Cluster", y = "Gene set")) +
+                  labs(list(title = paste("cogena:", method, nClusters), x = "Cluster", y = "Gene set")) +
                   theme(axis.text.y = element_text(size = rel(1.5), face="bold")) +
                   theme(axis.text.x = element_text(size = rel(1.3), angle=30, face="bold")) 
           })
