@@ -3,8 +3,8 @@ title: "cogena, a tool for co-expressed gene-set enrichment analysis and visuali
 author: "Zhilong Jia, Zhigang Luo and Michael Barnes"
 date: "`r Sys.Date()`"
 output:
-#    rmarkdown::html_vignette:
-     word_document:
+    rmarkdown::html_vignette:
+#     word_document:
         fig_caption: yes
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -19,7 +19,7 @@ Accordingly, this tools can be used for pathway enrichment, GO enrichment
 and so on.  
 
 ## Input data
-    Note: all the gene names should be gene SYMBOLs since the gene-set files use gene SYMBOLs.
+    Note: all the gene names should be gene SYMBOL since it is used in the gene dataset files.
     Other kind of gene names could be used according to the kind of gene names of user-defined
     gene-set files.
 
@@ -27,21 +27,19 @@ and so on.
 
 - the gene expression profiling of differentially expressed genes. It can be 
 matrix with gene in row and sample in column, data.frame or ExpressionSet object.
-- the background genes. Generally, these are genes in a microarray after filtering
-the non-informative genes. A vector.
 - the sample labels indicating the labels, like control and disease, of each 
 sample. A vector with sample name.
 
 2. Example dataset.
 
     There is an example data in `cogena` package. This dataset, from [GSE20163](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163), is about Parkinson's disease. 
-    There are four objects in the PD dataset. See `?PD` for more details.
+    There are three objects in the PD dataset. See `?PD` for more details.
 
 ```{r import_data, message=FALSE}
 library(devtools)
 load_all("~/cogena")
 data(PD)
-#   Four objects in the PD dataset.
+#   Three objects in the PD dataset.
 ```
 ```{r PD_data, echo=FALSE}
 ls()
@@ -62,7 +60,8 @@ annofile <- system.file("data", annoGMT, package="cogena")
 # the DEG gene-sets matrix
 anno <- gene2set(annofile, rownames(DEexprs))
 # the background gene gene-sets matrix
-annotationGenesPop <- gene2set(annofile, BGgenes)
+data(AllGeneSymbols)
+annotationGenesPop <- gene2set(annofile, AllGeneSymbols)
 annotationGenesPop <- annotationGenesPop[,colnames(anno)]
 ```
 
