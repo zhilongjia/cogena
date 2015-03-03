@@ -43,7 +43,7 @@ setMethod("optCluster", signature(object="cogena"),
                         }
                     }
 
-                    up_dn_score <- ifelse (up_dn_score >= as.numeric(j) * 0.75, 1, -1)
+                    up_dn_score <- ifelse (up_dn_score >= as.numeric(j) * 0.7, 1, -1)
 
                     score[i,j] <- ncol(enrichment_score) * up_dn_score
                     
