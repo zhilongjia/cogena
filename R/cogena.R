@@ -48,7 +48,7 @@
 #' "complete", and "average".
 #' @param annotation logical matrix of biological annotation with row be DEG, 
 #' column be gene sets and value be logical. 
-#' @param sampleLabel character vector with names are sample names. only used for plotting.
+#' @param sampleLabel factor vector with names are sample names. only used for plotting.
 #' @param ncore Number of core used. The default is 2.
 #' @param annotationGenesPop logical matrix of biological annotation with row be 
 #' all genes, column be gene sets and value be logical.
@@ -138,7 +138,7 @@ cogena <- function(obj, nClust, clMethods="hierarchical",
          stop("argument 'obj' must be a matrix, data.frame, or ExpressionSet object")
          )
 
-  if ("clara"%in%clMethods & metric %in% c("euclidean", "manhattan"))
+  if ("clara" %in% clMethods & !(metric %in% c("euclidean", "manhattan")))
     warning("'clara' currently only works with 'euclidean' or 'manhattan' metrics - other metrics will be changed to 'euclidean'  ")
 
   if (is.null(annotation) || is.null(annotationGenesPop)) {
@@ -197,7 +197,9 @@ cogena <- function(obj, nClust, clMethods="hierarchical",
     rownames(mat) <- 1:nrow(mat)
     warning("rownames for data not specified, using 1:nrow(data)")
   }
-
+  if (is.character(sampleLabel)){
+      sampleLabel <- as.factor(sampleLabel)
+  }
   new("cogena", mat=mat, Distmat=Distmat, clusterObjs=clusterObjs, measures=validMeasures,
       clMethods=clMethods, labels=rownames(mat), nClust=nClust, 
       metric=metric, method=method, annotation=annotation, 

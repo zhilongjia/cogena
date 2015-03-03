@@ -26,7 +26,7 @@
 #' @exportClass cogena
 
 
-
+#setClassUnion("character or factor", c("character", "factor"))
 setClass("cogena", slots= list(mat="matrix",
                           clusterObjs="list",
                           Distmat="dist",
@@ -37,7 +37,7 @@ setClass("cogena", slots= list(mat="matrix",
                           metric="character", 
                           method="character",
                           annotation="matrix", 
-                          sampleLabel="character",
+                          sampleLabel="factor",
                           ncore="numeric",
                           call="call"))
 
