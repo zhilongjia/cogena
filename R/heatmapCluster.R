@@ -8,9 +8,8 @@
 #' @param heatmapcol col for heatmap. The default is greenred(75).
 #' @param ... other parameters to heatmap.3.
 #' @export
+#' @import gplots
 #' @docType methods
-#' @usage heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"), 
-#' clusterColor = rainbow(nClusters), ...)
 #' @seealso \code{\link{cogena}}, \code{\link{heatmap.3}} and \code{\link{heatmapPEI}}
 #' @examples 
 #' #summay this cogena object

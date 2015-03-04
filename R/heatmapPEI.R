@@ -18,6 +18,7 @@
 #' \item all. ordered by all genes}
 #' 
 #' @export
+#' @import ggplot2
 #' @docType methods
 #' @rdname heatmapPEI
 #' @examples
@@ -30,7 +31,7 @@
 #'           low = "#132B43", high = "#56B1F7", na.value = "grey50")
 setGeneric("heatmapPEI", function(object, method, nClusters, CutoffNumGeneset=20,
                                   CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE,
-                                  low="green", high="red", na.value="white",...) 
+                                  low="green", high="red", na.value="white") 
     standardGeneric("heatmapPEI"))
 
 
@@ -40,7 +41,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
                    nClusters=nClusters(object), 
                    CutoffNumGeneset=20, CutoffPVal=0.05,
                    orderMethod="max", roundvalue=TRUE,
-                   low="grey", high="red", na.value="white",...) {
+                   low="grey", high="red", na.value="white") {
               method <- match.arg(method, clusterMethods(object))
               nClusters <- match.arg(nClusters, as.character(nClusters(object)))
               
@@ -55,7 +56,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
               } else {
                   breaks <- NULL
               }
-              ggplot(enrichment, aes(as.factor(Var1), Var2) ,...) + 
+              ggplot(enrichment, aes(as.factor(Var1), Var2)) + 
                   geom_tile(aes(fill = value)) + 
                   scale_fill_gradient2("score",  mid=low, midpoint=4, low=low, high=high, na.value=na.value, breaks=c(4.32, breaks)) +
                   geom_text(aes(fill=value, label=value),size=4, na.rm=TRUE) +

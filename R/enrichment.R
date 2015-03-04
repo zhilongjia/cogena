@@ -23,7 +23,8 @@
 #' @examples
 #' data(PD)
 #' enrichment.table1 <- enrichment(cogena_result, "kmeans", "3")
-#' enrichment.table2 <- enrichment(cogena_result, "kmeans", "3", CutoffNumGeneset=10, orderMethod="mean")
+#' enrichment.table2 <- enrichment(cogena_result, "kmeans", "3", 
+#' CutoffNumGeneset=10, orderMethod="mean")
 setGeneric("enrichment", function(object, method, nClusters, CutoffNumGeneset=Inf, 
                                   CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE) standardGeneric("enrichment"))
 

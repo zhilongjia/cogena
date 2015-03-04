@@ -29,13 +29,14 @@ or genes in a cluster. the gene names should be consistent with the genes in the
 }
 \examples{
 annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
-annofile <- system.file("data", annoGMT, package="cogena")
+annofile <- system.file("extdata", annoGMT, package="cogena")
 # the DEG gene-sets matrix
 anno <- gene2set(annofile, rownames(DEexprs))
 # the background gene gene-sets matrix
-annotationGenesPop <- gene2set(annofile, BGgenes)
+data(AllGeneSymbols)
+annotationGenesPop <- gene2set(annofile, AllGeneSymbols)
 annotationGenesPop <- annotationGenesPop[,colnames(anno)]
-
-PEI(rownames(DEexprs), anno, annotationGenesPop)
+# hypergeometric test
+res <- PEI(rownames(DEexprs), anno, annotationGenesPop)
 }
 

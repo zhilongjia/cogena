@@ -9,7 +9,9 @@
 #' @rdname optCluster
 #' @examples
 #' summary(cogena_result)
+#' \dontrun{
 #' score <- optCluster(cogena_result)
+#' }
 #' 
 setGeneric("optCluster", function(object) standardGeneric("optCluster"))
 

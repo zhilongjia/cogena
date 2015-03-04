@@ -6,7 +6,7 @@
 \title{heatmap of gene expression profilings with cluster indication.}
 \usage{
 heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"),
-clusterColor = rainbow(nClusters), ...)
+  clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL, ...)
 }
 \arguments{
 \item{object}{a cogena object}

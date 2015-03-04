@@ -35,7 +35,7 @@ method used. The default is "complete". Available choices are "ward", "single",
 \item{annotation}{logical matrix of biological annotation with row be DEG,
 column be gene sets and value be logical.}
 
-\item{sampleLabel}{character vector with names are sample names. only used for plotting.}
+\item{sampleLabel}{factor vector with names are sample names. only used for plotting.}
 
 \item{ncore}{Number of core used. The default is 2.}
 
@@ -80,15 +80,16 @@ Available distance measures are (written for two vectors x and y):
 }
 }
 \examples{
-data("PD")
+data(PD)
 
 #annotaion
 annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
-annofile <- system.file("data", annoGMT, package="cogena")
+annofile <- system.file("extdata", annoGMT, package="cogena")
 # the DEG gene-sets matrix
 anno <- gene2set(annofile, rownames(DEexprs))
 # the background gene gene-sets matrix
-annotationGenesPop <- gene2set(annofile, BGgenes)
+data(AllGeneSymbols)
+annotationGenesPop <- gene2set(annofile, AllGeneSymbols)
 annotationGenesPop <- annotationGenesPop[,colnames(anno)]
 
 #cogena parameters
@@ -104,6 +105,7 @@ metric <- "correlation"
 method <- "complete"
 
 # the cogena analysis
+head(annotationGenesPop)
 cogena_result <- cogena(DEexprs, nClust=nClust, clMethods=clMethods, metric=metric,
                       method=method,  annotation=anno, sampleLabel=sampleLabel,
                       ncore=ncore, annotationGenesPop=annotationGenesPop, verbose=TRUE)

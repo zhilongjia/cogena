@@ -16,6 +16,8 @@ of gene sets which are signifigant should be maximum.
 }
 \examples{
 summary(cogena_result)
+\dontrun{
 score <- optCluster(cogena_result)
+}
 }
 

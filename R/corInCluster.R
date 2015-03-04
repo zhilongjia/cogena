@@ -8,15 +8,16 @@
 #' @param corMethod a character string indicating which correlation coefficient 
 #' (or covariance) is to be computed. One of "pearson" (default), "kendall", or 
 #' "spearman", can be abbreviated.
-#' @param plotMethod Character, the visualization method of correlation matrix 
+#' @param plotMethod the visualization method of correlation matrix 
 #' to be used. Currently, it supports seven methods, named "circle" (default), 
 #' "square", "ellipse", "number", "pie", "shade" and "color". See examples in 
 #' \code{\link[corrplot]{corrplot}} for details
-#' @param type Character, "full" (default), "upper" or "lower", display full 
+#' @param type "full" (default), "upper" or "lower", display full 
 #' matrix, lower triangular or upper triangular matrix. See examples in 
 #' \code{\link[corrplot]{corrplot}} for details
 #' @param ... other parameters to \code{\link[corrplot]{corrplot}} function.
 #' @rdname corInCluster
+#' @importFrom corrplot corrplot
 #' @seealso \code{\link{cogena}} \code{\link[corrplot]{corrplot}}
 #' @export
 #' @examples
@@ -24,7 +25,9 @@
 #' corInCluster(cogena_result, "kmeans", "8", "8")
 #' corInCluster(cogena_result, "kmeans", "8", "8", plotMethod="square")
 
-setGeneric("corInCluster", function(object, method, nClusters, ith, corMethod="pearson", ...) standardGeneric("corInCluster"))
+setGeneric("corInCluster", function(object, method, nClusters, ith, 
+                                    corMethod="pearson", plotMethod = "circle", 
+                                    type = "upper", ...) standardGeneric("corInCluster"))
 
 #' @aliases corInCluster,cogena_methods
 setMethod("corInCluster", signature(object="cogena"), 
@@ -37,6 +40,6 @@ setMethod("corInCluster", signature(object="cogena"),
               geneExp <- geneExpInCluster(object, method, nClusters)$clusterGeneExp
               geneExpCluster <- geneExp[geneExp[,"cluster_id"] == ith,-1]
               M <- cor(t(geneExpCluster), method=corMethod)
-              corrplot::corrplot(M, method = plotMethod, type = type, ...)
+              corrplot(M, method = plotMethod, type = type, ...)
     
 })

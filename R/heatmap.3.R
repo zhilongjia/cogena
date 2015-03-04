@@ -3,6 +3,8 @@
 #' 
 #' The code is from \url{https://github.com/obigriffith/biostar-tutorials/tree/master/Heatmaps}
 #' @author Obi Griffith
+#' @inheritParams gplots::heatmap.2
+#' 
 heatmap.3 <- function(x,
                       Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE,
                       distfun = dist,

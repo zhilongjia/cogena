@@ -4,7 +4,6 @@
 #' helpful if user want to analyse the data for other application.
 #'
 #' @inheritParams enrichment
-#' @param ith the ith cluster.
 #' @return a list containing a matrix of cluster_id with expression profiling and
 #' label a vector of the sample labels.
 #' @rdname geneExpInCluster

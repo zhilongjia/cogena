@@ -17,7 +17,7 @@ clusters(object, method)
 
 mat(object)
 
-\S4method{summary}{cogena}(object, digits = max(3, getOption("digits") - 3))
+\S4method{summary}{cogena}(object)
 }
 \arguments{
 \item{object}{a cogena object}

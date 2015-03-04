@@ -56,15 +56,16 @@
 #' @param ... to function vClusters.
 #' @return a cogena object
 #' @examples
-#' data("PD")
+#' data(PD)
 #' 
 #' #annotaion
 #' annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
-#' annofile <- system.file("data", annoGMT, package="cogena")
+#' annofile <- system.file("extdata", annoGMT, package="cogena")
 #' # the DEG gene-sets matrix
 #' anno <- gene2set(annofile, rownames(DEexprs))
 #' # the background gene gene-sets matrix
-#' annotationGenesPop <- gene2set(annofile, BGgenes)
+#' data(AllGeneSymbols)
+#' annotationGenesPop <- gene2set(annofile, AllGeneSymbols)
 #' annotationGenesPop <- annotationGenesPop[,colnames(anno)]
 #' 
 #' #cogena parameters
@@ -80,6 +81,7 @@
 #' method <- "complete"
 #' 
 #' # the cogena analysis
+#' head(annotationGenesPop)
 #' cogena_result <- cogena(DEexprs, nClust=nClust, clMethods=clMethods, metric=metric,
 #'                       method=method,  annotation=anno, sampleLabel=sampleLabel, 
 #'                       ncore=ncore, annotationGenesPop=annotationGenesPop, verbose=TRUE)
@@ -160,7 +162,7 @@ cogena <- function(obj, nClust, clMethods="hierarchical",
     #Dist caculation
     if (verbose) {print("Dist caculation")}
     if (metric == "biwt") {
-        Distmat <- as.dist(biwt.cor(mat, output="distance"))
+        Distmat <- as.dist(biwt::biwt.cor(mat, output="distance"))
     } else if (metric == "NMI") {
         #NMI from infotheo package
         nmi <- infotheo::NMI(infotheo::discretize(t(mat)), method= "emp")
@@ -205,7 +207,3 @@ cogena <- function(obj, nClust, clMethods="hierarchical",
       metric=metric, method=method, annotation=annotation, 
       sampleLabel=sampleLabel, ncore=ncore, call=match.call())
 }
-
-
-
-

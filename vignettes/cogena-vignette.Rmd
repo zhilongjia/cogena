@@ -1,6 +1,6 @@
 ---
 title: "cogena, a tool for co-expressed gene-set enrichment analysis and visualization"
-author: "Zhilong Jia, Zhigang Luo and Michael Barnes"
+author: "Zhilong Jia, Michael Barnes"
 date: "`r Sys.Date()`"
 output:
     rmarkdown::html_vignette:
@@ -28,7 +28,9 @@ and so on.
 - the gene expression profiling of differentially expressed genes. It can be 
 matrix with gene in row and sample in column, data.frame or ExpressionSet object.
 - the sample labels indicating the labels, like control and disease, of each 
-sample. A vector with sample name.
+sample. A vector with sample names.
+- the background genes. Generally, all the protein-coding genes are used or 
+user-defined genes list vector. User can used `AllGeneSymbols` from `data(AllGeneSymbols)`.
 
 2. Example dataset.
 
@@ -38,8 +40,9 @@ sample. A vector with sample name.
 ```{r import_data, message=FALSE}
 library(devtools)
 load_all("~/cogena")
+data(AllGeneSymbols)
 data(PD)
-#   Three objects in the PD dataset.
+# Three objects in the PD dataset and one in AllGeneSymbols dataset.
 ```
 ```{r PD_data, echo=FALSE}
 ls()
@@ -56,7 +59,7 @@ ls()
     
 ```{r gene_list_annotation}
 annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
-annofile <- system.file("data", annoGMT, package="cogena")
+annofile <- system.file("extdata", annoGMT, package="cogena")
 # the DEG gene-sets matrix
 anno <- gene2set(annofile, rownames(DEexprs))
 # the background gene gene-sets matrix
@@ -74,7 +77,7 @@ annotationGenesPop <- annotationGenesPop[,colnames(anno)]
 nClust <- 2:8
 # the number of cores. As leveraging the `doMC` package, cogena can be used in
 # unix-like system only.
-ncore <- 5
+ncore <- 1
 # the clustering methods
 clMethods <- c("hierarchical","kmeans", "som")
 # the distance metric

@@ -8,6 +8,7 @@
 #' @slot Distmat the distance matrix.
 #' @slot measures a list of the enrichment results.
 #' @slot clMethods clustering method.
+#' @slot labels the label of genes
 #' @slot nClust A numeric vector giving the numbers of clusters to be 
 #' evaluated. e.g., 2:6 would evaluate the number of clusters ranging from 2 to 6.
 #' @slot metric the distance measure to be used. This must be one of "euclidean",
@@ -22,6 +23,8 @@
 #' @slot annotation logical matrix of biological annotation with row be DE gene, 
 #' column be gene sets and value be logical. 
 #' @slot sampleLabel character vector with names are sample names. only used for plotting.
+#' @slot ncore the number of cores used.
+#' @slot call the called function
 #' @rdname cogena_class
 #' @exportClass cogena
 

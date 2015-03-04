@@ -4,11 +4,11 @@
 \alias{gmt2list}
 \title{read gmt file as a list}
 \usage{
-gmt2list(anno)
+gmt2list(annofile)
 }
 \arguments{
-\item{anno}{a gmt file. Examples are from MSigDB Collections.
-A list of gene set could be find in the vignette of clena.}
+\item{annofile}{a gmt file. Examples are from MSigDB Collections.
+A list of gene set could be find in the vignette of cogena}
 }
 \description{
 read Gene Matrix Transposed (gmt) file and output a list with the the first column as
@@ -17,7 +17,7 @@ for more details.
 }
 \examples{
 anno <- "c2.cp.kegg.v4.0.symbols.gmt"
-anno <- system.file("data", anno, package="clena")
-gmt2list(anno)
+annofile <- system.file("extdata", anno, package="cogena")
+gmt2list(annofile)
 }
 

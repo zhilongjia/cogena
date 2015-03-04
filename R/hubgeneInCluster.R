@@ -17,7 +17,7 @@
 #' hubgeneInCluster(cogena_result, "kmeans", "3", "2")
 #' 
 #' @export
-setGeneric("hubgeneInCluster", function(object, method, nClusters, ith, ...) standardGeneric("hubgeneInCluster"))
+setGeneric("hubgeneInCluster", function(object, method, nClusters, ith) standardGeneric("hubgeneInCluster"))
 
 
 #' @exportMethod hubgeneInCluster

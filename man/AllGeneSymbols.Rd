@@ -4,21 +4,17 @@
 \name{AllGeneSymbols}
 \alias{AllGeneSymbols}
 \title{All GENE SYMBOLS}
+\format{the background gene symbols
+There are one object.
+\describe{
+ \item{AllGeneSymbols}{a vector of gene symbols.}
+}}
 \source{
 \url{http://www.genenames.org/cgi-bin/statistics}
-}
-\usage{
-data(AllGeneSymbols)
 }
 \description{
 This is all the gene symbols of protein-coding genes. There are 18986 genes
 totally, which are used as the backgound genes usually.
-}
-\details{
-There are one object.
-\itemize{
- \item AllGeneSymbols a vector of gene symbols.
-}
 }
 \keyword{datasets}
 

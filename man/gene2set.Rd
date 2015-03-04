@@ -5,22 +5,24 @@
 \alias{gene2set}
 \title{generate relationship between genes and gene-sets}
 \usage{
-gene2set(anno, genenames, TermFreq = 0)
+gene2set(annofile = NULL, genenames, TermFreq = 0)
 
 annotationListToMatrix(annotation, genenames)
 }
 \arguments{
-\item{anno}{a gmt file. Examples are from MSigDB Collections.
-A list of gene set could be find in the vignette of clena.}
+\item{annofile}{a gmt file. Examples are from MSigDB Collections.
+A list of gene set could be find in the vignette of cogena}
 
 \item{genenames}{a SYMBOL gene names charactic vector.}
 
 \item{TermFreq}{a threshold for the Term Frequence. Default is zero.}
+
+\item{annotation}{a value returned by \code{\link{gmt2list}}.}
 }
 \description{
 Generate relationship between genes (gene SYMBOL) and gene-sets, such as Pathway or GO.
 }
 \examples{
-please ?cogena
+#please ?cogena
 }
 

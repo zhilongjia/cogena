@@ -4,7 +4,12 @@
 #'
 #' Paralleled clustering with different clustering methods and different number
 #' of clusters. These functions should not be called directly by the user. 
-
+#' @import amap
+#' @import cluster
+#' @import fastcluster
+#' @import foreach
+#' @import doMC
+#' 
 vClusters <- function(mat, Distmat, clMethod, nClust, method, 
                       metric, annotation, ncore, annotationGenesPop, 
                       verbose, ...) {
@@ -35,11 +40,11 @@ vClusters <- function(mat, Distmat, clMethod, nClust, method,
              names(clusterObj) <- nClust })
 
     # parallel the Clustering with the number of Cluster is nc
-    library(doMC)
-    registerDoMC(ncore)
-    if (verbose) {print(paste("getDoParWorkers:", getDoParWorkers()))}
+    
+    doMC::registerDoMC(ncore)
+    if (verbose) {print(paste("getDoParWorkers:", foreach::getDoParWorkers()))}
 
-    clusterList <- foreach (nc = nClust) %dopar% {
+    clusterList <- foreach::foreach (nc = nClust) %dopar% {
         if (verbose) {print (paste(clMethod, "Starting nClust:", nc))}
         switch(clMethod,
            kmeans = {

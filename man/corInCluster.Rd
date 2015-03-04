@@ -4,7 +4,8 @@
 \alias{corInCluster}
 \title{Correlation in the cluster of a cogena object}
 \usage{
-corInCluster(object, method, nClusters, ith, corMethod = "pearson", ...)
+corInCluster(object, method, nClusters, ith, corMethod = "pearson",
+  plotMethod = "circle", type = "upper", ...)
 }
 \arguments{
 \item{object}{a cogena object}
@@ -19,16 +20,16 @@ corInCluster(object, method, nClusters, ith, corMethod = "pearson", ...)
 (or covariance) is to be computed. One of "pearson" (default), "kendall", or
 "spearman", can be abbreviated.}
 
-\item{...}{other parameters to \code{\link[corrplot]{corrplot}} function.}
-
-\item{plotMethod}{Character, the visualization method of correlation matrix
+\item{plotMethod}{the visualization method of correlation matrix
 to be used. Currently, it supports seven methods, named "circle" (default),
 "square", "ellipse", "number", "pie", "shade" and "color". See examples in
 \code{\link[corrplot]{corrplot}} for details}
 
-\item{type}{Character, "full" (default), "upper" or "lower", display full
+\item{type}{"full" (default), "upper" or "lower", display full
 matrix, lower triangular or upper triangular matrix. See examples in
 \code{\link[corrplot]{corrplot}} for details}
+
+\item{...}{other parameters to \code{\link[corrplot]{corrplot}} function.}
 }
 \description{
 Correlation in the cluster of a cogena object. This is helpful if the number

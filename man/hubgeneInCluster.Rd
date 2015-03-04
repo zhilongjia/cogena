@@ -5,7 +5,7 @@
 \alias{hubgeneInCluster}
 \title{Show hub gene names in certain cluster.}
 \usage{
-hubgeneInCluster(object, method, nClusters, ith, ...)
+hubgeneInCluster(object, method, nClusters, ith)
 }
 \arguments{
 \item{object}{a cogena object}

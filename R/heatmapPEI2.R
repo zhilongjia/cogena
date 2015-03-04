@@ -5,7 +5,8 @@
 #' heatmapPEI2 will show it as a heatmap.
 #' 
 #' @inheritParams heatmapPEI
-#' @param which cluster should be based to filter, value like "2#68".
+#' @param enrichment_score a returned value from \code{\link{enrichment}} function
+#' @param whichCluster which cluster should be based to filter.
 #' 
 #' @details
 #' This function aims to heatmap the enrichment_score directly. This is helpful
@@ -17,11 +18,12 @@
 #' enrichment.table <- enrichment(cogena_result, "kmeans", "3")
 #' heatmapPEI2(cogena_result, enrichment.table, "kmeans", "3", "1")
 #' @export heatmapPEI2
+#' @import ggplot2
 #' @docType methods
 #' @rdname heatmapPEI2
 setGeneric("heatmapPEI2", function(object, enrichment_score, method, nClusters, 
                                    whichCluster, CutoffNumGeneset=60, low="grey",
-                                   high="red", na.value="white",...) 
+                                   high="red", na.value="white") 
     standardGeneric("heatmapPEI2"))
 
 
@@ -31,7 +33,7 @@ setMethod("heatmapPEI2", signature(object="cogena"),
                    CutoffNumGeneset=60, 
                    #CutoffPVal=0.05,
                    #orderMethod="max", roundvalue=TRUE,
-                   low="grey", high="red", na.value="white",...) {
+                   low="grey", high="red", na.value="white") {
               
               method <- match.arg(method, clusterMethods(object))
               nClusters <- match.arg(nClusters, as.character(nClusters(object)))
@@ -56,7 +58,7 @@ setMethod("heatmapPEI2", signature(object="cogena"),
                   breaks <- NULL
                   
               }
-              ggplot(enrichment_score, aes(as.factor(Var1), Var2),...) + 
+              ggplot(enrichment_score, aes(as.factor(Var1), Var2)) + 
                   geom_tile(aes(fill = value)) + 
                   scale_fill_gradient2("score",  mid=low, midpoint=4, low=low, high=high, na.value=na.value, breaks=breaks) +
                   geom_text(aes(fill=value, label=value),size=4, na.rm=TRUE) +

@@ -5,20 +5,20 @@
 #' @inheritParams gmt2list
 #' @param genenames a SYMBOL gene names charactic vector.
 #' @param TermFreq a threshold for the Term Frequence. Default is zero.
+#' @param annotation a value returned by \code{\link{gmt2list}}.
 #' 
 #' @examples
-#' please ?cogena
+#' #please ?cogena
 #' @export
 #' @rdname gene2set
-gene2set <- function(anno, genenames, TermFreq=0) {
-    if (is.null(anno)) {
-        anno <- "c2.cp.v4.0.symbols.gmt"
-        annofile <- system.file("data", annoGMT, package="cogena")
+gene2set <- function(annofile=NULL, genenames, TermFreq=0) {
+    if (is.null(annofile)) {
+        annofile <- system.file("extdata", "c2.cp.v4.0.symbols.gmt", package="cogena")
     }
 
-    annoList <- gmt2list(anno)
+    annoList <- gmt2list(annofile)
     annoMatrix <- annotationListToMatrix(annoList, genenames)
-    anno = subset(annoMatrix, select=names(which( colSums(annoMatrix)/sapply(anno, length)>=TermFreq )))
+    anno = subset(annoMatrix, select=names(which( colSums(annoMatrix)/ncol(annoMatrix)>=TermFreq )))
 }
 
 

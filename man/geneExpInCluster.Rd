@@ -12,8 +12,6 @@ geneExpInCluster(object, method, nClusters)
 \item{method}{as clMethods in cogena function}
 
 \item{nClusters}{as nClust in cogena function.}
-
-\item{ith}{the ith cluster.}
 }
 \value{
 a list containing a matrix of cluster_id with expression profiling and

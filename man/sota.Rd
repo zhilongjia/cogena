@@ -97,7 +97,7 @@ Please note the 'euclidean' is the default distance metric different from
 \code{\link[clValid]{sota}}
 }
 \examples{
-please ref the manual of clValid::sota.
+#please ref the manual of clValid::sota.
 }
 \author{
 Vasyl Pihur, Guy Brock, Susmita Datta, Somnath Datta

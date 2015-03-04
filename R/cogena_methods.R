@@ -78,7 +78,7 @@ setMethod("mat",signature(object="cogena"),
 #' @rdname cogena_methods
 #' @exportMethod summary
 setMethod("summary","cogena",
-          function(object, digits = max(3,getOption("digits")-3)) {
+          function(object) {
               cat("\nClustering Methods:\n",clusterMethods(object),"\n\n")
               cat("The Number of Clusters:\n",nClusters(object),"\n\n")
               cat("Metric of Distance Matrix:\n", object@metric, "\n\n")

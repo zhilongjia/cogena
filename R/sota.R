@@ -65,7 +65,7 @@
 #' unsupervised growing neural network for clustering gene expression patterns. 
 #' Bioinformatics, 17, 126-136.
 #' @examples 
-#' please ref the manual of clValid::sota.
+#' #please ref the manual of clValid::sota.
 #' @keywords cluster
 #' @export
 #' @rdname sota

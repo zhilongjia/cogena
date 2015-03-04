@@ -39,6 +39,7 @@ orderMethod:
 \examples{
 data(PD)
 enrichment.table1 <- enrichment(cogena_result, "kmeans", "3")
-enrichment.table2 <- enrichment(cogena_result, "kmeans", "3", CutoffNumGeneset=10, orderMethod="mean")
+enrichment.table2 <- enrichment(cogena_result, "kmeans", "3",
+CutoffNumGeneset=10, orderMethod="mean")
 }
 

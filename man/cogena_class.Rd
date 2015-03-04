@@ -23,6 +23,8 @@ clustered (e.g., genes), and the columns are the samples.}
 
 \item{\code{clMethods}}{clustering method.}
 
+\item{\code{labels}}{the label of genes}
+
 \item{\code{nClust}}{A numeric vector giving the numbers of clusters to be
 evaluated. e.g., 2:6 would evaluate the number of clusters ranging from 2 to 6.}
 
@@ -41,5 +43,9 @@ method used. The default is "complete". Available choices are "ward", "single",
 column be gene sets and value be logical.}
 
 \item{\code{sampleLabel}}{character vector with names are sample names. only used for plotting.}
+
+\item{\code{ncore}}{the number of cores used.}
+
+\item{\code{call}}{the called function}
 }}
 

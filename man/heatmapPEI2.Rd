@@ -6,15 +6,18 @@
 \title{heatmap of the gene set enrichment_score matrix directly}
 \usage{
 heatmapPEI2(object, enrichment_score, method, nClusters, whichCluster,
-  CutoffNumGeneset = 60, low = "grey", high = "red", na.value = "white",
-  ...)
+  CutoffNumGeneset = 60, low = "grey", high = "red", na.value = "white")
 }
 \arguments{
 \item{object}{a cogena object}
 
+\item{enrichment_score}{a returned value from \code{\link{enrichment}} function}
+
 \item{method}{as clMethods in cogena function}
 
 \item{nClusters}{as nClust in cogena function.}
+
+\item{whichCluster}{which cluster should be based to filter.}
 
 \item{CutoffNumGeneset}{the cut-off of the number of gene sets in the return table}
 
@@ -23,8 +26,6 @@ heatmapPEI2(object, enrichment_score, method, nClusters, whichCluster,
 \item{high}{colour for high end of gradient.}
 
 \item{na.value}{Colour to use for missing values.}
-
-\item{which}{cluster should be based to filter, value like "2#68".}
 }
 \description{
 heatmap of the gene set enrichment_score matrix directly. After obtaining the
