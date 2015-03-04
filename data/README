@@ -1,3 +1,0 @@
-#Thu 23 Oct 11:51:49 BST 2014
-#Get the chemical perturbations ONLY.
-grep "TARGETS" c2.cgp.v4.0.symbols.gmt > c2.chemp.v4.0.symbols.gmt
