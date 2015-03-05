@@ -9,6 +9,7 @@
 #' @param ... other parameters to heatmap.3.
 #' @export
 #' @import gplots
+#' @rdname heatmapCluster
 #' @docType methods
 #' @seealso \code{\link{cogena}}, \code{\link{heatmap.3}} and \code{\link{heatmapPEI}}
 #' @examples 
@@ -24,7 +25,7 @@ setGeneric("heatmapCluster",
                     clusterColor=NULL, clusterColor2=NULL, heatmapcol=NULL,
                     ...) standardGeneric("heatmapCluster"))
 
-
+#' @rdname heatmapCluster
 #' @aliases heatmapCluster
 setMethod("heatmapCluster", signature(object="cogena"),
           function (object, method=clusterMethods(object), nClusters=nClusters(object),

@@ -29,6 +29,7 @@ setGeneric("corInCluster", function(object, method, nClusters, ith,
                                     corMethod="pearson", plotMethod = "circle", 
                                     type = "upper", ...) standardGeneric("corInCluster"))
 
+#' @rdname corInCluster
 #' @aliases corInCluster,cogena_methods
 setMethod("corInCluster", signature(object="cogena"), 
           function (object, method=clusterMethods(object), 

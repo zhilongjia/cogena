@@ -3,9 +3,14 @@
 \docType{methods}
 \name{heatmapCluster}
 \alias{heatmapCluster}
+\alias{heatmapCluster,cogena-method}
 \title{heatmap of gene expression profilings with cluster indication.}
 \usage{
 heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"),
+  clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL, ...)
+
+\S4method{heatmapCluster}{cogena}(object, method = clusterMethods(object),
+  nClusters = nClusters(object), sampleColor = c("darkblue", "cyan"),
   clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL, ...)
 }
 \arguments{

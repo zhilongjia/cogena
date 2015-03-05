@@ -3,9 +3,13 @@
 \docType{methods}
 \name{optCluster}
 \alias{optCluster}
+\alias{optCluster,cogena}
+\alias{optCluster,cogena-method}
 \title{get the best clustering methods and the number of clusters}
 \usage{
 optCluster(object)
+
+\S4method{optCluster}{cogena}(object)
 }
 \arguments{
 \item{object}{a cogena object}

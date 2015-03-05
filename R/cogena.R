@@ -122,7 +122,7 @@ cogena <- function(obj, nClust, clMethods="hierarchical",
   
   if ("biwt" %in% metric){
       if(!require(biwt)) {
-          stop("package 'biwt' required for weighted correlation based on Tukey’s biweight")
+          stop("package 'biwt' required for weighted correlation based on Tukey's biweight")
       }
   }
   

@@ -15,7 +15,7 @@
 #' 
 setGeneric("optCluster", function(object) standardGeneric("optCluster"))
 
-
+#' @rdname optCluster
 #' @aliases optCluster,cogena
 setMethod("optCluster", signature(object="cogena"),
     function(object){

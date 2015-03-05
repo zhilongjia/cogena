@@ -3,11 +3,18 @@
 \docType{methods}
 \name{heatmapPEI}
 \alias{heatmapPEI}
+\alias{heatmapPEI,cogena}
+\alias{heatmapPEI,cogena-method}
 \title{heatmap of the gene set enrichment from a cogena object.}
 \usage{
 heatmapPEI(object, method, nClusters, CutoffNumGeneset = 20,
   CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE,
   low = "green", high = "red", na.value = "white")
+
+\S4method{heatmapPEI}{cogena}(object, method = clusterMethods(object),
+  nClusters = nClusters(object), CutoffNumGeneset = 20, CutoffPVal = 0.05,
+  orderMethod = "max", roundvalue = TRUE, low = "grey", high = "red",
+  na.value = "white")
 }
 \arguments{
 \item{object}{a cogena object}

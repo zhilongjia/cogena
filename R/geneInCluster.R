@@ -19,7 +19,7 @@
 #' }
 setGeneric("geneInCluster", function(object, method, nClusters, ith) standardGeneric("geneInCluster"))
 
-
+#' @rdname geneInCluster
 #' @aliases geneInCluster,cogena_methods
 setMethod("geneInCluster", signature(object="cogena"),
           function (object, method=clusterMethods(object), nClusters=nClusters(object), ith){

@@ -3,9 +3,13 @@
 \docType{methods}
 \name{hubgeneInCluster}
 \alias{hubgeneInCluster}
+\alias{hubgeneInCluster,cogena-method}
 \title{Show hub gene names in certain cluster.}
 \usage{
 hubgeneInCluster(object, method, nClusters, ith)
+
+\S4method{hubgeneInCluster}{cogena}(object, method = clusterMethods(object),
+  nClusters = nClusters(object), ith)
 }
 \arguments{
 \item{object}{a cogena object}

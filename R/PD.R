@@ -18,3 +18,32 @@
 #' @aliases PD,DEexprs,sampleLabel,cogena_result
 #' @source \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163}
 NULL
+
+#' gene expression of DEG
+#' 
+#' @format matrix with 1243 DEGs (row) and 17 samples (column).
+#' @docType data
+#' @keywords datasets
+#' @name DEexprs
+#' @source \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163}
+NULL
+
+#' label of samples
+#' 
+#' @format a vector with 17 element.
+#' @docType data
+#' @keywords datasets
+#' @name sampleLabel
+#' @source \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163}
+NULL
+
+#' am example result of cogena
+#' 
+#' @format a cogena object.
+#' @docType data
+#' @keywords datasets
+#' @name cogena_result
+#' @source \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163}
+NULL
+
+

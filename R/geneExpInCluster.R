@@ -18,7 +18,7 @@
 #' 
 setGeneric("geneExpInCluster", function(object, method, nClusters) standardGeneric("geneExpInCluster"))
 
-
+#' @rdname geneExpInCluster
 #' @aliases geneExpInCluster,cogena_methods
 setMethod("geneExpInCluster", signature(object="cogena"),
           function (object, method=clusterMethods(object), nClusters=nClusters(object)){

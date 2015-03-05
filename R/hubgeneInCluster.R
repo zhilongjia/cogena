@@ -19,7 +19,7 @@
 #' @export
 setGeneric("hubgeneInCluster", function(object, method, nClusters, ith) standardGeneric("hubgeneInCluster"))
 
-
+#' @rdname hubgeneInCluster
 #' @exportMethod hubgeneInCluster
 #' @aliases hubgeneInCluster
 setMethod("hubgeneInCluster", signature(object="cogena"),

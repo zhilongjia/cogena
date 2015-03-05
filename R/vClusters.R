@@ -9,6 +9,7 @@
 #' @import fastcluster
 #' @import foreach
 #' @import doMC
+#' @keywords internal
 #' 
 vClusters <- function(mat, Distmat, clMethod, nClust, method, 
                       metric, annotation, ncore, annotationGenesPop, 
@@ -20,7 +21,7 @@ vClusters <- function(mat, Distmat, clMethod, nClust, method,
     #cluster init
     switch(clMethod,
            hierarchical = {
-               clusterObj <- hclust(Distmat,method)
+               clusterObj <- fastcluster::hclust(Distmat,method)
            },
            diana = {
                #            clusterObj <- diana(Distmat)
@@ -29,7 +30,7 @@ vClusters <- function(mat, Distmat, clMethod, nClust, method,
            kmeans = {
                clusterObj <- vector("list",length=length(nClust))
                names(clusterObj) <- nClust
-               clusterObjInit <- hclust(Distmat, method)
+               clusterObjInit <- fastcluster::hclust(Distmat, method)
            },
            agnes = {
                #            clusterObj <- agnes(Distmat, method=method)
@@ -43,7 +44,7 @@ vClusters <- function(mat, Distmat, clMethod, nClust, method,
     
     doMC::registerDoMC(ncore)
     if (verbose) {print(paste("getDoParWorkers:", foreach::getDoParWorkers()))}
-
+    nc=NULL
     clusterList <- foreach::foreach (nc = nClust) %dopar% {
         if (verbose) {print (paste(clMethod, "Starting nClust:", nc))}
         switch(clMethod,
@@ -68,13 +69,13 @@ vClusters <- function(mat, Distmat, clMethod, nClust, method,
            },
            model = {
                #              clusterObj <- Mclust(mat,nc)
-               clusterObj <- Mclust(mat,nc, ...)
+               clusterObj <- mclust::Mclust(mat,nc, ...)
                clusterObj$cluster <- clusterObj$classification
                cluster <- clusterObj$cluster
            },
            som = {
                #              clusterObj <- som(mat, grid=somgrid(1,nc))
-               clusterObj <- som(mat, grid=somgrid(1,nc), ...)
+               clusterObj <- kohonen::som(mat, grid=somgrid(1,nc), ...)
                clusterObj$cluster <- clusterObj$unit.classif
                names(clusterObj$cluster) <- rownames(mat)
                cluster <- clusterObj$cluster

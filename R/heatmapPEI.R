@@ -34,7 +34,7 @@ setGeneric("heatmapPEI", function(object, method, nClusters, CutoffNumGeneset=20
                                   low="green", high="red", na.value="white") 
     standardGeneric("heatmapPEI"))
 
-
+#' @rdname heatmapPEI
 #' @aliases heatmapPEI,cogena
 setMethod("heatmapPEI", signature(object="cogena"),
           function(object, method=clusterMethods(object), 
@@ -56,6 +56,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
               } else {
                   breaks <- NULL
               }
+              Var1=Var2=value=NULL
               ggplot(enrichment, aes(as.factor(Var1), Var2)) + 
                   geom_tile(aes(fill = value)) + 
                   scale_fill_gradient2("score",  mid=low, midpoint=4, low=low, high=high, na.value=na.value, breaks=c(4.32, breaks)) +

@@ -27,6 +27,7 @@
 #' @slot call the called function
 #' @rdname cogena_class
 #' @exportClass cogena
+#' @import class
 
 
 #setClassUnion("character or factor", c("character", "factor"))

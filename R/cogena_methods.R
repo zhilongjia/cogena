@@ -2,7 +2,8 @@
 #' 
 #' clusterMethods: get the methods of clustering used.
 #' @param object a cogena object
-#' @export clusterMethods
+#' @exportMethod clusterMethods
+#' @import methods
 #' @docType methods
 #' @rdname cogena_methods
 #' @return clusterMethods: a character vector.
@@ -12,7 +13,7 @@
 #' 
 setGeneric("clusterMethods", function(object) standardGeneric("clusterMethods"))
 
-
+#' @rdname cogena_methods
 #' @aliases clusterMethods,cogena_methods
 setMethod("clusterMethods",signature(object="cogena"),
           function(object) return(object@clMethods))
@@ -28,7 +29,7 @@ setMethod("clusterMethods",signature(object="cogena"),
 #' @rdname cogena_methods
 setGeneric("nClusters", function(object) standardGeneric("nClusters"))
 
-
+#' @rdname cogena_methods
 #' @aliases nClusters,cogena_methods
 setMethod("nClusters",signature(object="cogena"),
           function(object) return(object@nClust))
@@ -47,7 +48,7 @@ setMethod("nClusters",signature(object="cogena"),
 #' @rdname cogena_methods
 setGeneric("clusters", function(object, method) standardGeneric("clusters"))
 
-
+#' @rdname cogena_methods
 #' @aliases clusters,cogena_methods
 setMethod("clusters",signature(object="cogena"),
           function(object, method=clusterMethods(object)) {
@@ -65,7 +66,7 @@ setMethod("clusters",signature(object="cogena"),
 #' @rdname cogena_methods
 setGeneric("mat", function(object) standardGeneric("mat"))
 
-
+#' @rdname cogena_methods
 #' @aliases mat,cogena_methods
 setMethod("mat",signature(object="cogena"),
           function(object) return(object@mat))

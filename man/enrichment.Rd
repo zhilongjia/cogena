@@ -3,9 +3,15 @@
 \docType{methods}
 \name{enrichment}
 \alias{enrichment}
+\alias{enrichment,cogena-method}
+\alias{enrichment,cogena_methods}
 \title{get the enrichment table from a cogena object.}
 \usage{
 enrichment(object, method, nClusters, CutoffNumGeneset = Inf,
+  CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE)
+
+\S4method{enrichment}{cogena}(object, method = clusterMethods(object),
+  nClusters = nClusters(object), CutoffNumGeneset = Inf,
   CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE)
 }
 \arguments{

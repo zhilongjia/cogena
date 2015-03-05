@@ -3,19 +3,35 @@
 \docType{methods}
 \name{clusterMethods}
 \alias{clusterMethods}
+\alias{clusterMethods,cogena-method}
+\alias{clusterMethods,cogena_methods}
 \alias{clusters}
+\alias{clusters,cogena-method}
+\alias{clusters,cogena_methods}
 \alias{mat}
+\alias{mat,cogena-method}
+\alias{mat,cogena_methods}
 \alias{nClusters}
+\alias{nClusters,cogena-method}
+\alias{nClusters,cogena_methods}
 \alias{summary,cogena-method}
 \title{Basic methods for a cogena object.}
 \usage{
 clusterMethods(object)
 
+\S4method{clusterMethods}{cogena}(object)
+
 nClusters(object)
+
+\S4method{nClusters}{cogena}(object)
 
 clusters(object, method)
 
+\S4method{clusters}{cogena}(object, method = clusterMethods(object))
+
 mat(object)
+
+\S4method{mat}{cogena}(object)
 
 \S4method{summary}{cogena}(object)
 }

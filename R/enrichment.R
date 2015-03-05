@@ -28,7 +28,7 @@
 setGeneric("enrichment", function(object, method, nClusters, CutoffNumGeneset=Inf, 
                                   CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE) standardGeneric("enrichment"))
 
-
+#' @rdname enrichment
 #' @aliases enrichment,cogena_methods
 setMethod("enrichment", signature(object="cogena"),
           function(object, method=clusterMethods(object), nClusters=nClusters(object), 

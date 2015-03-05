@@ -3,10 +3,16 @@
 \docType{methods}
 \name{heatmapPEI2}
 \alias{heatmapPEI2}
+\alias{heatmapPEI2,cogena}
+\alias{heatmapPEI2,cogena-method}
 \title{heatmap of the gene set enrichment_score matrix directly}
 \usage{
 heatmapPEI2(object, enrichment_score, method, nClusters, whichCluster,
   CutoffNumGeneset = 60, low = "grey", high = "red", na.value = "white")
+
+\S4method{heatmapPEI2}{cogena}(object, enrichment_score, method, nClusters,
+  whichCluster, CutoffNumGeneset = 60, low = "grey", high = "red",
+  na.value = "white")
 }
 \arguments{
 \item{object}{a cogena object}
