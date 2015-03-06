@@ -24,7 +24,7 @@
 #' \item abscorrelation Absolute correlation \eqn{1 - | corr(x,y) |}.
 #' \item spearman Compute a distance based on rank.
 #' \item kendall Compute a distance based on rank. \eqn{\sum_{i,j} K_{i,j}(x,y)} with \eqn{K_{i,j}(x,y)} is 0 if \eqn{x_i}, \eqn{x_j} in same order as \eqn{y_i}, \eqn{y_j}, 1 if not.
-#' \item NMI normalised mutual information.
+#' \item NMI normalised mutual information. (use correlation instead so far!)
 #' \item biwt  a weighted correlation based on Tukey's biweight
 #' }
 #' 
@@ -86,6 +86,7 @@
 #'                       ncore=ncore, annotationGenesPop=annotationGenesPop, verbose=TRUE)
 #'
 #' @export
+#' @import devtools
 
 cogena <- function(obj, nClust, clMethods="hierarchical",
                     metric="correlation", method="complete", 
@@ -112,12 +113,12 @@ cogena <- function(obj, nClust, clMethods="hierarchical",
   "spearman", "maximum", "kendall", "canberra", "binary", "pearson", "abspearson",
   "NMI", "biwt"))
   
-  if("NMI" %in% metric){
-#       if(!require(infotheo)) {
-#           stop("package 'infotheo' required for mutual information metric")
-      devtools::install_github("zhilongjia/infotheo")
-      require(infotheo)
-  }
+#   if("NMI" %in% metric){
+# #       if(!require(infotheo)) {
+# #           stop("package 'infotheo' required for mutual information metric")
+#       devtools::install_github("zhilongjia/infotheo")
+#       require(infotheo)
+#   }
   
   if ("biwt" %in% metric){
       if(!require(biwt)) {
@@ -164,9 +165,9 @@ cogena <- function(obj, nClust, clMethods="hierarchical",
         Distmat <- as.dist(biwt::biwt.cor(mat, output="distance"))
     } else if (metric == "NMI") {
         #NMI from infotheo package
-        nmi <- infotheo::NMI(infotheo::discretize(t(mat)), method= "emp")
-        Distmat <- as.dist(1-nmi)
-        #Distmat <- as.dist(1- (nmi-min(nmi))/(max(nmi)-min(nmi)) )
+        #nmi <- infotheo::nMI(infotheo::discretize(t(mat)), method= "emp")
+        #Distmat <- as.dist(1-nmi)
+        Distmat <- amap::Dist(mat, method="correlation", nbproc=ncore)
     } else {
     Distmat <- amap::Dist(mat, method=metric, nbproc=ncore)
     }

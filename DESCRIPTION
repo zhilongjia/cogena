@@ -27,7 +27,6 @@ Suggests:
     annotate,
     kohonen,
     mclust,
-    infotheo,
     biwt,
     knitr
 Collate:

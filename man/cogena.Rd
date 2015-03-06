@@ -75,7 +75,7 @@ Available distance measures are (written for two vectors x and y):
 \item abscorrelation Absolute correlation \eqn{1 - | corr(x,y) |}.
 \item spearman Compute a distance based on rank.
 \item kendall Compute a distance based on rank. \eqn{\sum_{i,j} K_{i,j}(x,y)} with \eqn{K_{i,j}(x,y)} is 0 if \eqn{x_i}, \eqn{x_j} in same order as \eqn{y_i}, \eqn{y_j}, 1 if not.
-\item NMI normalised mutual information.
+\item NMI normalised mutual information. (use correlation instead so far!)
 \item biwt  a weighted correlation based on Tukey's biweight
 }
 }
