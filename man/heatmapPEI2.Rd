@@ -47,6 +47,8 @@ enrichment_score based on a criteria, like just one cluster.
 data(PD)
 summary(cogena_result)
 enrichment.table <- enrichment(cogena_result, "kmeans", "3")
+\dontrun{
 heatmapPEI2(cogena_result, enrichment.table, "kmeans", "3", "1")
+}
 }
 

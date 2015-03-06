@@ -105,7 +105,6 @@ metric <- "correlation"
 method <- "complete"
 
 # the cogena analysis
-head(annotationGenesPop)
 cogena_result <- cogena(DEexprs, nClust=nClust, clMethods=clMethods, metric=metric,
                       method=method,  annotation=anno, sampleLabel=sampleLabel,
                       ncore=ncore, annotationGenesPop=annotationGenesPop, verbose=TRUE)

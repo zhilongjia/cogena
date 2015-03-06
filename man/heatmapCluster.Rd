@@ -38,9 +38,11 @@ heatmap of gene expression profilings with cluster-based color indication.
 summary(cogena_result)
 
 #heatmapCluster
+\dontrun{
 heatmapCluster(cogena_result, "hierarchical", "3")
 heatmapcol <- gplots::redgreen(75)
 heatmapCluster(cogena_result, "hierarchical", "3", heatmapcol=heatmapcol)
+}
 }
 \seealso{
 \code{\link{cogena}}, \code{\link{heatmap.3}} and \code{\link{heatmapPEI}}

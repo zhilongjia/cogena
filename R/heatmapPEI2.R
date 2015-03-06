@@ -16,11 +16,14 @@
 #' data(PD)
 #' summary(cogena_result)
 #' enrichment.table <- enrichment(cogena_result, "kmeans", "3")
+#' \dontrun{
 #' heatmapPEI2(cogena_result, enrichment.table, "kmeans", "3", "1")
+#' }
 #' @export heatmapPEI2
 #' @import ggplot2
 #' @docType methods
 #' @rdname heatmapPEI2
+#' 
 setGeneric("heatmapPEI2", function(object, enrichment_score, method, nClusters, 
                                    whichCluster, CutoffNumGeneset=60, low="grey",
                                    high="red", na.value="white") 

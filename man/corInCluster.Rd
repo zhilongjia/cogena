@@ -44,8 +44,10 @@ of genes in cluster are small.
 }
 \examples{
 data(PD)
+\dontrun{
 corInCluster(cogena_result, "kmeans", "8", "8")
 corInCluster(cogena_result, "kmeans", "8", "8", plotMethod="square")
+}
 }
 \seealso{
 \code{\link{cogena}} \code{\link[corrplot]{corrplot}}

@@ -22,8 +22,11 @@
 #' @export
 #' @examples
 #' data(PD)
+#' \dontrun{
 #' corInCluster(cogena_result, "kmeans", "8", "8")
 #' corInCluster(cogena_result, "kmeans", "8", "8", plotMethod="square")
+#' }
+#' 
 
 setGeneric("corInCluster", function(object, method, nClusters, ith, 
                                     corMethod="pearson", plotMethod = "circle", 

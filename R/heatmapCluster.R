@@ -17,9 +17,11 @@
 #' summary(cogena_result)
 #'
 #' #heatmapCluster
+#' \dontrun{
 #' heatmapCluster(cogena_result, "hierarchical", "3")
 #' heatmapcol <- gplots::redgreen(75) 
 #' heatmapCluster(cogena_result, "hierarchical", "3", heatmapcol=heatmapcol)
+#' }
 setGeneric("heatmapCluster", 
            function(object, method, nClusters, sampleColor=c("darkblue", "cyan"),
                     clusterColor=NULL, clusterColor2=NULL, heatmapcol=NULL,
