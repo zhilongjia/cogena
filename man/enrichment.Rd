@@ -21,19 +21,23 @@ enrichment(object, method, nClusters, CutoffNumGeneset = Inf,
 
 \item{nClusters}{as nClust in cogena function.}
 
-\item{CutoffNumGeneset}{the cut-off of the number of gene sets in the return table}
+\item{CutoffNumGeneset}{the cut-off of the number of gene sets in the
+return table}
 
 \item{CutoffPVal}{the cut-off of p-value. The default is 0.05.}
 
-\item{orderMethod}{the order method, default is max, other options are "mean" and "all"}
+\item{orderMethod}{the order method, default is max, other options are
+"mean" and "all"}
 
-\item{roundvalue}{The default is TRUE. whether or not round the data. such as round(1.54, 1)=1.5}
+\item{roundvalue}{The default is TRUE. whether or not round the data.
+such as round(1.54, 1)=1.5}
 }
 \value{
 a matrix with clusters in row and gene-sets in column.
 }
 \description{
-get the enrichment table from a cogena object with certain clustering methods and number of clusters.
+get the enrichment table from a cogena object with certain clustering
+methods and number of clusters.
 }
 \details{
 orderMethod:

@@ -27,19 +27,18 @@ setMethod("optCluster", signature(object="cogena"),
             if (is.logical(enrichment_score)) {
                 score[i,j]=NA
             } else {
-            	
-            	if (is.logical(object@measures[[i]][[j]])){
-            		score[i,j] <- NA
-            	} else {
-            		up_dn_score <- 0
-            		up_dn2 <- 0
-            		for (k in 1:j){
+                if (is.logical(object@measures[[i]][[j]])){
+                    score[i,j] <- NA
+                } else {
+                    up_dn_score <- 0
+                    up_dn2 <- 0
+                    for (k in 1:j){
 
-            		    #print (paste(i, j, k))
-            	        data <- mat(object)[geneInCluster(object, i, j, as.character(k)),, drop=FALSE]
-            	        #print (dim(data))
+                        #print (paste(i, j, k))
+                        data <- mat(object)[geneInCluster(object, i, j, as.character(k)),, drop=FALSE]
+                        #print (dim(data))
 
-            	        up_dn <- apply(data, 1, upORdn, object@sampleLabel)
+                        up_dn <- apply(data, 1, upORdn, object@sampleLabel)
                         if (length(table(up_dn)) == 1){
                             up_dn_score <- up_dn_score + 1
                         }
@@ -50,16 +49,16 @@ setMethod("optCluster", signature(object="cogena"),
                     score[i,j] <- ncol(enrichment_score) * up_dn_score
                     
                     up_dn_score <- 0
-            	}
+                }
             }
         }
         # if the 2 clusters have a negative value, all other clusters in this method will have a negative value or NA.
         if (!is.na(score[i,"2"]) && score[i,"2"] < 0){
-        	for (j in as.character(nClusters(object))){
-        		if (!is.na(score[i,j]) && score[i,j] >0){
-        			score[i,j] <- -score[i,j]
-        		}
-        	}
+            for (j in as.character(nClusters(object))){
+                if (!is.na(score[i,j]) && score[i,j] >0){
+                    score[i,j] <- -score[i,j]
+                }
+            }
         }
     }
     return (score)

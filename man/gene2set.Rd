@@ -23,6 +23,12 @@ A list of gene set could be find in the vignette of cogena}
 Generate relationship between genes (gene SYMBOL) and gene-sets, such as Pathway or GO.
 }
 \examples{
-#please ?cogena
+data(PD)
+
+#annotaion
+annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
+annofile <- system.file("extdata", annoGMT, package="cogena")
+# the DEG gene-sets matrix
+anno <- gene2set(annofile, rownames(DEexprs))
 }
 

@@ -98,6 +98,9 @@ Please note the 'euclidean' is the default distance metric different from
 }
 \examples{
 #please ref the manual of clValid::sota.
+data(PD)
+
+sotaCl <- sota(as.matrix(DEexprs), 4)
 }
 \author{
 Vasyl Pihur, Guy Brock, Susmita Datta, Somnath Datta

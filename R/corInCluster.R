@@ -30,14 +30,16 @@
 
 setGeneric("corInCluster", function(object, method, nClusters, ith, 
                                     corMethod="pearson", plotMethod = "circle", 
-                                    type = "upper", ...) standardGeneric("corInCluster"))
+                                    type = "upper", ...
+                                    ) standardGeneric("corInCluster"))
 
 #' @rdname corInCluster
 #' @aliases corInCluster,cogena_methods
 setMethod("corInCluster", signature(object="cogena"), 
           function (object, method=clusterMethods(object), 
                     nClusters=nClusters(object), ith,
-                    corMethod="pearson", plotMethod = "circle", type = "upper",...){
+                    corMethod="pearson", plotMethod = "circle", 
+                    type = "upper",...){
               
               method <- match.arg(method, clusterMethods(object))
               nClusters <- match.arg(nClusters, as.character(nClusters(object)))

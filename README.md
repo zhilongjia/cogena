@@ -5,13 +5,13 @@
 co-expressed gene-set enrichment analysis
 
 The workflow of cogena
-![cogena_workflow](figure/Cogena_workflow.png)
+![cogena_workflow](inst/figure/Cogena_workflow.png)
 
 The heatmap of co-expressed gene set enrichment analysis
-![cogena_heatmapPEI](figure/cogena_heatmapPEI.png)
+![cogena_heatmapPEI](inst/figure/cogena_heatmapPEI.png)
 
 The heatmap of co-expressed gene set
-![cogena_heatmapCluster](figure/cogena_heatmapCluster.png)
+![cogena_heatmapCluster](inst/figure/cogena_heatmapCluster.png)
 
 
 installation

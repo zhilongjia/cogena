@@ -25,7 +25,8 @@ heatmapPEI2(object, enrichment_score, method, nClusters, whichCluster,
 
 \item{whichCluster}{which cluster should be based to filter.}
 
-\item{CutoffNumGeneset}{the cut-off of the number of gene sets in the return table}
+\item{CutoffNumGeneset}{the cut-off of the number of gene sets in the
+return table}
 
 \item{low}{colour for low end of gradient.}
 

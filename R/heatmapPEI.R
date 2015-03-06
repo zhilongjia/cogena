@@ -19,6 +19,7 @@
 #' 
 #' @export
 #' @import ggplot2
+#' @import reshape2
 #' @docType methods
 #' @rdname heatmapPEI
 #' @examples

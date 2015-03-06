@@ -23,13 +23,16 @@ heatmapPEI(object, method, nClusters, CutoffNumGeneset = 20,
 
 \item{nClusters}{as nClust in cogena function.}
 
-\item{CutoffNumGeneset}{the cut-off of the number of gene sets in the return table}
+\item{CutoffNumGeneset}{the cut-off of the number of gene sets in the
+return table}
 
 \item{CutoffPVal}{the cut-off of p-value. The default is 0.05.}
 
-\item{orderMethod}{the order method, default is max, other options are "mean" and "all"}
+\item{orderMethod}{the order method, default is max, other options are
+"mean" and "all"}
 
-\item{roundvalue}{The default is TRUE. whether or not round the data. such as round(1.54, 1)=1.5}
+\item{roundvalue}{The default is TRUE. whether or not round the data.
+such as round(1.54, 1)=1.5}
 
 \item{low}{colour for low end of gradient.}
 

@@ -83,7 +83,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
                   RowSideColors <- t(cbind(RowSideColors2, RowSideColors))
                   rownames(RowSideColors) <- paste("Size:", c(2, nClusters))
                   } else {
-                  	RowSideColors <- t(as.matrix(RowSideColors))
+                      RowSideColors <- t(as.matrix(RowSideColors))
                   }
 
               heatmap.3(mat, col=heatmapcol, trace="none", scale="row", 

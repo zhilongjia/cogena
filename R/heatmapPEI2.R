@@ -21,6 +21,7 @@
 #' }
 #' @export heatmapPEI2
 #' @import ggplot2
+#' @import reshape2
 #' @docType methods
 #' @rdname heatmapPEI2
 #' 
@@ -49,7 +50,7 @@ setMethod("heatmapPEI2", signature(object="cogena"),
               }
 
               if (ncol(enrichment_score)==0){
-              	stop("No enrichment for this cluster!")
+                  stop("No enrichment for this cluster!")
               }
 
               enrichment_score <- reshape2::melt(enrichment_score)

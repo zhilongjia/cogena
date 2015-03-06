@@ -8,7 +8,13 @@
 #' @param annotation a value returned by \code{\link{gmt2list}}.
 #' 
 #' @examples
-#' #please ?cogena
+#' data(PD)
+#' 
+#' #annotaion
+#' annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
+#' annofile <- system.file("extdata", annoGMT, package="cogena")
+#' # the DEG gene-sets matrix
+#' anno <- gene2set(annofile, rownames(DEexprs))
 #' @export
 #' @rdname gene2set
 gene2set <- function(annofile=NULL, genenames, TermFreq=0) {

@@ -29,13 +29,12 @@ Get gene names in a certain cluster. This is helpful if user want to get the
 detail of a cluster.
 }
 \examples{
-\dontrun{
+data(PD)
 #summay this cogena object
 summary(cogena_result)
 
 #geneInCluster
 geneInCluster(cogena_result, "kmeans", "3", "2")
-}
 }
 \seealso{
 \code{\link{cogena}}

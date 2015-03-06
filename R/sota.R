@@ -66,6 +66,10 @@
 #' Bioinformatics, 17, 126-136.
 #' @examples 
 #' #please ref the manual of clValid::sota.
+#' data(PD)
+#' 
+#' sotaCl <- sota(as.matrix(DEexprs), 4)
+#' @export
 #' @keywords cluster
 #' @export
 #' @rdname sota
@@ -92,7 +96,7 @@ sota <- function(data, maxCycles, maxEpochs=1000, distance="euclidean",
         curr.err <- 1e10
         ep <- 1
         
-        while(ep <= maxEpochs){          			#loop for the Epochs
+        while(ep <= maxEpochs){                      #loop for the Epochs
             last.err <- 0
             left.ctr <- right.ctr <- 0
             left.d <- right.d <- 0
