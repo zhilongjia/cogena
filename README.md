@@ -1,5 +1,7 @@
 # cogena
 
+[![Travis-CI Build Status](https://travis-ci.org/zhilongjia/cogena.png?branch=master)](https://travis-ci.org/zhilongjia/cogena)
+
 co-expressed gene-set enrichment analysis
 
 The workflow of cogena
@@ -15,5 +17,3 @@ The heatmap of co-expressed gene set
 installation
 
 	devtools::install_github("zhilongjia/cogena")
-
-[![Travis-CI Build Status](https://travis-ci.org/zhilongjia/cogena.png?branch=master)](https://travis-ci.org/zhilongjia/cogena)
