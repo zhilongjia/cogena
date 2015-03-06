@@ -102,7 +102,7 @@ vClusters <- function(mat, Distmat, clMethod, nClust, method,
       #if (!exists("cluster")) {cluster <- clusterObj$cluster}
       #if (!is.vector(cluster)) {cluster <- clusterObj$cluster}
       if (is.null(names(cluster))) {names(cluster) <- rownames(mat)}
-      #print (cluster)
+      
       if (verbose) {print (paste(clMethod, "nClust:", nc, "End"))}
 
       ## Gene sets enrichment measures
