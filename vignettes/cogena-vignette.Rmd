@@ -38,8 +38,7 @@ user-defined genes list vector. User can used `AllGeneSymbols` from `data(AllGen
     There are three objects in the PD dataset. See `?PD` for more details.
 
 ```{r import_data, message=FALSE}
-library(devtools)
-load_all("~/cogena")
+library(cogena)
 data(AllGeneSymbols)
 data(PD)
 # Three objects in the PD dataset and one in AllGeneSymbols dataset.
