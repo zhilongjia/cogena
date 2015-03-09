@@ -15,7 +15,7 @@ vignette: >
 cogena can be used as gene set enrichment analysis of up or down regulated 
 genes as well as genes in clusters resulting from various clustering methods. 
 And the gene sets could be Pathway, Gene Ontology or user-defined gene-sets. 
-Accordingly, this tools can be used for pathway enrichment, GO enrichment 
+Accordingly, this tool can be used for pathway enrichment, GO enrichment 
 and so on.  
 
 ## Input data
