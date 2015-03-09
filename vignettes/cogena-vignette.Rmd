@@ -3,8 +3,9 @@ title: "cogena, a tool for co-expressed gene-set enrichment analysis and visuali
 author: "Zhilong Jia, Michael Barnes"
 date: "`r Sys.Date()`"
 output:
-    rmarkdown::html_vignette:
+#    rmarkdown::html_vignette:
 #     word_document:
+    pdf_document:
         fig_caption: yes
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -16,7 +17,9 @@ cogena can be used as gene set enrichment analysis of up or down regulated
 genes as well as genes in clusters resulting from various clustering methods. 
 And the gene sets could be Pathway, Gene Ontology or user-defined gene-sets. 
 Accordingly, this tool can be used for pathway enrichment, GO enrichment 
-and so on.  
+and so on. See the workflow of cogena in Figure 1.
+
+![Overview of the cogena workflow](Cogena_workflow.png)
 
 ## Input data
     Note: all the gene names should be gene SYMBOL since it is used in the gene dataset files.
@@ -52,7 +55,7 @@ ls()
 1.  Make Annotation
 
     There are a variety of gene sets in the `cogena` package, collected from 
-    [MSigDB](http://www.broadinstitute.org/gsea/msigdb/index.jsp). They are `r dir(system.file("data", package="cogena"), pattern="*gmt")`. with gene-sets, user can get the genes-specific gene
+    [MSigDB](http://www.broadinstitute.org/gsea/msigdb/index.jsp). They are `r dir(system.file("extdata", package="cogena"), pattern="*gmt")`. with gene-sets, user can get the genes-specific gene
     sets matrix as showed in the following example. Here the gene-sets can be user-defined
     gene-sets formatted gmt, too.
     
@@ -70,11 +73,11 @@ annotationGenesPop <- annotationGenesPop[,colnames(anno)]
     
 2. Run cogena
 
-    Setting some parameters for cogena and run cogena analysis.
+    Setting some parameters for cogena and running cogena analysis.
 ```{r cogena, results="hide"}
 # the number of clusters. It could be a vector.
 nClust <- 2:8
-# the number of cores. As leveraging the `doMC` package, cogena can be used in
+# the number of cores. As leveraging the doMC package, cogena can be used in
 # unix-like system only.
 ncore <- 1
 # the clustering methods
@@ -112,51 +115,52 @@ knitr::kable(score)
 
 ```{r enrichment}
 #Here we consider the "hierarchical" method and 6 clusters as the optimum.
-#Always make the number as charactor, please!
+#Always make the number as character, please!
 enrichment.table <- enrichment(cogena_result, "hierarchical", "6")
 ```
 
-2.  To show the enrichment graph, `heatmapPEI` can be used. see Figure 1. 
+2.  To show the enrichment graph, `heatmapPEI` can be used. see Figure 2. 
 See ?heatmapPEI for more details.
 
 ```{r heatmapPEI, fig.width=10, fig.height=6, fig.cap="KEGG pathway enrichment"}
-#The values shown in Figure 1. is the -log2 (p-values).
-#Always make the number as charactor, please!
+#The values shown in Figure 2. is the -log2 (p-values).
+#Always make the number as character, please!
 heatmapPEI(cogena_result, "hierarchical", "6")
 ```
 
-3.  The heatmap of expression profiling with clusters is plotted by `heatmapCluster`. see Figure 2.
+3.  The heatmap of expression profiling with clusters is plotted by `heatmapCluster`. see Figure 3.
 User can know which cluster contains up-regulated or down-regulated genes.
 ```{r heatmapCluster, fig.width=10, fig.height=7, fig.cap="Heatmap of expression profiling with clusters"}
-#Always make the number as charactor, please!
+#Always make the number as character, please!
 heatmapCluster(cogena_result, "hierarchical", "6")
 ```
 
 4.  If interested genes in a certain cluster, user can obtain the genes in a certain
 cluster via `geneInCluster`.
 ```{r geneInCluster}
-#Always make the number as charactor, please!
+#Always make the number as character, please!
 head(geneInCluster(cogena_result, "hierarchical", "6", "2"))
 ```
 
 5.  The gene expression profilings with cluster infromation could be obtained by `geneExpInCluster`. There are two items, `clusterGeneExp` and `label`, in the returned object of `geneExpInCluster`. This can be used for other application.
 ```{r geneExpInCluster}
-#Always make the number as charactor, please!
+#Always make the number as character, please!
 gec <- geneExpInCluster(cogena_result, "hierarchical", "6")
 head(gec$clusterGeneExp, 3)
 gec$label
 ```
 
-6. The correlation among one cluster could be shown via `corInCluster`. see Figure 3.
+6. The correlation among one cluster could be shown via `corInCluster`. see Figure 4.
 ```{r corInCluster, fig.width=6, fig.height=6, fig.cap="Correlation"}
-#Always make the number as charactor, please!
+#Always make the number as character, please!
 corInCluster(cogena_result, "hierarchical", "8", "8")
 ```
 
 ## Bug Report
-    https://github.com/zhilongjia/cogena/issues
+https://github.com/zhilongjia/cogena/issues
 
-
+## Citation
+Jia Z. et al. *Cogena, a tool for co-expressed gene-set enrichment analysis and visualization*.
 
 ##Other Information
 System info
