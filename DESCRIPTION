@@ -16,7 +16,7 @@ Imports:
     methods,
     class,
     foreach,
-    doMC,
+    doParallel,
     fastcluster,
     corrplot,
     reshape2,
@@ -54,7 +54,6 @@ Collate:
 License: LGPL-3
 LazyData: true
 Encoding: UTF-8
-OS_type: unix
 URL: https://github.com/zhilongjia/cogena
 NeedsCompilation: no
 BugReports: https://github.com/zhilongjia/cogena/issues

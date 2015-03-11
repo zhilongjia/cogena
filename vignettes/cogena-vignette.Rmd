@@ -79,7 +79,7 @@ annotationGenesPop <- annotationGenesPop[,colnames(anno)]
 nClust <- 2:8
 # the number of cores. As leveraging the doMC package, cogena can be used in
 # unix-like system only.
-ncore <- 1
+ncore <- 2
 # the clustering methods
 clMethods <- c("hierarchical","kmeans", "som")
 # the distance metric

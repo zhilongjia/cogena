@@ -7,8 +7,10 @@
 #' @import amap
 #' @import cluster
 #' @import fastcluster
+##' @import doMC
+#' @import parallel
+#' @import doParallel
 #' @import foreach
-#' @import doMC
 #' @keywords internal
 #' 
 vClusters <- function(mat, Distmat, clMethod, nClust, method, 
@@ -42,7 +44,9 @@ vClusters <- function(mat, Distmat, clMethod, nClust, method,
 
     # parallel the Clustering with the number of Cluster is nc
     
-    doMC::registerDoMC(ncore)
+    #doMC::registerDoMC(ncore)
+    cl <- parallel::makeCluster(ncore)
+    doParallel::registerDoParallel(cl)
     if (verbose) {print(paste("getDoParWorkers:", foreach::getDoParWorkers()))}
     nc=NULL
     clusterList <- foreach::foreach (nc = nClust) %dopar% {
