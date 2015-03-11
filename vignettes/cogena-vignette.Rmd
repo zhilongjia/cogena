@@ -77,9 +77,8 @@ annotationGenesPop <- annotationGenesPop[,colnames(anno)]
 ```{r cogena, results="hide"}
 # the number of clusters. It could be a vector.
 nClust <- 2:8
-# the number of cores. As leveraging the doMC package, cogena can be used in
-# unix-like system only.
-ncore <- 2
+# the number of cores.
+ncore <- 1
 # the clustering methods
 clMethods <- c("hierarchical","kmeans", "som")
 # the distance metric

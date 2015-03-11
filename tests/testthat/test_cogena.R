@@ -7,7 +7,7 @@ data(AllGeneSymbols)
 annotationGenesPop <- gene2set(annofile, AllGeneSymbols)
 annotationGenesPop <- annotationGenesPop[,colnames(anno)]
 nClust <- 2:3
-ncore <- 1 #2
+ncore <- 2 #2
 clMethods <- c("hierarchical","kmeans")
 metric <- "correlation"
 method <- "complete"
