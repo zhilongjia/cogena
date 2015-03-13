@@ -8,7 +8,7 @@
 #' @param high colour for high end of gradient.
 #' @param na.value Colour to use for missing values.
 #' @title a character. like GSExxx. the output of figure will like "cogena: 
-#' kmeans 3 /GSExxx". Default is NULL
+#' kmeans 3 \nGSExxx". Default is NULL
 #' 
 #' @seealso \code{\link{cogena}} and \code{\link{heatmapCluster}}
 #' 
@@ -63,7 +63,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
               }
               Var1=Var2=value=NULL
               if (!is.null(title)) {
-                  title=paste("cogena:", method, nClusters, "/", title)
+                  title=paste("cogena:", method, nClusters, "\n", title)
               } else {
                   title=paste("cogena:", method, nClusters)
               }

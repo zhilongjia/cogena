@@ -6,7 +6,7 @@
 \alias{heatmapPEI2,cogena}
 \alias{heatmapPEI2,cogena-method}
 \title{a character. like GSExxx. the output of figure will like "cogena:
-kmeans 3 /GSExxx". Default is NULL}
+kmeans 3 \nGSExxx". Default is NULL}
 \usage{
 heatmapPEI2(object, enrichment_score, method, nClusters, whichCluster,
   CutoffNumGeneset = 60, low = "grey", high = "red", na.value = "white",

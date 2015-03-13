@@ -6,7 +6,7 @@
 #' @param clusterColor a color vector with the cluster length. The default is rainbow(nClusters(object)).
 #' @param clusterColor2 a color vector with 2 elements. The default is  c("coral3", "deepskyblue1").
 #' @param heatmapcol col for heatmap. The default is greenred(75).
-#' @param maintitle a character. like GSExxx. the output of figure will like "kmeans 3 Clusters / GSExxx"
+#' @param maintitle a character. like GSExxx. the output of figure will like "kmeans 3 Clusters \n GSExxx"
 #' @param ... other parameters to heatmap.3.
 #' @export
 #' @import gplots
@@ -88,7 +88,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
                   }
               
               if (!is.null(maintitle)) {
-                  maintitle=paste(method, nClusters, "clusters", "/", maintitle)
+                  maintitle=paste(method, nClusters, "clusters", "\n", maintitle)
               } else {
                   maintitle=paste(method, nClusters, "clusters",sep="_")
               }

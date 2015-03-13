@@ -8,7 +8,7 @@
 #' @param enrichment_score a returned value from \code{\link{enrichment}} function
 #' @param whichCluster which cluster should be based to filter.
 #' @title a character. like GSExxx. the output of figure will like "cogena: 
-#' kmeans 3 /GSExxx". Default is NULL
+#' kmeans 3 \nGSExxx". Default is NULL
 #' 
 #' @details
 #' This function aims to heatmap the enrichment_score directly. This is helpful
@@ -66,7 +66,7 @@ setMethod("heatmapPEI2", signature(object="cogena"),
               }
               Var1=Var2=value=NULL
               if (!is.null(title)) {
-                  title=paste("cogena:", method, nClusters, "/", title)
+                  title=paste("cogena:", method, nClusters, "\n", title)
               } else {
                   title=paste("cogena:", method, nClusters)
               }

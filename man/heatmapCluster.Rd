@@ -31,7 +31,7 @@ heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"),
 
 \item{...}{other parameters to heatmap.3.}
 
-\item{maintitle}{a character. like GSExxx. the output of figure will like "kmeans 3 Clusters / GSExxx"}
+\item{maintitle}{a character. like GSExxx. the output of figure will like "kmeans 3 Clusters \n GSExxx"}
 }
 \description{
 heatmap of gene expression profilings with cluster-based color indication.

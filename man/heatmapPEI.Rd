@@ -6,7 +6,7 @@
 \alias{heatmapPEI,cogena}
 \alias{heatmapPEI,cogena-method}
 \title{a character. like GSExxx. the output of figure will like "cogena:
-kmeans 3 /GSExxx". Default is NULL}
+kmeans 3 \nGSExxx". Default is NULL}
 \usage{
 heatmapPEI(object, method, nClusters, CutoffNumGeneset = 20,
   CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE,
