@@ -6,6 +6,7 @@
 #' @param clusterColor a color vector with the cluster length. The default is rainbow(nClusters(object)).
 #' @param clusterColor2 a color vector with 2 elements. The default is  c("coral3", "deepskyblue1").
 #' @param heatmapcol col for heatmap. The default is greenred(75).
+#' @param maintitle a character. like GSExxx. the output of figure will like "kmeans 3 Clusters / GSExxx"
 #' @param ... other parameters to heatmap.3.
 #' @export
 #' @import gplots
@@ -32,7 +33,7 @@ setGeneric("heatmapCluster",
 setMethod("heatmapCluster", signature(object="cogena"),
           function (object, method=clusterMethods(object), nClusters=nClusters(object),
                     sampleColor=c("darkblue", "cyan"), clusterColor=NULL,
-                    clusterColor2=NULL, heatmapcol=NULL, ...){
+                    clusterColor2=NULL, heatmapcol=NULL, maintitle=NULL, ...){
               
               #get the parameters
               method <- match.arg(method, clusterMethods(object))
@@ -85,6 +86,12 @@ setMethod("heatmapCluster", signature(object="cogena"),
                   } else {
                       RowSideColors <- t(as.matrix(RowSideColors))
                   }
+              
+              if (!is.null(maintitle)) {
+                  maintitle=paste(method, nClusters, "clusters", "/", maintitle)
+              } else {
+                  maintitle=paste(method, nClusters, "clusters",sep="_")
+              }
 
               heatmap.3(mat, col=heatmapcol, trace="none", scale="row", 
                         Rowv=FALSE, Colv=FALSE, dendrogram="none", labRow=NA, 
@@ -92,7 +99,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
                         rowsep=cumsum( table(cluster_size)), #adjCol=c(0.8,0),
                         sepcolor="white", sepwidth=c(0.05,1),
                         key=TRUE, symkey=FALSE, density.info="none", keysize=1.5, 
-                        main=paste(method, nClusters, "clusters",sep="_"),
+                        main=maintitle,
                         ColSideColors=as.matrix(ColSideColors), ylab="Genes", cexCol=0.8,
                         RowSideColors=RowSideColors, 
                         RowSideColorsSize=ifelse(nClusters!=2,2,1),

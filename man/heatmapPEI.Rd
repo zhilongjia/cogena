@@ -5,16 +5,17 @@
 \alias{heatmapPEI}
 \alias{heatmapPEI,cogena}
 \alias{heatmapPEI,cogena-method}
-\title{heatmap of the gene set enrichment from a cogena object.}
+\title{a character. like GSExxx. the output of figure will like "cogena:
+kmeans 3 /GSExxx". Default is NULL}
 \usage{
 heatmapPEI(object, method, nClusters, CutoffNumGeneset = 20,
   CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE,
-  low = "green", high = "red", na.value = "white")
+  low = "green", high = "red", na.value = "white", title = NULL)
 
 \S4method{heatmapPEI}{cogena}(object, method = clusterMethods(object),
   nClusters = nClusters(object), CutoffNumGeneset = 20, CutoffPVal = 0.05,
   orderMethod = "max", roundvalue = TRUE, low = "grey", high = "red",
-  na.value = "white")
+  na.value = "white", title = NULL)
 }
 \arguments{
 \item{object}{a cogena object}
@@ -41,10 +42,12 @@ such as round(1.54, 1)=1.5}
 \item{na.value}{Colour to use for missing values.}
 }
 \description{
-heatmap of the gene set enrichment index. After obtaining the ennrichemt of
-clusters in the gene sets, the heatmapPEI will show it as a heatmap with order.
+heatmap of the gene set enrichment from a cogena object.
 }
 \details{
+heatmap of the gene set enrichment index. After obtaining the ennrichemt of
+clusters in the gene sets, the heatmapPEI will show it as a heatmap with order.
+
 orderMethod:
 \itemize{
 \item max. ordered by the max value in clusters beside all

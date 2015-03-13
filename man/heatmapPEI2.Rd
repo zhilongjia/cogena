@@ -5,14 +5,16 @@
 \alias{heatmapPEI2}
 \alias{heatmapPEI2,cogena}
 \alias{heatmapPEI2,cogena-method}
-\title{heatmap of the gene set enrichment_score matrix directly}
+\title{a character. like GSExxx. the output of figure will like "cogena:
+kmeans 3 /GSExxx". Default is NULL}
 \usage{
 heatmapPEI2(object, enrichment_score, method, nClusters, whichCluster,
-  CutoffNumGeneset = 60, low = "grey", high = "red", na.value = "white")
+  CutoffNumGeneset = 60, low = "grey", high = "red", na.value = "white",
+  title = NULL)
 
 \S4method{heatmapPEI2}{cogena}(object, enrichment_score, method, nClusters,
   whichCluster, CutoffNumGeneset = 60, low = "grey", high = "red",
-  na.value = "white")
+  na.value = "white", title = NULL)
 }
 \arguments{
 \item{object}{a cogena object}
@@ -35,11 +37,13 @@ return table}
 \item{na.value}{Colour to use for missing values.}
 }
 \description{
+heatmap of the gene set enrichment_score matrix directly
+}
+\details{
 heatmap of the gene set enrichment_score matrix directly. After obtaining the
 ennrichemt of clusters in the gene sets via \code{\link{enrichment}}, the
 heatmapPEI2 will show it as a heatmap.
-}
-\details{
+
 This function aims to heatmap the enrichment_score directly. This is helpful
 on condition that there are so many enriched gene sets and you can filter the
 enrichment_score based on a criteria, like just one cluster.

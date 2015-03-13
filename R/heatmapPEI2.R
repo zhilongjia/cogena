@@ -7,6 +7,8 @@
 #' @inheritParams heatmapPEI
 #' @param enrichment_score a returned value from \code{\link{enrichment}} function
 #' @param whichCluster which cluster should be based to filter.
+#' @title a character. like GSExxx. the output of figure will like "cogena: 
+#' kmeans 3 /GSExxx". Default is NULL
 #' 
 #' @details
 #' This function aims to heatmap the enrichment_score directly. This is helpful
@@ -27,7 +29,7 @@
 #' 
 setGeneric("heatmapPEI2", function(object, enrichment_score, method, nClusters, 
                                    whichCluster, CutoffNumGeneset=60, low="grey",
-                                   high="red", na.value="white") 
+                                   high="red", na.value="white", title=NULL) 
     standardGeneric("heatmapPEI2"))
 
 #' @rdname heatmapPEI2
@@ -37,7 +39,7 @@ setMethod("heatmapPEI2", signature(object="cogena"),
                    CutoffNumGeneset=60, 
                    #CutoffPVal=0.05,
                    #orderMethod="max", roundvalue=TRUE,
-                   low="grey", high="red", na.value="white") {
+                   low="grey", high="red", na.value="white", title=NULL) {
               
               method <- match.arg(method, clusterMethods(object))
               nClusters <- match.arg(nClusters, as.character(nClusters(object)))
@@ -63,11 +65,16 @@ setMethod("heatmapPEI2", signature(object="cogena"),
                   
               }
               Var1=Var2=value=NULL
+              if (!is.null(title)) {
+                  title=paste("cogena:", method, nClusters, "/", title)
+              } else {
+                  title=paste("cogena:", method, nClusters)
+              }
               ggplot(enrichment_score, aes(as.factor(Var1), Var2)) + 
                   geom_tile(aes(fill = value)) + 
                   scale_fill_gradient2("score",  mid=low, midpoint=4, low=low, high=high, na.value=na.value, breaks=breaks) +
                   geom_text(aes(fill=value, label=value),size=4, na.rm=TRUE) +
-                  labs(list(title = paste("cogena:", method, nClusters), x = "Cluster", y = "Gene set")) +
+                  labs(list(title = title, x = "Cluster", y = "Gene set")) +
                   theme(axis.text.y = element_text(size = rel(1.5), face="bold")) +
                   theme(axis.text.x = element_text(size = rel(1.3), angle=30, face="bold")) 
           })

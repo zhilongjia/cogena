@@ -11,7 +11,8 @@ heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"),
 
 \S4method{heatmapCluster}{cogena}(object, method = clusterMethods(object),
   nClusters = nClusters(object), sampleColor = c("darkblue", "cyan"),
-  clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL, ...)
+  clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
+  maintitle = NULL, ...)
 }
 \arguments{
 \item{object}{a cogena object}
@@ -29,6 +30,8 @@ heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"),
 \item{heatmapcol}{col for heatmap. The default is greenred(75).}
 
 \item{...}{other parameters to heatmap.3.}
+
+\item{maintitle}{a character. like GSExxx. the output of figure will like "kmeans 3 Clusters / GSExxx"}
 }
 \description{
 heatmap of gene expression profilings with cluster-based color indication.
