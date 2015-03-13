@@ -7,8 +7,8 @@
 #' @param low colour for low end of gradient.
 #' @param high colour for high end of gradient.
 #' @param na.value Colour to use for missing values.
-#' @title a character. like GSExxx. the output of figure will like "cogena: 
-#' kmeans 3 \nGSExxx". Default is NULL
+#' @param title a character. like GSExxx. the output of figure will like "cogena: 
+#' kmeans 3 GSExxx" in two lines. Default is NULL
 #' 
 #' @seealso \code{\link{cogena}} and \code{\link{heatmapCluster}}
 #' 

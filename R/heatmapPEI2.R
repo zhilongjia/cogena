@@ -7,8 +7,8 @@
 #' @inheritParams heatmapPEI
 #' @param enrichment_score a returned value from \code{\link{enrichment}} function
 #' @param whichCluster which cluster should be based to filter.
-#' @title a character. like GSExxx. the output of figure will like "cogena: 
-#' kmeans 3 \nGSExxx". Default is NULL
+#' @param title a character. like GSExxx. the output of figure will like "cogena: 
+#' kmeans 3 GSExxx" in two lines. Default is NULL
 #' 
 #' @details
 #' This function aims to heatmap the enrichment_score directly. This is helpful
