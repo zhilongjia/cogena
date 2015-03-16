@@ -6,7 +6,9 @@
 #' 
 #' @inheritParams heatmapPEI
 #' @param enrichment_score a returned value from \code{\link{enrichment}} function
-#' @param whichCluster which cluster should be based to filter.
+#' @param whichCluster which cluster should be based to filter. The format is 
+#' "Cluster number # number of genes in clsuters", like "1#22". This can be 
+#' obtained by heatmapCluster
 #' @param title a character. like GSExxx. the output of figure will like "cogena: 
 #' kmeans 3 GSExxx" in two lines. Default is NULL
 #' 
@@ -19,7 +21,7 @@
 #' summary(cogena_result)
 #' enrichment.table <- enrichment(cogena_result, "kmeans", "3")
 #' \dontrun{
-#' heatmapPEI2(cogena_result, enrichment.table, "kmeans", "3", "1")
+#' heatmapPEI2(cogena_result, enrichment.table, "kmeans", "3", "1#nn")
 #' }
 #' @export heatmapPEI2
 #' @import ggplot2
