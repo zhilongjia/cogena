@@ -27,7 +27,7 @@ return table}
 \item{CutoffPVal}{the cut-off of p-value. The default is 0.05.}
 
 \item{orderMethod}{the order method, default is max, other options are
-"mean" and "all"}
+"mean", "all", "I", "II"}
 
 \item{roundvalue}{The default is TRUE. whether or not round the data.
 such as round(1.54, 1)=1.5}
@@ -44,7 +44,10 @@ orderMethod:
 \itemize{
 \item max. ordered by the max value in clusters beside all
 \item mean. ordered by the mean value in clusters beside all
-\item all. ordered by all genes}
+\item all. ordered by all genes
+\item I. ordered by the I cluster in only two clusters (Up or Down-regulated)
+\item II. ordered by the II cluster in only two clusters (Up or Down-regulated)
+}
 }
 \examples{
 data(PD)

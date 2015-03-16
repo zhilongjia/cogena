@@ -24,7 +24,9 @@ heatmapPEI2(object, enrichment_score, method, nClusters, whichCluster,
 
 \item{nClusters}{as nClust in cogena function.}
 
-\item{whichCluster}{which cluster should be based to filter.}
+\item{whichCluster}{which cluster should be based to filter. The format is
+"Cluster number # number of genes in clsuters", like "1#22". This can be
+obtained by heatmapCluster}
 
 \item{CutoffNumGeneset}{the cut-off of the number of gene sets in the
 return table}
@@ -53,7 +55,7 @@ data(PD)
 summary(cogena_result)
 enrichment.table <- enrichment(cogena_result, "kmeans", "3")
 \dontrun{
-heatmapPEI2(cogena_result, enrichment.table, "kmeans", "3", "1")
+heatmapPEI2(cogena_result, enrichment.table, "kmeans", "3", "1#nn")
 }
 }
 

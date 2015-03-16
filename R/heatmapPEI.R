@@ -17,7 +17,10 @@
 #' \itemize{
 #' \item max. ordered by the max value in clusters beside all
 #' \item mean. ordered by the mean value in clusters beside all
-#' \item all. ordered by all genes}
+#' \item all. ordered by all genes
+#' \item I. ordered by the I cluster in only two clusters (Up or Down-regulated)
+#' \item II. ordered by the II cluster in only two clusters (Up or Down-regulated)
+#' }
 #' 
 #' @export
 #' @import ggplot2
