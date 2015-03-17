@@ -9,7 +9,7 @@
 #' return table
 #' @param CutoffPVal the cut-off of p-value. The default is 0.05.
 #' @param orderMethod the order method, default is max, other options are 
-#' "mean", "all", "I", "II"
+#' "mean", "all", "I", "II" or a number meaning the ith cluster.
 #' @param roundvalue The default is TRUE. whether or not round the data. 
 #' such as round(1.54, 1)=1.5
 #' 
@@ -18,9 +18,10 @@
 #' \itemize{
 #' \item max. ordered by the max value in clusters beside all
 #' \item mean. ordered by the mean value in clusters beside all
-#' \item all. ordered by all genes
+#' \item All. ordered by all genes
 #' \item I. ordered by the I cluster in only two clusters (Up or Down-regulated)
 #' \item II. ordered by the II cluster in only two clusters (Up or Down-regulated)
+#' \item a number. like 2, "3".
 #' }
 #' 
 #' @export
@@ -49,8 +50,12 @@ setMethod("enrichment", signature(object="cogena"),
               method <- match.arg(method, clusterMethods(object))
               nClusters <- match.arg(nClusters, 
                                      as.character(nClusters(object)))
+              
               score1 <- object@measures[[method]][[nClusters]]
+              score1 <- score1[order(rownames(score1)),]
               score2 <- object@measures[[method]][["2"]]
+              score2 <- score2[order(rownames(score2)),]
+              rownames(score2) <- c("I", "II", "All")
 
               if (is.logical(score1)){
                   #warning(paste("For", method, ", the number of clusters:", nClusters, "Nonexists!"))
@@ -102,26 +107,23 @@ setMethod("enrichment", signature(object="cogena"),
                     NumGeneInCluster <- cluster2_all
                 }
               }
-
-              # the orderMethod options to order the score: mean, all and max
+              
+              #Trim the NO. of Geneset no more than CutoffNumGeneset and delete the all NAs
+              
+              # the orderMethod options
+              orderMethod <- match.arg(orderMethod, c(rownames(score), "max", "mean"))
               if (orderMethod == "mean") {
                   score = score[,order(colMeans(score, na.rm=TRUE), decreasing=TRUE)]
+                  index_above_cutoffPVal <- which(suppressWarnings(apply(score, 2, max, na.rm=TRUE)) > -log2(CutoffPVal))
               } else if (orderMethod == "max") {
                   colMax <- function(X) {suppressWarnings(apply(X, 2, max, na.rm=TRUE))}
                   score = score[,order(colMax(score), decreasing=TRUE)]
-                  #score = score[,order(colMax(score[-nrow(score),]), decreasing=TRUE)]
-              } else if (orderMethod == "all") {
-                  score = score[, order(score["All",], decreasing=TRUE)]
-              } else if (orderMethod == "I") {
-                  score = score[, order(score["I",], decreasing=TRUE)]
-              } else if (orderMethod == "II") {
-                  score = score[, order(score["II",], decreasing=TRUE)]
-              } else {
-                  warning(paste("\n wrong orderMethod:", orderMethod)); break
+                  index_above_cutoffPVal <- which(suppressWarnings(apply(score, 2, max, na.rm=TRUE)) > -log2(CutoffPVal))
+              } else if (orderMethod %in% rownames(score)) {
+                  score = score[, order(score[orderMethod,], decreasing=TRUE)]
+                  index_above_cutoffPVal <- which(score[orderMethod,] > -log2(CutoffPVal))
               }
 
-              #Trim the NO. of Geneset no more than CutoffNumGeneset and delete the all NAs
-              index_above_cutoffPVal <- which(suppressWarnings(apply(score, 2, max, na.rm=TRUE)) > -log2(CutoffPVal))
               if (length(index_above_cutoffPVal) > CutoffNumGeneset){
                   score <- score[,c(1:CutoffNumGeneset)]
               } else if (length(index_above_cutoffPVal) == 0){

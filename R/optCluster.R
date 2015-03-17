@@ -4,21 +4,27 @@
 #' of gene sets which are signifigant should be maximum.
 #'
 #' @inheritParams clusterMethods
+#' @param based counting method. Default is to count all the clusters and I, 
+#' II, All. Other options are "All", "I", "II".
 #' @export
 #' @docType methods
 #' @rdname optCluster
 #' @examples
+#' data(PD)
 #' summary(cogena_result)
 #' \dontrun{
 #' score <- optCluster(cogena_result)
+#' score <- optCluster(cogena_result, based="All")
 #' }
 #' 
-setGeneric("optCluster", function(object) standardGeneric("optCluster"))
+setGeneric("optCluster",  function(object, based=NULL) standardGeneric("optCluster"))
 
 #' @rdname optCluster
 #' @aliases optCluster,cogena
 setMethod("optCluster", signature(object="cogena"),
-    function(object){
+    function(object, based=NULL){
+    
+    based <- match.arg(based, c("I", "II", "All"))
     score <- matrix(NA, nrow=length(clusterMethods(object)), ncol=length(nClusters(object)), dimnames=list(clusterMethods(object), nClusters(object)))
     for (i in clusterMethods(object)){
         for (j in as.character(nClusters(object))) {
@@ -31,7 +37,7 @@ setMethod("optCluster", signature(object="cogena"),
                     score[i,j] <- NA
                 } else {
                     up_dn_score <- 0
-                    up_dn2 <- 0
+                    #up_dn2 <- 0
                     for (k in 1:j){
 
                         #print (paste(i, j, k))
@@ -45,9 +51,12 @@ setMethod("optCluster", signature(object="cogena"),
                     }
 
                     up_dn_score <- ifelse (up_dn_score >= as.numeric(j) * 0.75, 1, -1)
+                    if (is.null(based)){
+                        score[i,j] <- ncol(enrichment_score) * up_dn_score
+                    } else if (any(grepl(paste0(based, "#"), rownames(enrichment_score)))) {
+                        score[i,j] <- length(enrichment_score[rownames(enrichment_score)[grep(paste0(based, "#"), rownames(enrichment_score))],]) * up_dn_score
+                    }
 
-                    score[i,j] <- ncol(enrichment_score) * up_dn_score
-                    
                     up_dn_score <- 0
                 }
             }
