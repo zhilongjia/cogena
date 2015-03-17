@@ -33,6 +33,7 @@ setMethod("optCluster", signature(object="cogena"),
     based <- match.arg(based, c("inTotal","I", "II", "All"))
 
     doParallel::registerDoParallel(cores=ncores)
+    i = NULL
     score <- foreach::foreach (i = clusterMethods(object), .combine='rbind') %dopar% {
         cl_score <- vector(mode="numeric", length = length(nClusters(object)))
         names(cl_score) <- as.character(nClusters(object))
