@@ -7,15 +7,15 @@
 \alias{optCluster,cogena-method}
 \title{get the best clustering methods and the number of clusters}
 \usage{
-optCluster(object, based = NULL)
+optCluster(object, based = "inTotal")
 
-\S4method{optCluster}{cogena}(object, based = NULL)
+\S4method{optCluster}{cogena}(object, based = "inTotal")
 }
 \arguments{
 \item{object}{a cogena object}
 
-\item{based}{counting method. Default is to count all the clusters and I,
-II, All. Other options are "All", "I", "II".}
+\item{based}{counting method. Default is "inTotal" to count all the clusters
+and I, II, All. Other options are "All", "I", "II".}
 }
 \description{
 get the best clustering methods and the number of clusters, based that the number
@@ -26,6 +26,7 @@ data(PD)
 summary(cogena_result)
 \dontrun{
 score <- optCluster(cogena_result)
+score <- optCluster(cogena_result, based="All")
 }
 }
 

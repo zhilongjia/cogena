@@ -4,8 +4,8 @@
 #' of gene sets which are signifigant should be maximum.
 #'
 #' @inheritParams clusterMethods
-#' @param based counting method. Default is to count all the clusters and I, 
-#' II, All. Other options are "All", "I", "II".
+#' @param based counting method. Default is "inTotal" to count all the clusters
+#' and I, II, All. Other options are "All", "I", "II".
 #' @export
 #' @docType methods
 #' @rdname optCluster
@@ -17,17 +17,18 @@
 #' score <- optCluster(cogena_result, based="All")
 #' }
 #' 
-setGeneric("optCluster",  function(object, based=NULL) standardGeneric("optCluster"))
+setGeneric("optCluster",  function(object, based="inTotal") standardGeneric("optCluster"))
 
 #' @rdname optCluster
 #' @aliases optCluster,cogena
 setMethod("optCluster", signature(object="cogena"),
-    function(object, based=NULL){
+    function(object, based="inTotal"){
     
-    based <- match.arg(based, c("I", "II", "All"))
+    based <- match.arg(based, c("inTotal","I", "II", "All"))
     score <- matrix(NA, nrow=length(clusterMethods(object)), ncol=length(nClusters(object)), dimnames=list(clusterMethods(object), nClusters(object)))
     for (i in clusterMethods(object)){
         for (j in as.character(nClusters(object))) {
+            
             enrichment_score <- enrichment(object, i, j, roundvalue=FALSE)
 
             if (is.logical(enrichment_score)) {

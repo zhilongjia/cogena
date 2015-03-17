@@ -52,10 +52,8 @@ setMethod("enrichment", signature(object="cogena"),
                                      as.character(nClusters(object)))
               
               score1 <- object@measures[[method]][[nClusters]]
-              score1 <- score1[order(rownames(score1)),]
               score2 <- object@measures[[method]][["2"]]
-              score2 <- score2[order(rownames(score2)),]
-              rownames(score2) <- c("I", "II", "All")
+              
 
               if (is.logical(score1)){
                   #warning(paste("For", method, ", the number of clusters:", nClusters, "Nonexists!"))
@@ -67,6 +65,10 @@ setMethod("enrichment", signature(object="cogena"),
                   #2 Nonexists!"))
                   return (score1)
               }
+              
+              score1 <- score1[c(as.character(1:nClusters), "All"),]
+              score2 <- score2[c("1", "2", "All"),]
+              rownames(score2) <- c("I", "II", "All")
 
               if (nClusters != 2){
                   score <- rbind(score1[1:as.numeric(nClusters),], score2[1:2,]
