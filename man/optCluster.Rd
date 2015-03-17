@@ -7,15 +7,21 @@
 \alias{optCluster,cogena-method}
 \title{get the best clustering methods and the number of clusters}
 \usage{
-optCluster(object, based = "inTotal")
+optCluster(object, based = "inTotal", ncores = object@ncore,
+  CutoffPVal = 0.05)
 
-\S4method{optCluster}{cogena}(object, based = "inTotal")
+\S4method{optCluster}{cogena}(object, based = "inTotal",
+  ncores = object@ncore, CutoffPVal = 0.05)
 }
 \arguments{
 \item{object}{a cogena object}
 
 \item{based}{counting method. Default is "inTotal" to count all the clusters
 and I, II, All. Other options are "All", "I", "II".}
+
+\item{ncores}{cores used for caculating optCluster. Default is same as ncores used during cogena function}
+
+\item{CutoffPVal}{the cut-off of p-value. Default is 0.05.}
 }
 \description{
 get the best clustering methods and the number of clusters, based that the number

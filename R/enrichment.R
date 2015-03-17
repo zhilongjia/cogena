@@ -48,8 +48,7 @@ setMethod("enrichment", signature(object="cogena"),
                    orderMethod="max", roundvalue=TRUE) {
               
               method <- match.arg(method, clusterMethods(object))
-              nClusters <- match.arg(nClusters, 
-                                     as.character(nClusters(object)))
+              nClusters <- match.arg(nClusters, as.character(nClusters(object)))
               
               score1 <- object@measures[[method]][[nClusters]]
               score2 <- object@measures[[method]][["2"]]
@@ -109,8 +108,6 @@ setMethod("enrichment", signature(object="cogena"),
                     NumGeneInCluster <- cluster2_all
                 }
               }
-              
-              #Trim the NO. of Geneset no more than CutoffNumGeneset and delete the all NAs
               
               # the orderMethod options
               orderMethod <- match.arg(orderMethod, c(rownames(score), "max", "mean"))

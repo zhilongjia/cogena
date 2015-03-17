@@ -7,7 +7,7 @@
 #' @param low colour for low end of gradient.
 #' @param high colour for high end of gradient.
 #' @param na.value Colour to use for missing values.
-#' @param title a character. like GSExxx. the output of figure will like "cogena: 
+#' @param maintitle a character. like GSExxx. the output of figure will like "cogena: 
 #' kmeans 3 GSExxx" in two lines. Default is NULL
 #' 
 #' @seealso \code{\link{cogena}} and \code{\link{heatmapCluster}}
@@ -39,7 +39,7 @@
 #' }
 setGeneric("heatmapPEI", function(object, method, nClusters, CutoffNumGeneset=20,
                                   CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE,
-                                  low="green", high="red", na.value="white", title=NULL) 
+                                  low="green", high="red", na.value="white", maintitle=NULL) 
     standardGeneric("heatmapPEI"))
 
 #' @rdname heatmapPEI
@@ -49,7 +49,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
                    nClusters=nClusters(object), 
                    CutoffNumGeneset=20, CutoffPVal=0.05,
                    orderMethod="max", roundvalue=TRUE,
-                   low="grey", high="red", na.value="white", title=NULL) {
+                   low="grey", high="red", na.value="white", maintitle=NULL) {
               method <- match.arg(method, clusterMethods(object))
               nClusters <- match.arg(nClusters, as.character(nClusters(object)))
               
@@ -66,7 +66,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
               }
               Var1=Var2=value=NULL
               if (!is.null(title)) {
-                  title=paste("cogena:", method, nClusters, "\n", title)
+                  title=paste("cogena:", method, nClusters, "\n", maintitle)
               } else {
                   title=paste("cogena:", method, nClusters)
               }

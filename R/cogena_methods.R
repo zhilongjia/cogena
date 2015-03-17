@@ -83,6 +83,5 @@ setMethod("summary","cogena",
               cat("\nClustering Methods:\n",clusterMethods(object),"\n\n")
               cat("The Number of Clusters:\n",nClusters(object),"\n\n")
               cat("Metric of Distance Matrix:\n", object@metric, "\n\n")
-              cat("Agglomeration method for hierarchical clustering (hclust and
-               agnes):\n", object@method, "\n\n")
+              cat("Agglomeration method for hierarchical clustering (hclust and agnes):\n", object@method, "\n\n")
           })

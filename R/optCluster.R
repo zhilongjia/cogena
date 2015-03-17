@@ -6,9 +6,14 @@
 #' @inheritParams clusterMethods
 #' @param based counting method. Default is "inTotal" to count all the clusters
 #' and I, II, All. Other options are "All", "I", "II".
+#' @param ncores cores used for caculating optCluster. Default is same as ncores used during cogena function 
+#' @param CutoffPVal the cut-off of p-value. Default is 0.05.
 #' @export
 #' @docType methods
 #' @rdname optCluster
+#' @import parallel
+#' @import foreach
+#' @import doParallel
 #' @examples
 #' data(PD)
 #' summary(cogena_result)
@@ -17,60 +22,58 @@
 #' score <- optCluster(cogena_result, based="All")
 #' }
 #' 
-setGeneric("optCluster",  function(object, based="inTotal") standardGeneric("optCluster"))
+setGeneric("optCluster",  function(object, based="inTotal", ncores=object@ncore,
+                                   CutoffPVal=0.05) standardGeneric("optCluster"))
 
 #' @rdname optCluster
 #' @aliases optCluster,cogena
 setMethod("optCluster", signature(object="cogena"),
-    function(object, based="inTotal"){
+    function(object, based="inTotal", ncores=object@ncore, CutoffPVal=0.05){
     
     based <- match.arg(based, c("inTotal","I", "II", "All"))
-    score <- matrix(NA, nrow=length(clusterMethods(object)), ncol=length(nClusters(object)), dimnames=list(clusterMethods(object), nClusters(object)))
-    for (i in clusterMethods(object)){
+
+    doParallel::registerDoParallel(cores=ncores)
+    score <- foreach::foreach (i = clusterMethods(object), .combine='rbind') %dopar% {
+        cl_score <- vector(mode="numeric", length = length(nClusters(object)))
+        names(cl_score) <- as.character(nClusters(object))
+        cl_score_index = 1
         for (j in as.character(nClusters(object))) {
-            
             enrichment_score <- enrichment(object, i, j, roundvalue=FALSE)
 
-            if (is.logical(enrichment_score)) {
-                score[i,j]=NA
+            if (is.logical(enrichment_score) || is.logical(object@measures[[i]][[j]])) {
+                cl_score[cl_score_index] = NA
             } else {
-                if (is.logical(object@measures[[i]][[j]])){
-                    score[i,j] <- NA
-                } else {
-                    up_dn_score <- 0
-                    #up_dn2 <- 0
-                    for (k in 1:j){
-
-                        #print (paste(i, j, k))
-                        data <- mat(object)[geneInCluster(object, i, j, as.character(k)),, drop=FALSE]
-                        #print (dim(data))
-
-                        up_dn <- apply(data, 1, upORdn, object@sampleLabel)
-                        if (length(table(up_dn)) == 1){
-                            up_dn_score <- up_dn_score + 1
-                        }
+                up_dn_score <- 0
+                for (k in 1:j){
+                    data <- mat(object)[geneInCluster(object, i, j, as.character(k)),, drop=FALSE]
+                    up_dn <- apply(data, 1, upORdn, object@sampleLabel)
+                    if (length(table(up_dn)) == 1){
+                        up_dn_score <- up_dn_score + 1
                     }
-
-                    up_dn_score <- ifelse (up_dn_score >= as.numeric(j) * 0.75, 1, -1)
-                    if (is.null(based)){
-                        score[i,j] <- ncol(enrichment_score) * up_dn_score
-                    } else if (any(grepl(paste0(based, "#"), rownames(enrichment_score)))) {
-                        score[i,j] <- length(enrichment_score[rownames(enrichment_score)[grep(paste0(based, "#"), rownames(enrichment_score))],]) * up_dn_score
-                    }
-
-                    up_dn_score <- 0
                 }
+
+                up_dn_score <- ifelse (up_dn_score >= as.numeric(j) * 0.75, 1, -1)
+                if (based=="inTotal"){
+                    cl_score[cl_score_index] <- ncol(enrichment_score) * up_dn_score
+                } else if (any(grepl(paste0(based, "#"), rownames(enrichment_score)))) {
+                    cl_score[cl_score_index] <- length(which(enrichment_score[rownames(enrichment_score)[grep(paste0("^", based, "#"), rownames(enrichment_score))],] > -log2(CutoffPVal))) * up_dn_score
+                }
+                up_dn_score <- 0
             }
+            cl_score_index = cl_score_index + 1
         }
+        
         # if the 2 clusters have a negative value, all other clusters in this method will have a negative value or NA.
-        if (!is.na(score[i,"2"]) && score[i,"2"] < 0){
+        if (!is.na(cl_score["2"]) && cl_score["2"] < 0) {
             for (j in as.character(nClusters(object))){
-                if (!is.na(score[i,j]) && score[i,j] >0){
-                    score[i,j] <- -score[i,j]
+                if (!is.na(cl_score[j]) && cl_score[j] >0){
+                    cl_score[j] <- -cl_score[j]
                 }
             }
         }
+        cl_score
     }
+    rownames(score) <- clusterMethods(object)
     return (score)
 })
 

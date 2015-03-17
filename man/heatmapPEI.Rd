@@ -9,12 +9,12 @@
 \usage{
 heatmapPEI(object, method, nClusters, CutoffNumGeneset = 20,
   CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE,
-  low = "green", high = "red", na.value = "white", title = NULL)
+  low = "green", high = "red", na.value = "white", maintitle = NULL)
 
 \S4method{heatmapPEI}{cogena}(object, method = clusterMethods(object),
   nClusters = nClusters(object), CutoffNumGeneset = 20, CutoffPVal = 0.05,
   orderMethod = "max", roundvalue = TRUE, low = "grey", high = "red",
-  na.value = "white", title = NULL)
+  na.value = "white", maintitle = NULL)
 }
 \arguments{
 \item{object}{a cogena object}
@@ -40,7 +40,7 @@ such as round(1.54, 1)=1.5}
 
 \item{na.value}{Colour to use for missing values.}
 
-\item{title}{a character. like GSExxx. the output of figure will like "cogena:
+\item{maintitle}{a character. like GSExxx. the output of figure will like "cogena:
 kmeans 3 GSExxx" in two lines. Default is NULL}
 }
 \description{
