@@ -7,8 +7,9 @@
 #' @param low colour for low end of gradient.
 #' @param high colour for high end of gradient.
 #' @param na.value Colour to use for missing values.
-#' @param maintitle a character. like GSExxx. the output of figure will like "cogena: 
-#' kmeans 3 GSExxx" in two lines. Default is NULL
+#' @param maintitle a character. like GSExxx. the output of figure will like
+#' "cogena: kmeans 3 GSExxx" in two lines. Default is NULL
+#' @param printGS print the enriched gene set names or not. Default is TRUE.
 #' 
 #' @seealso \code{\link{cogena}} and \code{\link{heatmapCluster}}
 #' 
@@ -39,7 +40,8 @@
 #' }
 setGeneric("heatmapPEI", function(object, method, nClusters, CutoffNumGeneset=20,
                                   CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE,
-                                  low="green", high="red", na.value="white", maintitle=NULL) 
+                                  low="green", high="red", na.value="white", 
+                                  maintitle=NULL, printGS=TRUE) 
     standardGeneric("heatmapPEI"))
 
 #' @rdname heatmapPEI
@@ -49,7 +51,8 @@ setMethod("heatmapPEI", signature(object="cogena"),
                    nClusters=nClusters(object), 
                    CutoffNumGeneset=20, CutoffPVal=0.05,
                    orderMethod="max", roundvalue=TRUE,
-                   low="grey", high="red", na.value="white", maintitle=NULL) {
+                   low="grey", high="red", na.value="white", 
+                   maintitle=NULL, printGS=TRUE) {
               method <- match.arg(method, clusterMethods(object))
               nClusters <- match.arg(nClusters, as.character(nClusters(object)))
               
@@ -57,6 +60,15 @@ setMethod("heatmapPEI", signature(object="cogena"),
               if (length(enrichment)==1 && is.na(enrichment)){
                   stop(paste("No enrichment above the cutoff for", method, "when the number of clusters is", nClusters, "!"))
               }
+              
+              if (printGS==TRUE) {
+                  if (ncol(enrichment) <= CutoffNumGeneset) {
+                      print (rev(colnames(enrichment)))
+                  } else {
+                      print (rev(colnames(enrichment))[1:CutoffNumGeneset])
+                  }
+              }
+              
               enrichment <- reshape2::melt(enrichment)
               #legend breaks
               if (max(enrichment$value, na.rm=TRUE) > 15 ){
@@ -78,5 +90,6 @@ setMethod("heatmapPEI", signature(object="cogena"),
                   labs(list(title = title, x = "Cluster", y = "Gene set")) +
                   theme(axis.text.y = element_text(size = rel(1.5), face="bold")) +
                   theme(axis.text.x = element_text(size = rel(1.3), angle=30, face="bold"))
+              
           })
 
