@@ -16,7 +16,10 @@
 #' 
 #' #geneInCluster
 #' geneInCluster(cogena_result, "kmeans", "3", "2")
-#'
+#' 
+#' #Up or Down genes with setting nClusters as "2".
+#' geneInCluster(cogena_result, "som", "2", "1")
+#' 
 setGeneric("geneInCluster", function(object, method, nClusters, ith) standardGeneric("geneInCluster"))
 
 #' @rdname geneInCluster
