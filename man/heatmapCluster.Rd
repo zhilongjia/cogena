@@ -7,12 +7,13 @@
 \title{heatmap of gene expression profilings with cluster indication.}
 \usage{
 heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"),
-  clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL, ...)
+  clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
+  printSum = TRUE, ...)
 
 \S4method{heatmapCluster}{cogena}(object, method = clusterMethods(object),
   nClusters = nClusters(object), sampleColor = c("darkblue", "cyan"),
   clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
-  maintitle = NULL, ...)
+  maintitle = NULL, printSum = TRUE, ...)
 }
 \arguments{
 \item{object}{a cogena object}
@@ -28,6 +29,8 @@ heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"),
 \item{clusterColor2}{a color vector with 2 elements. The default is  c("coral3", "deepskyblue1").}
 
 \item{heatmapcol}{col for heatmap. The default is greenred(75).}
+
+\item{printSum}{print the summary of the number of genes in each cluster. Default is TRUE.}
 
 \item{...}{other parameters to heatmap.3.}
 

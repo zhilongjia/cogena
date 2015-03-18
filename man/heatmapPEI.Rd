@@ -9,12 +9,13 @@
 \usage{
 heatmapPEI(object, method, nClusters, CutoffNumGeneset = 20,
   CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE,
-  low = "green", high = "red", na.value = "white", maintitle = NULL)
+  low = "green", high = "red", na.value = "white", maintitle = NULL,
+  printGS = TRUE)
 
 \S4method{heatmapPEI}{cogena}(object, method = clusterMethods(object),
   nClusters = nClusters(object), CutoffNumGeneset = 20, CutoffPVal = 0.05,
   orderMethod = "max", roundvalue = TRUE, low = "grey", high = "red",
-  na.value = "white", maintitle = NULL)
+  na.value = "white", maintitle = NULL, printGS = TRUE)
 }
 \arguments{
 \item{object}{a cogena object}
@@ -40,8 +41,10 @@ such as round(1.54, 1)=1.5}
 
 \item{na.value}{Colour to use for missing values.}
 
-\item{maintitle}{a character. like GSExxx. the output of figure will like "cogena:
-kmeans 3 GSExxx" in two lines. Default is NULL}
+\item{maintitle}{a character. like GSExxx. the output of figure will like
+"cogena: kmeans 3 GSExxx" in two lines. Default is NULL}
+
+\item{printGS}{print the enriched gene set names or not. Default is TRUE.}
 }
 \description{
 heatmap of the gene set enrichment index. After obtaining the ennrichemt of

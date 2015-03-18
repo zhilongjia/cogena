@@ -8,6 +8,7 @@
 #' @param heatmapcol col for heatmap. The default is greenred(75).
 #' @param maintitle a character. like GSExxx. the output of figure will like
 #' "kmeans 3 Clusters GSExxx" in two lines.
+#' @param printSum print the summary of the number of genes in each cluster. Default is TRUE.
 #' @param ... other parameters to heatmap.3.
 #' @export
 #' @import gplots
@@ -27,14 +28,15 @@
 setGeneric("heatmapCluster", 
            function(object, method, nClusters, sampleColor=c("darkblue", "cyan"),
                     clusterColor=NULL, clusterColor2=NULL, heatmapcol=NULL,
-                    ...) standardGeneric("heatmapCluster"))
+                    printSum=TRUE, ...) standardGeneric("heatmapCluster"))
 
 #' @rdname heatmapCluster
 #' @aliases heatmapCluster
 setMethod("heatmapCluster", signature(object="cogena"),
           function (object, method=clusterMethods(object), nClusters=nClusters(object),
                     sampleColor=c("darkblue", "cyan"), clusterColor=NULL,
-                    clusterColor2=NULL, heatmapcol=NULL, maintitle=NULL, ...){
+                    clusterColor2=NULL, heatmapcol=NULL, maintitle=NULL, 
+                    printSum=TRUE, ...){
               
               #get the parameters
               method <- match.arg(method, clusterMethods(object))
@@ -50,10 +52,15 @@ setMethod("heatmapCluster", signature(object="cogena"),
                   cluster_size <- clusters(object, method)[[nClusters]]$cluster
                   cluster_size2 <- clusters(object, method)[["2"]]$cluster
               }
-              print (table(cluster_size2))
-              if (nClusters != "2"){
-                  print (table(cluster_size))
-                }
+              
+              if (printSum==TRUE) {
+                  cat ("The number of genes in each cluster:\n")
+                  print (table(cluster_size2))
+                  if (nClusters != "2"){
+                      print (table(cluster_size))
+                  }
+              }
+              
               #print (cluster_size)
               #reorder the mat based on the clustering and type of sample.
               

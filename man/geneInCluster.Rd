@@ -35,6 +35,9 @@ summary(cogena_result)
 
 #geneInCluster
 geneInCluster(cogena_result, "kmeans", "3", "2")
+
+#Up or Down genes with setting nClusters as "2".
+geneInCluster(cogena_result, "som", "2", "1")
 }
 \seealso{
 \code{\link{cogena}}
