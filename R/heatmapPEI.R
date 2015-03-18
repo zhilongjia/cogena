@@ -63,9 +63,9 @@ setMethod("heatmapPEI", signature(object="cogena"),
               
               if (printGS==TRUE) {
                   if (ncol(enrichment) <= CutoffNumGeneset) {
-                      print (rev(colnames(enrichment)))
+                      cat (rev(colnames(enrichment)), sep =", ")
                   } else {
-                      print (rev(colnames(enrichment))[1:CutoffNumGeneset])
+                      cat (rev(colnames(enrichment))[1:CutoffNumGeneset], sep =", ")
                   }
               }
               
