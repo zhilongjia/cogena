@@ -58,7 +58,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
               
               enrichment <- enrichment(object, method, nClusters, CutoffNumGeneset, CutoffPVal, orderMethod, roundvalue)
               if (length(enrichment)==1 && is.na(enrichment)){
-                  stop(paste("No enrichment above the cutoff for", method, "when the number of clusters is", nClusters, "!"))
+                  return(paste("No enrichment above the cutoff for", method, "when the number of clusters is", nClusters, "!"))
               }
               
               if (printGS==TRUE) {

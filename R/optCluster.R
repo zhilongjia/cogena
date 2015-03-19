@@ -6,7 +6,9 @@
 #' @inheritParams clusterMethods
 #' @param based counting method. Default is "inTotal" to count all the clusters
 #' and I, II, All. Other options are "All", "I", "II".
-#' @param ncores cores used for caculating optCluster. Default is same as ncores used during cogena function 
+#' @param ncores cores used for caculating optCluster. Default is same as ncores
+#' used during cogena function, but it will be the same as number of cores 
+#' machine has if ncores parameter is exceed it.
 #' @param CutoffPVal the cut-off of p-value. Default is 0.05.
 #' @export
 #' @docType methods
@@ -31,7 +33,10 @@ setMethod("optCluster", signature(object="cogena"),
     function(object, based="inTotal", ncores=object@ncore, CutoffPVal=0.05){
     
     based <- match.arg(based, c("inTotal","I", "II", "All"))
-
+    
+    if (ncores > parallel::detectCores()) {
+        ncores <- parallel::detectCores()
+    }
     doParallel::registerDoParallel(cores=ncores)
     i = NULL
     score <- foreach::foreach (i = clusterMethods(object), .combine='rbind') %dopar% {

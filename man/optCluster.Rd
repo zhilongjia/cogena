@@ -19,7 +19,9 @@ optCluster(object, based = "inTotal", ncores = object@ncore,
 \item{based}{counting method. Default is "inTotal" to count all the clusters
 and I, II, All. Other options are "All", "I", "II".}
 
-\item{ncores}{cores used for caculating optCluster. Default is same as ncores used during cogena function}
+\item{ncores}{cores used for caculating optCluster. Default is same as ncores
+used during cogena function, but it will be the same as number of cores
+machine has if ncores parameter is exceed it.}
 
 \item{CutoffPVal}{the cut-off of p-value. Default is 0.05.}
 }
