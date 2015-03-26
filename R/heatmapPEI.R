@@ -62,11 +62,11 @@ setMethod("heatmapPEI", signature(object="cogena"),
               }
               
               if (printGS==TRUE) {
-                  if (ncol(enrichment) <= CutoffNumGeneset) {
-                      cat (rev(colnames(enrichment)), sep =", ")
-                  } else {
-                      cat (rev(colnames(enrichment))[1:CutoffNumGeneset], sep =", ")
-                  }
+                  cat (rev(colnames(enrichment)), sep ="\t")
+              }
+              
+              if (nClusters != "2"){
+                  cl_color <- c(rep("black", nrow(enrichment)-3), rep("blue", 3))
               }
               
               enrichment <- reshape2::melt(enrichment)
@@ -89,7 +89,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
                   geom_text(aes(fill=value, label=value),size=4, na.rm=TRUE) +
                   labs(list(title = title, x = "Cluster", y = "Gene set")) +
                   theme(axis.text.y = element_text(size = rel(1.5), face="bold")) +
-                  theme(axis.text.x = element_text(size = rel(1.3), angle=30, face="bold"))
+                  theme(axis.text.x = element_text(size = rel(1.3), angle=30, face="bold", color=cl_color))
               
           })
 
