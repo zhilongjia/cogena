@@ -106,6 +106,8 @@ certain number of cluster.
 ```{r cogena_result_analysis}
 summary(cogena_result)
 score <- optCluster(cogena_result, ncores=1)
+#choose optimun based on cluster I.
+#score <- optCluster(cogena_result, based="I", ncores=1)
 ```
 
 ```{r score, echo=FALSE, results='asis'}
@@ -125,6 +127,8 @@ See ?heatmapPEI for more details.
 #The values shown in Figure 2. is the -log2 (p-values).
 #Always make the number as character, please!
 heatmapPEI(cogena_result, "hierarchical", "6")
+#ordered by the Cluster I.
+#heatmapPEI(cogena_result, "hierarchical", "6", orderMethod = "I")
 ```
 
 3.  The heatmap of expression profiling with clusters is plotted by `heatmapCluster`. see Figure 3.
