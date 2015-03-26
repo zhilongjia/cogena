@@ -25,6 +25,7 @@
 #' @slot sampleLabel character vector with names are sample names. only used 
 #' for plotting.
 #' @slot ncore the number of cores used.
+#' @slot gmt the gmt file used
 #' @slot call the called function
 #' @rdname cogena_class
 #' @exportClass cogena
@@ -45,5 +46,6 @@ setClass("cogena", slots= list(mat="matrix",
                           annotation="matrix", 
                           sampleLabel="factor",
                           ncore="numeric",
+                          gmt="character",
                           call="call"))
 

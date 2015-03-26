@@ -67,6 +67,8 @@ setMethod("heatmapPEI", signature(object="cogena"),
               
               if (nClusters != "2"){
                   cl_color <- c(rep("black", nrow(enrichment)-3), rep("blue", 3))
+              } else {
+                  cl_color <- rep("black", 3)
               }
               
               enrichment <- reshape2::melt(enrichment)

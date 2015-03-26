@@ -24,7 +24,9 @@ gene2set <- function(annofile=NULL, genenames, TermFreq=0) {
 
     annoList <- gmt2list(annofile)
     annoMatrix <- annotationListToMatrix(annoList, genenames)
-    anno = subset(annoMatrix, select=names(which( colSums(annoMatrix)/ncol(annoMatrix)>=TermFreq )))
+    anno=annoMatrix[,names(which( colSums(annoMatrix)/ncol(annoMatrix)>=TermFreq ))]
+    return(anno)
+    #anno = subset(annoMatrix, select=names(which( colSums(annoMatrix)/ncol(annoMatrix)>=TermFreq )))
 }
 
 

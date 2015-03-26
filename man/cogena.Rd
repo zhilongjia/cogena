@@ -5,8 +5,8 @@
 \title{co-expressed gene-set enrichment analysis}
 \usage{
 cogena(obj, nClust, clMethods = "hierarchical", metric = "correlation",
-  method = "complete", annotation = NULL, sampleLabel = NULL, ncore = 2,
-  annotationGenesPop = NULL, verbose = FALSE, ...)
+  method = "complete", annofile = NULL, sampleLabel = NULL, ncore = 2,
+  TermFreq = 0, verbose = FALSE, ...)
 }
 \arguments{
 \item{obj}{Differentially expressed gene (DEG) expression profilings. Either
@@ -35,20 +35,18 @@ See Detail.}
 agglomeration method used. The default is "complete". Available choices are
  "ward", "single", "complete", and "average".}
 
-\item{annotation}{logical matrix of biological annotation with row be DEG,
-column be gene sets and value be logical.}
+\item{annofile}{gene set filename.}
 
-\item{sampleLabel}{factor vector with names are sample names. only used for
-plotting.}
+\item{sampleLabel}{factor or character vector with names are sample names.
+only used for plotting.}
 
 \item{ncore}{Number of core used. The default is 2.}
 
-\item{annotationGenesPop}{logical matrix of biological annotation with row
-be all genes, column be gene sets and value be logical.}
+\item{TermFreq}{a value from [0,1) to filter low-frequence gene sets.}
 
 \item{verbose}{verbose.}
 
-\item{...}{to function vClusters.}
+\item{...}{to interal function vClusters.}
 }
 \value{
 a cogena object
@@ -102,16 +100,9 @@ data(PD)
 #annotaion
 annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
 annofile <- system.file("extdata", annoGMT, package="cogena")
-# the DEG gene-sets matrix
-anno <- gene2set(annofile, rownames(DEexprs))
-# the background gene gene-sets matrix
-data(AllGeneSymbols)
-annotationGenesPop <- gene2set(annofile, AllGeneSymbols)
-annotationGenesPop <- annotationGenesPop[,colnames(anno)]
-
 #cogena parameters
 # the number of clusters. A vector.
-nClust <- 2:3
+nClust <- 2:6
 # the number of cores.
 ncore <- 2
 # the clustering methods
@@ -124,7 +115,7 @@ method <- "complete"
 
 # the cogena analysis
 cogena_result <- cogena(DEexprs, nClust=nClust, clMethods=clMethods,
-    metric=metric, method=method,  annotation=anno, sampleLabel=sampleLabel,
-    ncore=ncore, annotationGenesPop=annotationGenesPop, verbose=TRUE)
+    metric=metric, method=method,  annofile=annofile, sampleLabel=sampleLabel,
+    ncore=ncore, verbose=TRUE)
 }
 

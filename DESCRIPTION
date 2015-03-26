@@ -32,7 +32,6 @@ Suggests:
 Collate: 
     dist_class.R
     cogena_class.R
-    AllGeneSymbols.R
     PD.R
     PEI.R
     cogena.R

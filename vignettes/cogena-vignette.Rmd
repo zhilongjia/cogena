@@ -41,8 +41,9 @@ user-defined genes list vector. User can used `AllGeneSymbols` from `data(AllGen
     There are three objects in the PD dataset. See `?PD` for more details.
 
 ```{r import_data, message=FALSE}
-library(cogena)
-data(AllGeneSymbols)
+#library(cogena)
+library(devtools)
+load_all("~/cogena/")
 data(PD)
 # Three objects in the PD dataset and one in AllGeneSymbols dataset.
 ```
@@ -62,12 +63,6 @@ ls()
 ```{r gene_list_annotation}
 annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
 annofile <- system.file("extdata", annoGMT, package="cogena")
-# the DEG gene-sets matrix
-anno <- gene2set(annofile, rownames(DEexprs))
-# the background gene gene-sets matrix
-data(AllGeneSymbols)
-annotationGenesPop <- gene2set(annofile, AllGeneSymbols)
-annotationGenesPop <- annotationGenesPop[,colnames(anno)]
 ```
 
     
@@ -88,8 +83,8 @@ method <- "complete"
 
 # the cogena analysis
 cogena_result <- cogena(DEexprs, nClust=nClust, clMethods=clMethods, metric=metric,
-                      method=method,  annotation=anno, sampleLabel=sampleLabel, 
-                      ncore=ncore, annotationGenesPop=annotationGenesPop, verbose=TRUE)
+                      method=method,  annofile=annofile, sampleLabel=sampleLabel, 
+                      ncore=ncore, verbose=TRUE)
 ```
 
 
@@ -126,7 +121,7 @@ See ?heatmapPEI for more details.
 ```{r heatmapPEI, fig.width=10, fig.height=6, fig.cap="KEGG pathway enrichment"}
 #The values shown in Figure 2. is the -log2 (p-values).
 #Always make the number as character, please!
-heatmapPEI(cogena_result, "hierarchical", "6")
+heatmapPEI(cogena_result, "hierarchical", "6", printGS=FALSE)
 #ordered by the Cluster I.
 #heatmapPEI(cogena_result, "hierarchical", "6", orderMethod = "I")
 ```

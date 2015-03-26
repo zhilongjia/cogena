@@ -47,6 +47,8 @@ for plotting.}
 
 \item{\code{ncore}}{the number of cores used.}
 
+\item{\code{gmt}}{the gmt file used}
+
 \item{\code{call}}{the called function}
 }}
 

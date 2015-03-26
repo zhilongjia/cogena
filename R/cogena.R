@@ -62,15 +62,13 @@
 #' @param method For hierarchical clustering (hierarchical and agnes), the 
 #' agglomeration method used. The default is "complete". Available choices are
 #'  "ward", "single", "complete", and "average".
-#' @param annotation logical matrix of biological annotation with row be DEG, 
-#' column be gene sets and value be logical. 
-#' @param sampleLabel factor vector with names are sample names. only used for 
-#' plotting.
+#' @param annofile gene set filename.
+#' @param sampleLabel factor or character vector with names are sample names. 
+#' only used for plotting.
 #' @param ncore Number of core used. The default is 2.
-#' @param annotationGenesPop logical matrix of biological annotation with row 
-#' be all genes, column be gene sets and value be logical.
+#' @param TermFreq a value from [0,1) to filter low-frequence gene sets.
 #' @param verbose verbose.
-#' @param ... to function vClusters.
+#' @param ... to interal function vClusters.
 #' @return a cogena object
 #' @examples
 #' data(PD)
@@ -78,16 +76,9 @@
 #' #annotaion
 #' annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
 #' annofile <- system.file("extdata", annoGMT, package="cogena")
-#' # the DEG gene-sets matrix
-#' anno <- gene2set(annofile, rownames(DEexprs))
-#' # the background gene gene-sets matrix
-#' data(AllGeneSymbols)
-#' annotationGenesPop <- gene2set(annofile, AllGeneSymbols)
-#' annotationGenesPop <- annotationGenesPop[,colnames(anno)]
-#' 
 #' #cogena parameters
 #' # the number of clusters. A vector.
-#' nClust <- 2:3
+#' nClust <- 2:6
 #' # the number of cores. 
 #' ncore <- 2
 #' # the clustering methods
@@ -100,19 +91,18 @@
 #' 
 #' # the cogena analysis
 #' cogena_result <- cogena(DEexprs, nClust=nClust, clMethods=clMethods, 
-#'     metric=metric, method=method,  annotation=anno, sampleLabel=sampleLabel, 
-#'     ncore=ncore, annotationGenesPop=annotationGenesPop, verbose=TRUE)
+#'     metric=metric, method=method,  annofile=annofile, sampleLabel=sampleLabel, 
+#'     ncore=ncore, verbose=TRUE)
 #'
 #' @export
 #' @import devtools
 
 cogena <- function(obj, nClust, clMethods="hierarchical",
                     metric="correlation", method="complete", 
-                    annotation=NULL, sampleLabel=NULL, ncore=2, 
-                    annotationGenesPop=NULL, verbose=FALSE,...) {
+                    annofile=NULL, sampleLabel=NULL, ncore=2, 
+                    TermFreq=0, verbose=FALSE,...) {
 
-  clMethods <- tolower(clMethods)
-  clMethods <- match.arg(clMethods,c("hierarchical","kmeans","diana","fanny",
+  clMethods <- match.arg(clMethods, c("hierarchical","kmeans","diana","fanny",
                                      "som","model","sota","pam","clara",
                                      "agnes"), several.ok=TRUE)
 
@@ -131,7 +121,7 @@ cogena <- function(obj, nClust, clMethods="hierarchical",
   ## used for hierarchical, kmeans, diana, fanny, agnes, pam
   metric <- match.arg(metric,c("euclidean", "correlation", "abscorrelation",
    "manhattan", "spearman", "maximum", "kendall", "canberra", "binary", 
-   "pearson", "abspearson", "NMI", "biwt"))
+   "pearson", "abspearson", "NMI", "biwt")) #
   
 #   if("NMI" %in% metric){
 # #       if(!require(infotheo)) {
@@ -161,31 +151,34 @@ cogena <- function(obj, nClust, clMethods="hierarchical",
          stop("argument 'obj' must be a matrix, data.frame, or ExpressionSet 
               object")
          )
-
-  if ("clara" %in% clMethods & !(metric %in% c("euclidean", "manhattan")))
-    warning("'clara' currently only works with 'euclidean' or 'manhattan' 
-            metrics - other metrics will be changed to 'euclidean'  ")
-
-  if (is.null(annotation) || is.null(annotationGenesPop)) {
-    stop("annotation must be specified")
+  
+  if(is.null(rownames(mat))) {
+      stop("rownames of data must be present")
   }
+  
+  if (is.null(annofile)) {
+      annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", package="cogena")
+  }
+  
+  annotation <- gene2set(annofile, rownames(mat), TermFreq=TermFreq)
+  # the background gene gene-sets matrix
+  annotationGenesPop <- gene2set(annofile, AllGeneSymbols, TermFreq=TermFreq)
+  annotationGenesPop <- annotationGenesPop[,colnames(annotation)]
 
   if (ncol(annotationGenesPop) ==0 || ncol(annotation)==0) {
     stop("Error in annotation or annotationGenesPop as ncol equals zero. 
          Maybe lower the TermFreq value.")
   }
 
-  if(is.null(rownames(mat))) {
-    stop("rownames of data must be present")
-  }
+  
 
   nClust <- floor(nClust)
   if (any(nClust<1))
-    stop("argument 'nClust' must be a positive integer vector")
+      {stop("argument 'nClust' must be a positive integer vector")}
 
-    #Dist caculation
-    if (verbose) {print("Dist caculation")}
-    if (metric == "biwt") {
+  #Dist caculation
+  if (verbose) {print("Dist caculation")}
+  if (metric == "biwt") {
         Distmat <- as.dist(biwt::biwt.cor(mat, output="distance"))
     } else if (metric == "NMI") {
         #NMI from infotheo package
@@ -219,15 +212,13 @@ cogena <- function(obj, nClust, clMethods="hierarchical",
     if (verbose) print(paste("The clMethod,", clMethods[i], "done"))
   }
   
-  if(is.null(rownames(mat))) {
-    rownames(mat) <- 1:nrow(mat)
-    warning("rownames for data not specified, using 1:nrow(data)")
-  }
+
   if (is.character(sampleLabel)){
       sampleLabel <- as.factor(sampleLabel)
   }
-  new("cogena", mat=mat, Distmat=Distmat, clusterObjs=clusterObjs, 
+  res <- new("cogena", mat=mat, Distmat=Distmat, clusterObjs=clusterObjs, 
       measures=validMeasures, clMethods=clMethods, labels=rownames(mat), 
       nClust=nClust, metric=metric, method=method, annotation=annotation, 
-      sampleLabel=sampleLabel, ncore=ncore, call=match.call())
+      sampleLabel=sampleLabel, ncore=ncore, gmt=basename(annofile), call=match.call())
+  return (res)
 }
