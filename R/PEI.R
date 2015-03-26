@@ -1,8 +1,7 @@
 #' Significance of Gene sets enrichment.
 #' 
 #' Caculating the significance of Gene sets enrichment based on the hypergeometric test.
-#' This function is mainly used internally. But it can be also used directly, which 
-#' can be used for the combined clusters based on user's analysis.
+#' This function is mainly used internally.
 #' 
 #' Here the genes in annotation can be a varity of types. like all the DEG, up-regualted genes
 #' or genes in a cluster. the gene names should be consistent with the genes in the gene sets.
@@ -14,18 +13,7 @@
 #' @param annotationGenesPop data.frame with the gene in row, gene set in column.
 #'  Here genes are genes in population with filering the non-nformative genes better.
 #' @return a vector with P-values.
-#' @examples
-#' annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
-#' annofile <- system.file("extdata", annoGMT, package="cogena")
-#' # the DEG gene-sets matrix
-#' anno <- gene2set(annofile, rownames(DEexprs))
-#' # the background gene gene-sets matrix
-#' data(AllGeneSymbols)
-#' annotationGenesPop <- gene2set(annofile, AllGeneSymbols)
-#' annotationGenesPop <- annotationGenesPop[,colnames(anno)]
-#' # hypergeometric test
-#' res <- PEI(rownames(DEexprs), anno, annotationGenesPop)
-#' @export
+#' @keywords internal
 
 PEI <- function(genenames, annotation, annotationGenesPop) {
 
