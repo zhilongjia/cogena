@@ -63,12 +63,22 @@ mat: get the original data from a cogena object.
 summary: a summary of a cogena object.
 }
 \examples{
+\dontrun{
 data(PD)
 clusterMethods(cogena_result)
+}
+\dontrun{
 nClusters(cogena_result)
+}
+\dontrun{
 clusters(cogena_result, "kmeans")
 clusters(cogena_result, "hierarchical")
+}
+\dontrun{
 mat(cogena_result)
+}
+\dontrun{
 summary(cogena_result)
+}
 }
 

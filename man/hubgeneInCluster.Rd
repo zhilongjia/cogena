@@ -27,11 +27,13 @@ a character vector.
 Show hub gene names in certain cluster.
 }
 \examples{
+\dontrun{
 #summay this cogena object
 summary(cogena_result)
 
 #hubgeneInCluster
 hubgeneInCluster(cogena_result, "kmeans", "3", "2")
+}
 }
 \seealso{
 \code{\link{cogena}} and \code{\link{geneInCluster}}

@@ -10,6 +10,7 @@
 #' @export
 #' @seealso \code{\link{cogena}}
 #' @examples
+#' \dontrun{
 #' data(PD)
 #' #summay this cogena object
 #' summary(cogena_result)
@@ -19,6 +20,7 @@
 #' 
 #' #Up or Down genes with setting nClusters as "2".
 #' geneInCluster(cogena_result, "som", "2", "1")
+#' }
 #' 
 setGeneric("geneInCluster", function(object, method, nClusters, ith) standardGeneric("geneInCluster"))
 

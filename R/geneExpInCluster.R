@@ -10,11 +10,13 @@
 #' @export
 #' @seealso \code{\link{cogena}}
 #' @examples 
+#' \dontrun{
 #' #summay this cogena object
 #' summary(cogena_result)
 #' 
 #' #geneExpInCluster
 #' geneExpInCluster(cogena_result, "kmeans", "3")
+#' }
 #' 
 setGeneric("geneExpInCluster", function(object, method, nClusters) standardGeneric("geneExpInCluster"))
 

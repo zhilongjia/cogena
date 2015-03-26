@@ -10,12 +10,13 @@
 #' 
 #' @seealso \code{\link{cogena}} and \code{\link{geneInCluster}}
 #' @examples 
+#' \dontrun{
 #' #summay this cogena object
 #' summary(cogena_result)
 #' 
 #' #hubgeneInCluster
 #' hubgeneInCluster(cogena_result, "kmeans", "3", "2")
-#' 
+#' }
 #' @export
 setGeneric("hubgeneInCluster", function(object, method, nClusters, ith) standardGeneric("hubgeneInCluster"))
 

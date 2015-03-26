@@ -8,8 +8,10 @@
 #' @rdname cogena_methods
 #' @return clusterMethods: a character vector.
 #' @examples
+#' \dontrun{
 #' data(PD)
 #' clusterMethods(cogena_result)
+#' }
 #' 
 setGeneric("clusterMethods", function(object) standardGeneric("clusterMethods"))
 
@@ -22,7 +24,9 @@ setMethod("clusterMethods",signature(object="cogena"),
 #' nClusters: get the number of clusters from a cogena object.
 #' @inheritParams clusterMethods
 #' @examples
+#' \dontrun{
 #' nClusters(cogena_result)
+#' }
 #' @return nClusters: a numeric vector.
 #' @export nClusters
 #' @docType methods
@@ -41,8 +45,10 @@ setMethod("nClusters",signature(object="cogena"),
 #' @param method as clMethods in cogena function
 #' @return clusters: a list or hclust depends on the method
 #' @examples
+#' \dontrun{
 #' clusters(cogena_result, "kmeans")
 #' clusters(cogena_result, "hierarchical")
+#' }
 #' @export clusters
 #' @docType methods
 #' @rdname cogena_methods
@@ -59,7 +65,9 @@ setMethod("clusters",signature(object="cogena"),
 #' mat: get the original data from a cogena object.
 #' @inheritParams clusterMethods
 #' @examples
+#' \dontrun{
 #' mat(cogena_result)
+#' }
 #' @return mat: a matrix
 #' @export mat
 #' @docType methods
@@ -75,7 +83,9 @@ setMethod("mat",signature(object="cogena"),
 #' summary: a summary of a cogena object.
 #' @return summary: a summary of a cogena object.
 #' @examples
+#' \dontrun{
 #' summary(cogena_result)
+#' }
 #' @rdname cogena_methods
 #' @exportMethod summary
 setMethod("summary","cogena",

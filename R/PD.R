@@ -37,13 +37,5 @@ NULL
 #' @source \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163}
 NULL
 
-#' am example result of cogena
-#' 
-#' @format a cogena object.
-#' @docType data
-#' @keywords datasets
-#' @name cogena_result
-#' @source \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163}
-NULL
 
 

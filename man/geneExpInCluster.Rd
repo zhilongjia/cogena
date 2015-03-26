@@ -28,11 +28,13 @@ Get gene names in each clusters and the expression profiling. This output is
 helpful if user want to analyse the data for other application.
 }
 \examples{
+\dontrun{
 #summay this cogena object
 summary(cogena_result)
 
 #geneExpInCluster
 geneExpInCluster(cogena_result, "kmeans", "3")
+}
 }
 \seealso{
 \code{\link{cogena}}

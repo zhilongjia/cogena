@@ -17,10 +17,11 @@
 #' on condition that there are so many enriched gene sets and you can filter the
 #' enrichment_score based on a criteria, like just one cluster. 
 #' @examples
+#' \dontrun{
 #' data(PD)
 #' summary(cogena_result)
 #' enrichment.table <- enrichment(cogena_result, "kmeans", "3")
-#' \dontrun{
+#' 
 #' heatmapPEI2(cogena_result, enrichment.table, "kmeans", "3", "1#nn")
 #' }
 #' @export heatmapPEI2

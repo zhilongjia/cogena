@@ -32,8 +32,6 @@ and so on. See the workflow of cogena in Figure 1.
 matrix with gene in row and sample in column, data.frame or ExpressionSet object.
 - the sample labels indicating the labels, like control and disease, of each 
 sample. A vector with sample names.
-- the background genes. Generally, all the protein-coding genes are used or 
-user-defined genes list vector. User can used `AllGeneSymbols` from `data(AllGeneSymbols)`.
 
 2. Example dataset.
 

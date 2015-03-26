@@ -15,12 +15,13 @@
 #' @rdname heatmapCluster
 #' @docType methods
 #' @seealso \code{\link{cogena}}, \code{\link{heatmap.3}} and \code{\link{heatmapPEI}}
-#' @examples 
+#' @examples
+#' \dontrun{
 #' #summay this cogena object
 #' summary(cogena_result)
 #'
 #' #heatmapCluster
-#' \dontrun{
+#' 
 #' heatmapCluster(cogena_result, "hierarchical", "3")
 #' heatmapcol <- gplots::redgreen(75) 
 #' heatmapCluster(cogena_result, "hierarchical", "3", heatmapcol=heatmapcol)

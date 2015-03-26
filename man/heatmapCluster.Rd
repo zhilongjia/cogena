@@ -41,11 +41,12 @@ heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"),
 heatmap of gene expression profilings with cluster-based color indication.
 }
 \examples{
+\dontrun{
 #summay this cogena object
 summary(cogena_result)
 
 #heatmapCluster
-\dontrun{
+
 heatmapCluster(cogena_result, "hierarchical", "3")
 heatmapcol <- gplots::redgreen(75)
 heatmapCluster(cogena_result, "hierarchical", "3", heatmapcol=heatmapcol)

@@ -29,6 +29,7 @@ Get gene names in a certain cluster. This is helpful if user want to get the
 detail of a cluster.
 }
 \examples{
+\dontrun{
 data(PD)
 #summay this cogena object
 summary(cogena_result)
@@ -38,6 +39,7 @@ geneInCluster(cogena_result, "kmeans", "3", "2")
 
 #Up or Down genes with setting nClusters as "2".
 geneInCluster(cogena_result, "som", "2", "1")
+}
 }
 \seealso{
 \code{\link{cogena}}

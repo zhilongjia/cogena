@@ -61,11 +61,11 @@ orderMethod:
 }
 }
 \examples{
+\dontrun{
 #summay this cogena object
 summary(cogena_result)
 
 #heatmapPEI
-\dontrun{
 heatmapPEI(cogena_result, "kmeans", "2", orderMethod="mean")
 heatmapPEI(cogena_result, "kmeans", "3", CutoffNumGeneset=20,
           low = "#132B43", high = "#56B1F7", na.value = "grey50")

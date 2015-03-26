@@ -30,9 +30,10 @@ get the best clustering methods and the number of clusters, based that the numbe
 of gene sets which are signifigant should be maximum.
 }
 \examples{
+\dontrun{
 data(PD)
 summary(cogena_result)
-\dontrun{
+
 score <- optCluster(cogena_result)
 score <- optCluster(cogena_result, based="All")
 }

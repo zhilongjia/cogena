@@ -17,9 +17,10 @@
 #' @import foreach
 #' @import doParallel
 #' @examples
+#' \dontrun{
 #' data(PD)
 #' summary(cogena_result)
-#' \dontrun{
+#' 
 #' score <- optCluster(cogena_result)
 #' score <- optCluster(cogena_result, based="All")
 #' }
