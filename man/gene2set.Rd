@@ -19,8 +19,12 @@ A list of gene set could be find in the vignette of cogena}
 
 \item{annotation}{a value returned by \code{\link{gmt2list}}.}
 }
+\value{
+an gene and gene-set relationship matrix
+}
 \description{
-Generate relationship between genes (gene SYMBOL) and gene-sets, such as Pathway or GO.
+Generate relationship between genes (gene SYMBOL) and gene-sets,
+such as Pathway or GO.
 }
 \examples{
 data(PD)

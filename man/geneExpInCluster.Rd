@@ -28,13 +28,18 @@ Get gene names in each clusters and the expression profiling. This output is
 helpful if user want to analyse the data for other application.
 }
 \examples{
-\dontrun{
+data(PD)
+annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
+package="cogena")
+cogena_result <- cogena(DEexprs, nClust=2:3,
+clMethods=c("hierarchical","kmeans"), metric="correlation",
+method="complete",  annofile=annofile, sampleLabel=sampleLabel,
+ncore=1, verbose=TRUE)
 #summay this cogena object
 summary(cogena_result)
 
 #geneExpInCluster
 geneExpInCluster(cogena_result, "kmeans", "3")
-}
 }
 \seealso{
 \code{\link{cogena}}

@@ -37,11 +37,21 @@ heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"),
 \item{maintitle}{a character. like GSExxx. the output of figure will like
 "kmeans 3 Clusters GSExxx" in two lines.}
 }
+\value{
+a gene expression heatmap with Cluster information figure
+}
 \description{
 heatmap of gene expression profilings with cluster-based color indication.
 }
 \examples{
-\dontrun{
+data(PD)
+annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
+package="cogena")
+cogena_result <- cogena(DEexprs, nClust=2:3,
+clMethods=c("hierarchical","kmeans"), metric="correlation",
+method="complete",  annofile=annofile, sampleLabel=sampleLabel,
+ncore=1, verbose=TRUE)
+
 #summay this cogena object
 summary(cogena_result)
 
@@ -50,7 +60,6 @@ summary(cogena_result)
 heatmapCluster(cogena_result, "hierarchical", "3")
 heatmapcol <- gplots::redgreen(75)
 heatmapCluster(cogena_result, "hierarchical", "3", heatmapcol=heatmapcol)
-}
 }
 \seealso{
 \code{\link{cogena}}, \code{\link{heatmap.3}} and \code{\link{heatmapPEI}}

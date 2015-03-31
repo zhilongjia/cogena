@@ -105,18 +105,6 @@ cogena <- function(obj, nClust, clMethods="hierarchical",
   clMethods <- match.arg(clMethods, c("hierarchical","kmeans","diana","fanny",
                                      "som","model","sota","pam","clara",
                                      "agnes"), several.ok=TRUE)
-
-  if("som"%in%clMethods) {
-    if(!require(kohonen)) {
-      stop("package 'kohonen' required for clustering using SOM")
-    }
-  }
-
-  if("model"%in%clMethods) {
-    if(!require(mclust)) {
-      stop("package 'mclust' required for model-based clustering")
-    }
-  }
   
   ## used for hierarchical, kmeans, diana, fanny, agnes, pam
   metric <- match.arg(metric,c("euclidean", "correlation", "abscorrelation",
@@ -130,12 +118,6 @@ cogena <- function(obj, nClust, clMethods="hierarchical",
 #       require(infotheo)
 #   }
   
-  if ("biwt" %in% metric){
-      if(!require(biwt)) {
-          stop("package 'biwt' required for weighted correlation based on 
-               Tukey's biweight")
-      }
-  }
   
   ## for hclust, agnes
   method <- match.arg(method,c("ward", "single", "complete", "average")) 

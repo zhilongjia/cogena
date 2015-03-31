@@ -71,7 +71,7 @@ nClust <- 2:8
 # the number of cores.
 ncore <- 1
 # the clustering methods
-clMethods <- c("hierarchical","kmeans", "som")
+clMethods <- c("hierarchical","kmeans")
 # the distance metric
 metric <- "correlation"
 # the agglomeration method used for hierarchical clustering (hierarchical and agnes)

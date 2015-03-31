@@ -29,17 +29,21 @@ Get gene names in a certain cluster. This is helpful if user want to get the
 detail of a cluster.
 }
 \examples{
-\dontrun{
 data(PD)
+annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
+package="cogena")
+cogena_result <- cogena(DEexprs, nClust=2:3,
+clMethods=c("hierarchical","kmeans"), metric="correlation",
+method="complete",  annofile=annofile, sampleLabel=sampleLabel,
+ncore=1, verbose=TRUE)
 #summay this cogena object
 summary(cogena_result)
 
 #geneInCluster
-geneInCluster(cogena_result, "kmeans", "3", "2")
+g1 <- geneInCluster(cogena_result, "kmeans", "3", "2")
 
 #Up or Down genes with setting nClusters as "2".
-geneInCluster(cogena_result, "som", "2", "1")
-}
+g2 <- geneInCluster(cogena_result, "kmeans", "2", "1")
 }
 \seealso{
 \code{\link{cogena}}

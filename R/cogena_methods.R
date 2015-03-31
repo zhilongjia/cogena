@@ -8,10 +8,15 @@
 #' @rdname cogena_methods
 #' @return clusterMethods: a character vector.
 #' @examples
-#' \dontrun{
 #' data(PD)
+#' annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", 
+#' package="cogena")
+#' cogena_result <- cogena(DEexprs, nClust=2:3, 
+#' clMethods=c("hierarchical","kmeans"), metric="correlation", 
+#' method="complete",  annofile=annofile, sampleLabel=sampleLabel, 
+#' ncore=1, verbose=TRUE)
 #' clusterMethods(cogena_result)
-#' }
+#' 
 #' 
 setGeneric("clusterMethods", function(object) standardGeneric("clusterMethods"))
 

@@ -7,6 +7,9 @@
 vClusters(mat, Distmat, clMethod, nClust, method, metric, annotation, ncore,
   annotationGenesPop, verbose, ...)
 }
+\value{
+a list containing the cluster information
+}
 \description{
 Internal cogena functions.
 }

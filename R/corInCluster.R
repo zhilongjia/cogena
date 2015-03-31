@@ -16,16 +16,22 @@
 #' matrix, lower triangular or upper triangular matrix. See examples in 
 #' \code{\link[corrplot]{corrplot}} for details
 #' @param ... other parameters to \code{\link[corrplot]{corrplot}} function.
+#' @return a correlation figure.
 #' @rdname corInCluster
 #' @importFrom corrplot corrplot
 #' @seealso \code{\link{cogena}} \code{\link[corrplot]{corrplot}}
 #' @export
 #' @examples
 #' data(PD)
-#' \dontrun{
-#' corInCluster(cogena_result, "kmeans", "8", "8")
-#' corInCluster(cogena_result, "kmeans", "8", "8", plotMethod="square")
-#' }
+#' annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", 
+#' package="cogena")
+#' cogena_result <- cogena(DEexprs, nClust=2:3, 
+#' clMethods=c("hierarchical","kmeans"), metric="correlation", 
+#' method="complete",  annofile=annofile, sampleLabel=sampleLabel, 
+#' ncore=1, verbose=TRUE)
+#' corInCluster(cogena_result, "kmeans", "3", "2")
+#' corInCluster(cogena_result, "kmeans", "3", "2", plotMethod="square")
+#' 
 #' 
 
 setGeneric("corInCluster", function(object, method, nClusters, ith, 

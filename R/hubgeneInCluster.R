@@ -10,13 +10,19 @@
 #' 
 #' @seealso \code{\link{cogena}} and \code{\link{geneInCluster}}
 #' @examples 
-#' \dontrun{
+#' data(PD)
+#' annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", 
+#' package="cogena")
+#' cogena_result <- cogena(DEexprs, nClust=2:3, 
+#' clMethods=c("hierarchical","kmeans"), metric="correlation", 
+#' method="complete",  annofile=annofile, sampleLabel=sampleLabel, 
+#' ncore=1, verbose=TRUE)
 #' #summay this cogena object
 #' summary(cogena_result)
 #' 
 #' #hubgeneInCluster
 #' hubgeneInCluster(cogena_result, "kmeans", "3", "2")
-#' }
+#' 
 #' @export
 setGeneric("hubgeneInCluster", function(object, method, nClusters, ith) standardGeneric("hubgeneInCluster"))
 

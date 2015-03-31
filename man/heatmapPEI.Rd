@@ -46,6 +46,9 @@ such as round(1.54, 1)=1.5}
 
 \item{printGS}{print the enriched gene set names or not. Default is TRUE.}
 }
+\value{
+a gene set enrichment heatmap
+}
 \description{
 heatmap of the gene set enrichment index. After obtaining the ennrichemt of
 clusters in the gene sets, the heatmapPEI will show it as a heatmap with order.
@@ -61,7 +64,13 @@ orderMethod:
 }
 }
 \examples{
-\dontrun{
+#' data(PD)
+annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
+package="cogena")
+cogena_result <- cogena(DEexprs, nClust=2:3,
+clMethods=c("hierarchical","kmeans"), metric="correlation",
+method="complete",  annofile=annofile, sampleLabel=sampleLabel,
+ncore=1, verbose=TRUE)
 #summay this cogena object
 summary(cogena_result)
 
@@ -69,7 +78,6 @@ summary(cogena_result)
 heatmapPEI(cogena_result, "kmeans", "2", orderMethod="mean")
 heatmapPEI(cogena_result, "kmeans", "3", CutoffNumGeneset=20,
           low = "#132B43", high = "#56B1F7", na.value = "grey50")
-}
 }
 \seealso{
 \code{\link{cogena}} and \code{\link{heatmapCluster}}

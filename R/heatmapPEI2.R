@@ -11,19 +11,24 @@
 #' obtained by heatmapCluster
 #' @param title a character. like GSExxx. the output of figure will like "cogena: 
 #' kmeans 3 GSExxx" in two lines. Default is NULL
-#' 
+#' @return a gene set enrichment heatmap
 #' @details
 #' This function aims to heatmap the enrichment_score directly. This is helpful
 #' on condition that there are so many enriched gene sets and you can filter the
 #' enrichment_score based on a criteria, like just one cluster. 
 #' @examples
-#' \dontrun{
 #' data(PD)
+#' annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", 
+#' package="cogena")
+#' cogena_result <- cogena(DEexprs, nClust=2:3, 
+#' clMethods=c("hierarchical","kmeans"), metric="correlation", 
+#' method="complete",  annofile=annofile, sampleLabel=sampleLabel, 
+#' ncore=1, verbose=TRUE)
 #' summary(cogena_result)
 #' enrichment.table <- enrichment(cogena_result, "kmeans", "3")
 #' 
-#' heatmapPEI2(cogena_result, enrichment.table, "kmeans", "3", "1#nn")
-#' }
+#' heatmapPEI2(cogena_result, enrichment.table, "kmeans", "3", "1")
+#' 
 #' @export heatmapPEI2
 #' @import ggplot2
 #' @import reshape2

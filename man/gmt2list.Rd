@@ -10,6 +10,9 @@ gmt2list(annofile)
 \item{annofile}{a gmt file. Examples are from MSigDB Collections.
 A list of gene set could be find in the vignette of cogena}
 }
+\value{
+a gmt list
+}
 \description{
 read Gene Matrix Transposed (gmt) file and output a list with the the first column as
 the names of items in the list. see \href{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{Gene Matrix Transposed file format}

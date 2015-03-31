@@ -10,13 +10,21 @@
 #' "kmeans 3 Clusters GSExxx" in two lines.
 #' @param printSum print the summary of the number of genes in each cluster. Default is TRUE.
 #' @param ... other parameters to heatmap.3.
+#' @return a gene expression heatmap with Cluster information figure
 #' @export
 #' @import gplots
 #' @rdname heatmapCluster
 #' @docType methods
 #' @seealso \code{\link{cogena}}, \code{\link{heatmap.3}} and \code{\link{heatmapPEI}}
 #' @examples
-#' \dontrun{
+#' data(PD)
+#' annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", 
+#' package="cogena")
+#' cogena_result <- cogena(DEexprs, nClust=2:3, 
+#' clMethods=c("hierarchical","kmeans"), metric="correlation", 
+#' method="complete",  annofile=annofile, sampleLabel=sampleLabel, 
+#' ncore=1, verbose=TRUE)
+#' 
 #' #summay this cogena object
 #' summary(cogena_result)
 #'
@@ -25,7 +33,7 @@
 #' heatmapCluster(cogena_result, "hierarchical", "3")
 #' heatmapcol <- gplots::redgreen(75) 
 #' heatmapCluster(cogena_result, "hierarchical", "3", heatmapcol=heatmapcol)
-#' }
+#' 
 setGeneric("heatmapCluster", 
            function(object, method, nClusters, sampleColor=c("darkblue", "cyan"),
                     clusterColor=NULL, clusterColor2=NULL, heatmapcol=NULL,

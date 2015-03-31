@@ -3,6 +3,7 @@
 #' 
 #' The code is from 
 #' \url{https://github.com/obigriffith/biostar-tutorials/tree/master/Heatmaps}
+#' @return a heatmap figure
 #' @author Obi Griffith
 #' @keywords internal
 #' 

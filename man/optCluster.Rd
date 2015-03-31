@@ -25,17 +25,24 @@ machine has if ncores parameter is exceed it.}
 
 \item{CutoffPVal}{the cut-off of p-value. Default is 0.05.}
 }
+\value{
+a score matrix
+}
 \description{
 get the best clustering methods and the number of clusters, based that the number
 of gene sets which are signifigant should be maximum.
 }
 \examples{
-\dontrun{
 data(PD)
+annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
+package="cogena")
+cogena_result <- cogena(DEexprs, nClust=2:3,
+clMethods=c("hierarchical","kmeans"), metric="correlation",
+method="complete",  annofile=annofile, sampleLabel=sampleLabel,
+ncore=1, verbose=TRUE)
 summary(cogena_result)
 
 score <- optCluster(cogena_result)
 score <- optCluster(cogena_result, based="All")
-}
 }
 

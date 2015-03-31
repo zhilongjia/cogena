@@ -52,10 +52,15 @@ orderMethod:
 }
 \examples{
 data(PD)
-\dontrun{
+data(PD)
+annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
+package="cogena")
+cogena_result <- cogena(DEexprs, nClust=2:3,
+clMethods=c("hierarchical","kmeans"), metric="correlation",
+method="complete",  annofile=annofile, sampleLabel=sampleLabel,
+ncore=1, verbose=TRUE)
 enrichment.table1 <- enrichment(cogena_result, "kmeans", "3")
 enrichment.table2 <- enrichment(cogena_result, "kmeans", "3",
 CutoffNumGeneset=10, orderMethod="mean")
-}
 }
 

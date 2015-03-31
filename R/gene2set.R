@@ -1,12 +1,13 @@
 #' generate relationship between genes and gene-sets
 #' 
-#' Generate relationship between genes (gene SYMBOL) and gene-sets, such as Pathway or GO.
+#' Generate relationship between genes (gene SYMBOL) and gene-sets, 
+#' such as Pathway or GO.
 #' 
 #' @inheritParams gmt2list
 #' @param genenames a SYMBOL gene names charactic vector.
 #' @param TermFreq a threshold for the Term Frequence. Default is zero.
 #' @param annotation a value returned by \code{\link{gmt2list}}.
-#' 
+#' @return an gene and gene-set relationship matrix 
 #' @examples
 #' data(PD)
 #' 

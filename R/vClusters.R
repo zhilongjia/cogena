@@ -3,7 +3,8 @@
 #' Internal cogena functions.
 #'
 #' Paralleled clustering with different clustering methods and different number
-#' of clusters. These functions should not be called directly by the user. 
+#' of clusters. These functions should not be called directly by the user.
+#' @return a list containing the cluster information 
 #' @import amap
 #' @import cluster
 #' @import fastcluster

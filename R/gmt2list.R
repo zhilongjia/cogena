@@ -6,7 +6,7 @@
 #' 
 #' @param annofile a gmt file. Examples are from MSigDB Collections.
 #' A list of gene set could be find in the vignette of cogena
-#'
+#' @return a gmt list
 #' @export
 #' 
 #' @examples

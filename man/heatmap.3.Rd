@@ -23,6 +23,9 @@ heatmap.3(x, Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE,
   lwid = NULL, ColSideColorsSize = 1, RowSideColorsSize = 1,
   KeyValueName = "Value", ...)
 }
+\value{
+a heatmap figure
+}
 \description{
 The code is from
 \url{https://github.com/obigriffith/biostar-tutorials/tree/master/Heatmaps}

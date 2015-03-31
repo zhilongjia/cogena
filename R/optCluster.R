@@ -10,6 +10,7 @@
 #' used during cogena function, but it will be the same as number of cores 
 #' machine has if ncores parameter is exceed it.
 #' @param CutoffPVal the cut-off of p-value. Default is 0.05.
+#' @return a score matrix
 #' @export
 #' @docType methods
 #' @rdname optCluster
@@ -17,13 +18,18 @@
 #' @import foreach
 #' @import doParallel
 #' @examples
-#' \dontrun{
 #' data(PD)
+#' annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", 
+#' package="cogena")
+#' cogena_result <- cogena(DEexprs, nClust=2:3, 
+#' clMethods=c("hierarchical","kmeans"), metric="correlation", 
+#' method="complete",  annofile=annofile, sampleLabel=sampleLabel, 
+#' ncore=1, verbose=TRUE)
 #' summary(cogena_result)
 #' 
 #' score <- optCluster(cogena_result)
 #' score <- optCluster(cogena_result, based="All")
-#' }
+#' 
 #' 
 setGeneric("optCluster",  function(object, based="inTotal", ncores=object@ncore,
                                    CutoffPVal=0.05) standardGeneric("optCluster"))

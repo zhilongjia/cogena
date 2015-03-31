@@ -10,7 +10,7 @@
 #' @param maintitle a character. like GSExxx. the output of figure will like
 #' "cogena: kmeans 3 GSExxx" in two lines. Default is NULL
 #' @param printGS print the enriched gene set names or not. Default is TRUE.
-#' 
+#' @return a gene set enrichment heatmap
 #' @seealso \code{\link{cogena}} and \code{\link{heatmapCluster}}
 #' 
 #' @details
@@ -29,7 +29,13 @@
 #' @docType methods
 #' @rdname heatmapPEI
 #' @examples
-#' \dontrun{
+#' #' data(PD)
+#' annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", 
+#' package="cogena")
+#' cogena_result <- cogena(DEexprs, nClust=2:3, 
+#' clMethods=c("hierarchical","kmeans"), metric="correlation", 
+#' method="complete",  annofile=annofile, sampleLabel=sampleLabel, 
+#' ncore=1, verbose=TRUE)
 #' #summay this cogena object
 #' summary(cogena_result)
 #' 
@@ -37,7 +43,7 @@
 #' heatmapPEI(cogena_result, "kmeans", "2", orderMethod="mean")
 #' heatmapPEI(cogena_result, "kmeans", "3", CutoffNumGeneset=20, 
 #'           low = "#132B43", high = "#56B1F7", na.value = "grey50")
-#' }
+#' 
 setGeneric("heatmapPEI", function(object, method, nClusters, CutoffNumGeneset=20,
                                   CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE,
                                   low="green", high="red", na.value="white", 
