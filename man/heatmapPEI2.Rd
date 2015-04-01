@@ -18,7 +18,8 @@ heatmapPEI2(object, enrichment_score, method, nClusters, whichCluster,
 \arguments{
 \item{object}{a cogena object}
 
-\item{enrichment_score}{a returned value from \code{\link{enrichment}} function}
+\item{enrichment_score}{a returned value from \code{\link{enrichment}}
+function}
 
 \item{method}{as clMethods in cogena function}
 
@@ -37,21 +38,21 @@ return table}
 
 \item{na.value}{Colour to use for missing values.}
 
-\item{title}{a character. like GSExxx. the output of figure will like "cogena:
-kmeans 3 GSExxx" in two lines. Default is NULL}
+\item{title}{a character. like GSExxx. the output of figure will like
+"cogena: kmeans 3 GSExxx" in two lines. Default is NULL}
 }
 \value{
 a gene set enrichment heatmap
 }
 \description{
-heatmap of the gene set enrichment_score matrix directly. After obtaining the
-ennrichemt of clusters in the gene sets via \code{\link{enrichment}}, the
-heatmapPEI2 will show it as a heatmap.
+heatmap of the gene set enrichment_score matrix directly. After obtaining
+the ennrichemt of clusters in the gene sets via \code{\link{enrichment}},
+the heatmapPEI2 will show it as a heatmap.
 }
 \details{
-This function aims to heatmap the enrichment_score directly. This is helpful
-on condition that there are so many enriched gene sets and you can filter the
-enrichment_score based on a criteria, like just one cluster.
+This function aims to heatmap the enrichment_score directly. This is
+helpful on condition that there are so many enriched gene sets and you
+can filter the enrichment_score based on a criteria, like just one cluster.
 }
 \examples{
 data(PD)

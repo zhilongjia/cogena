@@ -20,24 +20,25 @@
 #' @rdname gene2set
 gene2set <- function(annofile=NULL, genenames, TermFreq=0) {
     if (is.null(annofile)) {
-        annofile <- system.file("extdata", "c2.cp.v4.0.symbols.gmt", package="cogena")
+        annofile <- system.file("extdata", "c2.cp.v4.0.symbols.gmt", 
+            package="cogena")
     }
 
     annoList <- gmt2list(annofile)
     annoMatrix <- annotationListToMatrix(annoList, genenames)
-    anno=annoMatrix[,names(which( colSums(annoMatrix)/ncol(annoMatrix)>=TermFreq ))]
+    anno=annoMatrix[,
+        names(which( colSums(annoMatrix)/ncol(annoMatrix)>=TermFreq ))]
     return(anno)
-    #anno = subset(annoMatrix, select=names(which( colSums(annoMatrix)/ncol(annoMatrix)>=TermFreq )))
 }
 
 
 #' @rdname gene2set
 annotationListToMatrix <- function(annotation, genenames) {
-    annotation.matrix <- matrix(FALSE, ncol=length(annotation), nrow=length(genenames))
+    annotation.matrix <- matrix(FALSE, ncol=length(annotation), 
+        nrow=length(genenames))
     colnames(annotation.matrix) <- names(annotation)
     rownames(annotation.matrix) <- genenames
-    for ( i in 1:length(annotation) )
-    {
+    for ( i in 1:length(annotation) ){
         annot <- names(annotation)[i]
         genes <- as.character(annotation[[i]][!is.na(annotation[[i]])])
         genes.common <- intersect(genenames, genes)

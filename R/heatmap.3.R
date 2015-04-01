@@ -8,65 +8,65 @@
 #' @keywords internal
 #' 
 heatmap.3 <- function(x,
-                      Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE,
-                      distfun = dist,
-                      hclustfun = hclust,
-                      dendrogram = c("both","row", "column", "none"),
-                      symm = FALSE,
-                      scale = c("none","row", "column"),
-                      na.rm = TRUE,
-                      revC = identical(Colv,"Rowv"),
-                      add.expr,
-                      breaks,
-                      symbreaks = max(x < 0, na.rm = TRUE) || scale != "none",
-                      col = "heat.colors",
-                      colsep,
-                      rowsep,
-                      sepcolor = "white",
-                      sepwidth = c(0.05, 0.05),
-                      cellnote,
-                      notecex = 1,
-                      notecol = "cyan",
-                      na.color = par("bg"),
-                      trace = c("none", "column","row", "both"),
-                      tracecol = "cyan",
-                      hline = median(breaks),
-                      vline = median(breaks),
-                      linecol = tracecol,
-                      margins = c(5,5),
-                      ColSideColors,
-                      RowSideColors,
-                      side.height.fraction=0.3,
-                      cexRow = 0.2 + 1/log10(nr),
-                      cexCol = 0.2 + 1/log10(nc),
-                      labRow = NULL,
-                      labCol = NULL,
-                      key = TRUE,
-                      keysize = 1.5,
-                      density.info = c("none", "histogram", "density"),
-                      denscol = tracecol,
-                      symkey = max(x < 0, na.rm = TRUE) || symbreaks,
-                      densadj = 0.25,
-                      main = NULL,
-                      xlab = NULL,
-                      ylab = NULL,
-                      lmat = NULL,
-                      lhei = NULL,
-                      lwid = NULL,
-                      ColSideColorsSize = 1,
-                      RowSideColorsSize = 1,
-                      KeyValueName="Value",...){
- 
+    Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE,
+    distfun = dist,
+    hclustfun = hclust,
+    dendrogram = c("both","row", "column", "none"),
+    symm = FALSE,
+    scale = c("none","row", "column"),
+    na.rm = TRUE,
+    revC = identical(Colv,"Rowv"),
+    add.expr,
+    breaks,
+    symbreaks = max(x < 0, na.rm = TRUE) || scale != "none",
+    col = "heat.colors",
+    colsep,
+    rowsep,
+    sepcolor = "white",
+    sepwidth = c(0.05, 0.05),
+    cellnote,
+    notecex = 1,
+    notecol = "cyan",
+    na.color = par("bg"),
+    trace = c("none", "column","row", "both"),
+    tracecol = "cyan",
+    hline = median(breaks),
+    vline = median(breaks),
+    linecol = tracecol,
+    margins = c(5,5),
+    ColSideColors,
+    RowSideColors,
+    side.height.fraction=0.3,
+    cexRow = 0.2 + 1/log10(nr),
+    cexCol = 0.2 + 1/log10(nc),
+    labRow = NULL,
+    labCol = NULL,
+    key = TRUE,
+    keysize = 1.5,
+    density.info = c("none", "histogram", "density"),
+    denscol = tracecol,
+    symkey = max(x < 0, na.rm = TRUE) || symbreaks,
+    densadj = 0.25,
+    main = NULL,
+    xlab = NULL,
+    ylab = NULL,
+    lmat = NULL,
+    lhei = NULL,
+    lwid = NULL,
+    ColSideColorsSize = 1,
+    RowSideColorsSize = 1,
+    KeyValueName="Value",...){
+
     invalid <- function (x) {
-      if (missing(x) || is.null(x) || length(x) == 0)
-          return(TRUE)
-      if (is.list(x))
-          return(all(sapply(x, invalid)))
-      else if (is.vector(x))
-          return(all(is.na(x)))
-      else return(FALSE)
+        if (missing(x) || is.null(x) || length(x) == 0)
+            return(TRUE)
+        if (is.list(x))
+            return(all(sapply(x, invalid)))
+        else if (is.vector(x))
+            return(all(is.na(x)))
+        else return(FALSE)
     }
- 
+
     x <- as.matrix(x)
     scale01 <- function(x, low = min(x), high = max(x)) {
         x <- (x - low)/(high - low)
@@ -82,8 +82,9 @@ heatmap.3 <- function(x,
     if (length(col) == 1 && is.character(col))
         col <- get(col, mode = "function")
     if (!missing(breaks) && (scale != "none"))
-        warning("Using scale=\"row\" or scale=\"column\" when breaks are",
-            "specified can produce unpredictable results.", "Please consider using only one or the other.")
+        warning("Using scale=\"row\" or scale=\"column\" when breaks are", 
+            "specified can produce unpredictable results.", "Please consider 
+            using only one or the other.")
     if (is.null(Rowv) || is.na(Rowv))
         Rowv <- FALSE
     if (is.null(Colv) || is.na(Colv))
@@ -237,42 +238,44 @@ heatmap.3 <- function(x,
         lwid <- c(keysize, 4)
     if (missing(lmat) || is.null(lmat)) {
         lmat <- rbind(4:3, 2:1)
- 
+
         if (!missing(ColSideColors)) {
-           #if (!is.matrix(ColSideColors))
-           #stop("'ColSideColors' must be a matrix")
+            #if (!is.matrix(ColSideColors))
+            #stop("'ColSideColors' must be a matrix")
             if (!is.character(ColSideColors) || nrow(ColSideColors) != nc)
                 stop("'ColSideColors' must be a matrix of nrow(x) rows")
             lmat <- rbind(lmat[1, ] + 1, c(NA, 1), lmat[2, ] + 1)
             #lhei <- c(lhei[1], 0.2, lhei[2])
-             lhei=c(lhei[1], side.height.fraction*ColSideColorsSize/2, lhei[2])
+            lhei=c(lhei[1], side.height.fraction*ColSideColorsSize/2, lhei[2])
         }
- 
+
         if (!missing(RowSideColors)) {
             #if (!is.matrix(RowSideColors))
             #stop("'RowSideColors' must be a matrix")
             if (!is.character(RowSideColors) || ncol(RowSideColors) != nr)
                 stop("'RowSideColors' must be a matrix of ncol(x) columns")
-            lmat <- cbind(lmat[, 1] + 1, c(rep(NA, nrow(lmat) - 1), 1), lmat[,2] + 1)
+            lmat <- cbind(lmat[, 1] + 1, c(rep(NA, nrow(lmat) - 1), 1), 
+                lmat[,2] + 1)
             #lwid <- c(lwid[1], 0.2, lwid[2])
-            lwid <- c(lwid[1], side.height.fraction*RowSideColorsSize/2, lwid[2])
+            lwid <- c(lwid[1], 
+                side.height.fraction*RowSideColorsSize/2, lwid[2])
         }
         lmat[is.na(lmat)] <- 0
     }
- 
+
     if (length(lhei) != nrow(lmat))
         stop("lhei must have length = nrow(lmat) = ", nrow(lmat))
     if (length(lwid) != ncol(lmat))
         stop("lwid must have length = ncol(lmat) =", ncol(lmat))
     op <- par(no.readonly = TRUE)
     on.exit(par(op))
- 
+
     layout(lmat, widths = lwid, heights = lhei, respect = FALSE)
- 
+
     if (!missing(RowSideColors)) {
         if (!is.matrix(RowSideColors)){
-                par(mar = c(margins[1], 0, 0, 0.5))
-                image(rbind(1:nr), col = RowSideColors[rowInd], axes = FALSE)
+            par(mar = c(margins[1], 0, 0, 0.5))
+            image(rbind(1:nr), col = RowSideColors[rowInd], axes = FALSE)
         } else {
             par(mar = c(margins[1], 0, 0, 0.5))
             rsc = t(RowSideColors[,rowInd, drop=FALSE])
@@ -287,13 +290,14 @@ heatmap.3 <- function(x,
             rsc = matrix(as.numeric(rsc), nrow = dim(rsc)[1])
             image(t(rsc), col = as.vector(rsc.colors), axes = FALSE)
             if (length(rownames(RowSideColors)) > 0) {
-                axis(1, 0:(dim(rsc)[2] - 1)/max(1,(dim(rsc)[2] - 1)), rownames(RowSideColors), las = 2, tick = FALSE)
+                axis(1, 0:(dim(rsc)[2] - 1)/max(1,(dim(rsc)[2] - 1)), 
+                    rownames(RowSideColors), las = 2, tick = FALSE)
             }
         }
     }
- 
+
     if (!missing(ColSideColors)) {
- 
+
         if (!is.matrix(ColSideColors)){
             par(mar = c(0.5, 0, 0, margins[2]))
             image(cbind(1:nc), col = ColSideColors[colInd], axes = FALSE)
@@ -311,11 +315,12 @@ heatmap.3 <- function(x,
             csc = matrix(as.numeric(csc), nrow = dim(csc)[1])
             image(csc, col = as.vector(csc.colors), axes = FALSE)
             if (length(colnames(ColSideColors)) > 0) {
-                axis(2, 0:(dim(csc)[2] - 1)/max(1,(dim(csc)[2] - 1)), colnames(ColSideColors), las = 2, tick = FALSE)
+                axis(2, 0:(dim(csc)[2] - 1)/max(1,(dim(csc)[2] - 1)), 
+                    colnames(ColSideColors), las = 2, tick = FALSE)
             }
         }
     }
- 
+
     par(mar = c(margins[1], 0, 0, margins[2]))
     x <- t(x)
     cellnote <- t(cellnote)
@@ -327,7 +332,8 @@ heatmap.3 <- function(x,
         cellnote <- cellnote[, iy]
     }
     else iy <- 1:nr
-    image(1:nc, 1:nr, x, xlim = 0.5 + c(0, nc), ylim = 0.5 + c(0, nr), axes = FALSE, xlab = "", ylab = "", col = col, breaks = breaks, ...)
+    image(1:nc, 1:nr, x, xlim = 0.5 + c(0, nc), ylim = 0.5 + c(0, nr), 
+        axes = FALSE, xlab = "", ylab = "", col = col, breaks = breaks, ...)
     retval$carpet <- x
     if (exists("ddr"))
         retval$rowDendrogram <- ddr
@@ -351,9 +357,15 @@ heatmap.3 <- function(x,
     if (!missing(add.expr))
         eval(substitute(add.expr))
     if (!missing(colsep))
-        for (csep in colsep) rect(xleft = csep + 0.5, ybottom = rep(0, length(csep)), xright = csep + 0.5 + sepwidth[1], ytop = rep(ncol(x) + 1, csep), lty = 1, lwd = 1, col = sepcolor, border = sepcolor)
+        for (csep in colsep) rect(xleft = csep + 0.5, 
+            ybottom = rep(0, length(csep)), xright = csep + 0.5 + sepwidth[1], 
+            ytop = rep(ncol(x) + 1, csep), lty = 1, lwd = 1, col = sepcolor, 
+            border = sepcolor)
     if (!missing(rowsep))
-        for (rsep in rowsep) rect(xleft = 0, ybottom = (ncol(x) + 1 - rsep) - 0.5, xright = nrow(x) + 1, ytop = (ncol(x) + 1 - rsep) - 0.5 - sepwidth[2], lty = 1, lwd = 1, col = sepcolor, border = sepcolor)
+        for (rsep in rowsep) rect(xleft = 0, 
+            ybottom = (ncol(x) + 1 - rsep) - 0.5, xright = nrow(x) + 1, 
+            ytop = (ncol(x) + 1 - rsep) - 0.5 - sepwidth[2], lty = 1, lwd = 1, 
+            col = sepcolor, border = sepcolor)
     min.scale <- min(breaks)
     max.scale <- max(breaks)
     x.scaled <- scale01(t(x), min.scale, max.scale)
@@ -362,8 +374,7 @@ heatmap.3 <- function(x,
         vline.vals <- scale01(vline, min.scale, max.scale)
         for (i in colInd) {
             if (!is.null(vline)) {
-                abline(v = i - 0.5 + vline.vals, col = linecol,
-                  lty = 2)
+                abline(v = i - 0.5 + vline.vals, col = linecol, lty = 2)
             }
             xv <- rep(i, nrow(x.scaled)) + x.scaled[, i] - 0.5
             xv <- c(xv[1], xv)
@@ -412,7 +423,7 @@ heatmap.3 <- function(x,
             min.raw <- min(x, na.rm = TRUE)
             max.raw <- max(x, na.rm = TRUE)
         }
- 
+
         z <- seq(min.raw, max.raw, length = length(col))
         image(z = matrix(z, ncol = 1), col = col, breaks = tmpbreaks,
             xaxt = "n", yaxt = "n")

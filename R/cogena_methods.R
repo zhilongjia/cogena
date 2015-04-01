@@ -18,12 +18,13 @@
 #' clusterMethods(cogena_result)
 #' 
 #' 
-setGeneric("clusterMethods", function(object) standardGeneric("clusterMethods"))
+setGeneric("clusterMethods", 
+    function(object) standardGeneric("clusterMethods"))
 
 #' @rdname cogena_methods
 #' @aliases clusterMethods,cogena_methods
 setMethod("clusterMethods",signature(object="cogena"),
-          function(object) return(object@clMethods))
+    function(object) return(object@clMethods))
 
 
 #' nClusters: get the number of clusters from a cogena object.
@@ -41,8 +42,7 @@ setGeneric("nClusters", function(object) standardGeneric("nClusters"))
 #' @rdname cogena_methods
 #' @aliases nClusters,cogena_methods
 setMethod("nClusters",signature(object="cogena"),
-          function(object) return(object@nClust))
-
+    function(object) return(object@nClust))
 
 
 #' clusters: get the cluster of a certain clustering method.
@@ -62,9 +62,9 @@ setGeneric("clusters", function(object, method) standardGeneric("clusters"))
 #' @rdname cogena_methods
 #' @aliases clusters,cogena_methods
 setMethod("clusters",signature(object="cogena"),
-          function(object, method=clusterMethods(object)) {
-              method <- match.arg(method, clusterMethods(object))
-              return(object@clusterObjs[[method]])})
+    function(object, method=clusterMethods(object)) {
+        method <- match.arg(method, clusterMethods(object))
+        return(object@clusterObjs[[method]])})
 
 
 #' mat: get the original data from a cogena object.
@@ -82,7 +82,7 @@ setGeneric("mat", function(object) standardGeneric("mat"))
 #' @rdname cogena_methods
 #' @aliases mat,cogena_methods
 setMethod("mat",signature(object="cogena"),
-          function(object) return(object@mat))
+    function(object) return(object@mat))
 
 
 #' summary: a summary of a cogena object.
@@ -94,9 +94,12 @@ setMethod("mat",signature(object="cogena"),
 #' @rdname cogena_methods
 #' @exportMethod summary
 setMethod("summary","cogena",
-          function(object) {
-              cat("\nClustering Methods:\n",clusterMethods(object),"\n\n")
-              cat("The Number of Clusters:\n",nClusters(object),"\n\n")
-              cat("Metric of Distance Matrix:\n", object@metric, "\n\n")
-              cat("Agglomeration method for hierarchical clustering (hclust and agnes):\n", object@method, "\n\n")
-          })
+    function(object) {
+    cat("\nClustering Methods:\n",clusterMethods(object),"\n\n")
+    cat("The Number of Clusters:\n",nClusters(object),"\n\n")
+    cat("Metric of Distance Matrix:\n", object@metric, "\n\n")
+    cat("Agglomeration method for hierarchical 
+        clustering (hclust and agnes):\n", object@method, "\n\n")
+    }
+)
+

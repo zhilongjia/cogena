@@ -29,8 +29,8 @@ machine has if ncores parameter is exceed it.}
 a score matrix
 }
 \description{
-get the best clustering methods and the number of clusters, based that the number
-of gene sets which are signifigant should be maximum.
+get the best clustering methods and the number of clusters, based that
+the number of gene sets which are signifigant should be maximum.
 }
 \examples{
 data(PD)

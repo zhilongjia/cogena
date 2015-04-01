@@ -20,12 +20,12 @@ geneExpInCluster(object, method, nClusters)
 \item{nClusters}{as nClust in cogena function.}
 }
 \value{
-a list containing a matrix of cluster_id with expression profiling and
-label a vector of the sample labels.
+a list containing a matrix of cluster_id with expression profiling
+and label a vector of the sample labels.
 }
 \description{
-Get gene names in each clusters and the expression profiling. This output is
-helpful if user want to analyse the data for other application.
+Get gene names in each clusters and the expression profiling. This output
+is helpful if user want to analyse the data for other application.
 }
 \examples{
 data(PD)

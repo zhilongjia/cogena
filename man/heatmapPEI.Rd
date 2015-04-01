@@ -51,7 +51,8 @@ a gene set enrichment heatmap
 }
 \description{
 heatmap of the gene set enrichment index. After obtaining the ennrichemt of
-clusters in the gene sets, the heatmapPEI will show it as a heatmap with order.
+clusters in the gene sets, the heatmapPEI will show it as a heatmap with
+order.
 }
 \details{
 orderMethod:
@@ -59,8 +60,10 @@ orderMethod:
 \item max. ordered by the max value in clusters beside all
 \item mean. ordered by the mean value in clusters beside all
 \item All. ordered by all genes
-\item I. ordered by the I cluster in only two clusters (Up or Down-regulated)
-\item II. ordered by the II cluster in only two clusters (Up or Down-regulated)
+\item I. ordered by the I cluster in only two clusters
+(Up or Down-regulated)
+\item II. ordered by the II cluster in only two clusters
+(Up or Down-regulated)
 }
 }
 \examples{
@@ -77,7 +80,7 @@ summary(cogena_result)
 #heatmapPEI
 heatmapPEI(cogena_result, "kmeans", "2", orderMethod="mean")
 heatmapPEI(cogena_result, "kmeans", "3", CutoffNumGeneset=20,
-          low = "#132B43", high = "#56B1F7", na.value = "grey50")
+    low = "#132B43", high = "#56B1F7", na.value = "grey50")
 }
 \seealso{
 \code{\link{cogena}} and \code{\link{heatmapCluster}}

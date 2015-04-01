@@ -22,15 +22,19 @@ heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"),
 
 \item{nClusters}{as nClust in cogena function.}
 
-\item{sampleColor}{a color vector with the sample length. The default is c("darkblue", "cyan").}
+\item{sampleColor}{a color vector with the sample length.
+The default is c("darkblue", "cyan").}
 
-\item{clusterColor}{a color vector with the cluster length. The default is rainbow(nClusters(object)).}
+\item{clusterColor}{a color vector with the cluster length.
+The default is rainbow(nClusters(object)).}
 
-\item{clusterColor2}{a color vector with 2 elements. The default is  c("coral3", "deepskyblue1").}
+\item{clusterColor2}{a color vector with 2 elements. The default is
+c("coral3", "deepskyblue1").}
 
 \item{heatmapcol}{col for heatmap. The default is greenred(75).}
 
-\item{printSum}{print the summary of the number of genes in each cluster. Default is TRUE.}
+\item{printSum}{print the summary of the number of genes in each cluster.
+Default is TRUE.}
 
 \item{...}{other parameters to heatmap.3.}
 
@@ -62,6 +66,7 @@ heatmapcol <- gplots::redgreen(75)
 heatmapCluster(cogena_result, "hierarchical", "3", heatmapcol=heatmapcol)
 }
 \seealso{
-\code{\link{cogena}}, \code{\link{heatmap.3}} and \code{\link{heatmapPEI}}
+\code{\link{cogena}}, \code{\link{heatmap.3}} and
+\code{\link{heatmapPEI}}
 }
 

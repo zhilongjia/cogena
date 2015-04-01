@@ -1,9 +1,29 @@
 Package: cogena
 Version: 0.99.1
 Title: co-expressed gene-set enrichment analysis
-Authors@R: c(person("Zhilong", "Jia", role =c("aut", "cre"), email="zhilongjia@gmail.com"),person("Michael", "Barnes", role = "aut", email="m.r.barnes@qmul.ac.uk"))
-Description: Description: Gene set enrichment analysis is a valuable tool for the study of molecular mechanisms that underpin complex biological traits. As the method is conventionally used on entire omic datasets, such as transcriptomes, it may be dominated by pathways and processes that are substantially represented in a dataset, however the approach may overlook smaller scale, but highly correlated cellular events that may be of great biological relevance. In order to detect these discrete molecular triggers, we developed a tool, co-expressed gene-set enrichment analysis (cogena), for clustering differentially expressed genes and identification of highly correlated molecular expression clusters. Cogena offers the user a range of clustering methods, including hierarchical clustering, model based clustering and self-organised mapping, based on different distance metrics like correlation and mutual information. After obtaining and visualising clusters, cogena performs gene set enrichment. These gene sets can be sourced from the Molecular Signatures Database (MSigDB) or user-defined gene sets. By performing gene set enrichment across expression clusters, we find considerable enhancement in the resolution of molecular signatures in omic data at the cluster level compared to the whole.
-biocViews: GeneExpression, Clustering, GO, Pathways, GeneSetEnrichment, Software
+Authors@R: c(person("Zhilong", "Jia", role =c("aut", "cre"), 
+    email="zhilongjia@gmail.com"), 
+    person("Michael", "Barnes", role = "aut", email="m.r.barnes@qmul.ac.uk"))
+Description: Description: Gene set enrichment analysis is a valuable tool for
+    the study of molecular mechanisms that underpin complex biological traits. 
+    As the method is conventionally used on entire omic datasets, such as 
+    transcriptomes, it may be dominated by pathways and processes that are 
+    substantially represented in a dataset, however the approach may overlook 
+    smaller scale, but highly correlated cellular events that may be of great 
+    biological relevance. In order to detect these discrete molecular 
+    triggers, we developed a tool, co-expressed gene-set enrichment analysis 
+    (cogena), for clustering differentially expressed genes and identification
+    of highly correlated molecular expression clusters. Cogena offers the 
+    user a range of clustering methods, including hierarchical clustering, 
+    model based clustering and self-organised mapping, based on different 
+    distance metrics like correlation and mutual information. After obtaining
+    and visualising clusters, cogena performs gene set enrichment. These gene
+    sets can be sourced from the Molecular Signatures Database (MSigDB) or 
+    user-defined gene sets. By performing gene set enrichment across 
+    expression clusters, we find considerable enhancement in the resolution
+    of molecular signatures in omic data at the cluster level compared to 
+    the whole.
+biocViews: GeneExpression, Clustering, GO, Pathways, GeneSetEnrichment
 Depends: 
     R (>= 3.2),
     cluster,
@@ -55,5 +75,4 @@ Encoding: UTF-8
 URL: https://github.com/zhilongjia/cogena
 NeedsCompilation: no
 BugReports: https://github.com/zhilongjia/cogena/issues
-Date/Publication: 2015-01-20
 VignetteBuilder: knitr

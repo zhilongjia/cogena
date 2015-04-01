@@ -1,23 +1,24 @@
 #' Significance of Gene sets enrichment.
 #' 
-#' Caculating the significance of Gene sets enrichment based on the hypergeometric test.
-#' This function is mainly used internally.
+#' Caculating the significance of Gene sets enrichment based on the 
+#' hypergeometric test. This function is mainly used internally.
 #' 
-#' Here the genes in annotation can be a varity of types. like all the DEG, up-regualted genes
-#' or genes in a cluster. the gene names should be consistent with the genes in the gene sets.
+#' Here the genes in annotation can be a varity of types. like all the DEG, 
+#' up-regualted genes or genes in a cluster. the gene names should be 
+#' consistent with the genes in the gene sets.
 #' 
 #' 
 #' @param genenames a vector of gene names.
 #' @param annotation data.frame with the gene (like all the differentially 
 #' expressed genes) in row, gene set in column.
-#' @param annotationGenesPop data.frame with the gene in row, gene set in column.
-#'  Here genes are genes in population with filering the non-nformative genes better.
+#' @param annotationGenesPop data.frame with the gene in row, gene set 
+#' in column. Here genes are genes in population with filering the 
+#' non-nformative genes better.
 #' @return a vector with P-values.
 #' @keywords internal
 
 PEI <- function(genenames, annotation, annotationGenesPop) {
 
-    ######################################################################################
     # presteps for calculating p-value
     #pei <- vector("numeric", ncol(annotation))
     pei <- vector(mode="numeric")
@@ -25,11 +26,16 @@ PEI <- function(genenames, annotation, annotationGenesPop) {
     for (j in colnames(annotation) ){
         NumGenesWithinPathway <- sum(annotationGenesPop[,j])
         NumGenesWithinCluster <- length(genenames)
-        NumGenesWithinCluster.Pathway <- sum(annotation[genenames,j]) -1 #minus one due to phyper
-        if (NumGenesWithinPathway<2 | NumGenesWithinCluster<2 | NumGenesWithinCluster.Pathway<2){
+        NumGenesWithinCluster.Pathway <- 
+            sum(annotation[genenames,j]) -1 #minus one due to phyper
+        if (NumGenesWithinPathway<2 | 
+            NumGenesWithinCluster<2 | 
+            NumGenesWithinCluster.Pathway<2){
             pei[j] = NA
         } else {
-            pei[j] <- phyper(NumGenesWithinCluster.Pathway, NumGenesWithinPathway, NumGenes-NumGenesWithinPathway, NumGenesWithinCluster, lower.tail=FALSE)
+            pei[j] <- phyper(NumGenesWithinCluster.Pathway, 
+                NumGenesWithinPathway, NumGenes-NumGenesWithinPathway, 
+                NumGenesWithinCluster, lower.tail=FALSE)
         }
     }
     pei

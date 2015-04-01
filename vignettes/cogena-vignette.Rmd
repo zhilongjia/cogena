@@ -1,5 +1,6 @@
 ---
-title: "cogena, a tool for co-expressed gene-set enrichment analysis and visualization"
+title: "cogena, a tool for co-expressed gene-set enrichment analysis and 
+    visualization"
 author: "Zhilong Jia, Michael Barnes"
 date: "`r Sys.Date()`"
 output:
@@ -22,21 +23,24 @@ and so on. See the workflow of cogena in Figure 1.
 ![Overview of the cogena workflow](Cogena_workflow.png)
 
 ## Input data
-    Note: all the gene names should be gene SYMBOL since it is used in the gene dataset files.
-    Other kind of gene names could be used according to the kind of gene names of user-defined
-    gene-set files.
+    Note: all the gene names should be gene SYMBOL since it is used in the 
+    gene dataset files. Other kind of gene names could be used according to 
+    the kind of gene names of user-defined gene-set files.
 
 1. Input data needed.
 
 - the gene expression profiling of differentially expressed genes. It can be 
-matrix with gene in row and sample in column, data.frame or ExpressionSet object.
+matrix with gene in row and sample in column, data.frame or ExpressionSet 
+object.
 - the sample labels indicating the labels, like control and disease, of each 
 sample. A vector with sample names.
 
 2. Example dataset.
 
-    There is an example data in `cogena` package. This dataset, from [GSE20163](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163), is about Parkinson's disease. 
-    There are three objects in the PD dataset. See `?PD` for more details.
+    There is an example data in `cogena` package. This dataset, from 
+    [GSE20163](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163), 
+    is about Parkinson's disease. There are three objects in the PD dataset. 
+    See `?PD` for more details.
 
 ```{r import_data, message=FALSE}
 library(cogena)
@@ -52,16 +56,17 @@ ls()
 1.  Make Annotation
 
     There are a variety of gene sets in the `cogena` package, collected from 
-    [MSigDB](http://www.broadinstitute.org/gsea/msigdb/index.jsp). They are `r dir(system.file("extdata", package="cogena"), pattern="*gmt")`. with gene-sets, user can get the genes-specific gene
-    sets matrix as showed in the following example. Here the gene-sets can be user-defined
-    gene-sets formatted gmt, too.
-    
+    [MSigDB](http://www.broadinstitute.org/gsea/msigdb/index.jsp). They are 
+    `r  dir(system.file("extdata", package="cogena"), pattern="*gmt")`. with 
+    gene-sets, user can get the genes-specific gene
+    sets matrix as showed in the following example. Here the gene-sets can 
+    be user-defined gene-sets formatted gmt, too.
+
 ```{r gene_list_annotation}
 annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
 annofile <- system.file("extdata", annoGMT, package="cogena")
 ```
 
-    
 2. Run cogena
 
     Setting some parameters for cogena and running cogena analysis.
@@ -74,25 +79,45 @@ ncore <- 1
 clMethods <- c("hierarchical","kmeans")
 # the distance metric
 metric <- "correlation"
-# the agglomeration method used for hierarchical clustering (hierarchical and agnes)
+# the agglomeration method used for hierarchical clustering 
+#(hierarchical and agnes)
 method <- "complete"
 
 # the cogena analysis
-cogena_result <- cogena(DEexprs, nClust=nClust, clMethods=clMethods, metric=metric,
-                      method=method,  annofile=annofile, sampleLabel=sampleLabel, 
-                      ncore=ncore, verbose=TRUE)
+cogena_result <- cogena(DEexprs, nClust=nClust, clMethods=clMethods, 
+    metric=metric, method=method,  annofile=annofile, 
+    sampleLabel=sampleLabel, ncore=ncore, verbose=TRUE)
 ```
 
 
 ## Analysing results of cogena
-1.  After completing the cogena analysis, user can use `summary` to see the summary 
-of the result of cogena. Since there are so many options of results, user can 
-`optCluster` caculate wchih clusering methods and the number of clusters are optimum, 
-and `enrichment` caculate the enrichment score of certain clustering methods and 
-certain number of cluster.
+1.  After completing the cogena analysis, user can use `summary` to see 
+the summary of the result of cogena. Since there are so many options of 
+results, user can `optCluster` caculate wchih clusering methods and the 
+number of clusters are optimum, and `enrichment` caculate the enrichment 
+score of certain clustering methods and certain number of cluster.
 
-    As so many clustering methods and a range of number of clusters available, by setting the threshold of adjusted p-value as 0.05 so as to obtain the number of significant gene sets, we recommend that one can choose the clustering methods and the number of clusters, which is intuitively considered as the optimum, on which the number of significant gene sets are local maximum. In other words, with the cut-off of adjusted p-value, the optimum should have as many as possible gene sets enriched in a local range of number of clusters. The reason why choosing local maximum is largely because when the number of cluster is large and all clusters have more gene sets enriched, some clusters are generated from cutting a cluster from smaller number of clusters, which are highly enriched with gene sets, into more clusters. We consider the number of significant gene sets with the cut-off 0.05 of p-value as the score. Moreover, for some clustering methods with a certain number of clusters, if over 75% clusters possess a mixed up-regulated and down-regulated genes, the score (except not available (NA)) will be changed to inverse number. In addition, if the number of cluster is 2 and there are mixed up-regulated and down-regulated genes in each clusters, the score (if positive and except not available (NA)) of the other number of cluster for the same clustering method will be changed to inverse number.
-    
+    As so many clustering methods and a range of number of clusters 
+    available, by setting the threshold of adjusted p-value as 0.05 
+    so as to obtain the number of significant gene sets, we recommend
+    that one can choose the clustering methods and the number of clusters,
+    which is intuitively considered as the optimum, on which the number 
+    of significant gene sets are local maximum. In other words, with the 
+    cut-off of adjusted p-value, the optimum should have as many as possible 
+    gene sets enriched in a local range of number of clusters. The reason 
+    why choosing local maximum is largely because when the number of cluster
+    is large and all clusters have more gene sets enriched, some clusters 
+    are generated from cutting a cluster from smaller number of clusters,
+    which are highly enriched with gene sets, into more clusters. We consider 
+    the number of significant gene sets with the cut-off 0.05 of p-value as 
+    the score. Moreover, for some clustering methods with a certain number 
+    of clusters, if over 75% clusters possess a mixed up-regulated and 
+    down-regulated genes, the score (except not available (NA)) will be 
+    changed to inverse number. In addition, if the number of cluster is 
+    2 and there are mixed up-regulated and down-regulated genes in each 
+    clusters, the score (if positive and except not available (NA)) of 
+    the other number of cluster for the same clustering method will be 
+    changed to inverse number.
 
 ```{r cogena_result_analysis}
 summary(cogena_result)
@@ -112,7 +137,7 @@ enrichment.table <- enrichment(cogena_result, "hierarchical", "6")
 ```
 
 2.  To show the enrichment graph, `heatmapPEI` can be used. see Figure 2. 
-See ?heatmapPEI for more details.
+    See ?heatmapPEI for more details.
 
 ```{r heatmapPEI, fig.width=10, fig.height=6, fig.cap="KEGG pathway enrichment"}
 #The values shown in Figure 2. is the -log2 (p-values).
@@ -122,21 +147,26 @@ heatmapPEI(cogena_result, "hierarchical", "6", printGS=FALSE)
 #heatmapPEI(cogena_result, "hierarchical", "6", orderMethod = "I")
 ```
 
-3.  The heatmap of expression profiling with clusters is plotted by `heatmapCluster`. see Figure 3.
-User can know which cluster contains up-regulated or down-regulated genes.
+3.  The heatmap of expression profiling with clusters is plotted by 
+    `heatmapCluster`. see Figure 3. User can know which cluster contains
+    up-regulated or down-regulated genes.
+
 ```{r heatmapCluster, fig.width=10, fig.height=7, fig.cap="Heatmap of expression profiling with clusters"}
 #Always make the number as character, please!
 heatmapCluster(cogena_result, "hierarchical", "6")
 ```
 
-4.  If interested genes in a certain cluster, user can obtain the genes in a certain
-cluster via `geneInCluster`.
+4.  If interested genes in a certain cluster, user can obtain the genes in 
+    a certain cluster via `geneInCluster`.
 ```{r geneInCluster}
 #Always make the number as character, please!
 head(geneInCluster(cogena_result, "hierarchical", "6", "2"))
 ```
 
-5.  The gene expression profilings with cluster infromation could be obtained by `geneExpInCluster`. There are two items, `clusterGeneExp` and `label`, in the returned object of `geneExpInCluster`. This can be used for other application.
+5.  The gene expression profilings with cluster infromation could be 
+    obtained by `geneExpInCluster`. There are two items, `clusterGeneExp` 
+    and `label`, in the returned object of `geneExpInCluster`. This can 
+    be used for other application.
 ```{r geneExpInCluster}
 #Always make the number as character, please!
 gec <- geneExpInCluster(cogena_result, "hierarchical", "6")
@@ -144,7 +174,8 @@ head(gec$clusterGeneExp, 3)
 gec$label
 ```
 
-6. The correlation among one cluster could be shown via `corInCluster`. see Figure 4.
+6. The correlation among one cluster could be shown via `corInCluster`. 
+    see Figure 4.
 ```{r corInCluster, fig.width=6, fig.height=6, fig.cap="Correlation"}
 #Always make the number as character, please!
 corInCluster(cogena_result, "hierarchical", "8", "8")
@@ -154,7 +185,8 @@ corInCluster(cogena_result, "hierarchical", "8", "8")
 https://github.com/zhilongjia/cogena/issues
 
 ## Citation
-Jia Z. et al. *Cogena, a tool for co-expressed gene-set enrichment analysis and visualization*.
+Jia Z. et al. *Cogena, a tool for co-expressed gene-set enrichment 
+analysis and visualization*.
 
 ##Other Information
 System info

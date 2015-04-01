@@ -12,19 +12,21 @@ PEI(genenames, annotation, annotationGenesPop)
 \item{annotation}{data.frame with the gene (like all the differentially
 expressed genes) in row, gene set in column.}
 
-\item{annotationGenesPop}{data.frame with the gene in row, gene set in column.
-Here genes are genes in population with filering the non-nformative genes better.}
+\item{annotationGenesPop}{data.frame with the gene in row, gene set
+in column. Here genes are genes in population with filering the
+non-nformative genes better.}
 }
 \value{
 a vector with P-values.
 }
 \description{
-Caculating the significance of Gene sets enrichment based on the hypergeometric test.
-This function is mainly used internally.
+Caculating the significance of Gene sets enrichment based on the
+hypergeometric test. This function is mainly used internally.
 }
 \details{
-Here the genes in annotation can be a varity of types. like all the DEG, up-regualted genes
-or genes in a cluster. the gene names should be consistent with the genes in the gene sets.
+Here the genes in annotation can be a varity of types. like all the DEG,
+up-regualted genes or genes in a cluster. the gene names should be
+consistent with the genes in the gene sets.
 }
 \keyword{internal}
 

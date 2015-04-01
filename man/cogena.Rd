@@ -26,14 +26,13 @@ with multiple choices allowed.}
 \item{metric}{the distance measure to be used. This should be one of
 "euclidean", "maximum", "manhattan", "canberra", "binary", "pearson",
 "abspearson", "correlation", "abscorrelation", "NMI", "biwt", "spearman" or
- "kendall". Any unambiguous
-substring can be given. In detail, please reference the parameter method in
-amap::Dist. Some of the cluster methods could use only part of the metric.
-See Detail.}
+"kendall". Any unambiguous substring can be given. In detail, please
+reference the parameter method in amap::Dist. Some of the cluster methods
+could use only part of the metric. See Detail.}
 
 \item{method}{For hierarchical clustering (hierarchical and agnes), the
 agglomeration method used. The default is "complete". Available choices are
- "ward", "single", "complete", and "average".}
+"ward", "single", "complete", and "average".}
 
 \item{annofile}{gene set filename.}
 
@@ -79,7 +78,7 @@ values were missing.
 \item binary (aka asymmetric binary): The vectors are regarded as binary
 bits, so non-zero elements are 'on' and zero elements are 'off'. The
 distance is the proportion of bits in which only one is on amongst those in
- which at least one is on.
+which at least one is on.
 \item pearson Also named "not centered Pearson"
 \eqn{1 - sum(x_i y_i) / sqrt [sum(x_i^2) sum(y_i^2)]}.
 \item abspearson Absolute Pearson
@@ -115,7 +114,7 @@ method <- "complete"
 
 # the cogena analysis
 cogena_result <- cogena(DEexprs, nClust=nClust, clMethods=clMethods,
-    metric=metric, method=method,  annofile=annofile, sampleLabel=sampleLabel,
+    metric=metric, method=method, annofile=annofile, sampleLabel=sampleLabel,
     ncore=ncore, verbose=TRUE)
 }
 

@@ -14,8 +14,9 @@ A list of gene set could be find in the vignette of cogena}
 a gmt list
 }
 \description{
-read Gene Matrix Transposed (gmt) file and output a list with the the first column as
-the names of items in the list. see \href{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{Gene Matrix Transposed file format}
+read Gene Matrix Transposed (gmt) file and output a list with the the first
+column as the names of items in the list. see
+\href{http://www.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{Gene Matrix Transposed file format}
 for more details.
 }
 \examples{
