@@ -23,7 +23,9 @@ Description: Description: Gene set enrichment analysis is a valuable tool for
     expression clusters, we find considerable enhancement in the resolution
     of molecular signatures in omic data at the cluster level compared to 
     the whole.
-biocViews: GeneExpression, Clustering, GO, Pathways, GeneSetEnrichment
+biocViews: Clustering, GeneSetEnrichment, GeneExpression, Visualization, 
+    Pathways, Microarray, Sequencing, SystemsBiology, DataRepresentation, 
+    DataImport
 Depends: 
     R (>= 3.2),
     cluster,
