@@ -53,7 +53,6 @@ Suggests:
 Collate:
     dist_class.R
     cogena_class.R
-    stopImplicitCluster.R
     PD.R
     PEI.R
     cogena.R

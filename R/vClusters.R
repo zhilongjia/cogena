@@ -33,7 +33,10 @@ vClusters <- function(mat, Distmat, clMethod, nClust, method,
 
     # parallel the Clustering with the number of Cluster is nc
     #doMC::registerDoMC(ncore)
-    doParallel::registerDoParallel(cores=ncore)
+    cl <- parallel::makeCluster(ncore)
+    doParallel::registerDoParallel(cl)
+    #doParallel::registerDoParallel(cores=ncore)
+    
     if (verbose) {print(paste("getDoParWorkers:", foreach::getDoParWorkers()))}
     nc=NULL
     clusterList <- foreach::foreach (nc = nClust) %dopar% {
@@ -136,7 +139,9 @@ vClusters <- function(mat, Distmat, clMethod, nClust, method,
         if(verbose) print(paste("End PEI analysis,", clMethod, nc, "clusters"))
         list(clusterObj=clusterObj, measures=pei)
     } #END OF NC LOOP
-    stopImplicitCluster()
+    
+    stopCluster(cl)
+    #stopImplicitCluster()
     
 ########################################################
     #Combine the paralled results

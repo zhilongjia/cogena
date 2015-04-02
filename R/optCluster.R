@@ -45,9 +45,9 @@ setMethod("optCluster", signature(object="cogena"),
     if (ncores > parallel::detectCores()) {
         ncores <- parallel::detectCores()
     }
-#     cl <- parallel::makeCluster(ncores)
-#     doParallel::registerDoParallel(cl)
-    doParallel::registerDoParallel(cores=ncores)
+    cl <- parallel::makeCluster(ncores)
+    doParallel::registerDoParallel(cl)
+    # doParallel::registerDoParallel(cores=ncores)
     i = NULL
     score <- 
         foreach::foreach(i = clusterMethods(object), .combine='rbind') %dopar% {
@@ -100,8 +100,8 @@ setMethod("optCluster", signature(object="cogena"),
         }
         cl_score
         }
-    #stopCluster(cl)
-    stopImplicitCluster()
+    stopCluster(cl)
+    # stopImplicitCluster()
     
     rownames(score) <- clusterMethods(object)
     return (score)
