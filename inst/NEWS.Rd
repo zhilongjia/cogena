@@ -3,7 +3,7 @@
 
 \section{Changes in version 0.99.3 (2015-04-02)}{
 \itemize{
-    \item use stopImplicitCluster to stop cluster to avoid checking error from 
+    \item use makeCluster to creat cluster to avoid checking error from 
     Windows.
     }
 }
