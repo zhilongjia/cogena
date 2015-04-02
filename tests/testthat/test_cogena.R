@@ -3,7 +3,7 @@ data(PD)
 annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
 annofile <- system.file("extdata", annoGMT, package="cogena")
 nClust <- 2:3
-ncore <- 2 #2
+ncore <- 1 #2
 clMethods <- c("hierarchical","kmeans")
 metric <- "correlation"
 method <- "complete"

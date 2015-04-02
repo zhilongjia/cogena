@@ -8,7 +8,7 @@
 \usage{
 heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"),
   clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
-  printSum = TRUE, ...)
+  maintitle = NULL, printSum = TRUE, ...)
 
 \S4method{heatmapCluster}{cogena}(object, method = clusterMethods(object),
   nClusters = nClusters(object), sampleColor = c("darkblue", "cyan"),
@@ -33,13 +33,13 @@ c("coral3", "deepskyblue1").}
 
 \item{heatmapcol}{col for heatmap. The default is greenred(75).}
 
+\item{maintitle}{a character. like GSExxx. the output of figure will like
+"kmeans 3 Clusters GSExxx" in two lines.}
+
 \item{printSum}{print the summary of the number of genes in each cluster.
 Default is TRUE.}
 
 \item{...}{other parameters to heatmap.3.}
-
-\item{maintitle}{a character. like GSExxx. the output of figure will like
-"kmeans 3 Clusters GSExxx" in two lines.}
 }
 \value{
 a gene expression heatmap with Cluster information figure

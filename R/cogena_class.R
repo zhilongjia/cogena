@@ -34,9 +34,6 @@
 #' @exportClass cogena
 #' @import class
 
-
-#setOldClass("dist")
-#setClassUnion("character or factor", c("character", "factor"))
 setClass("cogena", slots=list(mat="matrix", 
     clusterObjs="list", 
     Distmat="dist",

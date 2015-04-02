@@ -1,6 +1,13 @@
 \name{NEWS}
 \title{News for Package \pkg{cogena}}
 
+\section{Changes in version 0.99.3 (2015-04-02)}{
+\itemize{
+    \item use stopImplicitCluster to stop cluster to avoid checking error from 
+    Windows.
+    }
+}
+
 \section{Changes in version 0.99.2 (2015-04-01)}{
 \itemize{
     \item Update indent based on the coding style of Bioconductor.
@@ -16,3 +23,8 @@
     }
 }
 
+\section{Changes in version 0.99.0 (2015-03-27)}{
+\itemize{
+    \item Submit cogena to Bioconductor.
+    }
+}

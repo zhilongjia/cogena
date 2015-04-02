@@ -49,12 +49,12 @@ of genes in cluster are small.
 data(PD)
 annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
 package="cogena")
-cogena_result <- cogena(DEexprs, nClust=2:3,
+cogena_result <- cogena(DEexprs, nClust=c(2,10),
 clMethods=c("hierarchical","kmeans"), metric="correlation",
 method="complete",  annofile=annofile, sampleLabel=sampleLabel,
 ncore=1, verbose=TRUE)
-corInCluster(cogena_result, "kmeans", "3", "2")
-corInCluster(cogena_result, "kmeans", "3", "2", plotMethod="square")
+corInCluster(cogena_result, "kmeans", "10", "10")
+corInCluster(cogena_result, "kmeans", "10", "10", plotMethod="square")
 }
 \seealso{
 \code{\link{cogena}} \code{\link[corrplot]{corrplot}}

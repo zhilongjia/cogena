@@ -41,7 +41,7 @@
 #' 
 setGeneric("heatmapCluster", 
     function(object, method, nClusters, sampleColor=c("darkblue", "cyan"),
-        clusterColor=NULL, clusterColor2=NULL, heatmapcol=NULL,
+        clusterColor=NULL, clusterColor2=NULL, heatmapcol=NULL, maintitle=NULL,
         printSum=TRUE, ...) 
     standardGeneric("heatmapCluster"))
 
@@ -88,7 +88,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
     ColSideColors <- map2col(as.numeric(as.factor(sampleLabel)), sampleColor)
     
     if (is.null(clusterColor)) {
-        clusterColor <- sample(rainbow(nClusters, alpha = c(1, 0.6)))
+        clusterColor <- sample(rainbow(nClusters)) #, alpha = c(1, 0.6)
     }
     if (is.null(clusterColor2)){
         clusterColor2 <- c("coral3", "deepskyblue1")
@@ -116,7 +116,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
     } else {
         maintitle=paste(method, nClusters, "clusters",sep="_")
     }
-
+    
     heatmap.3(mat, col=heatmapcol, trace="none", scale="row", Rowv=FALSE, 
         Colv=FALSE, dendrogram="none", labRow=NA, 
         colsep=length(which(sampleLabel==sampleLabel[1])), 
