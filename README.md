@@ -1,8 +1,9 @@
 # cogena
 
-[![Travis-CI Build Status](https://travis-ci.org/zhilongjia/cogena.png?branch=master)](https://travis-ci.org/zhilongjia/cogena)
 
-**Update: cogena supports Windows now by leveraging `doParallel` instead of `doMC` package.**
+**Update:**
++ cogena supports Windows now by leveraging `doParallel` instead of `doMC` package.
++ [cogena](http://bioconductor.org/packages/devel/bioc/html/cogena.html) was released at Bioconductor.
 
 co-expressed gene-set enrichment analysis: clustering differentially expressed 
 genes and gene set enrichment analysis of highly correlated genes within clusters
@@ -20,3 +21,4 @@ The heatmap of co-expressed gene set
 installation:
 
 	devtools::install_github("zhilongjia/cogena")
+
