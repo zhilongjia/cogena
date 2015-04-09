@@ -27,7 +27,7 @@ biocViews: Clustering, GeneSetEnrichment, GeneExpression, Visualization,
     Pathways, KEGG, Microarray, Sequencing, SystemsBiology, DataRepresentation, 
     DataImport
 Depends: 
-    R (>= 3.2),
+    R (>= 3.1),
     cluster,
     ggplot2,
     gplots,
