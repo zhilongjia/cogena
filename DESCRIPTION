@@ -1,5 +1,5 @@
 Package: cogena
-Version: 0.99.3
+Version: 1.0.1
 Title: co-expressed gene-set enrichment analysis
 Authors@R: c(person("Zhilong", "Jia", role =c("aut", "cre"), 
     email="zhilongjia@gmail.com"), 
@@ -27,7 +27,7 @@ biocViews: Clustering, GeneSetEnrichment, GeneExpression, Visualization,
     Pathways, KEGG, Microarray, Sequencing, SystemsBiology, DataRepresentation, 
     DataImport
 Depends: 
-    R (>= 3.1),
+    R (>= 3.2),
     cluster,
     ggplot2,
     gplots,
@@ -40,6 +40,8 @@ Imports:
     doParallel,
     fastcluster,
     corrplot,
+    gCMAP,
+    GSEABase,
     reshape2,
     devtools
 Suggests: 
