@@ -16,7 +16,7 @@
 #' gmt2list(annofile)
 #' 
 gmt2list <- function(annofile){
-    x <- scan(annofile, what="", sep="\n")
+    x <- scan(annofile, what="", sep="\n", quiet=TRUE)
     y <- strsplit(x, "\t")
     names(y) <- sapply(y, `[[`, 1)
     annoList <- lapply(y, `[`, c(-1,-2))
