@@ -15,7 +15,12 @@
 #' in column. Here genes are genes in population with filering the 
 #' non-nformative genes better.
 #' @return a vector with P-values.
-#' @keywords internal
+#' @examples
+#' data(PD)
+#' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", package="cogena")
+#' annoBG <- gene2set(annofile, AllGeneSymbols)
+#' res <- PEI(rownames(DEexprs)[1:200], gene2set(annofile, rownames(DEexprs)[1:200]), annoBG)
+#' 
 
 PEI <- function(genenames, annotation, annotationGenesPop) {
 

@@ -13,10 +13,10 @@
 #' @examples
 #' anno <- "c2.cp.kegg.v4.0.symbols.gmt"
 #' annofile <- system.file("extdata", anno, package="cogena")
-#' gmt2list(annofile)
+#' gl <- gmt2list(annofile)
 #' 
 gmt2list <- function(annofile){
-    x <- scan(annofile, what="", sep="\n")
+    x <- scan(annofile, what="", sep="\n", quiet=TRUE)
     y <- strsplit(x, "\t")
     names(y) <- sapply(y, `[[`, 1)
     annoList <- lapply(y, `[`, c(-1,-2))
