@@ -7,6 +7,7 @@
 #' @return a list containing the cluster information 
 #' @import amap
 #' @import cluster
+#' @import mclust
 #' @import fastcluster
 #' @import parallel
 #' @import foreach

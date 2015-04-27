@@ -1,6 +1,19 @@
 \name{NEWS}
 \title{News for Package \pkg{cogena}}
 
+\section{Changes in version 1.1.1 (2015-04-27)}{
+\itemize{
+    \item add Molecular Signatures Database v5.0.
+    \item import mclust instead of suggesting it.
+    }
+}
+
+\section{Changes in version 1.0.0 (2015-04-16)}{
+\itemize{
+    \item cogena is released with Bioconductor 3.1.
+    }
+}
+
 \section{Changes in version 0.99.3 (2015-04-02)}{
 \itemize{
     \item use makeCluster to creat cluster to avoid checking error from 
