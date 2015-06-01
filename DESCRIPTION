@@ -40,11 +40,9 @@ Imports:
     doParallel,
     fastcluster,
     corrplot,
-    gCMAP,
     mclust,
     kohonen,
     biwt,
-    GSEABase,
     Biobase,
     reshape2,
     devtools

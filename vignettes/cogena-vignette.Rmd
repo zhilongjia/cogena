@@ -45,7 +45,7 @@ sample. A vector with sample names.
 ```{r import_data, message=FALSE}
 library(cogena)
 data(PD)
-# Three objects in the PD dataset and one in AllGeneSymbols dataset.
+# Three objects in the PD dataset.
 ```
 ```{r PD_data, echo=FALSE}
 ls()
