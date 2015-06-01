@@ -15,6 +15,7 @@
 #' in column. Here genes are genes in population with filering the 
 #' non-nformative genes better.
 #' @return a vector with P-values.
+#' @export
 #' @examples
 #' data(PD)
 #' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", package="cogena")

@@ -38,3 +38,11 @@ NULL
 #' @source \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163}
 NULL
 
+#' All the gene symbols
+#' 
+#' @format a vector with 18986 gene symbols.
+#' @docType data
+#' @keywords datasets
+#' @name AllGeneSymbols
+#' @source \url{http://www.genenames.org/}
+NULL
