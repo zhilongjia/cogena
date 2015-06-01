@@ -139,6 +139,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
         }
         legend("top", legend = names(table(sampleLabel)), col = sampleColor, 
             lty=1, lwd=20, bty = "n", title = "Type of Sample")
+    # return (mat)
     })
 
 
