@@ -57,10 +57,10 @@ ls()
 
     There are a variety of gene sets in the `cogena` package, collected from 
     [MSigDB](http://www.broadinstitute.org/gsea/msigdb/index.jsp). They are 
-    `r  dir(system.file("extdata", package="cogena"), pattern="*gmt")`. with 
-    gene-sets, user can get the genes-specific gene
-    sets matrix as showed in the following example. Here the gene-sets can 
-    be user-defined gene-sets formatted gmt, too.
+    `r  dir(system.file("extdata", package="cogena"), pattern="*gmt")`. Here
+    the gene-sets can be user-defined gene-sets formatted gmt, too (Just 
+    put it into the extdata directory in the installation directory of
+    cogena, like ~/R/x86_64-pc-linux-gnu-library/3.2/cogena/extdata in Linux). 
 
 ```{r gene_list_annotation}
 annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
@@ -72,10 +72,14 @@ annofile <- system.file("extdata", annoGMT, package="cogena")
     Setting some parameters for cogena and running cogena analysis.
 ```{r cogena, results="hide"}
 # the number of clusters. It could be a vector.
+# nClust <- 2:20
 nClust <- 2:8
 # the number of cores.
+# ncore <- 8
 ncore <- 2
 # the clustering methods
+# clMethods <- c("hierarchical","kmeans","diana","fanny","som","model",
+# "sota","pam","clara","agnes") # All the methods can be used together.
 clMethods <- c("hierarchical","kmeans")
 # the distance metric
 metric <- "correlation"
