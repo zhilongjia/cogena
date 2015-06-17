@@ -1,4 +1,5 @@
-#' heatmap of the gene set enrichment_score matrix directly
+#' heatmap of the gene set enrichment_score matrix directly (for CMap 
+#' gene set only)
 #' 
 #' heatmap of the gene set enrichment_score matrix directly for the CMap 
 #' dataset only. This function is desgined for the cogena result from CMap
@@ -9,12 +10,14 @@
 #' 
 #' @param enrichment_score a returned value from \code{\link{enrichment}} 
 #' function
-#' 
 #' @param orderMethod the order method, default is max, other options are 
 #' "mean", "all", "I", "II" or a number meaning the ith cluster.
+#' @param CutoffNumGeneset the cut-off of the number of gene sets in the 
+#' return table. The default is 20.
+#' @param CutoffPVal the cut-off of p-value. The default is 0.05.
 #' @inheritParams heatmapPEI
-#' @inheritParams enrichment
-#' @param title a character. Default is NULL
+#' @param title a character. Default is "cogena"
+#' @param printGS print the enriched gene set names or not. Default is TRUE.
 #' 
 #' @return a gene set enrichment heatmap
 #' @details
@@ -34,8 +37,8 @@
 #' 
 #' @examples
 #' \dontrun{
-#' enrichment.table <- enrichment(cogena_result, "kmeans", "3")
-#' heatmapEnrich(enrichment.table, "kmeans", "3")
+#' enrichment_score <- enrichment(cogena_result, "kmeans", "3")
+#' heatmapEnrich(enrichment_score, "kmeans", "3")
 #' }
 #' 
 #' @export heatmapEnrich
@@ -46,17 +49,19 @@
 #' @rdname heatmapEnrich
 #' 
 setGeneric("heatmapEnrich", 
-           function(enrichment_score, method, nClusters, orderMethod="max",
+           function(enrichment_score, orderMethod="max",
                     CutoffNumGeneset=20, CutoffPVal=0.05, 
-                    low="grey", high="red", na.value="white", title=NULL) 
+                    low="grey", high="red", na.value="white", title="cogena",
+                    printGS=TRUE) 
                standardGeneric("heatmapEnrich"))
 
 #' @rdname heatmapEnrich
 #' @aliases heatmapEnrich,cogena
 setMethod("heatmapEnrich", signature(enrichment_score="matrix"),
-          function(enrichment_score, method, nClusters, orderMethod="max",
+          function(enrichment_score, orderMethod="max",
                    CutoffNumGeneset=20, CutoffPVal=0.05, 
-                   low="grey", high="red", na.value="white", title=NULL) {
+                   low="grey", high="red", na.value="white", title="cogena",
+                   printGS=TRUE) {
               
               enrichment_score <- as.data.frame(t(enrichment_score))
               enrichment_score$name <- sapply(strsplit(rownames(enrichment_score) , "_"), "[[", 1)
@@ -69,6 +74,7 @@ setMethod("heatmapEnrich", signature(enrichment_score="matrix"),
                       return (round(meanScore, 1)) 
                   }
               }
+              name <- NULL
               score <- dplyr::group_by(enrichment_score, name) %>% summarise_each(funs(meanX))
               score <- score[which(rowSums(score[,-1])!=0), ]
               rownames(score) <- score$name
@@ -107,6 +113,9 @@ setMethod("heatmapEnrich", signature(enrichment_score="matrix"),
               }
               
               score <- score[,ncol(score):1, drop=FALSE]
+              if (printGS==TRUE) {
+                  cat (rev(colnames(score)), sep ="\t")
+              }
 
               enrich_score <- reshape2::melt(score)
               #legend breaks
@@ -117,11 +126,7 @@ setMethod("heatmapEnrich", signature(enrichment_score="matrix"),
                   breaks <- NULL
               }
               Var1=Var2=value=NULL
-              if (!is.null(title)) {
-                  title=paste("cogena:", method, nClusters, "\n", title)
-              } else {
-                  title=paste("cogena:", method, nClusters)
-              }
+
               ggplot(enrich_score, aes(as.factor(Var1), Var2)) + 
                   geom_tile(aes(fill = value)) + 
                   scale_fill_gradient2("score",  mid=low, midpoint=4, low=low, 
