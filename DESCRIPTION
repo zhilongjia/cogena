@@ -45,6 +45,7 @@ Imports:
     biwt,
     Biobase,
     reshape2,
+    dplyr,
     devtools
 Suggests: 
     knitr
@@ -65,6 +66,7 @@ Collate:
     heatmapCluster.R
     heatmapPEI.R
     heatmapPEI2.R
+    heatmapEnrich.R
     hubgeneInCluster.R
     optCluster.R
     sota.R

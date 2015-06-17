@@ -128,7 +128,7 @@ cogena <- function(obj, nClust, clMethods="hierarchical",metric="correlation",
     }
 
     if (is.null(annofile)) {
-        annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", 
+        annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", 
             package="cogena")
     }
 
