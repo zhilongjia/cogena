@@ -77,7 +77,7 @@ setMethod("heatmapEnrich", signature(enrichment_score="matrix"),
               score <- dplyr::group_by(enrichment_score, name) %>% summarise_each(funs(meanX))
               score <- score[which(rowSums(score[,-1])!=0), ]
               rownames(score) <- score$name
-              if (ncol(score)==0){
+              if (nrow(score)==0){
                   stop("No enrichment for this cluster!")
               }
               
@@ -87,17 +87,17 @@ setMethod("heatmapEnrich", signature(enrichment_score="matrix"),
               # the orderMethod options
               orderMethod <- match.arg(orderMethod, c(rownames(score), "max", "mean"))
               if (orderMethod == "mean") {
-                  score = score[,order(colMeans(score, na.rm=TRUE), decreasing=TRUE)]
+                  score = score[,order(colMeans(score, na.rm=TRUE), decreasing=TRUE), drop=FALSE]
                   index_above_cutoffPVal <- which(suppressWarnings(
                       apply(score, 2, max, na.rm=TRUE)) > -log2(CutoffPVal))
               } else if (orderMethod == "max") {
                   colMax <- function(X) {suppressWarnings(
                       apply(X, 2, max, na.rm=TRUE))}
-                  score = score[,order(colMax(score), decreasing=TRUE)]
+                  score = score[,order(colMax(score), decreasing=TRUE), drop=FALSE]
                   index_above_cutoffPVal <- which(suppressWarnings(
                       apply(score, 2, max, na.rm=TRUE)) > -log2(CutoffPVal))
               } else if (orderMethod %in% rownames(score)) {
-                  score = score[, order(score[orderMethod,], decreasing=TRUE)]
+                  score = score[, order(score[orderMethod,], decreasing=TRUE), drop=FALSE]
                   index_above_cutoffPVal <- 
                       which(score[orderMethod,] > -log2(CutoffPVal))
               }
