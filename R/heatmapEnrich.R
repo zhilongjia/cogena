@@ -1,8 +1,7 @@
 #' heatmap of the gene set enrichment_score matrix directly (for CMap 
 #' gene set only)
 #' 
-#' heatmap of the gene set enrichment_score matrix directly for the CMap 
-#' dataset only. This function is desgined for the cogena result from CMap
+#' heatmapEnrich is desgined for the cogena result from CMap
 #' only so as to collapse the multi-isntance drugs in CMap! 
 #' After obtaining the ennrichemt of clusters in the gene 
 #' sets via \code{\link{enrichment}}, the heatmapEnrich will show it 
@@ -41,7 +40,7 @@
 #' heatmapEnrich(enrichment_score, "kmeans", "3")
 #' }
 #' 
-#' @export heatmapEnrich
+#' @export
 #' @import ggplot2
 #' @import reshape2
 #' @import dplyr
