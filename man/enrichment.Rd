@@ -52,7 +52,6 @@ orderMethod:
 }
 \examples{
 data(PD)
-data(PD)
 annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
 package="cogena")
 cogena_result <- cogena(DEexprs, nClust=2:3,
