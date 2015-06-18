@@ -65,7 +65,6 @@ Collate:
     heatmap.3.R
     heatmapCluster.R
     heatmapPEI.R
-    heatmapPEI2.R
     heatmapEnrich.R
     hubgeneInCluster.R
     optCluster.R
