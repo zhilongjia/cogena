@@ -100,6 +100,7 @@ setMethod("summary","cogena",
     cat("Metric of Distance Matrix:\n", object@metric, "\n\n")
     cat("Agglomeration method for hierarchical 
         clustering (hclust and agnes):\n", object@method, "\n\n")
+    cat("Gene set:\n", object@gmt, "\n\n")
     }
 )
 
