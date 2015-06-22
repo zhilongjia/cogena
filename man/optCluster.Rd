@@ -16,8 +16,11 @@ optCluster(object, based = "inTotal", ncores = object@ncore,
 \arguments{
 \item{object}{a cogena object}
 
-\item{based}{counting method. Default is "inTotal" to count all the clusters
-and I, II, All. Other options are "All", "I", "II".}
+\item{based}{counting method. Default is "inTotal" to count all enriched
+gene sets from all the clusters and I, II, All. Other options are "All",
+ "I", "II". Here "I" or "II" means all the up-regualted or down-regualted
+ genes (Do check the output of function heatmapCluster to suggest which is
+ up-regulated (down-regulated)!), while "All" means all the DEGs used.}
 
 \item{ncores}{cores used for caculating optCluster. Default is same as ncores
 used during cogena function, but it will be the same as number of cores

@@ -4,8 +4,11 @@
 #' the number of gene sets which are signifigant should be maximum.
 #'
 #' @inheritParams clusterMethods
-#' @param based counting method. Default is "inTotal" to count all the clusters
-#' and I, II, All. Other options are "All", "I", "II".
+#' @param based counting method. Default is "inTotal" to count all enriched 
+#' gene sets from all the clusters and I, II, All. Other options are "All",
+#'  "I", "II". Here "I" or "II" means all the up-regualted or down-regualted
+#'  genes (Do check the output of function heatmapCluster to suggest which is
+#'  up-regulated (down-regulated)!), while "All" means all the DEGs used.
 #' @param ncores cores used for caculating optCluster. Default is same as ncores
 #' used during cogena function, but it will be the same as number of cores 
 #' machine has if ncores parameter is exceed it.
