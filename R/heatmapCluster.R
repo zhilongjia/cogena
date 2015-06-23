@@ -3,7 +3,8 @@
 #' heatmap of gene expression profilings with cluster-based color indication.
 #' @inheritParams enrichment
 #' @param sampleColor a color vector with the sample length. 
-#' The default is c("darkblue", "cyan").
+#' The default is c("darkblue", "cyan"). Or setting as "random" if 
+#'  sample Label has more than 2 levels.
 #' @param clusterColor a color vector with the cluster length. 
 #' The default is rainbow(nClusters(object)).
 #' @param clusterColor2 a color vector with 2 elements. The default is 
@@ -38,6 +39,10 @@
 #' heatmapCluster(cogena_result, "hierarchical", "3")
 #' heatmapcol <- gplots::redgreen(75) 
 #' heatmapCluster(cogena_result, "hierarchical", "3", heatmapcol=heatmapcol)
+#' 
+#' # Setting sampleColor as "random" if sample Label has more 
+#' # than 2 levels.
+#' heatmapCluster(cogena_result, "hierarchical", "3", sampleColor="random")
 #' 
 setGeneric("heatmapCluster", 
     function(object, method, nClusters, sampleColor=c("darkblue", "cyan"),
@@ -85,6 +90,10 @@ setMethod("heatmapCluster", signature(object="cogena"),
     
     #color setting
     sampleLabel <- sort(object@sampleLabel)
+    # ColSideColors <- map2col(as.numeric(as.factor(sampleLabel)), sampleColor)
+    if (sampleColor == "random") {
+        sampleColor <- sample(topo.colors(nlevels(as.factor(sampleLabel))))
+    }
     ColSideColors <- map2col(as.numeric(as.factor(sampleLabel)), sampleColor)
     
     if (is.null(clusterColor)) {
@@ -119,8 +128,9 @@ setMethod("heatmapCluster", signature(object="cogena"),
     
     heatmap.3(mat, col=heatmapcol, trace="none", scale="row", Rowv=FALSE, 
         Colv=FALSE, dendrogram="none", labRow=NA, 
-        colsep=length(which(sampleLabel==sampleLabel[1])), 
-        rowsep=cumsum( table(cluster_size)), #adjCol=c(0.8,0), 
+        # colsep=length(which(sampleLabel==sampleLabel[1])), 
+        colsep=cumsum( table(sampleLabel)),
+        rowsep=cumsum( table(cluster_size)), #adjCol=c(0.8,0),
         sepcolor="white", sepwidth=c(0.05,1),
         key=TRUE, symkey=FALSE, density.info="none", keysize=1.5, 
         main=maintitle,
@@ -138,7 +148,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
                 title = paste(2, "Clusters"))
         }
         legend("top", legend = names(table(sampleLabel)), col = sampleColor, 
-            lty=1, lwd=20, bty = "n", title = "Type of Sample")
+            lty=1, lwd=20, bty = "n", title = "Type of Sample", horiz=TRUE)
     # return (mat)
     })
 
