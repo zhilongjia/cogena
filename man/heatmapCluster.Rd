@@ -23,7 +23,8 @@ heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"),
 \item{nClusters}{as nClust in cogena function.}
 
 \item{sampleColor}{a color vector with the sample length.
-The default is c("darkblue", "cyan").}
+The default is c("darkblue", "cyan"). Or setting as "random" if
+ sample Label has more than 2 levels.}
 
 \item{clusterColor}{a color vector with the cluster length.
 The default is rainbow(nClusters(object)).}
@@ -64,6 +65,10 @@ summary(cogena_result)
 heatmapCluster(cogena_result, "hierarchical", "3")
 heatmapcol <- gplots::redgreen(75)
 heatmapCluster(cogena_result, "hierarchical", "3", heatmapcol=heatmapcol)
+
+# Setting sampleColor as "random" if sample Label has more
+# than 2 levels.
+heatmapCluster(cogena_result, "hierarchical", "3", sampleColor="random")
 }
 \seealso{
 \code{\link{cogena}}, \code{\link{heatmap.3}} and

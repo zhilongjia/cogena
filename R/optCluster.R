@@ -107,6 +107,11 @@ setMethod("optCluster", signature(object="cogena"),
     # stopImplicitCluster()
     
     rownames(score) <- clusterMethods(object)
+    
+    #Omit the negative sign if there are more than 2 factors
+    if (nlevels(as.factor(object@sampleLabel)) != 2) {
+        score <- abs(score)
+    }
     return (score)
 })
 
