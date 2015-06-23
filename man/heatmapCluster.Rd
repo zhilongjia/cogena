@@ -6,14 +6,14 @@
 \alias{heatmapCluster,cogena-method}
 \title{heatmap of gene expression profilings with cluster indication.}
 \usage{
-heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"),
+heatmapCluster(object, method, nClusters, sampleColor = NULL,
   clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
   maintitle = NULL, printSum = TRUE, ...)
 
 \S4method{heatmapCluster}{cogena}(object, method = clusterMethods(object),
-  nClusters = nClusters(object), sampleColor = c("darkblue", "cyan"),
-  clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
-  maintitle = NULL, printSum = TRUE, ...)
+  nClusters = nClusters(object), sampleColor = NULL, clusterColor = NULL,
+  clusterColor2 = NULL, heatmapcol = NULL, maintitle = NULL,
+  printSum = TRUE, ...)
 }
 \arguments{
 \item{object}{a cogena object}
@@ -22,9 +22,8 @@ heatmapCluster(object, method, nClusters, sampleColor = c("darkblue", "cyan"),
 
 \item{nClusters}{as nClust in cogena function.}
 
-\item{sampleColor}{a color vector with the sample length.
-The default is c("darkblue", "cyan"). Or setting as "random" if
- sample Label has more than 2 levels.}
+\item{sampleColor}{a color vector with the sample length. The default is
+from topo.colors randomly.}
 
 \item{clusterColor}{a color vector with the cluster length.
 The default is rainbow(nClusters(object)).}
@@ -65,10 +64,6 @@ summary(cogena_result)
 heatmapCluster(cogena_result, "hierarchical", "3")
 heatmapcol <- gplots::redgreen(75)
 heatmapCluster(cogena_result, "hierarchical", "3", heatmapcol=heatmapcol)
-
-# Setting sampleColor as "random" if sample Label has more
-# than 2 levels.
-heatmapCluster(cogena_result, "hierarchical", "3", sampleColor="random")
 }
 \seealso{
 \code{\link{cogena}}, \code{\link{heatmap.3}} and
