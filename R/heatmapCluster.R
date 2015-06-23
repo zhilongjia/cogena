@@ -2,9 +2,8 @@
 #' 
 #' heatmap of gene expression profilings with cluster-based color indication.
 #' @inheritParams enrichment
-#' @param sampleColor a color vector with the sample length. 
-#' The default is c("darkblue", "cyan"). Or setting as "random" if 
-#'  sample Label has more than 2 levels.
+#' @param sampleColor a color vector with the sample length. The default is 
+#' from topo.colors randomly.
 #' @param clusterColor a color vector with the cluster length. 
 #' The default is rainbow(nClusters(object)).
 #' @param clusterColor2 a color vector with 2 elements. The default is 
@@ -40,12 +39,9 @@
 #' heatmapcol <- gplots::redgreen(75) 
 #' heatmapCluster(cogena_result, "hierarchical", "3", heatmapcol=heatmapcol)
 #' 
-#' # Setting sampleColor as "random" if sample Label has more 
-#' # than 2 levels.
-#' heatmapCluster(cogena_result, "hierarchical", "3", sampleColor="random")
 #' 
 setGeneric("heatmapCluster", 
-    function(object, method, nClusters, sampleColor=c("darkblue", "cyan"),
+    function(object, method, nClusters, sampleColor=NULL,
         clusterColor=NULL, clusterColor2=NULL, heatmapcol=NULL, maintitle=NULL,
         printSum=TRUE, ...) 
     standardGeneric("heatmapCluster"))
@@ -55,7 +51,7 @@ setGeneric("heatmapCluster",
 setMethod("heatmapCluster", signature(object="cogena"),
     function (object, method=clusterMethods(object), 
         nClusters=nClusters(object),
-        sampleColor=c("darkblue", "cyan"), clusterColor=NULL,
+        sampleColor=NULL, clusterColor=NULL,
         clusterColor2=NULL, heatmapcol=NULL, maintitle=NULL, 
         printSum=TRUE, ...){
 
@@ -91,7 +87,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
     #color setting
     sampleLabel <- sort(object@sampleLabel)
     # ColSideColors <- map2col(as.numeric(as.factor(sampleLabel)), sampleColor)
-    if (sampleColor == "random") {
+    if (is.null(sampleColor)) {
         sampleColor <- sample(topo.colors(nlevels(as.factor(sampleLabel))))
     }
     ColSideColors <- map2col(as.numeric(as.factor(sampleLabel)), sampleColor)
