@@ -2,6 +2,9 @@
 #' 
 #' heatmap of gene expression profilings with cluster-based color indication.
 #' @inheritParams enrichment
+#' @param scale character indicating if the values should be centered and
+#'  scaled in either the row direction or the column direction, or none.
+#'   The default is "row".
 #' @param sampleColor a color vector with the sample length. The default is 
 #' from topo.colors randomly.
 #' @param clusterColor a color vector with the cluster length. 
@@ -41,7 +44,7 @@
 #' 
 #' 
 setGeneric("heatmapCluster", 
-    function(object, method, nClusters, sampleColor=NULL,
+    function(object, method, nClusters, scale="row", sampleColor=NULL,
         clusterColor=NULL, clusterColor2=NULL, heatmapcol=NULL, maintitle=NULL,
         printSum=TRUE, ...) 
     standardGeneric("heatmapCluster"))
@@ -50,7 +53,7 @@ setGeneric("heatmapCluster",
 #' @aliases heatmapCluster
 setMethod("heatmapCluster", signature(object="cogena"),
     function (object, method=clusterMethods(object), 
-        nClusters=nClusters(object),
+        nClusters=nClusters(object), scale="row",
         sampleColor=NULL, clusterColor=NULL,
         clusterColor2=NULL, heatmapcol=NULL, maintitle=NULL, 
         printSum=TRUE, ...){
@@ -122,7 +125,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
         maintitle=paste(method, nClusters, "clusters",sep="_")
     }
     
-    heatmap.3(mat, col=heatmapcol, trace="none", scale="row", Rowv=FALSE, 
+    heatmap.3(mat, col=heatmapcol, trace="none", scale=scale, Rowv=FALSE, 
         Colv=FALSE, dendrogram="none", labRow=NA, 
         # colsep=length(which(sampleLabel==sampleLabel[1])), 
         colsep=cumsum( table(sampleLabel)),

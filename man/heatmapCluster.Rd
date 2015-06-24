@@ -6,14 +6,14 @@
 \alias{heatmapCluster,cogena-method}
 \title{heatmap of gene expression profilings with cluster indication.}
 \usage{
-heatmapCluster(object, method, nClusters, sampleColor = NULL,
+heatmapCluster(object, method, nClusters, scale = "row", sampleColor = NULL,
   clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
   maintitle = NULL, printSum = TRUE, ...)
 
 \S4method{heatmapCluster}{cogena}(object, method = clusterMethods(object),
-  nClusters = nClusters(object), sampleColor = NULL, clusterColor = NULL,
-  clusterColor2 = NULL, heatmapcol = NULL, maintitle = NULL,
-  printSum = TRUE, ...)
+  nClusters = nClusters(object), scale = "row", sampleColor = NULL,
+  clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
+  maintitle = NULL, printSum = TRUE, ...)
 }
 \arguments{
 \item{object}{a cogena object}
@@ -21,6 +21,10 @@ heatmapCluster(object, method, nClusters, sampleColor = NULL,
 \item{method}{as clMethods in cogena function}
 
 \item{nClusters}{as nClust in cogena function.}
+
+\item{scale}{character indicating if the values should be centered and
+scaled in either the row direction or the column direction, or none.
+ The default is "row".}
 
 \item{sampleColor}{a color vector with the sample length. The default is
 from topo.colors randomly.}
