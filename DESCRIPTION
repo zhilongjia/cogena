@@ -44,6 +44,7 @@ Imports:
     kohonen,
     biwt,
     Biobase,
+    STRINGdb,
     reshape2,
     dplyr,
     devtools
@@ -59,6 +60,7 @@ Collate:
     enrichment.R
     gene2set.R
     geneInCluster.R
+    plotPPI.R
     geneExpInCluster.R
     corInCluster.R
     gmt2list.R
