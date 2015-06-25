@@ -24,8 +24,9 @@
 #' summary(cogena_result)
 #' 
 #' #plotPPI
+#' \dontrun{
 #' plotPPI(cogena_result, "kmeans", "3", "3")
-#' 
+#' }
 #' 
 setGeneric("plotPPI", function(object, method, nClusters, ith, score_threshold=0, ...) 
     standardGeneric("plotPPI"))
