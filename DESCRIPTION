@@ -25,7 +25,7 @@ Description: Description: Gene set enrichment analysis is a valuable tool for
     the whole.
 biocViews: Clustering, GeneSetEnrichment, GeneExpression, Visualization, 
     Pathways, KEGG, Microarray, Sequencing, SystemsBiology, DataRepresentation, 
-    DataImport
+    DataImport,NetworkEnrichment, Network
 Depends: 
     R (>= 3.2),
     cluster,

@@ -7,8 +7,8 @@
 #' @param gn A charactor vector from geneInCluster
 #' @param ... other parameter to igraph::plot.graph
 #' @return a figure.
-#' @rdname netInCluster
-#' @import igraph
+#' @rdname netInCluster 
+#' @importFrom igraph graph.adjacency simplify plot.igraph
 #' @export
 #' @seealso \code{\link{cogena}}
 #' @examples
@@ -37,7 +37,7 @@ setMethod("netInCluster", signature(object="cogena"),
               distmat <- 1- as.matrix(object@Distmat)[gn,gn]
               distmat[distmat<=cutoff] <- 0
               net <- igraph::graph.adjacency(distmat, mode="undirected", weighted=TRUE)
-              net <- igraph::simplify(net, remove.multiple = F, remove.loops = T)
-              plot(net, ...)
+              net <- igraph::simplify(net, remove.multiple = FALSE, remove.loops = TRUE)
+              igraph::plot.igraph(net, ...)
           }
 )
