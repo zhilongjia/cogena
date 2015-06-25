@@ -21,7 +21,7 @@
 #' summary(cogena_result)
 #' 
 #' #geneExpInCluster
-#' geneExpInCluster(cogena_result, "kmeans", "3")
+#' geneExp <- geneExpInCluster(cogena_result, "kmeans", "3")
 #' 
 #' 
 setGeneric("geneExpInCluster", function(object, method, nClusters) 

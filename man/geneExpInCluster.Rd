@@ -39,7 +39,7 @@ ncore=1, verbose=TRUE)
 summary(cogena_result)
 
 #geneExpInCluster
-geneExpInCluster(cogena_result, "kmeans", "3")
+geneExp <- geneExpInCluster(cogena_result, "kmeans", "3")
 }
 \seealso{
 \code{\link{cogena}}
