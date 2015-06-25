@@ -1,6 +1,13 @@
 \name{NEWS}
 \title{News for Package \pkg{cogena}}
 
+\section{Changes in version 1.1.3 (2015-06-25)}{
+\itemize{
+    \item add heatmapEnrich, plotPPI and netInCluster functions.
+    \item sampleColor randomly in heatmapCluster.
+    }
+}
+
 \section{Changes in version 1.1.1 (2015-04-27)}{
 \itemize{
     \item add Molecular Signatures Database v5.0.
