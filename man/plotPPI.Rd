@@ -44,7 +44,9 @@ ncore=1, verbose=TRUE)
 summary(cogena_result)
 
 #plotPPI
+\dontrun{
 plotPPI(cogena_result, "kmeans", "3", "3")
+}
 }
 \seealso{
 \code{\link{cogena}}
