@@ -1,5 +1,5 @@
 Package: cogena
-Version: 1.1.3
+Version: 1.1.4
 Title: co-expressed gene-set enrichment analysis
 Authors@R: c(person("Zhilong", "Jia", role =c("aut", "cre"), 
     email="zhilongjia@gmail.com"), 
@@ -74,6 +74,7 @@ Collate:
     optCluster.R
     sota.R
     pClusters.R
+    PPIenrichment.R
 License: LGPL-3
 LazyData: true
 Encoding: UTF-8
