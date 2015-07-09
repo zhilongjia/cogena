@@ -1,6 +1,14 @@
 \name{NEWS}
 \title{News for Package \pkg{cogena}}
 
+\section{Changes in version 1.1.4 (2015-07-09)}{
+\itemize{
+    \item add PPIenrichment function.
+    \item debug pCluster function.
+    }
+}
+
+
 \section{Changes in version 1.1.3 (2015-06-25)}{
 \itemize{
     \item add heatmapEnrich, plotPPI and netInCluster functions.
