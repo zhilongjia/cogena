@@ -7,16 +7,19 @@ co-expressed gene-set enrichment analysis: clustering differentially expressed
 genes and gene set enrichment analysis of highly correlated genes within clusters
 
 
-![cogena_workflow](inst/figure/Cogena_workflow.png "The workflow of cogena")
+![cogena_workflow](inst/figure/Cogena_workflow.png)
+The workflow of cogena
+
+![cogena_heatmapPEI](inst/figure/cogena_heatmapPEI.png)
+ The enrichment score for 10 clusters, together with I, II and All (Down-regulated, Up-regualted and All DE genes)
+
+![cogena_heatmapCluster](inst/figure/cogena_heatmapCluster.png)
+The heatmap of co-expressed gene set
 
 
-![cogena_heatmapPEI](inst/figure/cogena_heatmapPEI.png "The enrichment score for 10 clusters, together with I, II and All (Down-regulated, Up-regualted and All DE genes)")
-
-
-![cogena_heatmapCluster](inst/figure/cogena_heatmapCluster.png "The heatmap of co-expressed gene set")
-
-
-installation:
+Installation:
 
 	devtools::install_github("zhilongjia/cogena")
 
+Acknowledgement:
+	cogena was originally based on the [clValid](http://cran.r-project.org/web/packages/clValid/index.html) package.
