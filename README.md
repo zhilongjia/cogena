@@ -26,3 +26,4 @@ Installation:
 Acknowledgement:
 
 cogena was originally based on the [clValid](http://cran.r-project.org/web/packages/clValid/index.html) package.
+

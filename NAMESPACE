@@ -3,6 +3,7 @@
 S3method(plot,sota)
 S3method(print,sota)
 export(PEI)
+export(PPIenrichment)
 export(clusters)
 export(cogena)
 export(corInCluster)

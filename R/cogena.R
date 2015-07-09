@@ -134,6 +134,7 @@ cogena <- function(obj, nClust, clMethods="hierarchical",metric="correlation",
 
     annotation <- gene2set(annofile, rownames(mat), TermFreq=TermFreq)
     # the background gene gene-sets matrix
+    AllGeneSymbols=NULL
     data(AllGeneSymbols, envir = environment())
     annotationGenesPop <- gene2set(annofile, AllGeneSymbols, TermFreq=TermFreq)
     annotationGenesPop <- annotationGenesPop[,colnames(annotation)]
