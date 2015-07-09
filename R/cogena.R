@@ -144,7 +144,7 @@ cogena <- function(obj, nClust, clMethods="hierarchical",metric="correlation",
     }
 
     nClust <- floor(nClust)
-    if (any(nClust<1))
+    if (any(nClust<2))
         {stop("argument 'nClust' must be a positive integer vector")}
 
     #Dist caculation
@@ -175,7 +175,7 @@ cogena <- function(obj, nClust, clMethods="hierarchical",metric="correlation",
     for (i in 1:length(clMethods)) {
         if (verbose) print(paste("# The clMethod,", clMethods[i], "starts #"))
 
-        cvalid <- vClusters(mat, Distmat , clMethods[i], nClust, method=method, 
+        cvalid <- pClusters(mat, Distmat , clMethods[i], nClust, method=method, 
             metric=metric, annotation=annotation,
             ncore=ncore, annotationGenesPop, verbose=verbose, ...)
         clusterObjs[[i]] <- cvalid$clusterObj

@@ -14,7 +14,7 @@
 #' @import doParallel
 #' @keywords internal
 #' 
-vClusters <- function(mat, Distmat, clMethod, nClust, method, 
+pClusters <- function(mat, Distmat, clMethod, nClust, method, 
     metric, annotation, ncore, annotationGenesPop, verbose, ...) {
 
     meausres <- matrix(NA, nrow=length(nClust), ncol=ncol(annotation))
@@ -115,11 +115,11 @@ vClusters <- function(mat, Distmat, clMethod, nClust, method,
         } else {
             pei <- matrix(NA, nrow=length(unique(cluster)), 
                 ncol=ncol(annotation))
-            rownames(pei) <- unique(cluster)
+            rownames(pei) <- sort(unique(cluster))
             colnames(pei) <- colnames(annotation)
-        for (k in unique(cluster)) {
+        for (k in  sort(unique(cluster))) {
             genenames <- names(which(cluster==k))
-            pei[k,] <- PEI(genenames, annotation=annotation, 
+            pei[as.character(k),] <- PEI(genenames, annotation=annotation, 
                 annotationGenesPop=annotationGenesPop)}
         }
 
