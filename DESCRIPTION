@@ -73,7 +73,7 @@ Collate:
     hubgeneInCluster.R
     optCluster.R
     sota.R
-    vClusters.R
+    pClusters.R
 License: LGPL-3
 LazyData: true
 Encoding: UTF-8
