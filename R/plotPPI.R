@@ -1,6 +1,7 @@
 #' Plot the Protein-protein interaction for genes in a certain cluster.
 #' 
 #' Show how genes in a certain cluster are interacted based on String database.
+#' please note, it doesnot work if there are more than 400 genes in a cluster.
 #'
 #' @inheritParams enrichment
 #' @param ith the ith cluster.
