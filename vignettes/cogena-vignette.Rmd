@@ -63,7 +63,7 @@ ls()
     cogena, like ~/R/x86_64-pc-linux-gnu-library/3.2/cogena/extdata in Linux). 
 
 ```{r gene_list_annotation}
-annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
+annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt"
 annofile <- system.file("extdata", annoGMT, package="cogena")
 ```
 
@@ -108,11 +108,7 @@ score of certain clustering methods and certain number of cluster.
     which is intuitively considered as the optimum, on which the number 
     of significant gene sets are local maximum. In other words, with the 
     cut-off of adjusted p-value, the optimum should have as many as possible 
-    gene sets enriched in a local range of number of clusters. The reason 
-    why choosing local maximum is largely because when the number of cluster
-    is large and all clusters have more gene sets enriched, some clusters 
-    are generated from cutting a cluster from smaller number of clusters,
-    which are highly enriched with gene sets, into more clusters. We consider 
+    gene sets enriched in a local range of number of clusters. We consider 
     the number of significant gene sets with the cut-off 0.05 of p-value as 
     the score. Moreover, for some clustering methods with a certain number 
     of clusters, if over 75% clusters possess a mixed up-regulated and 
@@ -121,7 +117,7 @@ score of certain clustering methods and certain number of cluster.
     2 and there are mixed up-regulated and down-regulated genes in each 
     clusters, the score (if positive and except not available (NA)) of 
     the other number of cluster for the same clustering method will be 
-    changed to inverse number.
+    changed to inverse number. 
 
 ```{r cogena_result_analysis}
 summary(cogena_result)
@@ -144,8 +140,10 @@ enrichment.table <- enrichment(cogena_result, "hierarchical", "6")
     See ?heatmapPEI for more details.
 
 ```{r heatmapPEI, fig.width=10, fig.height=6, fig.cap="KEGG pathway enrichment"}
-#The values shown in Figure 2. is the -log2 (p-values).
+#The values shown in Figure 2. is the -log2 (adjusted p-values).
 #Always make the number as character, please!
+# The enrichment score for 6 clusters, together with I, II and All 
+# (Down-regulated, Up-regualted and All DE genes)
 heatmapPEI(cogena_result, "hierarchical", "6", printGS=FALSE)
 #ordered by the Cluster I.
 #heatmapPEI(cogena_result, "hierarchical", "6", orderMethod = "I")
@@ -165,6 +163,13 @@ heatmapCluster(cogena_result, "hierarchical", "6")
 ```{r geneInCluster}
 #Always make the number as character, please!
 head(geneInCluster(cogena_result, "hierarchical", "6", "2"))
+
+# The probability to obtain such a number of interactions by chance considering PPI.
+# PPIenrichment(cogena_result, "hierarchical", "6", "2")
+
+# Protein-protein interaction graph for a certain cluster. 
+# plotPPI cannot work if there are more than 400 genes in a cluster.
+# plotPPI(cogena_result, "hierarchical", "6", "1")
 ```
 
 5.  The gene expression profilings with cluster infromation could be 
