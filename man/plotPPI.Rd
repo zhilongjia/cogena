@@ -31,6 +31,7 @@ a figure
 }
 \description{
 Show how genes in a certain cluster are interacted based on String database.
+please note, it doesnot work if there are more than 400 genes in a cluster.
 }
 \examples{
 data(PD)
