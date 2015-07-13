@@ -152,11 +152,12 @@ enrichment.table <- enrichment(clen_res, "hierarchical", "6")
 #Always make the number as character, please!
 heatmapCluster(clen_res, "hierarchical", "6")
 ```
+
 3.  To show the enrichment graph, `heatmapPEI` can be used. see Figure 3. 
     See `?heatmapPEI` for more details.
 
 ```{r heatmapPEI, fig.width=10, fig.height=6, fig.cap="KEGG pathway enrichment"}
-#The values shown in Figure 2. is the -log2 (adjusted p-values).
+#The values shown in Figure 2. is the -log (adjusted p-values).
 #Always make the number as character, please!
 # The enrichment score for 6 clusters, together with I, II and All 
 # (Down-regulated, Up-regualted and All DE genes)
