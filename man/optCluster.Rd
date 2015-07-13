@@ -14,7 +14,7 @@ optCluster(object, based = "inTotal", ncores = object@ncore,
   ncores = object@ncore, CutoffPVal = 0.05)
 }
 \arguments{
-\item{object}{a cogena object}
+\item{object}{a genecl or cogena object}
 
 \item{based}{counting method. Default is "inTotal" to count all enriched
 gene sets from all the clusters and I, II, All. Other options are "All",
@@ -37,15 +37,19 @@ the number of gene sets which are signifigant should be maximum.
 }
 \examples{
 data(PD)
-annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
+annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt",
 package="cogena")
-cogena_result <- cogena(DEexprs, nClust=2:3,
-clMethods=c("hierarchical","kmeans"), metric="correlation",
-method="complete",  annofile=annofile, sampleLabel=sampleLabel,
-ncore=1, verbose=TRUE)
-summary(cogena_result)
 
-score <- optCluster(cogena_result)
-score <- optCluster(cogena_result, based="All")
+\dontrun{
+genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"),
+    metric="correlation", method="complete", ncore=2, verbose=TRUE)
+
+clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
+
+summary(clen_res)
+
+score <- optCluster(clen_res)
+score <- optCluster(clen_res, based="All")
+}
 }
 

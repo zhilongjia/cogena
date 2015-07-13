@@ -22,17 +22,20 @@
 #' @import doParallel
 #' @examples
 #' data(PD)
-#' annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", 
+#' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", 
 #' package="cogena")
-#' cogena_result <- cogena(DEexprs, nClust=2:3, 
-#' clMethods=c("hierarchical","kmeans"), metric="correlation", 
-#' method="complete",  annofile=annofile, sampleLabel=sampleLabel, 
-#' ncore=1, verbose=TRUE)
-#' summary(cogena_result)
 #' 
-#' score <- optCluster(cogena_result)
-#' score <- optCluster(cogena_result, based="All")
+#' \dontrun{
+#' genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"), 
+#'     metric="correlation", method="complete", ncore=2, verbose=TRUE)
 #' 
+#' clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
+#' 
+#' summary(clen_res)
+#' 
+#' score <- optCluster(clen_res)
+#' score <- optCluster(clen_res, based="All")
+#' }
 #' 
 setGeneric("optCluster", 
     function(object, based="inTotal", ncores=object@ncore,
@@ -53,12 +56,13 @@ setMethod("optCluster", signature(object="cogena"),
     # doParallel::registerDoParallel(cores=ncores)
     i = NULL
     score <- 
-        foreach::foreach(i = clusterMethods(object), .combine='rbind') %dopar% {
-        cl_score <- vector(mode="numeric", length = length(nClusters(object)))
-        names(cl_score) <- as.character(nClusters(object))
+        foreach::foreach(i = cogena::clusterMethods(object), .combine='rbind') %dopar% {
+        cl_score <- vector(mode="numeric", length = length(cogena::nClusters(object)) )
+        names(cl_score) <- as.character(cogena::nClusters(object))
         cl_score_index = 1
-        for (j in as.character(nClusters(object))) {
-            enrichment_score <- enrichment(object, i, j, roundvalue=FALSE)
+        print (i)
+        for (j in as.character(cogena::nClusters(object))) {
+            enrichment_score <- cogena::enrichment(object, i, j, roundvalue=FALSE)
 
             if (is.logical(enrichment_score) || 
                 is.logical(object@measures[[i]][[j]])) {
@@ -66,8 +70,12 @@ setMethod("optCluster", signature(object="cogena"),
             } else {
                 up_dn_score <- 0
                 for (k in 1:j){
-                    data <- mat(object)[geneInCluster(object, i, j, 
+                    data <- cogena::mat(object)[cogena::geneInCluster(object, i, j, 
                         as.character(k)),, drop=FALSE]
+                    upORdn <- function (dat, Label){
+                        ifelse (mean(dat[which(Label==names(table(Label)[1]))])< 
+                                    mean(dat[which(Label==names(table(Label)[2]))]), 1,-1)
+                    }
                     up_dn <- apply(data, 1, upORdn, object@sampleLabel)
                     if (length(table(up_dn)) == 1){
                         up_dn_score <- up_dn_score + 1
@@ -95,7 +103,7 @@ setMethod("optCluster", signature(object="cogena"),
         # if the 2 clusters have a negative value, all other clusters 
         #in this method will have a negative value or NA.
         if (!is.na(cl_score["2"]) && cl_score["2"] < 0) {
-            for (j in as.character(nClusters(object))){
+            for (j in as.character(cogena::nClusters(object))){
                 if (!is.na(cl_score[j]) && cl_score[j] >0){
                     cl_score[j] <- -cl_score[j]
                 }
@@ -103,7 +111,7 @@ setMethod("optCluster", signature(object="cogena"),
         }
         cl_score
         }
-    stopCluster(cl)
+    parallel::stopCluster(cl)
     # stopImplicitCluster()
     
     rownames(score) <- clusterMethods(object)
@@ -115,8 +123,3 @@ setMethod("optCluster", signature(object="cogena"),
     return (score)
 })
 
-
-upORdn <- function (dat, Label){
-    ifelse (mean(dat[which(Label==names(table(Label)[1]))])< 
-        mean(dat[which(Label==names(table(Label)[2]))]), 1,-1)
-}

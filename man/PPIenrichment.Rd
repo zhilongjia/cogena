@@ -7,19 +7,19 @@
 \alias{PPIenrichment,cogena_methods}
 \title{enrichment for genes in a certain cluster.}
 \usage{
-PPIenrichment(object, method, nClusters, ith, score_threshold = 0)
+PPIenrichment(object, method, nCluster, ith, score_threshold = 0)
 
 \S4method{PPIenrichment}{cogena}(object, method = clusterMethods(object),
-  nClusters = nClusters(object), ith, score_threshold = 0)
+  nCluster = nClusters(object), ith, score_threshold = 0)
 }
 \arguments{
 \item{object}{a cogena object}
 
-\item{method}{as clMethods in cogena function}
+\item{method}{a clustering method}
 
-\item{nClusters}{as nClust in cogena function.}
+\item{nCluster}{cluster number}
 
-\item{ith}{the ith cluster.}
+\item{ith}{the i-th cluster (should no more than nCluster)}
 
 \item{score_threshold}{a threshold for the combined scores of the
 interactions. Default is 0.}
@@ -34,21 +34,20 @@ by chance). It is mainly based on get_ppi_enrichment from STRINGdb.
 }
 \examples{
 data(PD)
-annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
+annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt",
 package="cogena")
-cogena_result <- cogena(DEexprs, nClust=2:3,
-clMethods=c("hierarchical","kmeans"), metric="correlation",
-method="complete",  annofile=annofile, sampleLabel=sampleLabel,
-ncore=1, verbose=TRUE)
-#summay this cogena object
-summary(cogena_result)
+
+\dontrun{
+genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"),
+    metric="correlation", method="complete", ncore=2, verbose=TRUE)
+
+clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
 
 #PPIenrichment
-\dontrun{
-PPIenrichment(cogena_result, "kmeans", "3", "3")
+PPIenrichment(clen_res, "kmeans", "3", "3")
 }
 }
 \seealso{
-\code{\link{cogena}}, \code{\link[STRINGdb]{get_ppi_enrichment}}
+\code{\link{clEnrich}}, \code{\link[STRINGdb]{get_ppi_enrichment}}
 }
 

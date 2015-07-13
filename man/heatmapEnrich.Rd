@@ -65,7 +65,7 @@ orderMethod:
 }
 \examples{
 \dontrun{
-enrichment_score <- enrichment(cogena_result, "kmeans", "3")
+enrichment_score <- enrichment(clen_res, "kmeans", "3")
 heatmapEnrich(enrichment_score, "kmeans", "3")
 }
 }

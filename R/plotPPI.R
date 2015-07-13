@@ -12,33 +12,35 @@
 #' @rdname plotPPI
 #' @import STRINGdb
 #' @export
-#' @seealso \code{\link{cogena}}
+#' @seealso \code{\link{clEnrich}}
 #' @examples
 #' data(PD)
-#' annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", 
+#' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", 
 #' package="cogena")
-#' cogena_result <- cogena(DEexprs, nClust=2:3, 
-#' clMethods=c("hierarchical","kmeans"), metric="correlation", 
-#' method="complete",  annofile=annofile, sampleLabel=sampleLabel, 
-#' ncore=1, verbose=TRUE)
+#' 
+#' \dontrun{
+#' genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"), 
+#'     metric="correlation", method="complete", ncore=2, verbose=TRUE)
+#' 
+#' clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
+#' 
 #' #summay this cogena object
-#' summary(cogena_result)
+#' summary(clen_res)
 #' 
 #' #plotPPI
-#' \dontrun{
-#' plotPPI(cogena_result, "kmeans", "3", "3")
+#' plotPPI(clen_res, "kmeans", "3", "3")
 #' }
 #' 
-setGeneric("plotPPI", function(object, method, nClusters, ith, score_threshold=0, ...) 
+setGeneric("plotPPI", function(object, method, nCluster, ith, score_threshold=0, ...) 
     standardGeneric("plotPPI"))
 
 #' @rdname plotPPI
 #' @aliases plotPPI,cogena_methods
 setMethod("plotPPI", signature(object="cogena"),
           function (object, method=clusterMethods(object), 
-                    nClusters=nClusters(object), ith,
+                    nCluster=nClusters(object), ith,
                     score_threshold=0, ...){
-    geneC <- geneInCluster(object, method, nClusters, as.character(ith))
+    geneC <- geneInCluster(object, method, nCluster, as.character(ith))
     suppressWarnings(string_db <- STRINGdb$new(version="10", species=9606, score_threshold=score_threshold))
     
     example1_mapped <- string_db$map(as.data.frame(geneC), "geneC", removeUnmappedRows = TRUE, quiet=TRUE)

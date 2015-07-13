@@ -12,7 +12,7 @@
 #' "cogena: kmeans 3 GSExxx" in two lines. Default is NULL
 #' @param printGS print the enriched gene set names or not. Default is TRUE.
 #' @return a gene set enrichment heatmap
-#' @seealso \code{\link{cogena}} and \code{\link{heatmapCluster}}
+#' @seealso \code{\link{clEnrich}} and \code{\link{heatmapCluster}}
 #' 
 #' @details
 #' orderMethod:
@@ -32,23 +32,27 @@
 #' @docType methods
 #' @rdname heatmapPEI
 #' @examples
-#' #' data(PD)
-#' annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", 
+#' data(PD)
+#' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", 
 #' package="cogena")
-#' cogena_result <- cogena(DEexprs, nClust=2:3, 
-#' clMethods=c("hierarchical","kmeans"), metric="correlation", 
-#' method="complete",  annofile=annofile, sampleLabel=sampleLabel, 
-#' ncore=1, verbose=TRUE)
+#' 
+#' \dontrun{
+#' genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"), 
+#'     metric="correlation", method="complete", ncore=2, verbose=TRUE)
+#' 
+#' clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
+#' 
 #' #summay this cogena object
-#' summary(cogena_result)
+#' summary(clen_res)
 #' 
 #' #heatmapPEI
-#' heatmapPEI(cogena_result, "kmeans", "2", orderMethod="mean")
-#' heatmapPEI(cogena_result, "kmeans", "3", CutoffNumGeneset=20, 
+#' heatmapPEI(clen_res, "kmeans", "2", orderMethod="mean")
+#' heatmapPEI(clen_res, "kmeans", "3", CutoffNumGeneset=20, 
 #'     low = "#132B43", high = "#56B1F7", na.value = "grey50")
+#' }
 #' 
 setGeneric("heatmapPEI", 
-    function(object, method, nClusters, CutoffNumGeneset=20,
+    function(object, method, nCluster, CutoffNumGeneset=20,
         CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE,
         low="green", high="red", na.value="white", 
         maintitle=NULL, printGS=TRUE) 
@@ -58,25 +62,25 @@ setGeneric("heatmapPEI",
 #' @aliases heatmapPEI,cogena
 setMethod("heatmapPEI", signature(object="cogena"),
     function(object, method=clusterMethods(object), 
-        nClusters=nClusters(object), 
+        nCluster=nClusters(object), 
         CutoffNumGeneset=20, CutoffPVal=0.05,
         orderMethod="max", roundvalue=TRUE,
         low="grey", high="red", na.value="white", 
         maintitle=NULL, printGS=TRUE) {
         method <- match.arg(method, clusterMethods(object))
-        nClusters <- match.arg(nClusters, as.character(nClusters(object)))
+        nCluster <- match.arg(nCluster, as.character(nClusters(object)))
         
-        enrichment <- enrichment(object, method, nClusters, CutoffNumGeneset, 
+        enrichment <- enrichment(object, method, nCluster, CutoffNumGeneset, 
             CutoffPVal, orderMethod, roundvalue)
         if (length(enrichment)==1 && is.na(enrichment)){
             return(paste("No enrichment above the cutoff for", method, 
-                "when the number of clusters is", nClusters, "!"))
+                "when the number of clusters is", nCluster, "!"))
         }
         if (printGS==TRUE) {
             cat (rev(colnames(enrichment)), sep ="\t")
         }
 
-        if (nClusters != "2"){
+        if (nCluster != "2"){
             cl_color <- c(rep("black", nrow(enrichment)-3), rep("blue", 3))
         } else {
             cl_color <- rep("black", 3)
@@ -91,9 +95,9 @@ setMethod("heatmapPEI", signature(object="cogena"),
         }
         Var1=Var2=value=NULL
         if (!is.null(title)) {
-            title=paste("cogena:", method, nClusters, "\n", maintitle)
+            title=paste("cogena:", method, nCluster, "\n", maintitle)
         } else {
-            title=paste("cogena:", method, nClusters)
+            title=paste("cogena:", method, nCluster)
         }
 
         ggplot(enrichment, aes(as.factor(Var1), Var2)) + 

@@ -6,17 +6,17 @@
 \alias{hubgeneInCluster,cogena-method}
 \title{Show hub gene names in certain cluster.}
 \usage{
-hubgeneInCluster(object, method, nClusters, ith)
+hubgeneInCluster(object, method, nCluster, ith)
 
 \S4method{hubgeneInCluster}{cogena}(object, method = clusterMethods(object),
-  nClusters = nClusters(object), ith)
+  nCluster = nClusters(object), ith)
 }
 \arguments{
-\item{object}{a cogena object}
+\item{object}{a genecl or cogena object}
 
-\item{method}{as clMethods in cogena function}
+\item{method}{as clMethods in genecl function}
 
-\item{nClusters}{as nClust in cogena function.}
+\item{nCluster}{as nClust in cogena function.}
 
 \item{ith}{the ith cluster.}
 }
@@ -28,19 +28,20 @@ Show hub gene names in certain cluster.
 }
 \examples{
 data(PD)
-annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
+annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt",
 package="cogena")
-cogena_result <- cogena(DEexprs, nClust=2:3,
-clMethods=c("hierarchical","kmeans"), metric="correlation",
-method="complete",  annofile=annofile, sampleLabel=sampleLabel,
-ncore=1, verbose=TRUE)
-#summay this cogena object
-summary(cogena_result)
+
+\dontrun{
+genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"),
+    metric="correlation", method="complete", ncore=2, verbose=TRUE)
+
+clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
 
 #hubgeneInCluster
-hubgeneInCluster(cogena_result, "kmeans", "3", "2")
+hubgeneInCluster(clen_res, "kmeans", "3", "2")
+}
 }
 \seealso{
-\code{\link{cogena}} and \code{\link{geneInCluster}}
+\code{\link{clEnrich}} and \code{\link{geneInCluster}}
 }
 
