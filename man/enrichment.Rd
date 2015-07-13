@@ -7,19 +7,19 @@
 \alias{enrichment,cogena_methods}
 \title{get the enrichment table from a cogena object.}
 \usage{
-enrichment(object, method, nClusters, CutoffNumGeneset = Inf,
+enrichment(object, method, nCluster, CutoffNumGeneset = Inf,
   CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE)
 
 \S4method{enrichment}{cogena}(object, method = clusterMethods(object),
-  nClusters = nClusters(object), CutoffNumGeneset = Inf,
-  CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE)
+  nCluster = nClusters(object), CutoffNumGeneset = Inf, CutoffPVal = 0.05,
+  orderMethod = "max", roundvalue = TRUE)
 }
 \arguments{
-\item{object}{a cogena object}
+\item{object}{a genecl or cogena object}
 
-\item{method}{as clMethods in cogena function}
+\item{method}{as clMethods in genecl function}
 
-\item{nClusters}{as nClust in cogena function.}
+\item{nCluster}{as nClust in cogena function.}
 
 \item{CutoffNumGeneset}{the cut-off of the number of gene sets in the
 return table}
@@ -52,14 +52,18 @@ orderMethod:
 }
 \examples{
 data(PD)
-annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
+annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt",
 package="cogena")
-cogena_result <- cogena(DEexprs, nClust=2:3,
-clMethods=c("hierarchical","kmeans"), metric="correlation",
-method="complete",  annofile=annofile, sampleLabel=sampleLabel,
-ncore=1, verbose=TRUE)
-enrichment.table1 <- enrichment(cogena_result, "kmeans", "3")
-enrichment.table2 <- enrichment(cogena_result, "kmeans", "3",
+
+\dontrun{
+genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"),
+    metric="correlation", method="complete", ncore=2, verbose=TRUE)
+
+clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
+
+enrichment.table1 <- enrichment(clen_res, "kmeans", "3")
+enrichment.table2 <- enrichment(clen_res, "kmeans", "3",
 CutoffNumGeneset=10, orderMethod="mean")
+}
 }
 

@@ -7,17 +7,17 @@
 \alias{plotPPI,cogena_methods}
 \title{Plot the Protein-protein interaction for genes in a certain cluster.}
 \usage{
-plotPPI(object, method, nClusters, ith, score_threshold = 0, ...)
+plotPPI(object, method, nCluster, ith, score_threshold = 0, ...)
 
 \S4method{plotPPI}{cogena}(object, method = clusterMethods(object),
-  nClusters = nClusters(object), ith, score_threshold = 0, ...)
+  nCluster = nClusters(object), ith, score_threshold = 0, ...)
 }
 \arguments{
-\item{object}{a cogena object}
+\item{object}{a genecl or cogena object}
 
-\item{method}{as clMethods in cogena function}
+\item{method}{as clMethods in genecl function}
 
-\item{nClusters}{as nClust in cogena function.}
+\item{nCluster}{as nClust in cogena function.}
 
 \item{ith}{the ith cluster.}
 
@@ -35,21 +35,23 @@ please note, it doesnot work if there are more than 400 genes in a cluster.
 }
 \examples{
 data(PD)
-annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
+annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt",
 package="cogena")
-cogena_result <- cogena(DEexprs, nClust=2:3,
-clMethods=c("hierarchical","kmeans"), metric="correlation",
-method="complete",  annofile=annofile, sampleLabel=sampleLabel,
-ncore=1, verbose=TRUE)
+
+\dontrun{
+genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"),
+    metric="correlation", method="complete", ncore=2, verbose=TRUE)
+
+clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
+
 #summay this cogena object
-summary(cogena_result)
+summary(clen_res)
 
 #plotPPI
-\dontrun{
-plotPPI(cogena_result, "kmeans", "3", "3")
+plotPPI(clen_res, "kmeans", "3", "3")
 }
 }
 \seealso{
-\code{\link{cogena}}
+\code{\link{clEnrich}}
 }
 

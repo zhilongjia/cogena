@@ -22,29 +22,31 @@
 #' @import gplots
 #' @rdname heatmapCluster
 #' @docType methods
-#' @seealso \code{\link{cogena}}, \code{\link{heatmap.3}} and
+#' @seealso \code{\link{clEnrich}}, \code{\link{heatmap.3}} and
 #' \code{\link{heatmapPEI}}
 #' @examples
 #' data(PD)
 #' annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", 
 #' package="cogena")
-#' cogena_result <- cogena(DEexprs, nClust=2:3, 
-#' clMethods=c("hierarchical","kmeans"), metric="correlation", 
-#' method="complete",  annofile=annofile, sampleLabel=sampleLabel, 
-#' ncore=1, verbose=TRUE)
+#' 
+#' \dontrun{
+#' genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"), 
+#'     metric="correlation", method="complete", ncore=2, verbose=TRUE)
+#' 
+#' clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
 #' 
 #' #summay this cogena object
-#' summary(cogena_result)
+#' summary(clen_res)
 #'
 #' #heatmapCluster
 #' 
-#' heatmapCluster(cogena_result, "hierarchical", "3")
+#' heatmapCluster(clen_res, "hierarchical", "3")
 #' heatmapcol <- gplots::redgreen(75) 
-#' heatmapCluster(cogena_result, "hierarchical", "3", heatmapcol=heatmapcol)
-#' 
+#' heatmapCluster(clen_res, "hierarchical", "3", heatmapcol=heatmapcol)
+#' }
 #' 
 setGeneric("heatmapCluster", 
-    function(object, method, nClusters, scale="row", sampleColor=NULL,
+    function(object, method, nCluster, scale="row", sampleColor=NULL,
         clusterColor=NULL, clusterColor2=NULL, heatmapcol=NULL, maintitle=NULL,
         printSum=TRUE, ...) 
     standardGeneric("heatmapCluster"))
@@ -53,30 +55,27 @@ setGeneric("heatmapCluster",
 #' @aliases heatmapCluster
 setMethod("heatmapCluster", signature(object="cogena"),
     function (object, method=clusterMethods(object), 
-        nClusters=nClusters(object), scale="row",
+        nCluster=nClusters(object), scale="row",
         sampleColor=NULL, clusterColor=NULL,
         clusterColor2=NULL, heatmapcol=NULL, maintitle=NULL, 
         printSum=TRUE, ...){
 
     #get the parameters
     method <- match.arg(method, clusterMethods(object))
-    nClusters <- match.arg(nClusters, as.character(nClusters(object)))
+    nCluster <- match.arg(nCluster, as.character(nClusters(object)))
     mat <- mat(object)
 
-    if (method %in% c("hierarchical", "diana", "agnes")) {
-        cluster_size <- cutree(clusters(object, method), nClusters)
-        names(cluster_size) <- rownames(mat)
-        cluster_size2 <- cutree(clusters(object, method), "2")
-        names(cluster_size2) <- rownames(mat)
-    } else {
-        cluster_size <- clusters(object, method)[[nClusters]]$cluster
-        cluster_size2 <- clusters(object, method)[["2"]]$cluster
-    }
+
+    cluster_size <- geneclusters(object, method, nCluster)
+    cluster_size2 <- geneclusters(object, method, "2")
+#     names(cluster_size2) <- rownames(mat)
+#     names(cluster_size) <- rownames(mat)
+
 
     if (printSum==TRUE) {
         cat ("The number of genes in each cluster:\n")
         print (table(cluster_size2))
-        if (nClusters != "2"){
+        if (nCluster != "2"){
             print (table(cluster_size))
         }
     }
@@ -96,13 +95,13 @@ setMethod("heatmapCluster", signature(object="cogena"),
     ColSideColors <- map2col(as.numeric(as.factor(sampleLabel)), sampleColor)
     
     if (is.null(clusterColor)) {
-        clusterColor <- sample(rainbow(nClusters)) #, alpha = c(1, 0.6)
+        clusterColor <- sample(rainbow(nCluster)) #, alpha = c(1, 0.6)
     }
     if (is.null(clusterColor2)){
         clusterColor2 <- c("coral3", "deepskyblue1")
     }
 
-    #clusterColor <- rainbow(nClusters, alpha = c(1, 0.6))
+    #clusterColor <- rainbow(nCluster, alpha = c(1, 0.6))
     #make the neighboor colors different
     #clusterColor <- clusterColor[clusterColor]
     
@@ -112,17 +111,17 @@ setMethod("heatmapCluster", signature(object="cogena"),
     if (is.null(heatmapcol)) {
         heatmapcol <- greenred(75)
     }
-    if (nClusters != "2"){
+    if (nCluster != "2"){
         RowSideColors <- t(cbind(RowSideColors2, RowSideColors))
-        rownames(RowSideColors) <- paste("Size:", c(2, nClusters))
+        rownames(RowSideColors) <- paste("Size:", c(2, nCluster))
     } else {
         RowSideColors <- t(as.matrix(RowSideColors))
     }
 
     if (!is.null(maintitle)) {
-        maintitle=paste(method, nClusters, "clusters", "\n", maintitle)
+        maintitle=paste(method, nCluster, "clusters", "\n", maintitle)
     } else {
-        maintitle=paste(method, nClusters, "clusters",sep="_")
+        maintitle=paste(method, nCluster, "clusters",sep="_")
     }
     
     heatmap.3(mat, col=heatmapcol, trace="none", scale=scale, Rowv=FALSE, 
@@ -135,13 +134,13 @@ setMethod("heatmapCluster", signature(object="cogena"),
         main=maintitle,
         ColSideColors=as.matrix(ColSideColors), ylab="Genes", cexCol=0.8,
         RowSideColors=RowSideColors, 
-        RowSideColorsSize=ifelse(nClusters!=2,2,1),
+        RowSideColorsSize=ifelse(nCluster!=2,2,1),
         lhei=c(1.2, 4), ...)
         par(lend = 0, xpd=TRUE)
-        legend("left", legend = paste0(1:nClusters),
+        legend("left", legend = paste0(1:nCluster),
             col = clusterColor, lty= 1, lwd = 20, bty = "n", 
-            title = paste(nClusters, "Clusters"))
-        if (nClusters != "2"){
+            title = paste(nCluster, "Clusters"))
+        if (nCluster != "2"){
             legend("bottomleft", legend = as.character(as.roman(1:2)),
                 col = clusterColor2, lty= 1, lwd = 20, bty = "n", 
                 title = paste(2, "Clusters"))

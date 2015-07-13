@@ -1,10 +1,10 @@
 Package: cogena
-Version: 1.1.4
+Version: 1.1.5
 Title: co-expressed gene-set enrichment analysis
 Authors@R: c(person("Zhilong", "Jia", role =c("aut", "cre"), 
     email="zhilongjia@gmail.com"), 
     person("Michael", "Barnes", role = "aut", email="m.r.barnes@qmul.ac.uk"))
-Description: Description: Gene set enrichment analysis is a valuable tool for
+Description: Gene set enrichment analysis is a valuable tool for
     the study of molecular mechanisms that underpin complex biological traits. 
     As the method is conventionally used on entire omic datasets, such as 
     transcriptomes, it may be dominated by pathways and processes that are 
@@ -31,38 +31,41 @@ Depends:
     cluster,
     ggplot2,
     gplots,
-    STRINGdb,
-    amap
+    kohonen
 Imports: 
     methods,
     class,
+    mclust,
+    amap,
     foreach,
     parallel,
     doParallel,
     fastcluster,
     corrplot,
-    mclust,
-    kohonen,
+    STRINGdb,
     biwt,
     Biobase,
-    igraph,
     reshape2,
     dplyr,
     devtools
 Suggests: 
-    knitr
-Collate:
+    knitr,
+    testthat
+Collate: 
     dist_class.R
+    genecl_class.R
     cogena_class.R
-    PD.R
-    PEI.R
+    Class_methods.R
     cogena.R
-    cogena_methods.R
+    PEI.R
+    sota.R
+    pClusters.R
+    coExp.R
+    clEnrich.R
     enrichment.R
     gene2set.R
     geneInCluster.R
     plotPPI.R
-    netInCluster.R
     geneExpInCluster.R
     corInCluster.R
     gmt2list.R
@@ -72,8 +75,6 @@ Collate:
     heatmapEnrich.R
     hubgeneInCluster.R
     optCluster.R
-    sota.R
-    pClusters.R
     PPIenrichment.R
 License: LGPL-3
 LazyData: true

@@ -6,21 +6,21 @@
 \alias{heatmapCluster,cogena-method}
 \title{heatmap of gene expression profilings with cluster indication.}
 \usage{
-heatmapCluster(object, method, nClusters, scale = "row", sampleColor = NULL,
+heatmapCluster(object, method, nCluster, scale = "row", sampleColor = NULL,
   clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
   maintitle = NULL, printSum = TRUE, ...)
 
 \S4method{heatmapCluster}{cogena}(object, method = clusterMethods(object),
-  nClusters = nClusters(object), scale = "row", sampleColor = NULL,
+  nCluster = nClusters(object), scale = "row", sampleColor = NULL,
   clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
   maintitle = NULL, printSum = TRUE, ...)
 }
 \arguments{
-\item{object}{a cogena object}
+\item{object}{a genecl or cogena object}
 
-\item{method}{as clMethods in cogena function}
+\item{method}{as clMethods in genecl function}
 
-\item{nClusters}{as nClust in cogena function.}
+\item{nCluster}{as nClust in cogena function.}
 
 \item{scale}{character indicating if the values should be centered and
 scaled in either the row direction or the column direction, or none.
@@ -55,22 +55,25 @@ heatmap of gene expression profilings with cluster-based color indication.
 data(PD)
 annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
 package="cogena")
-cogena_result <- cogena(DEexprs, nClust=2:3,
-clMethods=c("hierarchical","kmeans"), metric="correlation",
-method="complete",  annofile=annofile, sampleLabel=sampleLabel,
-ncore=1, verbose=TRUE)
+
+\dontrun{
+genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"),
+    metric="correlation", method="complete", ncore=2, verbose=TRUE)
+
+clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
 
 #summay this cogena object
-summary(cogena_result)
+summary(clen_res)
 
 #heatmapCluster
 
-heatmapCluster(cogena_result, "hierarchical", "3")
+heatmapCluster(clen_res, "hierarchical", "3")
 heatmapcol <- gplots::redgreen(75)
-heatmapCluster(cogena_result, "hierarchical", "3", heatmapcol=heatmapcol)
+heatmapCluster(clen_res, "hierarchical", "3", heatmapcol=heatmapcol)
+}
 }
 \seealso{
-\code{\link{cogena}}, \code{\link{heatmap.3}} and
+\code{\link{clEnrich}}, \code{\link{heatmap.3}} and
 \code{\link{heatmapPEI}}
 }
 

@@ -7,22 +7,22 @@
 \alias{heatmapPEI,cogena-method}
 \title{heatmap of the gene set enrichment from a cogena object.}
 \usage{
-heatmapPEI(object, method, nClusters, CutoffNumGeneset = 20,
+heatmapPEI(object, method, nCluster, CutoffNumGeneset = 20,
   CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE,
   low = "green", high = "red", na.value = "white", maintitle = NULL,
   printGS = TRUE)
 
 \S4method{heatmapPEI}{cogena}(object, method = clusterMethods(object),
-  nClusters = nClusters(object), CutoffNumGeneset = 20, CutoffPVal = 0.05,
+  nCluster = nClusters(object), CutoffNumGeneset = 20, CutoffPVal = 0.05,
   orderMethod = "max", roundvalue = TRUE, low = "grey", high = "red",
   na.value = "white", maintitle = NULL, printGS = TRUE)
 }
 \arguments{
-\item{object}{a cogena object}
+\item{object}{a genecl or cogena object}
 
-\item{method}{as clMethods in cogena function}
+\item{method}{as clMethods in genecl function}
 
-\item{nClusters}{as nClust in cogena function.}
+\item{nCluster}{as nClust in cogena function.}
 
 \item{CutoffNumGeneset}{the cut-off of the number of gene sets in the
 return table}
@@ -67,22 +67,26 @@ orderMethod:
 }
 }
 \examples{
-#' data(PD)
-annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
+data(PD)
+annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt",
 package="cogena")
-cogena_result <- cogena(DEexprs, nClust=2:3,
-clMethods=c("hierarchical","kmeans"), metric="correlation",
-method="complete",  annofile=annofile, sampleLabel=sampleLabel,
-ncore=1, verbose=TRUE)
+
+\dontrun{
+genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"),
+    metric="correlation", method="complete", ncore=2, verbose=TRUE)
+
+clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
+
 #summay this cogena object
-summary(cogena_result)
+summary(clen_res)
 
 #heatmapPEI
-heatmapPEI(cogena_result, "kmeans", "2", orderMethod="mean")
-heatmapPEI(cogena_result, "kmeans", "3", CutoffNumGeneset=20,
+heatmapPEI(clen_res, "kmeans", "2", orderMethod="mean")
+heatmapPEI(clen_res, "kmeans", "3", CutoffNumGeneset=20,
     low = "#132B43", high = "#56B1F7", na.value = "grey50")
 }
+}
 \seealso{
-\code{\link{cogena}} and \code{\link{heatmapCluster}}
+\code{\link{clEnrich}} and \code{\link{heatmapCluster}}
 }
 

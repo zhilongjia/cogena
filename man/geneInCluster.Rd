@@ -7,19 +7,19 @@
 \alias{geneInCluster,cogena_methods}
 \title{Get gene names in a certain cluster.}
 \usage{
-geneInCluster(object, method, nClusters, ith)
+geneInCluster(object, method, nCluster, ith)
 
 \S4method{geneInCluster}{cogena}(object, method = clusterMethods(object),
-  nClusters = nClusters(object), ith)
+  nCluster = nClusters(object), ith)
 }
 \arguments{
 \item{object}{a cogena object}
 
-\item{method}{as clMethods in cogena function}
+\item{method}{a clustering method}
 
-\item{nClusters}{as nClust in cogena function.}
+\item{nCluster}{cluster number}
 
-\item{ith}{the ith cluster.}
+\item{ith}{the i-th cluster (should no more than nCluster)}
 }
 \value{
 a character vector containing the gene names.
@@ -30,22 +30,26 @@ detail of a cluster.
 }
 \examples{
 data(PD)
-annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
+annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt",
 package="cogena")
-cogena_result <- cogena(DEexprs, nClust=2:3,
-clMethods=c("hierarchical","kmeans"), metric="correlation",
-method="complete",  annofile=annofile, sampleLabel=sampleLabel,
-ncore=1, verbose=TRUE)
+
+\dontrun{
+genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"),
+    metric="correlation", method="complete", ncore=2, verbose=TRUE)
+
+clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
+
 #summay this cogena object
-summary(cogena_result)
+summary(clen_res)
 
 #geneInCluster
-g1 <- geneInCluster(cogena_result, "kmeans", "3", "2")
+g1 <- geneInCluster(clen_res, "kmeans", "3", "2")
 
-#Up or Down genes with setting nClusters as "2".
-g2 <- geneInCluster(cogena_result, "kmeans", "2", "1")
+#Up or Down genes with setting nCluster as "2".
+g2 <- geneInCluster(clen_res, "kmeans", "2", "1")
+}
 }
 \seealso{
-\code{\link{cogena}}
+\code{\link{clEnrich}}
 }
 
