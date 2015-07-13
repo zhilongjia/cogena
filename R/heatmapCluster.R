@@ -28,6 +28,8 @@
 #' data(PD)
 #' annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", 
 #' package="cogena")
+#' 
+#' \dontrun{
 #' genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"), 
 #'     metric="correlation", method="complete", ncore=2, verbose=TRUE)
 #' 
@@ -41,7 +43,7 @@
 #' heatmapCluster(clen_res, "hierarchical", "3")
 #' heatmapcol <- gplots::redgreen(75) 
 #' heatmapCluster(clen_res, "hierarchical", "3", heatmapcol=heatmapcol)
-#' 
+#' }
 #' 
 setGeneric("heatmapCluster", 
     function(object, method, nCluster, scale="row", sampleColor=NULL,

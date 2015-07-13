@@ -70,6 +70,8 @@ orderMethod:
 data(PD)
 annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt",
 package="cogena")
+
+\dontrun{
 genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"),
     metric="correlation", method="complete", ncore=2, verbose=TRUE)
 
@@ -82,6 +84,7 @@ summary(clen_res)
 heatmapPEI(clen_res, "kmeans", "2", orderMethod="mean")
 heatmapPEI(clen_res, "kmeans", "3", CutoffNumGeneset=20,
     low = "#132B43", high = "#56B1F7", na.value = "grey50")
+}
 }
 \seealso{
 \code{\link{clEnrich}} and \code{\link{heatmapCluster}}

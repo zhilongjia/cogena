@@ -101,8 +101,14 @@ metric <- "correlation"
 #and agnes)
 method <- "complete"
 
-# the cogena analysis
+# See examples of clEnrich function
+# the co-expression analysis
+\dontrun{
 genecl_result <- coExp(DEexprs, nClust=nClust, clMethods=clMethods,
-    metric=metric, method=method, ncore=ncore, verbose=TRUE)
+metric=metric, method=method, ncore=ncore, verbose=TRUE)
+}
+}
+\seealso{
+\code{\link{clEnrich}}
 }
 

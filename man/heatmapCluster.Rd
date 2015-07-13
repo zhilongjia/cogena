@@ -55,6 +55,8 @@ heatmap of gene expression profilings with cluster-based color indication.
 data(PD)
 annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
 package="cogena")
+
+\dontrun{
 genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"),
     metric="correlation", method="complete", ncore=2, verbose=TRUE)
 
@@ -68,6 +70,7 @@ summary(clen_res)
 heatmapCluster(clen_res, "hierarchical", "3")
 heatmapcol <- gplots::redgreen(75)
 heatmapCluster(clen_res, "hierarchical", "3", heatmapcol=heatmapcol)
+}
 }
 \seealso{
 \code{\link{clEnrich}}, \code{\link{heatmap.3}} and

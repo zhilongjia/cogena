@@ -32,6 +32,8 @@
 #' data(PD)
 #' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", 
 #' package="cogena")
+#' 
+#' \dontrun{
 #' genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"), 
 #'     metric="correlation", method="complete", ncore=2, verbose=TRUE)
 #' 
@@ -40,7 +42,7 @@
 #' enrichment.table1 <- enrichment(clen_res, "kmeans", "3")
 #' enrichment.table2 <- enrichment(clen_res, "kmeans", "3", 
 #' CutoffNumGeneset=10, orderMethod="mean")
-#' 
+#' }
 #' 
 setGeneric("enrichment", function(object, method, nCluster, 
     CutoffNumGeneset=Inf, CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE) 

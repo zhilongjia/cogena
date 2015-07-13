@@ -4,7 +4,8 @@
 \alias{clEnrich}
 \title{Gene set enrichment for clusters}
 \usage{
-clEnrich(genecl_obj, annofile = NULL, sampleLabel = NULL, TermFreq = 0)
+clEnrich(genecl_obj, annofile = NULL, sampleLabel = NULL, TermFreq = 0,
+  ncore = 1)
 }
 \arguments{
 \item{genecl_obj}{a genecl object}
@@ -14,6 +15,8 @@ clEnrich(genecl_obj, annofile = NULL, sampleLabel = NULL, TermFreq = 0)
 \item{sampleLabel}{sameple Label}
 
 \item{TermFreq}{a value from [0,1) to filter low-frequence gene sets}
+
+\item{ncore}{the number of cores used}
 }
 \value{
 a list containing the enrichment score for each clustering methods

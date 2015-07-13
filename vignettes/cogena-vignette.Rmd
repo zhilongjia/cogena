@@ -14,13 +14,18 @@ vignette: >
   %\usepackage[utf8]{inputenc}
 ---
 
-cogena can be used as gene set enrichment analysis of up or down regulated 
-genes as well as genes in clusters resulting from various clustering methods. 
-And the gene sets could be Pathway, Gene Ontology or user-defined gene-sets. 
-Accordingly, this tool can be used for pathway enrichment, GO enrichment 
-and so on. See the workflow of cogena in Figure 1.
+Co-expressed gene-set enrichment analysis, cogena, can be used as gene set 
+enrichment analysis of up or down regulated genes as well as co-expressed 
+genes resulting from various clustering methods. And the gene sets could 
+be Pathway, Gene Ontology or user-defined gene-sets. Accordingly, this tool
+can be used for pathway enrichment, GO enrichment and so on. See the workflow
+of cogena in Figure 1.
+
 
 ![Overview of the cogena workflow](Cogena_workflow.png)
+
+## A quick start
+See example in `?cogena` please.
 
 ## Input data
     Note: all the gene names should be gene SYMBOL since it is used in the 
@@ -39,28 +44,29 @@ sample. A vector with sample names.
 
     There is an example data in `cogena` package. This dataset, from 
     [GSE20163](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163), 
-    is about Parkinson's disease. There are three objects in the PD dataset. 
+    is about Parkinson's disease. There are two objects in the PD dataset. 
     See `?PD` for more details.
 
 ```{r import_data, message=FALSE}
 library(cogena)
 data(PD)
-# Three objects in the PD dataset.
+# objects in the PD dataset.
 ```
+
 ```{r PD_data, echo=FALSE}
 ls()
 ```
 
-## cogena analysis
+## Cogena analysis
 
-1.  Make Annotation
+1.  Make Annotation of gene set
 
     There are a variety of gene sets in the `cogena` package, collected from 
     [MSigDB](http://www.broadinstitute.org/gsea/msigdb/index.jsp). They are 
     `r  dir(system.file("extdata", package="cogena"), pattern="*gmt")`. Here
     the gene-sets can be user-defined gene-sets formatted gmt, too (Just 
     put it into the extdata directory in the installation directory of
-    cogena, like ~/R/x86_64-pc-linux-gnu-library/3.2/cogena/extdata in Linux). 
+    cogena, such as ~/R/x86_64-pc-linux-gnu-library/3.2/cogena/extdata in Linux). 
 
 ```{r gene_list_annotation}
 annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt"
@@ -138,8 +144,16 @@ knitr::kable(score)
 enrichment.table <- enrichment(clen_res, "hierarchical", "6")
 ```
 
-2.  To show the enrichment graph, `heatmapPEI` can be used. see Figure 2. 
-    See ?heatmapPEI for more details.
+2.  The heatmap of expression profiling with clusters is plotted by 
+    `heatmapCluster`. see Figure 2. User can know which cluster contains
+    up-regulated or down-regulated genes.
+
+```{r heatmapCluster, fig.width=10, fig.height=7, fig.cap="Heatmap of expression profiling with clusters"}
+#Always make the number as character, please!
+heatmapCluster(clen_res, "hierarchical", "6")
+```
+3.  To show the enrichment graph, `heatmapPEI` can be used. see Figure 3. 
+    See `?heatmapPEI` for more details.
 
 ```{r heatmapPEI, fig.width=10, fig.height=6, fig.cap="KEGG pathway enrichment"}
 #The values shown in Figure 2. is the -log2 (adjusted p-values).
@@ -151,14 +165,6 @@ heatmapPEI(clen_res, "hierarchical", "6", printGS=FALSE)
 #heatmapPEI(cogena_result, "hierarchical", "6", orderMethod = "I")
 ```
 
-3.  The heatmap of expression profiling with clusters is plotted by 
-    `heatmapCluster`. see Figure 3. User can know which cluster contains
-    up-regulated or down-regulated genes.
-
-```{r heatmapCluster, fig.width=10, fig.height=7, fig.cap="Heatmap of expression profiling with clusters"}
-#Always make the number as character, please!
-heatmapCluster(clen_res, "hierarchical", "6")
-```
 
 4.  If interested genes in a certain cluster, user can obtain the genes in 
     a certain cluster via `geneInCluster`.
@@ -187,7 +193,7 @@ gec$label
 
 6. The correlation among one cluster could be shown via `corInCluster`. 
     see Figure 4.
-```{r corInCluster, fig.width=6, fig.height=6, fig.cap="Correlation"}
+```{r corInCluster, fig.width=6, fig.height=6, fig.cap="Correlation of genes in a cluster"}
 #Always make the number as character, please!
 corInCluster(clen_res, "hierarchical", "8", "8")
 ```

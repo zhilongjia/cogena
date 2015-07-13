@@ -94,8 +94,9 @@ pClusters <- function(mat, Distmat, clMethod, nClust, method,
     clusterObj$cluster
     } #END OF NC LOOP
     
+    # stopImplicitCluster()
     parallel::stopCluster(cl)
-    #stopImplicitCluster()
+    
     
     return (clusterList)
 }

@@ -7,9 +7,13 @@
 #' @param annofile gene set annotation file
 #' @param sampleLabel sameple Label
 #' @param TermFreq a value from [0,1) to filter low-frequence gene sets
+#' @param ncore the number of cores used
 #' 
 #' @return a list containing the enrichment score for each clustering methods 
 #' and cluster numbers included in the genecl_obj
+#' @import parallel
+#' @import foreach
+#' @import doParallel
 #' @examples 
 #' 
 #' #annotaion
@@ -25,7 +29,7 @@
 #'     
 #' @export
 #' 
-clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0){
+clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, ncore=1){
     
     ############################################################################
     # Annotation data
@@ -54,11 +58,14 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0){
     All <- PEI(genecl_obj@labels, annotation=annotation, 
                annotationGenesPop=annotationGenesPop)
     
+    cl <- parallel::makeCluster(ncore)
+    doParallel::registerDoParallel(cl)
+    nc <- NULL
     ############################################################################
     # Gene sets enrichment analysis for clusters
     for (i in clusterMethods(genecl_obj) ) {
-        for (nc in as.character(nClusters(genecl_obj)) ) {
-            cluster <- geneclusters(genecl_obj, i, nc)
+        pei_tmp <- foreach::foreach (nc = as.character(nClusters(genecl_obj)) ) %dopar% {
+            cluster <- cogena::geneclusters(genecl_obj, i, nc)
             if (nc != length(unique(cluster))) {
                 # warning (paste("Cluster", nc, "(aim) only have", length(unique(cluster)), "(result) clusters"))
                 pei <- NA
@@ -69,7 +76,7 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0){
                 colnames(pei) <- colnames(annotation)
                 for (k in  sort(unique(cluster))) {
                     genenames <- names(which(cluster==k))
-                    pei[as.character(k),] <- PEI(genenames, annotation=annotation, 
+                    pei[as.character(k),] <- cogena::PEI(genenames, annotation=annotation, 
                                                  annotationGenesPop=annotationGenesPop)
                 }
                 pei <- rbind(pei, All)
@@ -82,10 +89,15 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0){
                 }
                 pei <- logAdjPEI(pei)
             }
-            clen[[i]][[nc]] <- pei
-            
+            return (pei)
         }
+        names(pei_tmp) <- nClusters(genecl_obj)
+        clen[[i]] <- pei_tmp
     }
+    
+    # stopImplicitCluster()
+    parallel::stopCluster(cl)
+    
     ############################################################################
     ############################################################################
     res <- new("cogena", 
@@ -100,7 +112,7 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0){
                nClust=genecl_obj@nClust, 
                metric=genecl_obj@metric, 
                method=genecl_obj@method, 
-               ncore=genecl_obj@ncore,
+               ncore=ncore,
                gmt=basename(annofile),
                call=match.call() )
     return (res)

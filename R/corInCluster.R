@@ -23,6 +23,8 @@
 #' data(PD)
 #' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", 
 #' package="cogena")
+#' 
+#' \dontrun{
 #' genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"), 
 #'     metric="correlation", method="complete", ncore=2, verbose=TRUE)
 #' 
@@ -30,7 +32,7 @@
 #' 
 #' corInCluster(clen_res, "kmeans", "3", "3")
 #' corInCluster(clen_res, "kmeans", "3", "3", plotMethod="square")
-#' 
+#' }
 #' 
 
 setGeneric("corInCluster", 
