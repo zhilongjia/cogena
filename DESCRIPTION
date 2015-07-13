@@ -46,6 +46,7 @@ Imports:
     biwt,
     Biobase,
     reshape2,
+    jsonlite,
     dplyr,
     devtools
 Suggests: 
@@ -70,6 +71,7 @@ Collate:
     corInCluster.R
     gmt2list.R
     heatmap.3.R
+    geneDrug.R
     heatmapCluster.R
     heatmapPEI.R
     heatmapEnrich.R
