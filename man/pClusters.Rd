@@ -4,14 +4,13 @@
 \alias{pClusters}
 \title{paralleled clustering}
 \usage{
-pClusters(mat, Distmat, clMethod, nClust, method, metric, annotation, ncore,
-  annotationGenesPop, verbose, ...)
+pClusters(mat, Distmat, clMethod, nClust, method, metric, ncore, verbose, ...)
 }
 \value{
 a list containing the cluster information
 }
 \description{
-Internal cogena functions.
+Internal functions.
 }
 \details{
 Paralleled clustering with different clustering methods and different number

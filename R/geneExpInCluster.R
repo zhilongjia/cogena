@@ -8,40 +8,35 @@
 #' and label a vector of the sample labels.
 #' @rdname geneExpInCluster
 #' @export
-#' @seealso \code{\link{cogena}}
+#' @seealso \code{\link{clEnrich}}
 #' @examples 
 #' data(PD)
-#' annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", 
+#' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", 
 #' package="cogena")
-#' cogena_result <- cogena(DEexprs, nClust=2:3, 
-#' clMethods=c("hierarchical","kmeans"), metric="correlation", 
-#' method="complete",  annofile=annofile, sampleLabel=sampleLabel, 
-#' ncore=1, verbose=TRUE)
-#' #summay this cogena object
-#' summary(cogena_result)
+#' genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"), 
+#'     metric="correlation", method="complete", ncore=2, verbose=TRUE)
+#' 
+#' clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
 #' 
 #' #geneExpInCluster
-#' geneExp <- geneExpInCluster(cogena_result, "kmeans", "3")
+#' geneExp <- geneExpInCluster(clen_res, "kmeans", "3")
 #' 
 #' 
-setGeneric("geneExpInCluster", function(object, method, nClusters) 
+setGeneric("geneExpInCluster", function(object, method, nCluster) 
     standardGeneric("geneExpInCluster"))
 
 #' @rdname geneExpInCluster
 #' @aliases geneExpInCluster,cogena_methods
 setMethod("geneExpInCluster", signature(object="cogena"),
     function (object, method=clusterMethods(object), 
-        nClusters=nClusters(object)){
+        nCluster=nClusters(object)){
 
     method <- match.arg(method, clusterMethods(object))
-    nClusters <- match.arg(nClusters, as.character(nClusters(object)))
+    nCluster <- match.arg(nCluster, as.character(nClusters(object)))
 
 
-    if (method %in% c("hierarchical", "diana", "agnes")) {
-        cluster_id <- cutree(clusters(object, method), k=nClusters)
-    } else {
-        cluster_id <- clusters(object, method)[[nClusters]]$cluster
-    }
+    cluster_id <- geneclusters(object, method,nCluster)
+    
 
     clusterGeneExp <- cbind(cluster_id, object@mat)
     clusterGeneExp <- clusterGeneExp[order(clusterGeneExp[,"cluster_id"]),]

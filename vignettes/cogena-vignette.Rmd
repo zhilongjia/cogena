@@ -87,10 +87,12 @@ metric <- "correlation"
 #(hierarchical and agnes)
 method <- "complete"
 
-# the cogena analysis
-cogena_result <- cogena(DEexprs, nClust=nClust, clMethods=clMethods, 
-    metric=metric, method=method,  annofile=annofile, 
-    sampleLabel=sampleLabel, ncore=ncore, verbose=TRUE)
+# Clustering the genes
+genecl_result <- coExp(DEexprs, nClust=nClust, clMethods=clMethods, 
+                       metric=metric, method=method, ncore=ncore, verbose=TRUE)
+
+#Enrichment analysis for the clusters
+clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
 ```
 
 
@@ -120,8 +122,8 @@ score of certain clustering methods and certain number of cluster.
     changed to inverse number. 
 
 ```{r cogena_result_analysis}
-summary(cogena_result)
-score <- optCluster(cogena_result, ncores=1)
+summary(clen_res)
+score <- optCluster(clen_res, ncores=1)
 #choose optimun based on cluster I.
 #score <- optCluster(cogena_result, based="I", ncores=1)
 ```
@@ -133,7 +135,7 @@ knitr::kable(score)
 ```{r enrichment}
 #Here we consider the "hierarchical" method and 6 clusters as the optimum.
 #Always make the number as character, please!
-enrichment.table <- enrichment(cogena_result, "hierarchical", "6")
+enrichment.table <- enrichment(clen_res, "hierarchical", "6")
 ```
 
 2.  To show the enrichment graph, `heatmapPEI` can be used. see Figure 2. 
@@ -144,7 +146,7 @@ enrichment.table <- enrichment(cogena_result, "hierarchical", "6")
 #Always make the number as character, please!
 # The enrichment score for 6 clusters, together with I, II and All 
 # (Down-regulated, Up-regualted and All DE genes)
-heatmapPEI(cogena_result, "hierarchical", "6", printGS=FALSE)
+heatmapPEI(clen_res, "hierarchical", "6", printGS=FALSE)
 #ordered by the Cluster I.
 #heatmapPEI(cogena_result, "hierarchical", "6", orderMethod = "I")
 ```
@@ -155,21 +157,21 @@ heatmapPEI(cogena_result, "hierarchical", "6", printGS=FALSE)
 
 ```{r heatmapCluster, fig.width=10, fig.height=7, fig.cap="Heatmap of expression profiling with clusters"}
 #Always make the number as character, please!
-heatmapCluster(cogena_result, "hierarchical", "6")
+heatmapCluster(clen_res, "hierarchical", "6")
 ```
 
 4.  If interested genes in a certain cluster, user can obtain the genes in 
     a certain cluster via `geneInCluster`.
 ```{r geneInCluster}
 #Always make the number as character, please!
-head(geneInCluster(cogena_result, "hierarchical", "6", "2"))
+head(geneInCluster(clen_res, "hierarchical", "6", "2"))
 
 # The probability to obtain such a number of interactions by chance considering PPI.
-# PPIenrichment(cogena_result, "hierarchical", "6", "2")
+# PPIenrichment(clen_res, "hierarchical", "6", "2")
 
 # Protein-protein interaction graph for a certain cluster. 
 # plotPPI cannot work if there are more than 400 genes in a cluster.
-# plotPPI(cogena_result, "hierarchical", "6", "1")
+# plotPPI(clen_res, "hierarchical", "6", "1")
 ```
 
 5.  The gene expression profilings with cluster infromation could be 
@@ -178,7 +180,7 @@ head(geneInCluster(cogena_result, "hierarchical", "6", "2"))
     be used for other application.
 ```{r geneExpInCluster}
 #Always make the number as character, please!
-gec <- geneExpInCluster(cogena_result, "hierarchical", "6")
+gec <- geneExpInCluster(clen_res, "hierarchical", "6")
 head(gec$clusterGeneExp, 3)
 gec$label
 ```
@@ -187,7 +189,7 @@ gec$label
     see Figure 4.
 ```{r corInCluster, fig.width=6, fig.height=6, fig.cap="Correlation"}
 #Always make the number as character, please!
-corInCluster(cogena_result, "hierarchical", "8", "8")
+corInCluster(clen_res, "hierarchical", "8", "8")
 ```
 
 ## Bug Report

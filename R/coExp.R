@@ -61,20 +61,16 @@
 #' @param method For hierarchical clustering (hierarchical and agnes), the 
 #' agglomeration method used. The default is "complete". Available choices are
 #' "ward", "single", "complete", and "average".
-#' @param annofile gene set filename.
-#' @param sampleLabel factor or character vector with names are sample names. 
-#' only used for plotting.
 #' @param ncore Number of core used. The default is 2.
-#' @param TermFreq a value from [0,1) to filter low-frequence gene sets.
 #' @param verbose verbose.
 #' @param ... to interal function vClusters.
-#' @return a cogena object
+#' 
+#' @return a genecl object
+#' @import amap
 #' @examples
 #' data(PD)
 #' 
-#' #annotaion
-#' annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
-#' annofile <- system.file("extdata", annoGMT, package="cogena")
+
 #' #cogena parameters
 #' # the number of clusters. A vector.
 #' nClust <- 2:6
@@ -89,24 +85,29 @@
 #' method <- "complete"
 #' 
 #' # the cogena analysis
-#' cogena_result <- cogena(DEexprs, nClust=nClust, clMethods=clMethods, 
-#'     metric=metric, method=method, annofile=annofile, sampleLabel=sampleLabel,
-#'     ncore=ncore, verbose=TRUE)
+#' genecl_result <- coExp(DEexprs, nClust=nClust, clMethods=clMethods, 
+#'     metric=metric, method=method, ncore=ncore, verbose=TRUE)
 #'
 #' @export
 #' @import devtools
 
-cogena <- function(obj, nClust, clMethods="hierarchical",metric="correlation", 
-    method="complete", annofile=NULL, sampleLabel=NULL, ncore=2, 
-    TermFreq=0, verbose=FALSE,...) {
+coExp <- function(obj, nClust, clMethods="hierarchical",metric="correlation", 
+    method="complete", ncore=2, verbose=FALSE,...) {
 
+    ############################################################################
+    #Checking parameters
+    if (any(nClust<2)) {
+        stop("argument 'nClust' must be a positive integer vector")
+    }
+    nClust <- as.character(nClust)
+    
     clMethods <- match.arg(clMethods, c("hierarchical","kmeans","diana","fanny",
         "som","model","sota","pam","clara","agnes"), several.ok=TRUE)
 
     ## used for hierarchical, kmeans, diana, fanny, agnes, pam
     metric <- match.arg(metric,c("euclidean", "correlation", "abscorrelation",
         "manhattan", "spearman", "maximum", "kendall", "canberra", "binary", 
-        "pearson", "abspearson", "NMI", "biwt")) #
+        "pearson", "abspearson", "NMI", "biwt"))
 
     ## for hclust, agnes
     method <- match.arg(method,c("ward", "single", "complete", "average")) 
@@ -127,29 +128,8 @@ cogena <- function(obj, nClust, clMethods="hierarchical",metric="correlation",
         stop("rownames of data must be present")
     }
 
-    if (is.null(annofile)) {
-        annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", 
-            package="cogena")
-    }
-
-    annotation <- gene2set(annofile, rownames(mat), TermFreq=TermFreq)
-    # the background gene gene-sets matrix
-    AllGeneSymbols=NULL
-    data(AllGeneSymbols, envir = environment())
-    annotationGenesPop <- gene2set(annofile, AllGeneSymbols, TermFreq=TermFreq)
-    annotationGenesPop <- annotationGenesPop[,colnames(annotation)]
-
-    if (ncol(annotationGenesPop) ==0 || ncol(annotation)==0) {
-    stop("Error in annotation or annotationGenesPop as ncol equals zero. 
-        Maybe lower the TermFreq value.")
-    }
-
-    nClust <- floor(nClust)
-    if (any(nClust<2))
-        {stop("argument 'nClust' must be a positive integer vector")}
-
-    #Dist caculation
-    if (verbose) {print("Dist caculation")}
+    ############################################################################
+    # Calculating distance
     if (metric == "biwt") {
         Distmat <- as.dist(biwt::biwt.cor(mat, output="distance"))
     } else if (metric == "NMI") {
@@ -160,37 +140,27 @@ cogena <- function(obj, nClust, clMethods="hierarchical",metric="correlation",
     } else {
         Distmat <- amap::Dist(mat, method=metric, nbproc=ncore)
     }
-    #convert the NA to max of the Distmat
-    #Distmat[which(is.na(Distmat))]= max(Distmat, na.rm=T)
     if (verbose) {print("Dist caculation done")}
 
-##################################################################
 
+    ############################################################################
+    # Cluster Analysis
     clusterObjs <- vector("list",length(clMethods))
-    names(clusterObjs) <- clMethods
+    
+    for (i in clMethods) {
+        if (verbose) print(paste("# The clMethod,", i, "starts #"))
 
-    validMeasures = vector("list", length=length(clMethods))
-    names(validMeasures) <- clMethods
-
-    #for each clMethods, implement the Cluster Analysis.
-    for (i in 1:length(clMethods)) {
-        if (verbose) print(paste("# The clMethod,", clMethods[i], "starts #"))
-
-        cvalid <- pClusters(mat, Distmat , clMethods[i], nClust, method=method, 
-            metric=metric, annotation=annotation,
-            ncore=ncore, annotationGenesPop, verbose=verbose, ...)
-        clusterObjs[[i]] <- cvalid$clusterObj
-        validMeasures[[i]] <- cvalid$measures
-        if (verbose) print(paste("The clMethod,", clMethods[i], "done"))
+        pClusters_res <- pClusters(mat, Distmat , i, nClust, method=method, 
+            metric=metric, ncore=ncore, verbose=verbose, ...)
+        names(pClusters_res) <- nClust
+        clusterObjs[[i]] <- pClusters_res
+        
+        if (verbose) print(paste("The clMethod,", i, "done"))
     }
 
-    if (is.character(sampleLabel)){
-        sampleLabel <- as.factor(sampleLabel)
-    }
-    res <- new("cogena", mat=mat, Distmat=Distmat, clusterObjs=clusterObjs, 
-        measures=validMeasures, clMethods=clMethods, labels=rownames(mat), 
-        nClust=nClust, metric=metric, method=method, annotation=annotation, 
-        sampleLabel=sampleLabel, ncore=ncore, gmt=basename(annofile), 
+    res <- new("genecl", mat=mat, Distmat=Distmat, clusterObjs=clusterObjs, 
+        clMethods=clMethods, labels=rownames(mat),
+        nClust=as.numeric(nClust), metric=metric, method=method, ncore=ncore,
         call=match.call())
     return (res)
 }

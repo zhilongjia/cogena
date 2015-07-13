@@ -1,5 +1,5 @@
 Package: cogena
-Version: 1.1.4
+Version: 1.1.5
 Title: co-expressed gene-set enrichment analysis
 Authors@R: c(person("Zhilong", "Jia", role =c("aut", "cre"), 
     email="zhilongjia@gmail.com"), 
@@ -31,21 +31,20 @@ Depends:
     cluster,
     ggplot2,
     gplots,
-    STRINGdb,
-    amap
+    kohonen
 Imports: 
     methods,
     class,
+    mclust,
+    amap,
     foreach,
     parallel,
     doParallel,
     fastcluster,
     corrplot,
-    mclust,
-    kohonen,
+    STRINGdb,
     biwt,
     Biobase,
-    igraph,
     reshape2,
     dplyr,
     devtools
@@ -53,16 +52,19 @@ Suggests:
     knitr
 Collate:
     dist_class.R
+    genecl_class.R
     cogena_class.R
+    Class_methods.R
     PD.R
     PEI.R
-    cogena.R
-    cogena_methods.R
+    sota.R
+    pClusters.R
+    coExp.R
+    clEnrich.R
     enrichment.R
     gene2set.R
     geneInCluster.R
     plotPPI.R
-    netInCluster.R
     geneExpInCluster.R
     corInCluster.R
     gmt2list.R
@@ -72,8 +74,6 @@ Collate:
     heatmapEnrich.R
     hubgeneInCluster.R
     optCluster.R
-    sota.R
-    pClusters.R
     PPIenrichment.R
 License: LGPL-3
 LazyData: true

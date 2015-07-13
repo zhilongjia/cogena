@@ -8,24 +8,22 @@
 #' @docType methods
 #' @rdname hubgeneInCluster
 #' 
-#' @seealso \code{\link{cogena}} and \code{\link{geneInCluster}}
+#' @seealso \code{\link{clEnrich}} and \code{\link{geneInCluster}}
 #' @examples 
 #' data(PD)
-#' annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", 
+#' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", 
 #' package="cogena")
-#' cogena_result <- cogena(DEexprs, nClust=2:3, 
-#' clMethods=c("hierarchical","kmeans"), metric="correlation", 
-#' method="complete",  annofile=annofile, sampleLabel=sampleLabel, 
-#' ncore=1, verbose=TRUE)
-#' #summay this cogena object
-#' summary(cogena_result)
+#' genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"), 
+#'     metric="correlation", method="complete", ncore=2, verbose=TRUE)
+#' 
+#' clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
 #' 
 #' #hubgeneInCluster
-#' hubgeneInCluster(cogena_result, "kmeans", "3", "2")
+#' hubgeneInCluster(clen_res, "kmeans", "3", "2")
 #' 
 #' @export
 setGeneric("hubgeneInCluster", 
-    function(object, method, nClusters, ith) 
+    function(object, method, nCluster, ith) 
     standardGeneric("hubgeneInCluster"))
 
 #' @rdname hubgeneInCluster
@@ -33,14 +31,14 @@ setGeneric("hubgeneInCluster",
 #' @aliases hubgeneInCluster
 setMethod("hubgeneInCluster", signature(object="cogena"),
     function (object, method=clusterMethods(object),
-        nClusters=nClusters(object), ith){
+        nCluster=nClusters(object), ith){
     #ith is the ith cluster enquerying
     method <- match.arg(method, clusterMethods(object))
-    nClusters <- match.arg(nClusters, as.character(nClusters(object)))
-    ith <- match.arg(ith, as.character(seq(1:as.numeric(nClusters))))
+    nCluster <- match.arg(nCluster, as.character(nClusters(object)))
+    ith <- match.arg(ith, as.character(seq(1:as.numeric(nCluster))))
     ith <- as.numeric(ith)
     
-    geneincluster <- geneInCluster(object, method, nClusters, as.character(ith))
+    geneincluster <- geneInCluster(object, method, nCluster, as.character(ith))
     geneDist <- object@Distmat
     geneAdjacency <- (1 - as.matrix(geneDist))
     geneAdjacency <- geneAdjacency[]

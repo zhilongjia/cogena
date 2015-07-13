@@ -2,8 +2,6 @@
 #' 
 #' Correlation in the cluster of a cogena object. This is helpful if the number 
 #' of genes in cluster are small.
-#' @inheritParams clusterMethods
-#' @inheritParams enrichment
 #' @inheritParams geneInCluster
 #' @param corMethod a character string indicating which correlation coefficient 
 #' (or covariance) is to be computed. One of "pearson" (default), "kendall", or 
@@ -19,23 +17,24 @@
 #' @return a correlation figure.
 #' @rdname corInCluster
 #' @importFrom corrplot corrplot
-#' @seealso \code{\link{cogena}} \code{\link[corrplot]{corrplot}}
+#' @seealso \code{\link{clEnrich}} \code{\link[corrplot]{corrplot}}
 #' @export
 #' @examples
 #' data(PD)
-#' annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", 
+#' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", 
 #' package="cogena")
-#' cogena_result <- cogena(DEexprs, nClust=c(2,10), 
-#' clMethods=c("hierarchical","kmeans"), metric="correlation", 
-#' method="complete",  annofile=annofile, sampleLabel=sampleLabel, 
-#' ncore=1, verbose=TRUE)
-#' corInCluster(cogena_result, "kmeans", "10", "10")
-#' corInCluster(cogena_result, "kmeans", "10", "10", plotMethod="square")
+#' genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"), 
+#'     metric="correlation", method="complete", ncore=2, verbose=TRUE)
+#' 
+#' clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
+#' 
+#' corInCluster(clen_res, "kmeans", "3", "3")
+#' corInCluster(clen_res, "kmeans", "3", "3", plotMethod="square")
 #' 
 #' 
 
 setGeneric("corInCluster", 
-    function(object, method, nClusters, ith, 
+    function(object, method, nCluster, ith, 
         corMethod="pearson", plotMethod = "circle", type = "upper", ...) 
         standardGeneric("corInCluster"))
 
@@ -43,12 +42,12 @@ setGeneric("corInCluster",
 #' @aliases corInCluster,cogena_methods
 setMethod("corInCluster", signature(object="cogena"), 
     function (object, method=clusterMethods(object), 
-        nClusters=nClusters(object), ith,
+        nCluster=nClusters(object), ith,
         corMethod="pearson", plotMethod = "circle", type="upper",...){
 
     method <- match.arg(method, clusterMethods(object))
-    nClusters <- match.arg(nClusters, as.character(nClusters(object)))
-    geneExp <- geneExpInCluster(object, method, nClusters)$clusterGeneExp
+    nCluster <- match.arg(nCluster, as.character(nClusters(object)))
+    geneExp <- geneExpInCluster(object, method, nCluster)$clusterGeneExp
     geneExpCluster <- geneExp[geneExp[,"cluster_id"] == ith,-1]
     M <- cor(t(geneExpCluster), method=corMethod)
     corrplot(M, method = plotMethod, type = type, ...)
