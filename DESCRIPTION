@@ -51,8 +51,7 @@ Imports:
     dplyr,
     devtools
 Suggests: 
-    knitr,
-    testthat
+    knitr
 Collate: 
     dist_class.R
     genecl_class.R
