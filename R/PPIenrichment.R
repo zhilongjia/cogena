@@ -31,7 +31,7 @@ setGeneric("PPIenrichment", function(object, method, nCluster, ith, score_thresh
     standardGeneric("PPIenrichment"))
 
 #' @rdname PPIenrichment
-#' @aliases PPIenrichment,cogena_methods
+#' @aliases PPIenrichment,cluster_methods
 setMethod("PPIenrichment", signature(object="cogena"),
           function (object, method=clusterMethods(object), 
                     nCluster=nClusters(object), ith,

@@ -35,7 +35,7 @@ setGeneric("plotPPI", function(object, method, nCluster, ith, score_threshold=0,
     standardGeneric("plotPPI"))
 
 #' @rdname plotPPI
-#' @aliases plotPPI,cogena_methods
+#' @aliases plotPPI,cluster_methods
 setMethod("plotPPI", signature(object="cogena"),
           function (object, method=clusterMethods(object), 
                     nCluster=nClusters(object), ith,

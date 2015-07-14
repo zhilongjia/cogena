@@ -75,7 +75,7 @@ Collate:
     heatmapCluster.R
     heatmapPEI.R
     heatmapEnrich.R
-    hubgeneInCluster.R
+    hubGene.R
     optCluster.R
     PPIenrichment.R
 License: LGPL-3

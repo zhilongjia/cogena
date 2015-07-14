@@ -3,8 +3,8 @@
 \docType{methods}
 \name{PPIenrichment}
 \alias{PPIenrichment}
+\alias{PPIenrichment,cluster_methods}
 \alias{PPIenrichment,cogena-method}
-\alias{PPIenrichment,cogena_methods}
 \title{enrichment for genes in a certain cluster.}
 \usage{
 PPIenrichment(object, method, nCluster, ith, score_threshold = 0)

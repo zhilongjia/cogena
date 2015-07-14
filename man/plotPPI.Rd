@@ -3,8 +3,8 @@
 \docType{methods}
 \name{plotPPI}
 \alias{plotPPI}
+\alias{plotPPI,cluster_methods}
 \alias{plotPPI,cogena-method}
-\alias{plotPPI,cogena_methods}
 \title{Plot the Protein-protein interaction for genes in a certain cluster.}
 \usage{
 plotPPI(object, method, nCluster, ith, score_threshold = 0, ...)
