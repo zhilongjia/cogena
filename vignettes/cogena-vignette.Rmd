@@ -48,7 +48,7 @@ sample. A vector with sample names.
     See `?PD` for more details.
 
 ```{r import_data, message=FALSE}
-devtools::load_all("~/cogena")
+library(cogena)
 data(PD)
 # objects in the PD dataset.
 ```
