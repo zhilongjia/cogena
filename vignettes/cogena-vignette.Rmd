@@ -59,7 +59,7 @@ ls()
 
 ## Cogena analysis
 
-1.  Make Annotation of gene set
+1.  Gene sets
 
     There are a variety of gene sets in the `cogena` package, collected from 
     [MSigDB](http://www.broadinstitute.org/gsea/msigdb/index.jsp). They are 
@@ -145,40 +145,43 @@ enrichment.table <- enrichment(clen_res, "hierarchical", "6")
 ```
 
 2.  The heatmap of expression profiling with clusters is plotted by 
-    `heatmapCluster`. see Figure 2. User can know which cluster contains
-    up-regulated or down-regulated genes.
+    `heatmapCluster`. See Figure 2. Based on it, which cluster contains
+    up-regulated or down-regulated genes is obvious.
 
 ```{r heatmapCluster, fig.width=10, fig.height=7, fig.cap="Heatmap of expression profiling with clusters"}
 #Always make the number as character, please!
 heatmapCluster(clen_res, "hierarchical", "6")
 ```
 
-3.  To show the enrichment graph, `heatmapPEI` can be used. see Figure 3. 
+3.  To show the enrichment graph, `heatmapPEI` can be used. See Figure 3. 
     See `?heatmapPEI` for more details.
 
 ```{r heatmapPEI, fig.width=10, fig.height=6, fig.cap="KEGG pathway enrichment"}
-#The values shown in Figure 2. is the -log (adjusted p-values).
-#Always make the number as character, please!
+# Always make the number as character, please!
+#
 # The enrichment score for 6 clusters, together with I, II and All 
-# (Down-regulated, Up-regualted and All DE genes)
+# (Down-regulated, Up-regualted and All DE genes). The values shown
+# in Figure 2 is the -log (FDR).
 heatmapPEI(clen_res, "hierarchical", "6", printGS=FALSE)
+
 #ordered by the Cluster I.
 #heatmapPEI(cogena_result, "hierarchical", "6", orderMethod = "I")
 ```
 
 
-4.  If interested genes in a certain cluster, user can obtain the genes in 
-    a certain cluster via `geneInCluster`.
+4.  Genes and hub genes in a certain cluster. user can obtain the genes in 
+    a certain cluster via `geneInCluster`, protein-protein interaction via
+    `PPIinfo`, hubgenes in cluster via `hubGene`.
 ```{r geneInCluster}
-#Always make the number as character, please!
-head(geneInCluster(clen_res, "hierarchical", "6", "2"))
+# Always make the number as character, please!
+geneC <- geneInCluster(clen_res, "hierarchical", "6", "2")
+head(geneC)
 
-# The probability to obtain such a number of interactions by chance considering PPI.
-# PPIenrichment(clen_res, "hierarchical", "6", "2")
+# The Hub genes in a cluster
+# hubGene(geneC)
 
-# Protein-protein interaction graph for a certain cluster. 
-# plotPPI cannot work if there are more than 400 genes in a cluster.
-# plotPPI(clen_res, "hierarchical", "6", "1")
+# PPI related information
+# PPIinfo(geneC)
 ```
 
 5.  The gene expression profilings with cluster infromation could be 
@@ -186,7 +189,7 @@ head(geneInCluster(clen_res, "hierarchical", "6", "2"))
     and `label`, in the returned object of `geneExpInCluster`. This can 
     be used for other application.
 ```{r geneExpInCluster}
-#Always make the number as character, please!
+# Always make the number as character, please!
 gec <- geneExpInCluster(clen_res, "hierarchical", "6")
 head(gec$clusterGeneExp, 3)
 gec$label
@@ -195,7 +198,7 @@ gec$label
 6. The correlation among one cluster could be shown via `corInCluster`. 
     see Figure 4.
 ```{r corInCluster, fig.width=6, fig.height=6, fig.cap="Correlation of genes in a cluster"}
-#Always make the number as character, please!
+# Always make the number as character, please!
 corInCluster(clen_res, "hierarchical", "8", "8")
 ```
 

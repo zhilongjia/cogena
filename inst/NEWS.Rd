@@ -1,12 +1,13 @@
 \name{NEWS}
 \title{News for Package \pkg{cogena}}
 
-\section{Changes in version 1.1.5 (2015-07-13)}{
+\section{Changes in version 1.1.5 (2015-07-14)}{
 \itemize{
     \item redesign cogena.
     \item add coExp and clEnrich as a substitute for the original cogena function.
     \item update vignette
-    \item add test
+    \item add tests
+    \item add PPIinfo and hubGene funtions, delete PPIenrichment, netInCluster and plotPPI
     }
 }
 

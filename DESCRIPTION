@@ -30,11 +30,13 @@ Depends:
     R (>= 3.2),
     cluster,
     ggplot2,
-    gplots,
+    igraph,
+    STRINGdb,
     kohonen
 Imports: 
     methods,
     class,
+    gplots,
     mclust,
     amap,
     foreach,
@@ -42,10 +44,10 @@ Imports:
     doParallel,
     fastcluster,
     corrplot,
-    STRINGdb,
     biwt,
     Biobase,
     reshape2,
+    jsonlite,
     dplyr,
     devtools
 Suggests: 
@@ -65,17 +67,17 @@ Collate:
     enrichment.R
     gene2set.R
     geneInCluster.R
-    plotPPI.R
     geneExpInCluster.R
     corInCluster.R
     gmt2list.R
     heatmap.3.R
+    geneDrug.R
     heatmapCluster.R
     heatmapPEI.R
     heatmapEnrich.R
-    hubgeneInCluster.R
+    hubGene.R
     optCluster.R
-    PPIenrichment.R
+    PPIinfo.R
 License: LGPL-3
 LazyData: true
 Encoding: UTF-8
