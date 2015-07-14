@@ -80,12 +80,12 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, nc
                                                  annotationGenesPop=annotationGenesPop)
                 }
                 pei <- rbind(pei, All)
-                # negative log p value
+                # negative log2 p value
                 logAdjPEI <- function (pei) {
                     # fdr based on pval
                     pei.adjust <- matrix(p.adjust(pei, "fdr"), ncol=ncol(pei))
                     dimnames(pei.adjust) <- dimnames(pei)
-                    pei.NeglogPval <- -log(pei.adjust)
+                    pei.NeglogPval <- -log2(pei.adjust)
                 }
                 pei <- logAdjPEI(pei)
             }
