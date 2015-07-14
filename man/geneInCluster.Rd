@@ -4,7 +4,7 @@
 \name{geneInCluster}
 \alias{geneInCluster}
 \alias{geneInCluster,cogena-method}
-\alias{geneInCluster,cogena_methods}
+\alias{geneInCluster,cogena_methods,cluster_methods}
 \title{Get gene names in a certain cluster.}
 \usage{
 geneInCluster(object, method, nCluster, ith)
