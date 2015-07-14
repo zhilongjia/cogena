@@ -10,14 +10,14 @@ To discovery smaller scale, but highly correlated cellular events that may be of
 
 The workflow of cogena
 
-![cogena_heatmapCluster](inst/figure/cogena_heatmapCluster.png)
+![cogena_heatmapCluster](inst/figure/heatmapCluster_Kmeans8.png)
 
-The heatmap of co-expressed gene set
+The heatmap of co-expressed gene set based on K-means methods with 8 clusters.
 
 
-![cogena_heatmapPEI](inst/figure/cogena_heatmapPEI.png)
+![cogena_heatmapPEI](inst/figure/heatmapPEI_Kmeans8.png)
 
- The enrichment score for 10 clusters, together with I, II and All (Down-regulated, Up-regualted and All DE genes)
+ The enrichment score for 10 clusters, together with I, II and All (Down-regulated, Up-regualted and All DE genes). The values shown is the -log2(FDR).
 
 
 

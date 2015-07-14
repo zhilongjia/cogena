@@ -1,6 +1,13 @@
 \name{NEWS}
 \title{News for Package \pkg{cogena}}
 
+\section{Changes in version 1.1.6 (2015-07-14)}{
+\itemize{
+    \item debug cutree.
+    \item values are -log2(FDR) in heatmapPEI instead of -log(FDR).
+    }
+}
+
 \section{Changes in version 1.1.5 (2015-07-14)}{
 \itemize{
     \item redesign cogena.
