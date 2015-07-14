@@ -43,8 +43,13 @@ setMethod("PPIinfo", signature(geneC="character"),
     
     example1_mapped <- string_db$map(as.data.frame(geneC), "geneC", removeUnmappedRows = TRUE, quiet=TRUE)
     hits <- example1_mapped$STRING_id
-    url <- string_db$get_link(hits, ...)
-    net_summary <- string_db$get_summary(hits)
-    cat ("STRING Website:", url, "\n",  net_summary)
+    if (length(hits) <= 400){
+        url <- string_db$get_link(hits, ...)
+        net_summary <- string_db$get_summary(hits)
+        cat ("STRING Website:", url, "\n",  net_summary)
+    } else {
+        net_summary <- string_db$get_summary(hits)
+        cat (net_summary)
     }
-)
+
+})
