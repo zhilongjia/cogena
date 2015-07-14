@@ -64,8 +64,8 @@ ls()
     There are a variety of gene sets in the `cogena` package, collected from 
     [MSigDB](http://www.broadinstitute.org/gsea/msigdb/index.jsp). They are 
     `r  dir(system.file("extdata", package="cogena"), pattern="*gmt")`. Here
-    the gene-sets can be user-defined gene-sets formatted gmt, too (Just 
-    put it into the extdata directory in the installation directory of
+    the gene-sets can be user-defined gene-sets formatted gmt, too. 
+    Put it into the extdata directory in the installation directory of
     cogena, such as ~/R/x86_64-pc-linux-gnu-library/3.2/cogena/extdata in Linux). 
 
 ```{r gene_list_annotation}
@@ -149,7 +149,7 @@ enrichment.table <- enrichment(clen_res, "hierarchical", "6")
     up-regulated or down-regulated genes is obvious.
 
 ```{r heatmapCluster, fig.width=10, fig.height=7, fig.cap="Heatmap of expression profiling with clusters"}
-#Always make the number as character, please!
+# Always make the number as character, please!
 heatmapCluster(clen_res, "hierarchical", "6")
 ```
 
@@ -161,7 +161,7 @@ heatmapCluster(clen_res, "hierarchical", "6")
 #
 # The enrichment score for 6 clusters, together with I, II and All 
 # (Down-regulated, Up-regualted and All DE genes). The values shown
-# in Figure 2 is the -log (FDR).
+# in Figure 2 is the -log2(FDR).
 heatmapPEI(clen_res, "hierarchical", "6", printGS=FALSE)
 
 #ordered by the Cluster I.
