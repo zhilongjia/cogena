@@ -1,6 +1,6 @@
 
 language: r
-sudo: required
+sudo: false
 bioc_required: true
 
 warnings_are_errors: true
