@@ -88,7 +88,7 @@ pClusters <- function(mat, Distmat, clMethod, nClust, method,
                         "correlation")) )
             },
             ## otherwise - hierarchical, diana, agnes
-            {clusterObj$cluster <- cutree(clusterObj, nc)}
+            {clusterObj$cluster <- cutree(as.hclust(clusterObj), nc)}
             )
 
     clusterObj$cluster

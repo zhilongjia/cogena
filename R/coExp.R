@@ -71,7 +71,6 @@
 #' @examples
 #' data(PD)
 #' 
-
 #' #cogena parameters
 #' # the number of clusters. A vector.
 #' nClust <- 2:6
