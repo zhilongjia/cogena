@@ -1,7 +1,7 @@
 library(cogena)
 data(PD)
 clMethods <- c("hierarchical","kmeans","diana","fanny","som","model","sota","pam","clara","agnes")
-clMethods <- c("hierarchical","kmeans","diana","fanny","som","sota","pam","clara","agnes")
+clMethods <- c("hierarchical","kmeans")
 
 annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", package="cogena")
 

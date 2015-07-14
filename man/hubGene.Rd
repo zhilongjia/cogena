@@ -7,14 +7,17 @@
 \alias{hubGene,cluster_methods}
 \title{Hub genes in a cluster}
 \usage{
-hubGene(geneC, score_threshold = 0)
+hubGene(geneC, score_threshold = 0, input_directory = "")
 
-\S4method{hubGene}{character}(geneC, score_threshold = 0)
+\S4method{hubGene}{character}(geneC, score_threshold = 0,
+  input_directory = "")
 }
 \arguments{
 \item{geneC}{a gene names vector}
 
 \item{score_threshold}{a threshold for the combined scores of the interactions.}
+
+\item{input_directory}{a directory to store data downloaded from STRING.}
 }
 \value{
 the hub genes
@@ -33,7 +36,7 @@ genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans")
 
 clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
 geneC3 <- geneInCluster(clen_res, "hierarchical", "3", "3")
-res <- hubGene(geneC3)
+res <- hubGene(geneC3, input_directory="~/tmp/STRINGdb")
 }
 }
 

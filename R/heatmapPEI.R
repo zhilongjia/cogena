@@ -100,7 +100,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
             title=paste("cogena:", method, nCluster)
         }
 
-        ggplot(enrichment, aes(as.factor(Var1), Var2)) + 
+        ggplot2::ggplot(enrichment, aes(as.factor(Var1), Var2)) + 
             geom_tile(aes(fill = value)) + 
             scale_fill_gradient2("score",  mid=low, midpoint=4, low=low, 
                 high=high, na.value=na.value, breaks=c(4.32, breaks)) +
