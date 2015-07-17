@@ -3,6 +3,20 @@
 #' Gene set enrichment for clusters sourced from coExp function. the enrichment
 #' score are based on -log(p) with p from hyper-geometric test.
 #' 
+#' Gene sets availiable (See vignette for more): 
+#' \itemize{
+#' \item c2.cp.kegg.v5.0.symbols.gmt (From Msigdb)
+#' \item c2.cp.kegg.v4.0.symbols.gmt (From Msigdb)
+#' \item c2.cp.reactome.v5.0.symbols.gmt (From Msigdb)
+#' \item c5.bp.v5.0.symbols.gmt (From Msigdb)
+#' \item c2.cp.biocarta.v5.0.symbols.gmt (From Msigdb)
+#' \item c2.all.v5.0.symbols.gmt (From Msigdb)
+#' \item c2.cp.v5.0.symbols.gmt (From Msigdb)
+#' \item c5.mf.v5.0.symbols.gmt (From Msigdb)
+#' \item Transcription_Factor_PPIs.gmt (From Enrichr)
+#' \item TargetScan_microRNA.gmt (From Enrichr)
+#' }
+#' 
 #' @param genecl_obj a genecl object
 #' @param annofile gene set annotation file
 #' @param sampleLabel sameple Label
