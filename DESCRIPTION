@@ -39,6 +39,7 @@ Imports:
     gplots,
     mclust,
     amap,
+    apcluster,
     foreach,
     parallel,
     doParallel,

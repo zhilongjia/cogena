@@ -27,8 +27,7 @@ pClusters <- function(mat, Distmat, clMethod, nClust, method,
             names(clusterObj) <- nClust
             clusterObjInit <- fastcluster::hclust(Distmat, method)},
         agnes = {clusterObj <- agnes(Distmat, method=method, ...)},
-        {clusterObj <- vector("list",length=length(nClust))
-        names(clusterObj) <- nClust })
+        {clusterObj <- list()})
 
     # parallel the Clustering with the number of Cluster is nc
     #doMC::registerDoMC(ncore)
@@ -86,6 +85,16 @@ pClusters <- function(mat, Distmat, clMethod, nClust, method,
                 suppressWarnings( clusterObj <- sota(mat, nc-1, 
                     distance=ifelse(metric=="euclidean", metric, 
                         "correlation")) )
+            },
+            ap = {
+                ap_cluster_infor <- vector("integer", length=length(rownames(mat)))
+                names(ap_cluster_infor) <- rownames(mat)
+                aggres <- apcluster::apcluster(apcluster::negDistMat(r=2), mat)
+                ap_cluster <- cutree(as.hclust(aggres), nc)
+                for (i in 1:nc) {
+                    ap_cluster_infor[names(unlist(aggres@clusters[which(ap_cluster == i)]))] = i
+                }
+                clusterObj$cluster <- ap_cluster_infor
             },
             ## otherwise - hierarchical, diana, agnes
             {clusterObj$cluster <- cutree(as.hclust(clusterObj), nc)}

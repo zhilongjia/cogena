@@ -74,7 +74,8 @@ setMethod("heatmapEnrich", signature(enrichment_score="matrix"),
                   }
               }
               name <- NULL
-              score <- dplyr::group_by(enrichment_score, name) %>% summarise_each(funs(meanX))
+              score <- dplyr::group_by(enrichment_score, name)
+              score <- summarise_each(score, funs(meanX))
               score <- score[which(rowSums(score[,-1])!=0), ]
               rownames(score) <- score$name
               if (nrow(score)==0){
