@@ -11,7 +11,10 @@
 #' @param maintitle a character. like GSExxx. the output of figure will like
 #' "cogena: kmeans 3 GSExxx" in two lines. Default is NULL
 #' @param printGS print the enriched gene set names or not. Default is TRUE.
+#' @param add2 add 2 clusters information.
+#' 
 #' @return a gene set enrichment heatmap
+#' 
 #' @seealso \code{\link{clEnrich}} and \code{\link{heatmapCluster}}
 #' 
 #' @details
@@ -21,9 +24,9 @@
 #' \item mean. ordered by the mean value in clusters beside all
 #' \item All. ordered by all genes
 #' \item I. ordered by the I cluster in only two clusters 
-#' (Up or Down-regulated)
+#' (Up or Down-regulated, add2 should be TRUE)
 #' \item II. ordered by the II cluster in only two clusters 
-#' (Up or Down-regulated)
+#' (Up or Down-regulated, add2 should be TRUE)
 #' }
 #' 
 #' @export
@@ -55,7 +58,7 @@ setGeneric("heatmapPEI",
     function(object, method, nCluster, CutoffNumGeneset=20,
         CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE,
         low="green", high="red", na.value="white", 
-        maintitle=NULL, printGS=TRUE) 
+        maintitle=NULL, printGS=TRUE, add2=FALSE) 
     standardGeneric("heatmapPEI"))
 
 #' @rdname heatmapPEI
@@ -66,12 +69,12 @@ setMethod("heatmapPEI", signature(object="cogena"),
         CutoffNumGeneset=20, CutoffPVal=0.05,
         orderMethod="max", roundvalue=TRUE,
         low="grey", high="red", na.value="white", 
-        maintitle=NULL, printGS=TRUE) {
+        maintitle=NULL, printGS=TRUE, add2=FALSE) {
         method <- match.arg(method, clusterMethods(object))
         nCluster <- match.arg(nCluster, as.character(nClusters(object)))
         
         enrichment <- enrichment(object, method, nCluster, CutoffNumGeneset, 
-            CutoffPVal, orderMethod, roundvalue)
+            CutoffPVal, orderMethod, roundvalue, add2 =add2)
         if (length(enrichment)==1 && is.na(enrichment)){
             return(paste("No enrichment above the cutoff for", method, 
                 "when the number of clusters is", nCluster, "!"))

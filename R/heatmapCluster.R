@@ -16,6 +16,7 @@
 #' "kmeans 3 Clusters GSExxx" in two lines.
 #' @param printSum print the summary of the number of genes in each cluster. 
 #' Default is TRUE.
+#' @param add2 add 2 clusters information.
 #' @param ... other parameters to heatmap.3.
 #' @return a gene expression heatmap with Cluster information figure
 #' @export
@@ -48,7 +49,7 @@
 setGeneric("heatmapCluster", 
     function(object, method, nCluster, scale="row", sampleColor=NULL,
         clusterColor=NULL, clusterColor2=NULL, heatmapcol=NULL, maintitle=NULL,
-        printSum=TRUE, ...) 
+        printSum=TRUE, add2=FALSE, ...) 
     standardGeneric("heatmapCluster"))
 
 #' @rdname heatmapCluster
@@ -58,7 +59,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
         nCluster=nClusters(object), scale="row",
         sampleColor=NULL, clusterColor=NULL,
         clusterColor2=NULL, heatmapcol=NULL, maintitle=NULL, 
-        printSum=TRUE, ...){
+        printSum=TRUE, add2=FALSE, ...){
 
     #get the parameters
     method <- match.arg(method, clusterMethods(object))
@@ -74,9 +75,14 @@ setMethod("heatmapCluster", signature(object="cogena"),
 
     if (printSum==TRUE) {
         cat ("The number of genes in each cluster:\n")
-        print (table(cluster_size2))
-        if (nCluster != "2"){
+        
+        if (nCluster != "2" && isTRUE(add2) ){
+            print (table(cluster_size2))
             print (table(cluster_size))
+        } else if (nCluster != "2" && !isTRUE(add2)) {
+            print (table(cluster_size))
+        } else if (nCluster == "2") {
+            print (table(cluster_size2))
         }
     }
 
@@ -98,7 +104,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
         clusterColor <- sample(rainbow(nCluster)) #, alpha = c(1, 0.6)
     }
     if (is.null(clusterColor2)){
-        clusterColor2 <- c("coral3", "deepskyblue1")
+        clusterColor2 <- sample(topo.colors(2)) # c("coral3", "deepskyblue1")
     }
 
     #clusterColor <- rainbow(nCluster, alpha = c(1, 0.6))
@@ -106,12 +112,16 @@ setMethod("heatmapCluster", signature(object="cogena"),
     #clusterColor <- clusterColor[clusterColor]
     
     RowSideColors <- map2col(sort(cluster_size, decreasing=FALSE), clusterColor)
-    RowSideColors2 <- map2col(cluster_size2[names(sort(cluster_size, 
-        decreasing=FALSE))], clusterColor2)
+    
+    if (isTRUE(add2)) {
+        RowSideColors2 <- map2col(cluster_size2[names(sort(cluster_size, 
+                        decreasing=FALSE))], clusterColor2)
+    }
+    
     if (is.null(heatmapcol)) {
         heatmapcol <- greenred(75)
     }
-    if (nCluster != "2"){
+    if (nCluster != "2" && isTRUE(add2)){
         RowSideColors <- t(cbind(RowSideColors2, RowSideColors))
         rownames(RowSideColors) <- paste("Size:", c(2, nCluster))
     } else {
@@ -140,7 +150,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
         legend("left", legend = paste0(1:nCluster),
             col = clusterColor, lty= 1, lwd = 20, bty = "n", 
             title = paste(nCluster, "Clusters"))
-        if (nCluster != "2"){
+        if (nCluster != "2" && isTRUE(add2) ){
             legend("bottomleft", legend = as.character(as.roman(1:2)),
                 col = clusterColor2, lty= 1, lwd = 20, bty = "n", 
                 title = paste(2, "Clusters"))

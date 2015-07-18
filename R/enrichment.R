@@ -12,15 +12,15 @@
 #' "mean", "all", "I", "II" or a number meaning the ith cluster.
 #' @param roundvalue The default is TRUE. whether or not round the data. 
 #' such as round(1.54, 1)=1.5
-#' 
+#' @param add2 add 2 clusters information.
 #' @details
 #' orderMethod:
 #' \itemize{
 #' \item max. ordered by the max value in clusters beside all
 #' \item mean. ordered by the mean value in clusters beside all
 #' \item All. ordered by all genes
-#' \item I. ordered by the I cluster in two clusters (Up or Down-regulated)
-#' \item II. ordered by the II cluster in two clusters (Up or Down-regulated)
+#' \item I. ordered by the I cluster in two clusters (Up or Down-regulated, add2 should be TRUE)
+#' \item II. ordered by the II cluster in two clusters (Up or Down-regulated, add2 should be TRUE)
 #' \item a number. like 2, "3".
 #' }
 #' 
@@ -45,7 +45,8 @@
 #' }
 #' 
 setGeneric("enrichment", function(object, method, nCluster, 
-    CutoffNumGeneset=Inf, CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE) 
+    CutoffNumGeneset=Inf, CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE,
+    add2=FALSE) 
     standardGeneric("enrichment"))
 
 #' @rdname enrichment
@@ -54,7 +55,7 @@ setMethod("enrichment", signature(object="cogena"),
     function(object, method=clusterMethods(object), 
         nCluster=nClusters(object), 
         CutoffNumGeneset=Inf, CutoffPVal=0.05,
-        orderMethod="max", roundvalue=TRUE) {
+        orderMethod="max", roundvalue=TRUE, add2=FALSE) {
 
     method <- match.arg(method, clusterMethods(object))
     nCluster <- match.arg(nCluster, as.character(nClusters(object)))
@@ -80,9 +81,14 @@ setMethod("enrichment", signature(object="cogena"),
     rownames(score2) <- c("I", "II", "All")
 
     if (nCluster != 2){
-        score <- rbind(score1[1:as.numeric(nCluster),], score2[1:2,], 
-            score1["All",])
-        rownames(score) <- c(as.character(1:nCluster), "I", "II", "All")
+        if (isTRUE(add2) ) {
+            score <- rbind(score1[1:as.numeric(nCluster),], score2[1:2,], 
+                           score1["All",])
+            rownames(score) <- c(as.character(1:nCluster), "I", "II", "All")
+        } else {
+            score <- score1[c(1:as.numeric(nCluster), "All"),]
+        }
+        
     } else {
         score <- score2
         rownames(score) <- c("I", "II", "All")
@@ -97,7 +103,10 @@ setMethod("enrichment", signature(object="cogena"),
     cluster2_all <- c(length(which(cluster2 == 1)), length(which(cluster2 == 2)), 
             length(geneclusters(object, method, nCluster)) )
     if (nCluster != 2){
-        NumGeneInCluster <- c(NumGeneInCluster, cluster2_all)
+        if (isTRUE(add2)) {
+            NumGeneInCluster <- c(NumGeneInCluster, cluster2_all)
+        }
+        
     } else {
         NumGeneInCluster <- cluster2_all
     }
@@ -138,8 +147,13 @@ setMethod("enrichment", signature(object="cogena"),
     #suppressWarnings(score <- 
     #score[order(as.numeric(rownames(score))),,drop=FALSE])
     if (nCluster !=2){
-        suppressWarnings(score <- score[c(as.character(1:nCluster), "I", 
-            "II", "All"),,drop=FALSE])
+        if (isTRUE(add2)) {
+            suppressWarnings(score <- score[c(as.character(1:nCluster), "I", 
+                                              "II", "All"),,drop=FALSE])
+        } else {
+            suppressWarnings(score <- score[c(as.character(1:nCluster), "All"),,drop=FALSE])
+        }
+        
     } else {
         suppressWarnings(score <- score[c("I", "II", "All"),,drop=FALSE])
     }

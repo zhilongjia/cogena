@@ -10,12 +10,12 @@
 heatmapPEI(object, method, nCluster, CutoffNumGeneset = 20,
   CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE,
   low = "green", high = "red", na.value = "white", maintitle = NULL,
-  printGS = TRUE)
+  printGS = TRUE, add2 = FALSE)
 
 \S4method{heatmapPEI}{cogena}(object, method = clusterMethods(object),
   nCluster = nClusters(object), CutoffNumGeneset = 20, CutoffPVal = 0.05,
   orderMethod = "max", roundvalue = TRUE, low = "grey", high = "red",
-  na.value = "white", maintitle = NULL, printGS = TRUE)
+  na.value = "white", maintitle = NULL, printGS = TRUE, add2 = FALSE)
 }
 \arguments{
 \item{object}{a genecl or cogena object}
@@ -45,6 +45,8 @@ such as round(1.54, 1)=1.5}
 "cogena: kmeans 3 GSExxx" in two lines. Default is NULL}
 
 \item{printGS}{print the enriched gene set names or not. Default is TRUE.}
+
+\item{add2}{add 2 clusters information.}
 }
 \value{
 a gene set enrichment heatmap
@@ -61,9 +63,9 @@ orderMethod:
 \item mean. ordered by the mean value in clusters beside all
 \item All. ordered by all genes
 \item I. ordered by the I cluster in only two clusters
-(Up or Down-regulated)
+(Up or Down-regulated, add2 should be TRUE)
 \item II. ordered by the II cluster in only two clusters
-(Up or Down-regulated)
+(Up or Down-regulated, add2 should be TRUE)
 }
 }
 \examples{

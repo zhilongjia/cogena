@@ -8,11 +8,12 @@
 \title{get the enrichment table from a cogena object.}
 \usage{
 enrichment(object, method, nCluster, CutoffNumGeneset = Inf,
-  CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE)
+  CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE,
+  add2 = FALSE)
 
 \S4method{enrichment}{cogena}(object, method = clusterMethods(object),
   nCluster = nClusters(object), CutoffNumGeneset = Inf, CutoffPVal = 0.05,
-  orderMethod = "max", roundvalue = TRUE)
+  orderMethod = "max", roundvalue = TRUE, add2 = FALSE)
 }
 \arguments{
 \item{object}{a genecl or cogena object}
@@ -31,6 +32,8 @@ return table}
 
 \item{roundvalue}{The default is TRUE. whether or not round the data.
 such as round(1.54, 1)=1.5}
+
+\item{add2}{add 2 clusters information.}
 }
 \value{
 a matrix with clusters in row and gene-sets in column.
@@ -45,8 +48,8 @@ orderMethod:
 \item max. ordered by the max value in clusters beside all
 \item mean. ordered by the mean value in clusters beside all
 \item All. ordered by all genes
-\item I. ordered by the I cluster in two clusters (Up or Down-regulated)
-\item II. ordered by the II cluster in two clusters (Up or Down-regulated)
+\item I. ordered by the I cluster in two clusters (Up or Down-regulated, add2 should be TRUE)
+\item II. ordered by the II cluster in two clusters (Up or Down-regulated, add2 should be TRUE)
 \item a number. like 2, "3".
 }
 }

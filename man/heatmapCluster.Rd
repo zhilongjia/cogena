@@ -8,12 +8,12 @@
 \usage{
 heatmapCluster(object, method, nCluster, scale = "row", sampleColor = NULL,
   clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
-  maintitle = NULL, printSum = TRUE, ...)
+  maintitle = NULL, printSum = TRUE, add2 = FALSE, ...)
 
 \S4method{heatmapCluster}{cogena}(object, method = clusterMethods(object),
   nCluster = nClusters(object), scale = "row", sampleColor = NULL,
   clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
-  maintitle = NULL, printSum = TRUE, ...)
+  maintitle = NULL, printSum = TRUE, add2 = FALSE, ...)
 }
 \arguments{
 \item{object}{a genecl or cogena object}
@@ -42,6 +42,8 @@ c("coral3", "deepskyblue1").}
 
 \item{printSum}{print the summary of the number of genes in each cluster.
 Default is TRUE.}
+
+\item{add2}{add 2 clusters information.}
 
 \item{...}{other parameters to heatmap.3.}
 }
