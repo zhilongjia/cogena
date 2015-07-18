@@ -19,7 +19,7 @@ evaluated. e.g., 2:6 would evaluate the number of clusters ranging from
 
 \item{clMethods}{A character vector giving the clustering methods. The
 default is "hierarchical". Available options are "hierarchical", "kmeans",
-"diana", "fanny", "som", "model", "sota", "pam", "clara", "ap" (apcluster),
+"diana", "fanny", "som", "model", "sota", "pam", "clara", "apcluster",
 and "agnes", with multiple choices allowed.}
 
 \item{metric}{the distance measure to be used. This should be one of
