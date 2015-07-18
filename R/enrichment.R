@@ -105,6 +105,8 @@ setMethod("enrichment", signature(object="cogena"),
     if (nCluster != 2){
         if (isTRUE(add2)) {
             NumGeneInCluster <- c(NumGeneInCluster, cluster2_all)
+        } else {
+            NumGeneInCluster <- c(NumGeneInCluster, length(geneclusters(object, method, nCluster)))
         }
         
     } else {
