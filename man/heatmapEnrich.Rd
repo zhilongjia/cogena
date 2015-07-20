@@ -4,21 +4,25 @@
 \name{heatmapEnrich}
 \alias{heatmapEnrich}
 \alias{heatmapEnrich,cogena}
-\alias{heatmapEnrich,matrix-method}
-\title{heatmap of the gene set enrichment_score matrix directly (for CMap
-gene set only)}
+\alias{heatmapEnrich,cogena-method}
+\title{heatmap designed for for CMap gene set only}
 \usage{
-heatmapEnrich(enrichment_score, orderMethod = "max", CutoffNumGeneset = 20,
-  CutoffPVal = 0.05, low = "grey", high = "red", na.value = "white",
-  title = "cogena", printGS = TRUE)
-
-\S4method{heatmapEnrich}{matrix}(enrichment_score, orderMethod = "max",
+heatmapEnrich(object, method = clusterMethods(object),
+  nCluster = nClusters(object), orderMethod = "max",
   CutoffNumGeneset = 20, CutoffPVal = 0.05, low = "grey", high = "red",
-  na.value = "white", title = "cogena", printGS = TRUE)
+  na.value = "white", title = "cogena", printGS = TRUE, add2 = TRUE)
+
+\S4method{heatmapEnrich}{cogena}(object, method = clusterMethods(object),
+  nCluster = nClusters(object), orderMethod = "max",
+  CutoffNumGeneset = 20, CutoffPVal = 0.05, low = "grey", high = "red",
+  na.value = "white", title = "cogena", printGS = TRUE, add2 = TRUE)
 }
 \arguments{
-\item{enrichment_score}{a returned value from \code{\link{enrichment}}
-function}
+\item{object}{a genecl or cogena object}
+
+\item{method}{as clMethods in genecl function}
+
+\item{nCluster}{as nClust in cogena function.}
 
 \item{orderMethod}{the order method, default is max, other options are
 "mean", "all", "I", "II" or a number meaning the ith cluster.}
@@ -37,36 +41,28 @@ return table. The default is 20.}
 \item{title}{a character. Default is "cogena"}
 
 \item{printGS}{print the enriched gene set names or not. Default is TRUE.}
+
+\item{add2}{enrichment score for add Up and Down reuglated genes.}
 }
 \value{
 a gene set enrichment heatmap
-}
-\description{
-heatmapEnrich is desgined for the cogena result from CMap
-only so as to collapse the multi-isntance drugs in CMap!
-After obtaining the ennrichemt of clusters in the gene
-sets via \code{\link{enrichment}}, the heatmapEnrich will show it
-as a heatmap.
-}
-\details{
-This function aims to heatmap the enrichment_score directly. This is
-helpful on condition that there are so many enriched gene sets and you
-can filter the enrichment_score based on a criteria, like just one cluster.
 
 orderMethod:
 \itemize{
 \item max. ordered by the max value in clusters beside all
 \item mean. ordered by the mean value in clusters beside all
 \item All. ordered by all genes
-\item I. ordered by the I cluster in two clusters (Up or Down-regulated)
-\item II. ordered by the II cluster in two clusters (Up or Down-regulated)
-\item a number. like 2, "3".
+\item Up. ordered by up-regulated genes (add2 should be TRUE)
+\item Down. ordered by down-regulated genes (add2 should be TRUE)
 }
+}
+\description{
+heatmapEnrich is desgined for the cogena result from CMap
+only so as to collapse the multi-isntance drugs in CMap!
 }
 \examples{
 \dontrun{
-enrichment_score <- enrichment(clen_res, "kmeans", "3")
-heatmapEnrich(enrichment_score, "kmeans", "3")
+heatmapEnrich(clen_res, "kmeans", "3")
 }
 }
 

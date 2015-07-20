@@ -68,9 +68,19 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, nc
     ############################################################################
     clen <- list()
     
-    # Enrichment of the All DE genes
-    All <- PEI(genecl_obj@labels, annotation=annotation, 
-               annotationGenesPop=annotationGenesPop)
+    ############################################################################
+    # Enrichment score for Up-regulated, Down-regulated genes and All DE genes
+    geneExp <- as.data.frame(genecl_obj@mat)
+    geneExp$meanA <- apply(geneExp[,names(sampleLabel)[which((sampleLabel == names(table(sampleLabel))[1]))]], 1, mean)
+    geneExp$meanB <- apply(geneExp[,names(sampleLabel)[which((sampleLabel == names(table(sampleLabel))[2]))]], 1, mean)
+    geneExp$logFC <- ifelse( log2(geneExp$meanB/geneExp$meanA)>0, 1, -1)
+    
+    upGene <- rownames(geneExp[geneExp$logFC >0,])
+    dnGene <- rownames(geneExp[geneExp$logFC <0,])
+    Up <- cogena::PEI(upGene, annotation=annotation, annotationGenesPop=annotationGenesPop)
+    Down <- cogena::PEI(dnGene, annotation=annotation, annotationGenesPop=annotationGenesPop)
+    All <- PEI(genecl_obj@labels, annotation=annotation, annotationGenesPop=annotationGenesPop)
+    upDnPei <- as.matrix(rbind(Up, Down))
     
     cl <- parallel::makeCluster(ncore)
     doParallel::registerDoParallel(cl)
@@ -93,7 +103,8 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, nc
                     pei[as.character(k),] <- cogena::PEI(genenames, annotation=annotation, 
                                                  annotationGenesPop=annotationGenesPop)
                 }
-                pei <- rbind(pei, All)
+                pei <- rbind(pei, upDnPei, All)
+                
                 # negative log2 p value
                 logAdjPEI <- function (pei) {
                     # fdr based on pval
@@ -112,11 +123,14 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, nc
     # stopImplicitCluster()
     parallel::stopCluster(cl)
     
+    upDn <- list(upGene=upGene, dnGene=dnGene)
+    
     ############################################################################
     ############################################################################
     res <- new("cogena", 
                mat=genecl_obj@mat, 
-               measures=clen, 
+               measures=clen,
+               upDn=upDn,
                Distmat=genecl_obj@Distmat, 
                clusterObjs=genecl_obj@clusterObjs, 
                clMethods=genecl_obj@clMethods, 

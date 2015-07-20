@@ -10,12 +10,12 @@
 heatmapPEI(object, method, nCluster, CutoffNumGeneset = 20,
   CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE,
   low = "green", high = "red", na.value = "white", maintitle = NULL,
-  printGS = TRUE, add2 = FALSE)
+  printGS = TRUE, add2 = TRUE)
 
 \S4method{heatmapPEI}{cogena}(object, method = clusterMethods(object),
   nCluster = nClusters(object), CutoffNumGeneset = 20, CutoffPVal = 0.05,
   orderMethod = "max", roundvalue = TRUE, low = "grey", high = "red",
-  na.value = "white", maintitle = NULL, printGS = TRUE, add2 = FALSE)
+  na.value = "white", maintitle = NULL, printGS = TRUE, add2 = TRUE)
 }
 \arguments{
 \item{object}{a genecl or cogena object}
@@ -46,7 +46,7 @@ such as round(1.54, 1)=1.5}
 
 \item{printGS}{print the enriched gene set names or not. Default is TRUE.}
 
-\item{add2}{add 2 clusters information (Usually Up and Down reuglated genes).}
+\item{add2}{enrichment score for add Up and Down reuglated genes.}
 }
 \value{
 a gene set enrichment heatmap
@@ -72,10 +72,8 @@ orderMethod:
 \item max. ordered by the max value in clusters beside all
 \item mean. ordered by the mean value in clusters beside all
 \item All. ordered by all genes
-\item I. ordered by the I cluster in only two clusters
-(Up or Down-regulated, add2 should be TRUE)
-\item II. ordered by the II cluster in only two clusters
-(Up or Down-regulated, add2 should be TRUE)
+\item Up. ordered by up-regulated genes (add2 should be TRUE)
+\item Down. ordered by down-regulated genes (add2 should be TRUE)
 }
 }
 \examples{

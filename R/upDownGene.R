@@ -5,13 +5,13 @@
 #' value within (-1, 1) means genes there are both up and down regulated genes
 #' in the cluster. Return a vector with the length of nCluster if add2 is 
 #' FALSE, or the length of nCluster + 2 if add2 is TRUE and nCluster is not 2. 
-#' In the latter situation, the last two itemes represent cluster I and II 
-#' if only two clusters for a clustering method.
+#' In the latter situation, the last two itemes represent Up and Down
+#' reuglated genes
 #' 
 #' @param object a genecl or cogena object
 #' @param method as clMethods in genecl function
 #' @param nCluster cluster number
-#' @param add2 add 2 clusters information
+#' @param add2 add2 enrichment score for add Up and Down reuglated genes
 #' @return a vector
 #' @rdname upDownGene
 #' @export
@@ -27,9 +27,9 @@
 #' 
 #' clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
 #' 
-#' upDownGene(clen_res, "kmeans", "3", add2=FALSE)
-#' 
 #' upDownGene(clen_res, "kmeans", "3", add2=TRUE)
+#' 
+#' upDownGene(clen_res, "kmeans", "2", add2=FALSE)
 #' 
 setGeneric("upDownGene", 
            function(object, method, nCluster, add2=FALSE) 
@@ -43,6 +43,7 @@ setMethod("upDownGene", signature(object="cogena"), function(
     
     logFC <- NULL; cluster_id = NULL
     
+    # Return a vector representing the up or down regulated genes. (1 or -1)
     logfc <- function(object, method, nClusterX, sampleLabel) {
         geneExp <- as.data.frame(geneExpInCluster(object, method, nClusterX)$clusterGeneExp)
         sampleLabel <- geneExpInCluster(object, method, nClusterX)$label
@@ -58,14 +59,11 @@ setMethod("upDownGene", signature(object="cogena"), function(
         cluster_upDn$UpDn
     }
     cluster_logfc <- logfc(object, method, nCluster)
-    cluster2_logfc <- logfc(object, method, "2")
     
-    if (isTRUE(add2) && as.numeric(nCluster) >2) {
-        res <- c(cluster_logfc, cluster2_logfc)
-    } else if (!isTRUE(add2) && as.numeric(nCluster) >2) {
+    if (isTRUE(add2) ) {
+        res <- c(cluster_logfc, c(1, -1))
+    } else {
         res <- cluster_logfc
-    } else if (as.numeric(nCluster) == 2) {
-        res <- cluster2_logfc
     }
     return (res)
 })

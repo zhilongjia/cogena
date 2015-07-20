@@ -18,7 +18,7 @@ upDownGene(object, method, nCluster, add2 = FALSE)
 
 \item{nCluster}{cluster number}
 
-\item{add2}{add 2 clusters information}
+\item{add2}{add2 enrichment score for add Up and Down reuglated genes}
 }
 \value{
 a vector
@@ -29,8 +29,8 @@ genes in the cluster is up-regualted genes, while -1 down-regualted genes.
 value within (-1, 1) means genes there are both up and down regulated genes
 in the cluster. Return a vector with the length of nCluster if add2 is
 FALSE, or the length of nCluster + 2 if add2 is TRUE and nCluster is not 2.
-In the latter situation, the last two itemes represent cluster I and II
-if only two clusters for a clustering method.
+In the latter situation, the last two itemes represent Up and Down
+reuglated genes
 }
 \examples{
 data(PD)
@@ -43,8 +43,8 @@ genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans")
 
 clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
 
-upDownGene(clen_res, "kmeans", "3", add2=FALSE)
-
 upDownGene(clen_res, "kmeans", "3", add2=TRUE)
+
+upDownGene(clen_res, "kmeans", "2", add2=FALSE)
 }
 

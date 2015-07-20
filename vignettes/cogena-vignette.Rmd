@@ -15,8 +15,8 @@ vignette: >
 ---
 
 Co-expressed gene-set enrichment analysis, cogena, can be used as gene set 
-enrichment analysis of up or down regulated genes as well as co-expressed 
-genes resulting from various clustering methods. And the gene sets could 
+enrichment analysis of co-expressed genes based on various clustering methods,
+together with up and down regulated genes respectively. Gene sets could 
 be Pathway, Gene Ontology or user-defined gene-sets. Accordingly, this tool
 can be used for pathway enrichment, GO enrichment and so on. See the workflow
 of cogena in Figure 1.
@@ -104,43 +104,25 @@ clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
 
 ## Analysing results of cogena
 1.  After completing the cogena analysis, user can use `summary` to see 
-the summary of the result of cogena. Since there are so many options of 
-results, user can `optCluster` caculate wchih clusering methods and the 
-number of clusters are optimum, and `enrichment` caculate the enrichment 
+the summary of the result of cogena. And `enrichment` caculate the enrichment 
 score of certain clustering methods and certain number of cluster.
 
-    As so many clustering methods and a range of number of clusters 
-    available, by setting the threshold of adjusted p-value as 0.05 
-    so as to obtain the number of significant gene sets, we recommend
-    that one can choose the clustering methods and the number of clusters,
-    which is intuitively considered as the optimum, on which the number 
-    of significant gene sets are local maximum. In other words, with the 
-    cut-off of adjusted p-value, the optimum should have as many as possible 
-    gene sets enriched in a local range of number of clusters. We consider 
-    the number of significant gene sets with the cut-off 0.05 of p-value as 
-    the score. Moreover, for some clustering methods with a certain number 
-    of clusters, if over 75% clusters possess a mixed up-regulated and 
-    down-regulated genes, the score (except not available (NA)) will be 
-    changed to inverse number. In addition, if the number of cluster is 
-    2 and there are mixed up-regulated and down-regulated genes in each 
-    clusters, the score (if positive and except not available (NA)) of 
-    the other number of cluster for the same clustering method will be 
-    changed to inverse number. 
+    Which clustering method and the number of clusters should be choose? Here 
+    we show some principles:
+    + Different clusters should account for different gene sets.
+    + A gene set should enirched only in one cluster but not two or more.
+    + The number of gene in a gene set enriched cluster should be as smaller as it can when the enrichment score is high.
+    
 
 ```{r cogena_result_analysis}
 summary(clen_res)
-score <- optCluster(clen_res, ncores=1)
-#choose optimun based on cluster I.
-#score <- optCluster(cogena_result, based="I", ncores=1)
 ```
 
-```{r score, echo=FALSE, results='asis'}
-knitr::kable(score)
-```
+
 
 ```{r enrichment}
-#Here we consider the "hierarchical" method and 6 clusters as the optimum.
-#Always make the number as character, please!
+# Here we consider the "hierarchical" method and 6 clusters.
+# Always make the number as character, please!
 enrichment.table <- enrichment(clen_res, "hierarchical", "6")
 ```
 
@@ -157,17 +139,15 @@ heatmapCluster(clen_res, "hierarchical", "6")
     See `?heatmapPEI` for more details.
 
 ```{r heatmapPEI, fig.width=10, fig.height=6, fig.cap="KEGG pathway enrichment"}
-# Always make the number as character, please!
+# The enrichment score for 6 clusters, together with Down-regulated, 
+# Up-regualted and All DE genes. The values shown in Figure 2 is the -log2(FDR).
 #
-# The enrichment score for 6 clusters, together with I, II and All 
-# (Down-regulated, Up-regualted and All DE genes). The values shown
-# in Figure 2 is the -log2(FDR).
+# Always make the number as character, please!
 heatmapPEI(clen_res, "hierarchical", "6", printGS=FALSE)
 
-#ordered by the Cluster I.
-#heatmapPEI(cogena_result, "hierarchical", "6", orderMethod = "I")
+#ordered by the Cluster 1.
+#heatmapPEI(cogena_result, "hierarchical", "6", orderMethod = "1")
 ```
-
 
 4.  Genes and hub genes in a certain cluster. user can obtain the genes in 
     a certain cluster via `geneInCluster`, protein-protein interaction via

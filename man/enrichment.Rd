@@ -13,7 +13,7 @@ enrichment(object, method, nCluster, CutoffNumGeneset = Inf,
 
 \S4method{enrichment}{cogena}(object, method = clusterMethods(object),
   nCluster = nClusters(object), CutoffNumGeneset = Inf, CutoffPVal = 0.05,
-  orderMethod = "max", roundvalue = TRUE, add2 = FALSE)
+  orderMethod = "max", roundvalue = TRUE, add2 = TRUE)
 }
 \arguments{
 \item{object}{a genecl or cogena object}
@@ -33,7 +33,7 @@ return table}
 \item{roundvalue}{The default is TRUE. whether or not round the data.
 such as round(1.54, 1)=1.5}
 
-\item{add2}{add 2 clusters information.}
+\item{add2}{enrichment score for add Up and Down reuglated genes.}
 }
 \value{
 a matrix with clusters in row and gene-sets in column.
@@ -59,8 +59,8 @@ annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt",
 package="cogena")
 
 \dontrun{
-genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"),
-    metric="correlation", method="complete", ncore=2, verbose=TRUE)
+genecl_result <- coExp(DEexprs, nClust=2:13, clMethods=c("hierarchical","kmeans", "model"),
+    metric="correlation", method="complete", ncore=8, verbose=TRUE)
 
 clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
 

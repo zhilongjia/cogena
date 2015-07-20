@@ -21,7 +21,7 @@
 #' @param maintitle a character. like GSExxx. the output of figure will like
 #' "cogena: kmeans 3 GSExxx" in two lines. Default is NULL
 #' @param printGS print the enriched gene set names or not. Default is TRUE.
-#' @param add2 add 2 clusters information (Usually Up and Down reuglated genes).
+#' @param add2 enrichment score for add Up and Down reuglated genes.
 #' 
 #' @return a gene set enrichment heatmap
 #' 
@@ -33,10 +33,8 @@
 #' \item max. ordered by the max value in clusters beside all
 #' \item mean. ordered by the mean value in clusters beside all
 #' \item All. ordered by all genes
-#' \item I. ordered by the I cluster in only two clusters 
-#' (Up or Down-regulated, add2 should be TRUE)
-#' \item II. ordered by the II cluster in only two clusters 
-#' (Up or Down-regulated, add2 should be TRUE)
+#' \item Up. ordered by up-regulated genes (add2 should be TRUE)
+#' \item Down. ordered by down-regulated genes (add2 should be TRUE)
 #' }
 #' 
 #' @export
@@ -69,7 +67,7 @@ setGeneric("heatmapPEI",
     function(object, method, nCluster, CutoffNumGeneset=20,
         CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE,
         low="green", high="red", na.value="white", 
-        maintitle=NULL, printGS=TRUE, add2=FALSE) 
+        maintitle=NULL, printGS=TRUE, add2=TRUE)
     standardGeneric("heatmapPEI"))
 
 #' @rdname heatmapPEI
@@ -80,7 +78,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
         CutoffNumGeneset=20, CutoffPVal=0.05,
         orderMethod="max", roundvalue=TRUE,
         low="grey", high="red", na.value="white", 
-        maintitle=NULL, printGS=TRUE, add2=FALSE) {
+        maintitle=NULL, printGS=TRUE, add2=TRUE) {
         method <- match.arg(method, clusterMethods(object))
         nCluster <- match.arg(nCluster, as.character(nClusters(object)))
         
@@ -97,7 +95,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
 
         cl_color0 <- upDownGene(object, method, nCluster, add2)
         
-        cl_color <- sapply(cl_color0, function(x) {if (x>=0.75) "red" else if (x<=-0.75) "green4" else "black"})
+        cl_color <- sapply(cl_color0, function(x) {if (x>=0.6) "red" else if (x<=-0.6) "green4" else "black"})
         cl_color <- c(cl_color, "blue")
         
 

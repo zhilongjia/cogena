@@ -77,7 +77,6 @@ Collate:
     heatmapPEI.R
     heatmapEnrich.R
     hubGene.R
-    optCluster.R
     PPIinfo.R
 License: LGPL-3
 LazyData: true
