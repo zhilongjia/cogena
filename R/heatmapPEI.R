@@ -1,8 +1,18 @@
 #' heatmap of the gene set enrichment from a cogena object.
 #'
-#' heatmap of the gene set enrichment index. After obtaining the ennrichemt of 
-#' clusters in the gene sets, the heatmapPEI will show it as a heatmap with 
-#' order.
+#' heatmap of the gene set enrichment score. After obtaining the ennrichemt of 
+#' clusters for each gene set, the heatmapPEI will show it as a heatmap in 
+#' order. The value shown in heatmapPEI is the -log2(fdr), representing the
+#' enrichment score. 
+#' 
+#' The x-axis shows cluster i and the number of genes in cluster, with
+#' red means cluster containing up-regulated genes, green means down-regulated
+#' genes, black means there are up and 
+#' down regulated genes in this cluster and blue means all DEGs. If parameter
+#' add2 is true, another two columns will be shown as well, representing the
+#' up and down regulated genes.
+#' 
+#' The y-axis represents the gene sets enriched.
 #'
 #' @inheritParams enrichment
 #' @param low colour for low end of gradient.
@@ -11,7 +21,7 @@
 #' @param maintitle a character. like GSExxx. the output of figure will like
 #' "cogena: kmeans 3 GSExxx" in two lines. Default is NULL
 #' @param printGS print the enriched gene set names or not. Default is TRUE.
-#' @param add2 add 2 clusters information.
+#' @param add2 add 2 clusters information (Usually Up and Down reuglated genes).
 #' 
 #' @return a gene set enrichment heatmap
 #' 
@@ -49,6 +59,7 @@
 #' summary(clen_res)
 #' 
 #' #heatmapPEI
+#' heatmapPEI(clen_res, "kmeans", "2")
 #' heatmapPEI(clen_res, "kmeans", "2", orderMethod="mean")
 #' heatmapPEI(clen_res, "kmeans", "3", CutoffNumGeneset=20, 
 #'     low = "#132B43", high = "#56B1F7", na.value = "grey50")
@@ -75,6 +86,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
         
         enrichment <- enrichment(object, method, nCluster, CutoffNumGeneset, 
             CutoffPVal, orderMethod, roundvalue, add2 =add2)
+        
         if (length(enrichment)==1 && is.na(enrichment)){
             return(paste("No enrichment above the cutoff for", method, 
                 "when the number of clusters is", nCluster, "!"))
@@ -83,11 +95,11 @@ setMethod("heatmapPEI", signature(object="cogena"),
             cat (rev(colnames(enrichment)), sep ="\t")
         }
 
-        if (nCluster != "2"){
-            cl_color <- c(rep("black", nrow(enrichment)-3), rep("blue", 3))
-        } else {
-            cl_color <- rep("black", 3)
-        }
+        cl_color0 <- upDownGene(object, method, nCluster, add2)
+        
+        cl_color <- sapply(cl_color0, function(x) {if (x>=0.75) "red" else if (x<=-0.75) "green4" else "black"})
+        cl_color <- c(cl_color, "blue")
+        
 
         enrichment <- reshape2::melt(enrichment)
         #legend breaks

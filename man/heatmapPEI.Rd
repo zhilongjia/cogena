@@ -46,17 +46,27 @@ such as round(1.54, 1)=1.5}
 
 \item{printGS}{print the enriched gene set names or not. Default is TRUE.}
 
-\item{add2}{add 2 clusters information.}
+\item{add2}{add 2 clusters information (Usually Up and Down reuglated genes).}
 }
 \value{
 a gene set enrichment heatmap
 }
 \description{
-heatmap of the gene set enrichment index. After obtaining the ennrichemt of
-clusters in the gene sets, the heatmapPEI will show it as a heatmap with
-order.
+heatmap of the gene set enrichment score. After obtaining the ennrichemt of
+clusters for each gene set, the heatmapPEI will show it as a heatmap in
+order. The value shown in heatmapPEI is the -log2(fdr), representing the
+enrichment score.
 }
 \details{
+The x-axis shows cluster i and the number of genes in cluster, with
+red means cluster containing up-regulated genes, green means down-regulated
+genes, black means there are up and
+down regulated genes in this cluster and blue means all DEGs. If parameter
+add2 is true, another two columns will be shown as well, representing the
+up and down regulated genes.
+
+The y-axis represents the gene sets enriched.
+
 orderMethod:
 \itemize{
 \item max. ordered by the max value in clusters beside all
@@ -83,6 +93,7 @@ clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
 summary(clen_res)
 
 #heatmapPEI
+heatmapPEI(clen_res, "kmeans", "2")
 heatmapPEI(clen_res, "kmeans", "2", orderMethod="mean")
 heatmapPEI(clen_res, "kmeans", "3", CutoffNumGeneset=20,
     low = "#132B43", high = "#56B1F7", na.value = "grey50")

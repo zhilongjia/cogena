@@ -80,7 +80,7 @@ setMethod("enrichment", signature(object="cogena"),
     score2 <- score2[c("1", "2", "All"),]
     rownames(score2) <- c("I", "II", "All")
 
-    if (nCluster != 2){
+    if (as.numeric(nCluster) != 2){
         if (isTRUE(add2) ) {
             score <- rbind(score1[1:as.numeric(nCluster),], score2[1:2,], 
                            score1["All",])
@@ -161,8 +161,15 @@ setMethod("enrichment", signature(object="cogena"),
     }
 
     colnames(score) <- tolower(strtrim(colnames(score), 60))
-    rownames(score) <- paste(rownames(score), 
-        as.character(NumGeneInCluster), sep="#")
+    
+    if (isTRUE(add2)) {
+        rownames(score) <- c(paste(rownames(score)[1:nCluster], as.character(NumGeneInCluster)[1:nCluster], sep="#"),
+                             paste(rownames(score)[(as.numeric(nCluster)+1):nrow(score)], as.character(NumGeneInCluster)[(as.numeric(nCluster)+1):nrow(score)], sep="@"))
+    } else {
+        rownames(score) <- paste(rownames(score), 
+                                 as.character(NumGeneInCluster), sep="#")
+    }
+    
 
     if (roundvalue){
         #-log2(0.5)=1
