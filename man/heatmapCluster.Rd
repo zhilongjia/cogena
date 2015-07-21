@@ -52,6 +52,9 @@ a gene expression heatmap with Cluster information figure
 }
 \description{
 heatmap of gene expression profilings with cluster-based color indication.
+The direction of DEGs are based on latter Vs former from sample labels.
+For example, labels are as.factor(c("ct", "Disease")), the "Disease" are
+latter compared with "ct". Usually, the order is the alphabet.
 }
 \examples{
 data(PD)

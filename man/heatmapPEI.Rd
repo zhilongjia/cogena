@@ -65,6 +65,11 @@ down regulated genes in this cluster and blue means all DEGs. If parameter
 add2 is true, another two columns will be shown as well, representing the
 up and down regulated genes.
 
+The direction of DEGs are based on latter Vs
+former from sample labels. For example, labels are
+as.factor(c("ct", "Disease")), the "Disease" are latter compared with "ct".
+Usually, the order is the alphabet.
+
 The y-axis represents the gene sets enriched.
 
 orderMethod:

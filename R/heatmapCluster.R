@@ -1,6 +1,10 @@
 #' heatmap of gene expression profilings with cluster indication.
 #' 
-#' heatmap of gene expression profilings with cluster-based color indication.
+#' heatmap of gene expression profilings with cluster-based color indication. 
+#' The direction of DEGs are based on latter Vs former from sample labels. 
+#' For example, labels are as.factor(c("ct", "Disease")), the "Disease" are
+#' latter compared with "ct". Usually, the order is the alphabet.
+#' 
 #' @inheritParams enrichment
 #' @param scale character indicating if the values should be centered and
 #'  scaled in either the row direction or the column direction, or none.
