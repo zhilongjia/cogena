@@ -54,7 +54,8 @@ setMethod("heatmapEnrich", signature(object="cogena"),
                    low="grey", high="red", na.value="white", title="cogena",
                    printGS=TRUE, add2=TRUE) {
               
-              enrichment_score <- enrichment(object, method, nCluster, add2)
+              enrichment_score <- enrichment(object, method, nCluster, add2=add2, 
+                                             orderMethod="max", CutoffNumGeneset=20, CutoffPVal=0.05)
               
               enrichment_score <- as.data.frame(t(enrichment_score))
               enrichment_score$name <- sapply(strsplit(rownames(enrichment_score) , "_"), "[[", 1)

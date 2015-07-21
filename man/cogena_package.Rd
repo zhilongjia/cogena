@@ -37,8 +37,6 @@ clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
 
 summary(clen_res)
 
-# To choose which clustering methods and the number of clusters.
-score <- optCluster(clen_res, ncores=1)
 
 # Visualisation
 heatmapCluster(clen_res, "hierarchical", "6")

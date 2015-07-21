@@ -8,12 +8,12 @@
 \usage{
 heatmapCluster(object, method, nCluster, scale = "row", sampleColor = NULL,
   clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
-  maintitle = NULL, printSum = TRUE, add2 = FALSE, ...)
+  maintitle = NULL, printSum = TRUE, add2 = TRUE, ...)
 
 \S4method{heatmapCluster}{cogena}(object, method = clusterMethods(object),
   nCluster = nClusters(object), scale = "row", sampleColor = NULL,
   clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
-  maintitle = NULL, printSum = TRUE, add2 = FALSE, ...)
+  maintitle = NULL, printSum = TRUE, add2 = TRUE, ...)
 }
 \arguments{
 \item{object}{a genecl or cogena object}
@@ -55,7 +55,7 @@ heatmap of gene expression profilings with cluster-based color indication.
 }
 \examples{
 data(PD)
-annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
+annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt",
 package="cogena")
 
 \dontrun{
