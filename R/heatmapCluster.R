@@ -104,7 +104,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
         clusterColor <- sample(rainbow(nCluster)) #, alpha = c(1, 0.6)
     }
     if (is.null(clusterColor2)){
-        clusterColor2 <- sample(topo.colors(2)) # c("coral3", "deepskyblue1")
+        clusterColor2 <- rainbow(2) # c("coral3", "deepskyblue1")
     }
 
     #clusterColor <- rainbow(nCluster, alpha = c(1, 0.6))
