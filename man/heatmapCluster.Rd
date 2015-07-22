@@ -33,7 +33,7 @@ from topo.colors randomly.}
 The default is rainbow(nClusters(object)).}
 
 \item{clusterColor2}{a color vector with 2 elements. The default is
-c("coral3", "deepskyblue1").}
+rainbow(2).}
 
 \item{heatmapcol}{col for heatmap. The default is greenred(75).}
 

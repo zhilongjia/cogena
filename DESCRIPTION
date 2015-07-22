@@ -64,6 +64,7 @@ Collate:
     pClusters.R
     coExp.R
     clEnrich.R
+    clEnrich_one.R
     enrichment.R
     gene2set.R
     geneInCluster.R
