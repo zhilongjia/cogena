@@ -12,7 +12,7 @@
 #' @param method as clMethods in genecl function
 #' @param nCluster cluster number
 #' @param add2 add2 enrichment score for add Up and Down reuglated genes
-#' @return a vector
+#' @return upDownGene: a vector
 #' @rdname upDownGene
 #' @export
 #' 
@@ -44,21 +44,14 @@ setMethod("upDownGene", signature(object="cogena"), function(
     logFC <- NULL; cluster_id = NULL
     
     # Return a vector representing the up or down regulated genes. (1 or -1)
-    logfc <- function(object, method, nClusterX, sampleLabel) {
-        geneExp <- as.data.frame(geneExpInCluster(object, method, nClusterX)$clusterGeneExp)
-        sampleLabel <- geneExpInCluster(object, method, nClusterX)$label
-        
-        geneExp$meanA <- apply(geneExp[,names(sampleLabel)[which((sampleLabel == names(table(sampleLabel))[1]))]], 1, mean)
-        geneExp$meanB <- apply(geneExp[,names(sampleLabel)[which((sampleLabel == names(table(sampleLabel))[2]))]], 1, mean)
-        geneExp$logFC <- ifelse( log2(geneExp$meanB/geneExp$meanA)>0, 1, -1)
-        
-        geneExp <- geneExp[,c("cluster_id", "logFC")]
-        cluster_upDn <- dplyr::group_by(geneExp, cluster_id)
-        cluster_upDn <- dplyr::summarise(cluster_upDn, UpDn=sum(logFC)/n() )
-        cluster_upDn <- dplyr::arrange(cluster_upDn, cluster_id)
-        cluster_upDn$UpDn
-    }
-    cluster_logfc <- logfc(object, method, nCluster)
+    geneExp <- as.data.frame(geneExpInCluster(object, method, nClusterX)$clusterGeneExp)
+    sampleLabel <- geneExpInCluster(object, method, nClusterX)$label
+    geneExp <- logfc(geneExp, sampleLabel)
+    geneExp <- geneExp[,c("cluster_id", "logFC")]
+    cluster_upDn <- dplyr::group_by(geneExp, cluster_id)
+    cluster_upDn <- dplyr::summarise(cluster_upDn, UpDn=sum(logFC)/n() )
+    cluster_upDn <- dplyr::arrange(cluster_upDn, cluster_id)
+    cluster_logfc <- cluster_upDn$UpDn
     
     if (isTRUE(add2) ) {
         res <- c(cluster_logfc, c(1, -1))
@@ -67,5 +60,29 @@ setMethod("upDownGene", signature(object="cogena"), function(
     }
     return (res)
 })
+
+#' logfc: add MeanA, MeanB and logFC to the dat
+#' 
+#' 
+#' @param dat gene expression data frame
+#' @param sampleLabel factor. sampleLabel with names
+#' @return logfc: a data.frame
+#' @rdname upDownGene
+#' @aliases logfc, upDownGene
+#' @export
+# Add MeanA, MeanB and logFC.  
+logfc <- function(dat, sampleLabel) {
+    dat$meanA <- apply(dat[,names(sampleLabel)[which((sampleLabel == names(table(sampleLabel))[1]))]], 1, mean)
+    dat$meanB <- apply(dat[,names(sampleLabel)[which((sampleLabel == names(table(sampleLabel))[2]))]], 1, mean)
+    # log2 transform
+    if ( is.infinite(2**max(dat, na.rm =TRUE)) ) {
+        dat$logFC <- ifelse( log2(dat$meanB/dat$meanA) > 0, 1, -1)
+    } else {
+        dat$logFC <- ifelse( (dat$meanB-dat$meanA) >0, 1, -1)
+    }
     
+    return (dat)
+}
+
+
 

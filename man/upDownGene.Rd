@@ -2,6 +2,8 @@
 % Please edit documentation in R/upDownGene.R
 \docType{methods}
 \name{upDownGene}
+\alias{logfc}
+\alias{logfc,}
 \alias{upDownGene}
 \alias{upDownGene,cogena}
 \alias{upDownGene,cogena-method}
@@ -10,6 +12,8 @@
 upDownGene(object, method, nCluster, add2 = FALSE)
 
 \S4method{upDownGene}{cogena}(object, method, nCluster, add2 = FALSE)
+
+logfc(dat, sampleLabel)
 }
 \arguments{
 \item{object}{a genecl or cogena object}
@@ -19,9 +23,15 @@ upDownGene(object, method, nCluster, add2 = FALSE)
 \item{nCluster}{cluster number}
 
 \item{add2}{add2 enrichment score for add Up and Down reuglated genes}
+
+\item{dat}{gene expression data frame}
+
+\item{sampleLabel}{factor. sampleLabel with names}
 }
 \value{
-a vector
+upDownGene: a vector
+
+logfc: a data.frame
 }
 \description{
 The value means up or down regulated genes for each cluster. 1 suggests that
@@ -31,6 +41,8 @@ in the cluster. Return a vector with the length of nCluster if add2 is
 FALSE, or the length of nCluster + 2 if add2 is TRUE and nCluster is not 2.
 In the latter situation, the last two itemes represent Up and Down
 reuglated genes
+
+logfc: add MeanA, MeanB and logFC to the dat
 }
 \examples{
 data(PD)

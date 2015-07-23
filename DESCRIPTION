@@ -59,6 +59,7 @@ Collate:
     cogena_class.R
     Class_methods.R
     cogena.R
+    upDownGene.R
     PEI.R
     sota.R
     pClusters.R
@@ -69,7 +70,6 @@ Collate:
     gene2set.R
     geneInCluster.R
     geneExpInCluster.R
-    upDownGene.R
     corInCluster.R
     gmt2list.R
     heatmap.3.R

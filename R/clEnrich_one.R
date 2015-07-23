@@ -69,11 +69,7 @@ clEnrich_one <- function(genecl_obj, method=clusterMethods(genecl_obj),
     
     ############################################################################
     # Enrichment score for Up-regulated, Down-regulated genes and All DE genes
-    geneExp <- as.data.frame(genecl_obj@mat)
-    geneExp$meanA <- apply(geneExp[,names(sampleLabel)[which((sampleLabel == names(table(sampleLabel))[1]))]], 1, mean)
-    geneExp$meanB <- apply(geneExp[,names(sampleLabel)[which((sampleLabel == names(table(sampleLabel))[2]))]], 1, mean)
-    geneExp$logFC <- ifelse( log2(geneExp$meanB/geneExp$meanA)>0, 1, -1)
-    
+    geneExp <- logfc(as.data.frame(genecl_obj@mat), sampleLabel)
     upGene <- rownames(geneExp[geneExp$logFC >0,])
     dnGene <- rownames(geneExp[geneExp$logFC <0,])
     Up <- cogena::PEI(upGene, annotation=annotation, annotationGenesPop=annotationGenesPop)
