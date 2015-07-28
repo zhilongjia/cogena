@@ -18,16 +18,21 @@
 #' \item TargetScan_microRNA.gmt (From Enrichr)
 #' }
 #' 
-#' @param genecl_obj a genecl object
+#' @param genecl_obj a genecl or cogena object
 #' @param method as clMethods in genecl function
-#' @param as nClust in cogena function
+#' @param nCluster as nClust in cogena function
 #' @param annofile gene set annotation file
 #' @param sampleLabel sameple Label
 #' @param TermFreq a value from [0,1) to filter low-frequence gene sets
-#' @param ncore the number of cores used
 #' 
 #' @return a list containing the enrichment score for each clustering methods 
 #' and cluster numbers included in the genecl_obj
+#' @source
+#' Gene sets are from
+#' 
+#' 1. http://www.broadinstitute.org/gsea/msigdb/index.jsp
+#' 
+#' 2. http://amp.pharm.mssm.edu/Enrichr/
 #' @import parallel
 #' @import foreach
 #' @import doParallel
@@ -43,12 +48,19 @@
 #'     metric="correlation", method="complete", ncore=2, verbose=TRUE)
 #' 
 #' clen_res <- clEnrich_one(genecl_result, "kmeans", "3", annofile=annofile, sampleLabel=sampleLabel)
+#' clen_res1 <- clEnrich_one(clen_res, "hierarchical", "2", annofile=annofile, sampleLabel=sampleLabel)
 #' 
 #' @export
 #' 
-clEnrich_one <- function(genecl_obj, method=clusterMethods(genecl_obj), 
-                          nCluster=nClusters(genecl_obj), annofile=NULL, sampleLabel=NULL, TermFreq=0, ncore=1){
+clEnrich_one <- function(genecl_obj, method, 
+                          nCluster, annofile=NULL, sampleLabel=NULL, TermFreq=0){
     
+    method <- match.arg(method, c("hierarchical","kmeans","diana","fanny",
+                                        "som","model","sota","pam","clara","agnes", "apcluster"), several.ok=FALSE)
+    if (any(nCluster<2)) {
+        stop("argument 'nClust' must be a positive integer vector")
+    }
+    nCluster <- as.character(nCluster)
     ############################################################################
     # Annotation data
     if (is.null(annofile)) {
@@ -80,7 +92,12 @@ clEnrich_one <- function(genecl_obj, method=clusterMethods(genecl_obj),
 
     ############################################################################
     # Gene sets enrichment analysis for clusters
-    clen <- list()
+    if ( class(genecl_obj)  == "genecl" ) {
+        clen <- list()
+    } else {
+        clen <- genecl_obj@measures
+    }
+    
     cluster <- cogena::geneclusters(genecl_obj, method, nCluster)
     if (nCluster != length(unique(cluster))) {
         # warning (paste("Cluster", nc, "(aim) only have", length(unique(cluster)), "(result) clusters"))
@@ -125,7 +142,7 @@ clEnrich_one <- function(genecl_obj, method=clusterMethods(genecl_obj),
                nClust=genecl_obj@nClust, 
                metric=genecl_obj@metric, 
                method=genecl_obj@method, 
-               ncore=ncore,
+               ncore=genecl_obj@ncore,
                gmt=basename(annofile),
                call=match.call() )
     return (res)

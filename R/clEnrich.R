@@ -25,6 +25,13 @@
 #' 
 #' @return a list containing the enrichment score for each clustering methods 
 #' and cluster numbers included in the genecl_obj
+#' 
+#' @source
+#' Gene sets are from
+#' 
+#' 1. http://www.broadinstitute.org/gsea/msigdb/index.jsp
+#' 
+#' 2. http://amp.pharm.mssm.edu/Enrichr/
 #' @import parallel
 #' @import foreach
 #' @import doParallel

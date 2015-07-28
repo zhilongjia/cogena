@@ -44,8 +44,8 @@ setMethod("upDownGene", signature(object="cogena"), function(
     logFC <- NULL; cluster_id = NULL
     
     # Return a vector representing the up or down regulated genes. (1 or -1)
-    geneExp <- as.data.frame(geneExpInCluster(object, method, nClusterX)$clusterGeneExp)
-    sampleLabel <- geneExpInCluster(object, method, nClusterX)$label
+    geneExp <- as.data.frame(geneExpInCluster(object, method, nCluster)$clusterGeneExp)
+    sampleLabel <- geneExpInCluster(object, method, nCluster)$label
     geneExp <- logfc(geneExp, sampleLabel)
     geneExp <- geneExp[,c("cluster_id", "logFC")]
     cluster_upDn <- dplyr::group_by(geneExp, cluster_id)

@@ -3,6 +3,13 @@
 \name{clEnrich}
 \alias{clEnrich}
 \title{Gene set enrichment for clusters}
+\source{
+Gene sets are from
+
+1. http://www.broadinstitute.org/gsea/msigdb/index.jsp
+
+2. http://amp.pharm.mssm.edu/Enrichr/
+}
 \usage{
 clEnrich(genecl_obj, annofile = NULL, sampleLabel = NULL, TermFreq = 0,
   ncore = 1)

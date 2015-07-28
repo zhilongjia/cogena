@@ -4,25 +4,29 @@
 \alias{clEnrich_one}
 \title{Gene set enrichment for clusters (for one clustering method and a certain
 	number of clusters)}
+\source{
+Gene sets are from
+
+1. http://www.broadinstitute.org/gsea/msigdb/index.jsp
+
+2. http://amp.pharm.mssm.edu/Enrichr/
+}
 \usage{
-clEnrich_one(genecl_obj, method = clusterMethods(genecl_obj),
-  nCluster = nClusters(genecl_obj), annofile = NULL, sampleLabel = NULL,
-  TermFreq = 0, ncore = 1)
+clEnrich_one(genecl_obj, method, nCluster, annofile = NULL,
+  sampleLabel = NULL, TermFreq = 0)
 }
 \arguments{
-\item{genecl_obj}{a genecl object}
+\item{genecl_obj}{a genecl or cogena object}
 
 \item{method}{as clMethods in genecl function}
+
+\item{nCluster}{as nClust in cogena function}
 
 \item{annofile}{gene set annotation file}
 
 \item{sampleLabel}{sameple Label}
 
 \item{TermFreq}{a value from [0,1) to filter low-frequence gene sets}
-
-\item{ncore}{the number of cores used}
-
-\item{as}{nClust in cogena function}
 }
 \value{
 a list containing the enrichment score for each clustering methods
@@ -58,5 +62,6 @@ genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans")
     metric="correlation", method="complete", ncore=2, verbose=TRUE)
 
 clen_res <- clEnrich_one(genecl_result, "kmeans", "3", annofile=annofile, sampleLabel=sampleLabel)
+clen_res1 <- clEnrich_one(clen_res, "hierarchical", "2", annofile=annofile, sampleLabel=sampleLabel)
 }
 
