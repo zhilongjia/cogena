@@ -1,11 +1,11 @@
 #' Hub genes in a cluster
 #' 
-#' Show hub genes in a cluster.
+#' Show hub genes with p-values in a cluster.
 #' 
 #' @param geneC a gene names vector
 #' @param score_threshold a threshold for the combined scores of the interactions.
 #' @param input_directory a directory to store data downloaded from STRING.
-#' @return the hub genes
+#' @return a vector with p-values
 #' @export
 #' @import igraph
 #' @import STRINGdb
@@ -37,8 +37,11 @@ setMethod("hubGene", signature(geneC="character"),
     hits <- example1_mapped$STRING_id
     p <- string_db$get_subnetwork(hits)
     hubvec <- igraph::hub.score(p)$vector
-    hubgenes <- names(which(hubvec==min(hubvec)))
-    hubgenes <- example1_mapped$geneC[which(example1_mapped$STRING_id %in% hubgenes)]
-    return (hubgenes)
+#     hubgenes <- names(which(hubvec==min(hubvec)))
+    rownames(example1_mapped) <- example1_mapped$STRING_id
+    names(hubvec) <- example1_mapped[names(hubvec),"geneC"]
+    hubvec <- sort(hubvec)
+    # hubgenes <- example1_mapped$geneC[which(example1_mapped$STRING_id %in% names(hubvec) )]
+    return (hubvec)
 })
 

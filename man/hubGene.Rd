@@ -20,10 +20,10 @@ hubGene(geneC, score_threshold = 0, input_directory = "")
 \item{input_directory}{a directory to store data downloaded from STRING.}
 }
 \value{
-the hub genes
+a vector with p-values
 }
 \description{
-Show hub genes in a cluster.
+Show hub genes with p-values in a cluster.
 }
 \examples{
 data(PD)
