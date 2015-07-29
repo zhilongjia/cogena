@@ -10,12 +10,12 @@
 heatmapEnrich(object, method = clusterMethods(object),
   nCluster = nClusters(object), orderMethod = "max",
   CutoffNumGeneset = 20, CutoffPVal = 0.05, low = "grey", high = "red",
-  na.value = "white", title = "cogena", printGS = TRUE, add2 = TRUE)
+  na.value = "white", maintitle = "cogena", printGS = TRUE, add2 = TRUE)
 
 \S4method{heatmapEnrich}{cogena}(object, method = clusterMethods(object),
   nCluster = nClusters(object), orderMethod = "max",
   CutoffNumGeneset = 20, CutoffPVal = 0.05, low = "grey", high = "red",
-  na.value = "white", title = "cogena", printGS = TRUE, add2 = TRUE)
+  na.value = "white", maintitle = "cogena", printGS = TRUE, add2 = TRUE)
 }
 \arguments{
 \item{object}{a genecl or cogena object}
@@ -38,7 +38,7 @@ return table. The default is 20.}
 
 \item{na.value}{Colour to use for missing values.}
 
-\item{title}{a character. Default is "cogena"}
+\item{maintitle}{a character. Default is "cogena"}
 
 \item{printGS}{print the enriched gene set names or not. Default is TRUE.}
 

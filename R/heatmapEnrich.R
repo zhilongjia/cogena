@@ -11,7 +11,7 @@
 #' return table. The default is 20.
 #' @param CutoffPVal the cut-off of p-value. The default is 0.05.
 #' @inheritParams heatmapPEI
-#' @param title a character. Default is "cogena"
+#' @param maintitle a character. Default is "cogena"
 #' @param printGS print the enriched gene set names or not. Default is TRUE.
 #' 
 #' @return a gene set enrichment heatmap
@@ -41,7 +41,7 @@ setGeneric("heatmapEnrich",
            function(object, method=clusterMethods(object), 
                     nCluster=nClusters(object), orderMethod="max",
                     CutoffNumGeneset=20, CutoffPVal=0.05, 
-                    low="grey", high="red", na.value="white", title="cogena",
+                    low="grey", high="red", na.value="white", maintitle="cogena",
                     printGS=TRUE, add2=TRUE) 
                standardGeneric("heatmapEnrich"))
 
@@ -51,7 +51,7 @@ setMethod("heatmapEnrich", signature(object="cogena"),
           function(object, method=clusterMethods(object), 
                    nCluster=nClusters(object), orderMethod="max",
                    CutoffNumGeneset=20, CutoffPVal=0.05, 
-                   low="grey", high="red", na.value="white", title="cogena",
+                   low="grey", high="red", na.value="white", maintitle="cogena",
                    printGS=TRUE, add2=TRUE) {
               
               enrichment_score <- enrichment(object, method, nCluster, add2=add2, 
@@ -131,7 +131,7 @@ setMethod("heatmapEnrich", signature(object="cogena"),
                   scale_fill_gradient2("score",  mid=low, midpoint=4, low=low, 
                                        high=high, na.value=na.value, breaks=breaks) +
                   geom_text(aes(fill=value, label=value),size=4, na.rm=TRUE) +
-                  labs(list(title = title, x = "Cluster", y = "Gene set")) +
+                  labs(list(title = maintitle, x = "Cluster", y = "Gene set")) +
                   theme(axis.text.y = element_text(size = rel(1.5), face="bold")) +
                   theme(axis.text.x = element_text(size = rel(1.3), angle=30, 
                                                    face="bold", color=cl_color)) 
