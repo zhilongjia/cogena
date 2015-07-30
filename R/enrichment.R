@@ -34,8 +34,8 @@
 #' package="cogena")
 #' 
 #' \dontrun{
-#' genecl_result <- coExp(DEexprs, nClust=2:13, clMethods=c("hierarchical","kmeans"), 
-#'     metric="correlation", method="complete", ncore=8, verbose=TRUE)
+#' genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"), 
+#'     metric="correlation", method="complete", ncore=2, verbose=TRUE)
 #' 
 #' clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
 #' 
@@ -62,9 +62,11 @@ setMethod("enrichment", signature(object="cogena"),
 
     score1 <- object@measures[[method]][[nCluster]]
     
-    if (is.logical(score1)) {
+    if (is.logical(score1) ) {
         # warning(paste("For", method, ", the number of clusters:", nCluster, "Nonexists!"))
         return (score1)
+    } else if (is.null(score1)) {
+        stop(paste("For", method, "with ", nCluster, "clusters: Nonexists in the input cogena object!"))
     }
 
     # Gene numbers in each clusters, I, II and All.
