@@ -57,8 +57,8 @@ clEnrich_one <- function(genecl_obj, method,
     
     method <- match.arg(method, c("hierarchical","kmeans","diana","fanny",
                                         "som","model","sota","pam","clara","agnes", "apcluster"), several.ok=FALSE)
-    if (any(nCluster<2)) {
-        stop("argument 'nClust' must be a positive integer vector")
+    if (any(as.numeric(nCluster)<2)) {
+        stop("argument 'nCluster' must be a positive integer vector")
     }
     nCluster <- as.character(nCluster)
     ############################################################################

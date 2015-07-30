@@ -99,7 +99,7 @@ coExp <- function(obj, nClust, clMethods="hierarchical",metric="correlation",
 
     ############################################################################
     #Checking parameters
-    if (any(nClust<2)) {
+    if (any(as.numeric(nClust)<2)) {
         stop("argument 'nClust' must be a positive integer vector")
     }
     nClust <- as.character(nClust)
