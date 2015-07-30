@@ -1,20 +1,7 @@
 #' heatmap designed for for CMap gene set only
 #' 
-#' heatmapEnrich is desgined for the cogena result from CMap
+#' heatmapCmap is desgined for the cogena result from CMap
 #' only so as to collapse the multi-isntance drugs in CMap! 
-#' 
-#' @inheritParams enrichment
-#' @param nCluster as nClust in cogena function.
-#' @param orderMethod the order method, default is max, other options are 
-#' "mean", "all", "I", "II" or a number meaning the ith cluster.
-#' @param CutoffNumGeneset the cut-off of the number of gene sets in the 
-#' return table. The default is 20.
-#' @param CutoffPVal the cut-off of p-value. The default is 0.05.
-#' @inheritParams heatmapPEI
-#' @param maintitle a character. Default is "cogena"
-#' @param printGS print the enriched gene set names or not. Default is TRUE.
-#' 
-#' @return a gene set enrichment heatmap
 #' 
 #' orderMethod:
 #' \itemize{
@@ -25,9 +12,31 @@
 #' \item Down. ordered by down-regulated genes (add2 should be TRUE)
 #' }
 #' 
+#' MultiInstance:
+#' \itemize{
+#' \item drug. merge based on cmap_name
+#' \item celldrug. merge based on cmap_name and cell type
+#' \item conccelldrug. merge based on cmap_name, cell type and concentration
+#' }
+#' 
+#' @inheritParams enrichment
+#' @param nCluster as nClust in cogena function.
+#' @param orderMethod the order method, default is max, other options are 
+#' "mean", "all", "I", "II" or a number meaning the ith cluster.
+#' @param MultiInstance merge multi instances. Options are "drug", "celldrug", "conccelldrug"
+#' @param CutoffNumGeneset the cut-off of the number of gene sets in the 
+#' return table. The default is 20.
+#' @param CutoffPVal the cut-off of p-value. The default is 0.05.
+#' @inheritParams heatmapPEI
+#' @param maintitle a character. Default is "cogena"
+#' @param printGS print the enriched gene set names or not. Default is TRUE.
+#' 
+#' @return a gene set enrichment heatmap
+#' 
+#' 
 #' @examples
 #' \dontrun{
-#' heatmapEnrich(clen_res, "kmeans", "3")
+#' heatmapCmap(clen_res, "kmeans", "3")
 #' }
 #' 
 #' @export
@@ -35,30 +44,41 @@
 #' @import reshape2
 #' @import dplyr
 #' @docType methods
-#' @rdname heatmapEnrich
+#' @rdname heatmapCmap
 #' 
-setGeneric("heatmapEnrich", 
+setGeneric("heatmapCmap", 
            function(object, method=clusterMethods(object), 
-                    nCluster=nClusters(object), orderMethod="max",
+                    nCluster=nClusters(object), orderMethod="max", MultiInstance="drug",
                     CutoffNumGeneset=20, CutoffPVal=0.05, 
                     low="grey", high="red", na.value="white", maintitle="cogena",
                     printGS=TRUE, add2=TRUE) 
-               standardGeneric("heatmapEnrich"))
+               standardGeneric("heatmapCmap"))
 
-#' @rdname heatmapEnrich
-#' @aliases heatmapEnrich,cogena
-setMethod("heatmapEnrich", signature(object="cogena"),
+#' @rdname heatmapCmap
+#' @aliases heatmapCmap,cogena
+setMethod("heatmapCmap", signature(object="cogena"),
           function(object, method=clusterMethods(object), 
-                   nCluster=nClusters(object), orderMethod="max",
+                   nCluster=nClusters(object), orderMethod="max", MultiInstance="drug",
                    CutoffNumGeneset=20, CutoffPVal=0.05, 
                    low="grey", high="red", na.value="white", maintitle="cogena",
                    printGS=TRUE, add2=TRUE) {
+              
+              MultiInstance <- match.arg(MultiInstance, c("drug", "celldrug", "conccelldrug"))
               
               enrichment_score <- enrichment(object, method, nCluster, add2=add2, 
                                              orderMethod="max", CutoffNumGeneset=20, CutoffPVal=0.05)
               
               enrichment_score <- as.data.frame(t(enrichment_score))
-              enrichment_score$name <- sapply(strsplit(rownames(enrichment_score) , "_"), "[[", 1)
+              
+              if (MultiInstance == "drug") {
+                  enrichment_score$name <- sapply(strsplit(rownames(enrichment_score) , "@"), "[[", 1)
+              } else if (MultiInstance == "celldrug") {
+                  enrichment_score$name <- sapply(strsplit(rownames(enrichment_score) , "#"), "[[", 1)
+              } else if (MultiInstance == "conccelldrug") {
+                  enrichment_score$name <- sapply(strsplit(rownames(enrichment_score) , "_"), "[[", 1)
+              }
+              
+              
               meanX <- function(x) {
                   instanceCount <- length(which(x>=round(-log2(CutoffPVal))))
                   meanScore <- mean(x[which(x>=round(-log2(CutoffPVal)))])

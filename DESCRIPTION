@@ -76,7 +76,7 @@ Collate:
     geneDrug.R
     heatmapCluster.R
     heatmapPEI.R
-    heatmapEnrich.R
+    heatmapCmap.R
     hubGene.R
     PPIinfo.R
 License: LGPL-3
