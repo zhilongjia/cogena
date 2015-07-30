@@ -34,7 +34,7 @@
 #' package="cogena")
 #' 
 #' \dontrun{
-#' genecl_result <- coExp(DEexprs, nClust=2:13, clMethods=c("hierarchical","kmeans", "model"), 
+#' genecl_result <- coExp(DEexprs, nClust=2:13, clMethods=c("hierarchical","kmeans"), 
 #'     metric="correlation", method="complete", ncore=8, verbose=TRUE)
 #' 
 #' clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
@@ -78,7 +78,7 @@ setMethod("enrichment", signature(object="cogena"),
         score <- score1[c(1:as.numeric(nCluster), "All"),]
         NumGeneInCluster <- c(NumGeneInCluster, length(geneclusters(object, method, nCluster)))
     }
-    colnames(score) <- tolower(colnames(score))
+    # colnames(score) <- tolower(colnames(score))
     
 
     # the orderMethod options
@@ -109,10 +109,18 @@ setMethod("enrichment", signature(object="cogena"),
         score <- score[,index_above_cutoffPVal, drop=FALSE]
     }
 
-    #drop para used as length(index_above_cutoffPVal)==1.
+    # drop para used as length(index_above_cutoffPVal)==1.
     score <- score[,ncol(score):1, drop=FALSE]
 
-    colnames(score) <- tolower(strtrim(colnames(score), 60))
+    # Upper cell type and conc in CMAP
+    if (grepl("@", colnames(score)[1])) {
+        colnames(score) <- paste(sapply(strsplit(colnames(score), "@"), "[", 1), 
+                                 toupper(sapply(strsplit(colnames(score), "@"), "[", 2)), 
+                                 sep="@")
+    } else {
+        colnames(score) <- tolower(strtrim(colnames(score), 60))
+    }
+    
     rownames(score) <- paste(rownames(score), as.character(NumGeneInCluster), sep="#")
     
     if (roundvalue){
