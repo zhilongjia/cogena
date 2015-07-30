@@ -66,7 +66,9 @@ setMethod("heatmapCmap", signature(object="cogena"),
               MultiInstance <- match.arg(MultiInstance, c("drug", "celldrug", "conccelldrug"))
               
               enrichment_score <- enrichment(object, method, nCluster, add2=add2, 
-                                             orderMethod="max", CutoffNumGeneset=20, CutoffPVal=0.05)
+                                             orderMethod=orderMethod, 
+                                             CutoffNumGeneset=Inf, 
+                                             CutoffPVal=CutoffPVal)
               
               enrichment_score <- as.data.frame(t(enrichment_score))
               
@@ -90,11 +92,11 @@ setMethod("heatmapCmap", signature(object="cogena"),
               }
               name <- NULL
               score <- dplyr::group_by(enrichment_score, name)
-              score <- summarise_each(score, funs(meanX))
+              score <- dplyr::summarise_each(score, funs(meanX))
               score <- score[which(rowSums(score[,-1])!=0), ]
               rownames(score) <- score$name
               if (nrow(score)==0){
-                  stop("No enrichment for this cluster!")
+                  stop(paste("No enrichment for this order Method:", orderMethod))
               }
               
               score <- t(subset(as.data.frame(score), select=-name))
@@ -127,6 +129,10 @@ setMethod("heatmapCmap", signature(object="cogena"),
                   score <- score[,index_above_cutoffPVal, drop=FALSE]
               }
               
+              # Show max CutoffNumGeneset gene sets
+              if (nrow(score) > CutoffNumGeneset) {
+                  score <- score[,1:CutoffNumGeneset]
+              }
               score <- score[,ncol(score):1, drop=FALSE]
               if (printGS==TRUE) {
                   cat (rev(colnames(score)), sep ="\t")
