@@ -92,7 +92,8 @@ setMethod("heatmapPEI", signature(object="cogena"),
         
         if (length(enrichment)==1 && is.na(enrichment)){
             return(paste("No enrichment above the cutoff for", method, 
-                "when the number of clusters is", nCluster, "!"))
+                "when the number of clusters is", nCluster, 
+                "with the orderMethod:", orderMethod, "!"))
         }
         if (printGS==TRUE) {
             cat (rev(colnames(enrichment)), sep ="\t")

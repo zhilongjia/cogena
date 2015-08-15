@@ -140,3 +140,25 @@ setMethod("summary","cogena",
               cat("Gene set:\n", object@gmt, "\n\n")
           }
 )
+
+################################################################################
+#' show: show the class of cogena or genecl object
+#' @param object a genecl or cogena object
+#' @examples
+#' \dontrun{
+#' show(genecl_result)
+#' }
+#' @rdname show
+#' @exportMethod show
+setMethod(f="show", signature="cogena",
+    function(object) { 
+        cat("An instance of ", "\"", class(object), "\".", "\n", sep="")
+})
+
+#' @rdname show
+#' @aliases show,cogena_methods
+setMethod(f="show", signature="genecl",
+    function(object) { 
+        cat("An instance of ", "\"", class(object), "\".", "\n", sep="")
+})
+

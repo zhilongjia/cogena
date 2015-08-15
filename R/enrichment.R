@@ -21,7 +21,7 @@
 #' \item All. ordered by all genes
 #' \item I. ordered by the I cluster in two clusters (Up or Down-regulated, add2 should be TRUE)
 #' \item II. ordered by the II cluster in two clusters (Up or Down-regulated, add2 should be TRUE)
-#' \item a number. like 2, "3".
+#' \item a character number. like "3".
 #' }
 #' 
 #' @export
@@ -52,8 +52,7 @@ setGeneric("enrichment", function(object, method, nCluster,
 #' @rdname enrichment
 #' @aliases enrichment,cogena_methods
 setMethod("enrichment", signature(object="cogena"),
-    function(object, method=clusterMethods(object), 
-        nCluster=nClusters(object), 
+    function(object, method, nCluster, 
         CutoffNumGeneset=Inf, CutoffPVal=0.05,
         orderMethod="max", roundvalue=TRUE, add2=TRUE) {
 
