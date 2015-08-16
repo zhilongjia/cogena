@@ -8,12 +8,12 @@
 \usage{
 heatmapCluster(object, method, nCluster, scale = "row", sampleColor = NULL,
   clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
-  maintitle = NULL, printSum = TRUE, ...)
+  maintitle = NULL, printSum = TRUE, add2 = TRUE, ...)
 
 \S4method{heatmapCluster}{cogena}(object, method = clusterMethods(object),
   nCluster = nClusters(object), scale = "row", sampleColor = NULL,
   clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
-  maintitle = NULL, printSum = TRUE, ...)
+  maintitle = NULL, printSum = TRUE, add2 = TRUE, ...)
 }
 \arguments{
 \item{object}{a genecl or cogena object}
@@ -33,7 +33,7 @@ from topo.colors randomly.}
 The default is rainbow(nClusters(object)).}
 
 \item{clusterColor2}{a color vector with 2 elements. The default is
-c("coral3", "deepskyblue1").}
+rainbow(2).}
 
 \item{heatmapcol}{col for heatmap. The default is greenred(75).}
 
@@ -43,6 +43,8 @@ c("coral3", "deepskyblue1").}
 \item{printSum}{print the summary of the number of genes in each cluster.
 Default is TRUE.}
 
+\item{add2}{add 2 clusters information.}
+
 \item{...}{other parameters to heatmap.3.}
 }
 \value{
@@ -50,10 +52,13 @@ a gene expression heatmap with Cluster information figure
 }
 \description{
 heatmap of gene expression profilings with cluster-based color indication.
+The direction of DEGs are based on latter Vs former from sample labels.
+For example, labels are as.factor(c("ct", "Disease")), the "Disease" are
+latter compared with "ct". Usually, the order is the alphabet.
 }
 \examples{
 data(PD)
-annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt",
+annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt",
 package="cogena")
 
 \dontrun{

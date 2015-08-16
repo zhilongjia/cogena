@@ -8,6 +8,7 @@
 #' @slot clusterObjs a list contains clustering results.
 #' @slot Distmat the distance matrix.
 #' @slot measures a list of the enrichment results.
+#' @slot upDn the enrichment score for up or down-regulated genes.
 #' @slot clMethods clustering method.
 #' @slot labels the label of genes
 #' @slot nClust A numeric vector giving the numbers of clusters to be 
@@ -36,6 +37,7 @@
 
 setClass("cogena", slots=list(
     measures="list",
+    upDn="list",
     annotation="matrix", 
     sampleLabel="factor",
     gmt="character",

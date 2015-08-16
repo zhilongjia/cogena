@@ -23,6 +23,8 @@ clustered (e.g., genes), and the columns are the samples.}
 
 \item{\code{measures}}{a list of the enrichment results.}
 
+\item{\code{upDn}}{the enrichment score for up or down-regulated genes.}
+
 \item{\code{clMethods}}{clustering method.}
 
 \item{\code{labels}}{the label of genes}
