@@ -157,11 +157,6 @@ heatmapPEI(clen_res, "hierarchical", "6", printGS=FALSE)
 geneC <- geneInCluster(clen_res, "hierarchical", "6", "2")
 head(geneC)
 
-# The Hub genes in a cluster
-# hubGene(geneC)
-
-# PPI related information
-# PPIinfo(geneC)
 ```
 
 5.  The gene expression profilings with cluster infromation could be 
