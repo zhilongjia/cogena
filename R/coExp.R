@@ -10,7 +10,7 @@
 #' "euclidean".
 #' "sota" uses "correlation" or "euclidean", other metric will be changed as 
 #' "euclidean".
-#' "model" uses its own metric and "som" uses euclidean only, which is 
+#' "model" uses its own metric and "som" and "ap" uses euclidean only, which is 
 #' irrelative with metric.
 #'
 #' method:
@@ -50,8 +50,8 @@
 #' 2 to 6.
 #' @param clMethods A character vector giving the clustering methods. The 
 #' default is "hierarchical". Available options are "hierarchical", "kmeans", 
-#' "diana", "fanny", "som", "model", "sota", "pam", "clara", and "agnes", 
-#' with multiple choices allowed.
+#' "diana", "fanny", "som", "model", "sota", "pam", "clara", "apcluster", 
+#' and "agnes", with multiple choices allowed.
 #' @param metric the distance measure to be used. This should be one of 
 #' "euclidean", "maximum", "manhattan", "canberra", "binary", "pearson", 
 #' "abspearson", "correlation", "abscorrelation", "NMI", "biwt", "spearman" or
@@ -99,13 +99,13 @@ coExp <- function(obj, nClust, clMethods="hierarchical",metric="correlation",
 
     ############################################################################
     #Checking parameters
-    if (any(nClust<2)) {
+    if (any(as.numeric(nClust)<2)) {
         stop("argument 'nClust' must be a positive integer vector")
     }
     nClust <- as.character(nClust)
     
     clMethods <- match.arg(clMethods, c("hierarchical","kmeans","diana","fanny",
-        "som","model","sota","pam","clara","agnes"), several.ok=TRUE)
+        "som","model","sota","pam","clara","agnes", "apcluster"), several.ok=TRUE)
 
     ## used for hierarchical, kmeans, diana, fanny, agnes, pam
     metric <- match.arg(metric,c("euclidean", "correlation", "abscorrelation",

@@ -1,6 +1,10 @@
 #' heatmap of gene expression profilings with cluster indication.
 #' 
-#' heatmap of gene expression profilings with cluster-based color indication.
+#' heatmap of gene expression profilings with cluster-based color indication. 
+#' The direction of DEGs are based on latter Vs former from sample labels. 
+#' For example, labels are as.factor(c("ct", "Disease")), the "Disease" are
+#' latter compared with "ct". Usually, the order is the alphabet.
+#' 
 #' @inheritParams enrichment
 #' @param scale character indicating if the values should be centered and
 #'  scaled in either the row direction or the column direction, or none.
@@ -10,12 +14,13 @@
 #' @param clusterColor a color vector with the cluster length. 
 #' The default is rainbow(nClusters(object)).
 #' @param clusterColor2 a color vector with 2 elements. The default is 
-#' c("coral3", "deepskyblue1").
+#' rainbow(2).
 #' @param heatmapcol col for heatmap. The default is greenred(75).
 #' @param maintitle a character. like GSExxx. the output of figure will like
 #' "kmeans 3 Clusters GSExxx" in two lines.
 #' @param printSum print the summary of the number of genes in each cluster. 
 #' Default is TRUE.
+#' @param add2 add 2 clusters information.
 #' @param ... other parameters to heatmap.3.
 #' @return a gene expression heatmap with Cluster information figure
 #' @export
@@ -26,7 +31,7 @@
 #' \code{\link{heatmapPEI}}
 #' @examples
 #' data(PD)
-#' annofile <- system.file("extdata", "c2.cp.kegg.v4.0.symbols.gmt", 
+#' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", 
 #' package="cogena")
 #' 
 #' \dontrun{
@@ -48,7 +53,7 @@
 setGeneric("heatmapCluster", 
     function(object, method, nCluster, scale="row", sampleColor=NULL,
         clusterColor=NULL, clusterColor2=NULL, heatmapcol=NULL, maintitle=NULL,
-        printSum=TRUE, ...) 
+        printSum=TRUE, add2=TRUE, ...) 
     standardGeneric("heatmapCluster"))
 
 #' @rdname heatmapCluster
@@ -58,35 +63,36 @@ setMethod("heatmapCluster", signature(object="cogena"),
         nCluster=nClusters(object), scale="row",
         sampleColor=NULL, clusterColor=NULL,
         clusterColor2=NULL, heatmapcol=NULL, maintitle=NULL, 
-        printSum=TRUE, ...){
+        printSum=TRUE, add2=TRUE, ...){
 
-    #get the parameters
+    # get the parameters
     method <- match.arg(method, clusterMethods(object))
     nCluster <- match.arg(nCluster, as.character(nClusters(object)))
     mat <- mat(object)
 
-
+    # Cluster information and DEGs
     cluster_size <- geneclusters(object, method, nCluster)
-    cluster_size2 <- geneclusters(object, method, "2")
-#     names(cluster_size2) <- rownames(mat)
-#     names(cluster_size) <- rownames(mat)
-
+    upDownGene <- vector("numeric")
+    upDownGene[object@upDn$upGene] <- 1
+    upDownGene[object@upDn$dnGene] <- 2
 
     if (printSum==TRUE) {
         cat ("The number of genes in each cluster:\n")
-        print (table(cluster_size2))
-        if (nCluster != "2"){
+        
+        if (isTRUE(add2) ){
+            print (table(upDownGene))
+            print (table(cluster_size))
+        } else {
             print (table(cluster_size))
         }
     }
 
-    #print (cluster_size)
-    #reorder the mat based on the clustering and type of sample.
+    # reorder the mat based on the clustering and type of sample.
     mat <- mat[order(cluster_size, decreasing=FALSE), order(object@sampleLabel)]
     #add the type of sample into the colnames
     #colnames(mat) <- paste(colnames(mat), sampleLabel, sep="_")
     
-    #color setting
+    # color setting
     sampleLabel <- sort(object@sampleLabel)
     # ColSideColors <- map2col(as.numeric(as.factor(sampleLabel)), sampleColor)
     if (is.null(sampleColor)) {
@@ -98,7 +104,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
         clusterColor <- sample(rainbow(nCluster)) #, alpha = c(1, 0.6)
     }
     if (is.null(clusterColor2)){
-        clusterColor2 <- c("coral3", "deepskyblue1")
+        clusterColor2 <- rainbow(2) # c("coral3", "deepskyblue1")
     }
 
     #clusterColor <- rainbow(nCluster, alpha = c(1, 0.6))
@@ -106,14 +112,18 @@ setMethod("heatmapCluster", signature(object="cogena"),
     #clusterColor <- clusterColor[clusterColor]
     
     RowSideColors <- map2col(sort(cluster_size, decreasing=FALSE), clusterColor)
-    RowSideColors2 <- map2col(cluster_size2[names(sort(cluster_size, 
-        decreasing=FALSE))], clusterColor2)
+    
+    if (isTRUE(add2)) {
+        RowSideColors2 <- map2col(upDownGene[names(sort(cluster_size, 
+                        decreasing=FALSE))], clusterColor2)
+    }
+    
     if (is.null(heatmapcol)) {
         heatmapcol <- greenred(75)
     }
-    if (nCluster != "2"){
+    if (isTRUE(add2)){
         RowSideColors <- t(cbind(RowSideColors2, RowSideColors))
-        rownames(RowSideColors) <- paste("Size:", c(2, nCluster))
+        rownames(RowSideColors) <- c("DEG", nCluster)
     } else {
         RowSideColors <- t(as.matrix(RowSideColors))
     }
@@ -140,10 +150,10 @@ setMethod("heatmapCluster", signature(object="cogena"),
         legend("left", legend = paste0(1:nCluster),
             col = clusterColor, lty= 1, lwd = 20, bty = "n", 
             title = paste(nCluster, "Clusters"))
-        if (nCluster != "2"){
-            legend("bottomleft", legend = as.character(as.roman(1:2)),
+        if (isTRUE(add2) ){
+            legend("bottomleft", legend = c("Up", "Down"),
                 col = clusterColor2, lty= 1, lwd = 20, bty = "n", 
-                title = paste(2, "Clusters"))
+                title = "DEGs")
         }
         legend("top", legend = names(table(sampleLabel)), col = sampleColor, 
             lty=1, lwd=20, bty = "n", title = "Type of Sample", horiz=TRUE)

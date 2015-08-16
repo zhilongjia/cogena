@@ -1,5 +1,5 @@
 Package: cogena
-Version: 1.1.6
+Version: 1.1.7
 Title: co-expressed gene-set enrichment analysis
 Authors@R: c(person("Zhilong", "Jia", role =c("aut", "cre"), 
     email="zhilongjia@gmail.com"), 
@@ -30,8 +30,6 @@ Depends:
     R (>= 3.2),
     cluster,
     ggplot2,
-    igraph,
-    STRINGdb,
     kohonen
 Imports: 
     methods,
@@ -39,6 +37,7 @@ Imports:
     gplots,
     mclust,
     amap,
+    apcluster,
     foreach,
     parallel,
     doParallel,
@@ -58,11 +57,13 @@ Collate:
     cogena_class.R
     Class_methods.R
     cogena.R
+    upDownGene.R
     PEI.R
     sota.R
     pClusters.R
     coExp.R
     clEnrich.R
+    clEnrich_one.R
     enrichment.R
     gene2set.R
     geneInCluster.R
@@ -73,10 +74,7 @@ Collate:
     geneDrug.R
     heatmapCluster.R
     heatmapPEI.R
-    heatmapEnrich.R
-    hubGene.R
-    optCluster.R
-    PPIinfo.R
+    heatmapCmap.R
 License: LGPL-3
 LazyData: true
 Encoding: UTF-8

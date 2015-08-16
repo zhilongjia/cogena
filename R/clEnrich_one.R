@@ -1,4 +1,5 @@
-#' Gene set enrichment for clusters
+#' Gene set enrichment for clusters (for one clustering method and a certain 
+#'	number of clusters)
 #' 
 #' Gene set enrichment for clusters sourced from coExp function. the enrichment
 #' score are based on -log(p) with p from hyper-geometric test.
@@ -17,15 +18,15 @@
 #' \item TargetScan_microRNA.gmt (From Enrichr)
 #' }
 #' 
-#' @param genecl_obj a genecl object
+#' @param genecl_obj a genecl or cogena object
+#' @param method as clMethods in genecl function
+#' @param nCluster as nClust in cogena function
 #' @param annofile gene set annotation file
 #' @param sampleLabel sameple Label
 #' @param TermFreq a value from [0,1) to filter low-frequence gene sets
-#' @param ncore the number of cores used
 #' 
 #' @return a list containing the enrichment score for each clustering methods 
 #' and cluster numbers included in the genecl_obj
-#' 
 #' @source
 #' Gene sets are from
 #' 
@@ -46,12 +47,20 @@
 #' genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"), 
 #'     metric="correlation", method="complete", ncore=2, verbose=TRUE)
 #' 
-#' clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
-#'     
+#' clen_res <- clEnrich_one(genecl_result, "kmeans", "3", annofile=annofile, sampleLabel=sampleLabel)
+#' clen_res1 <- clEnrich_one(clen_res, "hierarchical", "2", annofile=annofile, sampleLabel=sampleLabel)
+#' 
 #' @export
 #' 
-clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, ncore=1){
+clEnrich_one <- function(genecl_obj, method, 
+                          nCluster, annofile=NULL, sampleLabel=NULL, TermFreq=0){
     
+    method <- match.arg(method, c("hierarchical","kmeans","diana","fanny",
+                                        "som","model","sota","pam","clara","agnes", "apcluster"), several.ok=FALSE)
+    if (any(as.numeric(nCluster)<2)) {
+        stop("argument 'nCluster' must be a positive integer vector")
+    }
+    nCluster <- as.character(nCluster)
     ############################################################################
     # Annotation data
     if (is.null(annofile)) {
@@ -70,11 +79,6 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, nc
         Maybe lower the TermFreq value.")
     }
     
-    
-    ############################################################################
-    ############################################################################
-    clen <- list()
-    
     ############################################################################
     # Enrichment score for Up-regulated, Down-regulated genes and All DE genes
     geneExp <- logfc(as.data.frame(genecl_obj@mat), sampleLabel)
@@ -85,46 +89,41 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, nc
     All <- PEI(genecl_obj@labels, annotation=annotation, annotationGenesPop=annotationGenesPop)
     upDnPei <- as.matrix(rbind(Up, Down))
     
-    cl <- parallel::makeCluster(ncore)
-    doParallel::registerDoParallel(cl)
-    nc <- NULL
+
     ############################################################################
     # Gene sets enrichment analysis for clusters
-    for (i in clusterMethods(genecl_obj) ) {
-        pei_tmp <- foreach::foreach (nc = as.character(nClusters(genecl_obj)) ) %dopar% {
-            cluster <- cogena::geneclusters(genecl_obj, i, nc)
-            if (nc != length(unique(cluster))) {
-                # warning (paste("Cluster", nc, "(aim) only have", length(unique(cluster)), "(result) clusters"))
-                pei <- NA
-            } else {
-                pei <- matrix(NA, nrow=length(unique(cluster)), 
-                              ncol=ncol(annotation))
-                rownames(pei) <- sort(unique(cluster))
-                colnames(pei) <- colnames(annotation)
-                for (k in  sort(unique(cluster))) {
-                    genenames <- names(which(cluster==k))
-                    pei[as.character(k),] <- cogena::PEI(genenames, annotation=annotation, 
-                                                 annotationGenesPop=annotationGenesPop)
-                }
-                pei <- rbind(pei, upDnPei, All)
-                
-                # negative log2 p value
-                logAdjPEI <- function (pei) {
-                    # fdr based on pval
-                    pei.adjust <- matrix(p.adjust(pei, "fdr"), ncol=ncol(pei))
-                    dimnames(pei.adjust) <- dimnames(pei)
-                    pei.NeglogPval <- -log2(pei.adjust)
-                }
-                pei <- logAdjPEI(pei)
-            }
-            return (pei)
-        }
-        names(pei_tmp) <- nClusters(genecl_obj)
-        clen[[i]] <- pei_tmp
+    if ( class(genecl_obj)  == "genecl" ) {
+        clen <- list()
+    } else {
+        clen <- genecl_obj@measures
     }
     
-    # stopImplicitCluster()
-    parallel::stopCluster(cl)
+    cluster <- cogena::geneclusters(genecl_obj, method, nCluster)
+    if (nCluster != length(unique(cluster))) {
+        # warning (paste("Cluster", nc, "(aim) only have", length(unique(cluster)), "(result) clusters"))
+        pei <- NA
+    } else {
+        pei <- matrix(NA, nrow=length(unique(cluster)), 
+                      ncol=ncol(annotation))
+        rownames(pei) <- sort(unique(cluster))
+        colnames(pei) <- colnames(annotation)
+        for (k in  sort(unique(cluster))) {
+            genenames <- names(which(cluster==k))
+            pei[as.character(k),] <- cogena::PEI(genenames, annotation=annotation, 
+                                                 annotationGenesPop=annotationGenesPop)
+        }
+        pei <- rbind(pei, upDnPei, All)
+        
+        # negative log2 p value
+        logAdjPEI <- function (pei) {
+            # fdr based on pval
+            pei.adjust <- matrix(p.adjust(pei, "fdr"), ncol=ncol(pei))
+            dimnames(pei.adjust) <- dimnames(pei)
+            pei.NeglogPval <- -log2(pei.adjust)
+        }
+        pei <- logAdjPEI(pei)
+    }
+    clen[[method]][[nCluster]] <- pei
     
     upDn <- list(upGene=upGene, dnGene=dnGene)
     
@@ -143,7 +142,7 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, nc
                nClust=genecl_obj@nClust, 
                metric=genecl_obj@metric, 
                method=genecl_obj@method, 
-               ncore=ncore,
+               ncore=genecl_obj@ncore,
                gmt=basename(annofile),
                call=match.call() )
     return (res)
