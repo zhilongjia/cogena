@@ -36,21 +36,18 @@ score are based on -log(p) with p from hyper-geometric test.
 \details{
 Gene sets availiable (See vignette for more):
 \itemize{
-\item c2.cp.kegg.v5.0.symbols.gmt (From Msigdb)
-\item c2.cp.kegg.v4.0.symbols.gmt (From Msigdb)
-\item c2.cp.reactome.v5.0.symbols.gmt (From Msigdb)
-\item c5.bp.v5.0.symbols.gmt (From Msigdb)
-\item c2.cp.biocarta.v5.0.symbols.gmt (From Msigdb)
-\item c2.all.v5.0.symbols.gmt (From Msigdb)
-\item c2.cp.v5.0.symbols.gmt (From Msigdb)
-\item c5.mf.v5.0.symbols.gmt (From Msigdb)
-\item Transcription_Factor_PPIs.gmt (From Enrichr)
-\item TargetScan_microRNA.gmt (From Enrichr)
+\item c2.cp.kegg.v5.0.symbols.gmt.xz (From Msigdb)
+\item c2.cp.reactome.v5.0.symbols.gmt.xz (From Msigdb)
+\item c5.bp.v5.0.symbols.gmt.xz (From Msigdb)
+\item c2.cp.biocarta.v5.0.symbols.gmt.xz (From Msigdb)
+\item c2.all.v5.0.symbols.gmt.xz (From Msigdb)
+\item c2.cp.v5.0.symbols.gmt.xz (From Msigdb)
+\item c5.mf.v5.0.symbols.gmt.xz (From Msigdb)
 }
 }
 \examples{
 #annotaion
-annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt"
+annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
 annofile <- system.file("extdata", annoGMT, package="cogena")
 
 data(PD)

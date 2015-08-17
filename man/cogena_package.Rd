@@ -30,7 +30,7 @@ genecl_result <- coExp(DEexprs, nClust=2:6, clMethods=clMethods,
     metric="correlation", method="complete", ncore=2, verbose=TRUE)
 
 # Gene set used
-annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", package="cogena")
+annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz", package="cogena")
 
 # Enrichment analysis for clusters
 clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)

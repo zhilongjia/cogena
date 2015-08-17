@@ -12,7 +12,7 @@
 #' data(PD)
 #' 
 #' #annotaion
-#' annoGMT <- "c2.cp.kegg.v4.0.symbols.gmt"
+#' annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
 #' annofile <- system.file("extdata", annoGMT, package="cogena")
 #' # the DEG gene-sets matrix
 #' anno <- gene2set(annofile, rownames(DEexprs))
@@ -20,7 +20,7 @@
 #' @rdname gene2set
 gene2set <- function(annofile=NULL, genenames, TermFreq=0) {
     if (is.null(annofile)) {
-        annofile <- system.file("extdata", "c2.cp.v4.0.symbols.gmt", 
+        annofile <- system.file("extdata", "c2.cp.v5.0.symbols.gmt.xz", 
             package="cogena")
     }
 
