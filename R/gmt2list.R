@@ -12,13 +12,24 @@
 #' 
 #' @examples
 #' anno <- "c2.cp.kegg.v4.0.symbols.gmt"
+#' anno <- "CmapDn100.gmt.xz"
 #' annofile <- system.file("extdata", anno, package="cogena")
 #' gl <- gmt2list(annofile)
 #' 
 gmt2list <- function(annofile){
-    x <- scan(annofile, what="", sep="\n", quiet=TRUE)
+    if (tools::file_ext(annofile) == "xz") {
+        annofile <- xzfile(annofile)
+        x <- scan(annofile, what="", sep="\n", quiet=TRUE)
+        close(annofile)
+    } else if (tools::file_ext(annofile) == "gmt") {
+        x <- scan(annofile, what="", sep="\n", quiet=TRUE)
+    } else {
+        stop ("Only gmt and gmt.xz are accepted for gmt2list")
+    }
+    
     y <- strsplit(x, "\t")
     names(y) <- sapply(y, `[[`, 1)
+    
     annoList <- lapply(y, `[`, c(-1,-2))
 }
 
