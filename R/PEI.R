@@ -19,7 +19,7 @@
 #' @examples
 #' data(PD)
 #' data(AllGeneSymbols)
-#' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", package="cogena")
+#' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz", package="cogena")
 #' annoBG <- gene2set(annofile, AllGeneSymbols)
 #' res <- PEI(rownames(DEexprs)[1:200], gene2set(annofile, rownames(DEexprs)[1:200]), annoBG)
 #' 

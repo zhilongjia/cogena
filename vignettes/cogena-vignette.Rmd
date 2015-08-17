@@ -65,12 +65,12 @@ ls()
     There are a variety of gene sets in the `cogena` package, collected from 
     [MSigDB](http://www.broadinstitute.org/gsea/msigdb/index.jsp). They are 
     `r  dir(system.file("extdata", package="cogena"), pattern="*gmt")`. Here
-    the gene-sets can be user-defined gene-sets formatted gmt, too. 
+    the gene-sets can be user-defined gene-sets formatted gmt and compressed by xz, too. 
     Put it into the extdata directory in the installation directory of
     cogena, such as ~/R/x86_64-pc-linux-gnu-library/3.2/cogena/extdata in Linux). 
 
 ```{r gene_list_annotation}
-annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt"
+annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
 annofile <- system.file("extdata", annoGMT, package="cogena")
 ```
 
