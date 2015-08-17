@@ -11,7 +11,7 @@
 #' @export
 #' 
 #' @examples
-#' anno <- "c2.cp.kegg.v4.0.symbols.gmt"
+#' anno <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
 #' anno <- "CmapDn100.gmt.xz"
 #' annofile <- system.file("extdata", anno, package="cogena")
 #' gl <- gmt2list(annofile)

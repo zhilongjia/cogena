@@ -13,7 +13,7 @@
 #' @seealso \code{\link{clEnrich}}
 #' @examples
 #' data(PD)
-#' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", 
+#' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz", 
 #' package="cogena")
 #' 
 #' \dontrun{

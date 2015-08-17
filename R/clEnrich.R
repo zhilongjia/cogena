@@ -5,16 +5,13 @@
 #' 
 #' Gene sets availiable (See vignette for more): 
 #' \itemize{
-#' \item c2.cp.kegg.v5.0.symbols.gmt (From Msigdb)
-#' \item c2.cp.kegg.v4.0.symbols.gmt (From Msigdb)
-#' \item c2.cp.reactome.v5.0.symbols.gmt (From Msigdb)
-#' \item c5.bp.v5.0.symbols.gmt (From Msigdb)
-#' \item c2.cp.biocarta.v5.0.symbols.gmt (From Msigdb)
-#' \item c2.all.v5.0.symbols.gmt (From Msigdb)
-#' \item c2.cp.v5.0.symbols.gmt (From Msigdb)
-#' \item c5.mf.v5.0.symbols.gmt (From Msigdb)
-#' \item Transcription_Factor_PPIs.gmt (From Enrichr)
-#' \item TargetScan_microRNA.gmt (From Enrichr)
+#' \item c2.cp.kegg.v5.0.symbols.gmt.xz (From Msigdb)
+#' \item c2.cp.reactome.v5.0.symbols.gmt.xz (From Msigdb)
+#' \item c5.bp.v5.0.symbols.gmt.xz (From Msigdb)
+#' \item c2.cp.biocarta.v5.0.symbols.gmt.xz (From Msigdb)
+#' \item c2.all.v5.0.symbols.gmt.xz (From Msigdb)
+#' \item c2.cp.v5.0.symbols.gmt.xz (From Msigdb)
+#' \item c5.mf.v5.0.symbols.gmt.xz (From Msigdb)
 #' }
 #' 
 #' @param genecl_obj a genecl object
@@ -38,7 +35,7 @@
 #' @examples 
 #' 
 #' #annotaion
-#' annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt"
+#' annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
 #' annofile <- system.file("extdata", annoGMT, package="cogena")
 #' 
 #' data(PD)
@@ -55,7 +52,7 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, nc
     ############################################################################
     # Annotation data
     if (is.null(annofile)) {
-        annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt", 
+        annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz", 
                                 package="cogena")
     }
     annotation <- gene2set(annofile, genecl_obj@labels, TermFreq=TermFreq)
