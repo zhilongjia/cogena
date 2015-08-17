@@ -129,7 +129,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
     }
 
     if (!is.null(maintitle)) {
-        maintitle=paste(method, nCluster, "clusters", "\n", maintitle)
+        maintitle=paste(maintitle, "\n", "cogena:", method, nCluster)
     } else {
         maintitle=paste(method, nCluster, "clusters",sep="_")
     }

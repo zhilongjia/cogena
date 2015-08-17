@@ -28,7 +28,7 @@
 #' return table. The default is 20.
 #' @param CutoffPVal the cut-off of p-value. The default is 0.05.
 #' @inheritParams heatmapPEI
-#' @param maintitle a character. Default is "cogena"
+#' @param maintitle a character. Default is null
 #' @param printGS print the enriched gene set names or not. Default is TRUE.
 #' 
 #' @return a gene set enrichment heatmap
@@ -50,7 +50,7 @@ setGeneric("heatmapCmap",
            function(object, method=clusterMethods(object), 
                     nCluster=nClusters(object), orderMethod="max", MultiInstance="drug",
                     CutoffNumGeneset=20, CutoffPVal=0.05, 
-                    low="grey", high="red", na.value="white", maintitle="cogena",
+                    low="grey", high="red", na.value="white", maintitle=NULL,
                     printGS=TRUE, add2=TRUE) 
                standardGeneric("heatmapCmap"))
 
@@ -150,6 +150,13 @@ setMethod("heatmapCmap", signature(object="cogena"),
               } else {
                   breaks <- NULL
               }
+              
+              if (!is.null(maintitle)) {
+                  maintitle=paste(maintitle, "\n", "cogena:", method, nCluster)
+              } else {
+                  maintitle=paste(method, nCluster, "clusters",sep="_")
+              }
+              
               Var1=Var2=value=NULL
 
               ggplot(enrich_score, aes(as.factor(Var1), Var2)) + 
