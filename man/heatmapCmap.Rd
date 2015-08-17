@@ -10,7 +10,7 @@
 heatmapCmap(object, method = clusterMethods(object),
   nCluster = nClusters(object), orderMethod = "max",
   MultiInstance = "drug", CutoffNumGeneset = 20, CutoffPVal = 0.05,
-  low = "grey", high = "red", na.value = "white", maintitle = "cogena",
+  low = "grey", high = "red", na.value = "white", maintitle = NULL,
   printGS = TRUE, add2 = TRUE)
 
 \S4method{heatmapCmap}{cogena}(object, method = clusterMethods(object),
@@ -42,7 +42,7 @@ return table. The default is 20.}
 
 \item{na.value}{Colour to use for missing values.}
 
-\item{maintitle}{a character. Default is "cogena"}
+\item{maintitle}{a character. Default is null}
 
 \item{printGS}{print the enriched gene set names or not. Default is TRUE.}
 
