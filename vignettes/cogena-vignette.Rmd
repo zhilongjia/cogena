@@ -17,8 +17,9 @@ vignette: >
 Co-expressed gene-set enrichment analysis, cogena, can be used as gene set 
 enrichment analysis of co-expressed genes based on various clustering methods,
 together with up and down regulated genes respectively. Gene sets could 
-be Pathway, Gene Ontology or user-defined gene-sets. Accordingly, this tool
-can be used for pathway enrichment, GO enrichment and so on. See the workflow
+be Pathway, Gene Ontology, Cmap (Connectivity Map) compound or user-defined 
+gene-sets. Accordingly, this tool can be used for pathway enrichment, 
+GO enrichment, drug repositioning and so on. See the workflow
 of cogena in Figure 1.
 
 
