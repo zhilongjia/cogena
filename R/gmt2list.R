@@ -12,11 +12,15 @@
 #' 
 #' @examples
 #' anno <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
-#' anno <- "CmapDn100.gmt.xz"
+#' anno <- "Cmap_Dn100.gmt.xz"
 #' annofile <- system.file("extdata", anno, package="cogena")
 #' gl <- gmt2list(annofile)
 #' 
 gmt2list <- function(annofile){
+    if (!file.exists(annofile)) {
+        stop("There is no such gmt file.")
+    }
+    
     if (tools::file_ext(annofile) == "xz") {
         annofile <- xzfile(annofile)
         x <- scan(annofile, what="", sep="\n", quiet=TRUE)
