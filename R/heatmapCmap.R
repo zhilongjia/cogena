@@ -60,7 +60,7 @@ setGeneric("heatmapCmap",
 setMethod("heatmapCmap", signature(object="cogena"),
           function(object, method=clusterMethods(object), 
                    nCluster=nClusters(object), orderMethod="max", MultiInstance="drug",
-                   CutoffNumGeneset=20, CutoffPVal=0.05, mergeMethod="max",
+                   CutoffNumGeneset=20, CutoffPVal=0.05, mergeMethod="mean",
                    low="grey", high="red", na.value="white", maintitle="cogena",
                    printGS=TRUE, add2=TRUE) {
               
