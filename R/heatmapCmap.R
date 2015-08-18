@@ -27,6 +27,7 @@
 #' @param CutoffNumGeneset the cut-off of the number of gene sets in the 
 #' return table. The default is 20.
 #' @param CutoffPVal the cut-off of p-value. The default is 0.05.
+#' @param mergeMethod max or mean. The default is mean.
 #' @inheritParams heatmapPEI
 #' @param maintitle a character. Default is null
 #' @param printGS print the enriched gene set names or not. Default is TRUE.
@@ -49,7 +50,7 @@
 setGeneric("heatmapCmap", 
            function(object, method=clusterMethods(object), 
                     nCluster=nClusters(object), orderMethod="max", MultiInstance="drug",
-                    CutoffNumGeneset=20, CutoffPVal=0.05, 
+                    CutoffNumGeneset=20, CutoffPVal=0.05, mergeMethod="mean",
                     low="grey", high="red", na.value="white", maintitle=NULL,
                     printGS=TRUE, add2=TRUE) 
                standardGeneric("heatmapCmap"))
@@ -59,7 +60,7 @@ setGeneric("heatmapCmap",
 setMethod("heatmapCmap", signature(object="cogena"),
           function(object, method=clusterMethods(object), 
                    nCluster=nClusters(object), orderMethod="max", MultiInstance="drug",
-                   CutoffNumGeneset=20, CutoffPVal=0.05, 
+                   CutoffNumGeneset=20, CutoffPVal=0.05, mergeMethod="max",
                    low="grey", high="red", na.value="white", maintitle="cogena",
                    printGS=TRUE, add2=TRUE) {
               
@@ -80,11 +81,17 @@ setMethod("heatmapCmap", signature(object="cogena"),
                   enrichment_score$name <- sapply(strsplit(rownames(enrichment_score) , "_"), "[[", 1)
               }
               
-              
+              #Multi instance merging
               meanX <- function(x) {
                   instanceCount <- length(which(x>=round(-log2(CutoffPVal))))
-                  meanScore <- mean(x[which(x>=round(-log2(CutoffPVal)))])
-                  if (is.nan(meanScore) || instanceCount == 1) {
+                  if (mergeMethod == "max") {
+                      suppressWarnings(meanScore <- max(x[which(x>=round(-log2(CutoffPVal)))], na.rm=TRUE) )
+                  } else if (mergeMethod == "mean") {
+                      meanScore <- mean(x[which(x>=round(-log2(CutoffPVal)))])
+                  } else {
+                      stop("Parameter mergeMethod should be 'max' or 'min'.")
+                  }
+                  if (is.nan(meanScore) || is.infinite(meanScore) || instanceCount == 1) {
                       return (0)
                   } else {
                       return (round(meanScore, 1)) 

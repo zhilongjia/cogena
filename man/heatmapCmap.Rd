@@ -10,14 +10,14 @@
 heatmapCmap(object, method = clusterMethods(object),
   nCluster = nClusters(object), orderMethod = "max",
   MultiInstance = "drug", CutoffNumGeneset = 20, CutoffPVal = 0.05,
-  low = "grey", high = "red", na.value = "white", maintitle = NULL,
-  printGS = TRUE, add2 = TRUE)
+  mergeMethod = "mean", low = "grey", high = "red", na.value = "white",
+  maintitle = NULL, printGS = TRUE, add2 = TRUE)
 
 \S4method{heatmapCmap}{cogena}(object, method = clusterMethods(object),
   nCluster = nClusters(object), orderMethod = "max",
   MultiInstance = "drug", CutoffNumGeneset = 20, CutoffPVal = 0.05,
-  low = "grey", high = "red", na.value = "white", maintitle = "cogena",
-  printGS = TRUE, add2 = TRUE)
+  mergeMethod = "max", low = "grey", high = "red", na.value = "white",
+  maintitle = "cogena", printGS = TRUE, add2 = TRUE)
 }
 \arguments{
 \item{object}{a genecl or cogena object}
@@ -35,6 +35,8 @@ heatmapCmap(object, method = clusterMethods(object),
 return table. The default is 20.}
 
 \item{CutoffPVal}{the cut-off of p-value. The default is 0.05.}
+
+\item{mergeMethod}{max or mean. The default is mean.}
 
 \item{low}{colour for low end of gradient.}
 
