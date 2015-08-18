@@ -16,7 +16,7 @@ heatmapCmap(object, method = clusterMethods(object),
 \S4method{heatmapCmap}{cogena}(object, method = clusterMethods(object),
   nCluster = nClusters(object), orderMethod = "max",
   MultiInstance = "drug", CutoffNumGeneset = 20, CutoffPVal = 0.05,
-  mergeMethod = "max", low = "grey", high = "red", na.value = "white",
+  mergeMethod = "mean", low = "grey", high = "red", na.value = "white",
   maintitle = "cogena", printGS = TRUE, add2 = TRUE)
 }
 \arguments{
