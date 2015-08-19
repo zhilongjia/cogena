@@ -12,7 +12,6 @@
 #' 
 #' @examples
 #' anno <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
-#' anno <- "Cmap_Dn100.gmt.xz"
 #' annofile <- system.file("extdata", anno, package="cogena")
 #' gl <- gmt2list(annofile)
 #' 
