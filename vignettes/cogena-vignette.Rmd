@@ -43,15 +43,15 @@ sample. A vector with sample names.
 
 2. Example dataset.
 
-    There is an example data in `cogena` package. This dataset, from 
-    [GSE20163](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163), 
-    is about Parkinson's disease. There are two objects in the PD dataset. 
-    See `?PD` for more details.
+    There is an example dataset in `cogena` package. This dataset, from 
+    [GSE13355](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE13355), 
+    is about psoriasis. There are two objects in the Psoriasis dataset. 
+    See `?Psoriasis` for more details.
 
 ```{r import_data, message=FALSE}
 library(cogena)
-data(PD)
-# objects in the PD dataset.
+data(Psoriasis)
+# objects in the Psoriasis dataset.
 ```
 
 ```{r PD_data, echo=FALSE}
@@ -62,14 +62,15 @@ ls()
 
 1.  Gene sets
 
-    There are a variety of gene sets in the `cogena` package, collected from 
+    There are a variety of gene sets in the `cogena` package, partly collected from 
     [MSigDB](http://www.broadinstitute.org/gsea/msigdb/index.jsp). They are 
-    `r  dir(system.file("extdata", package="cogena"), pattern="*gmt")`. Here
+    `r  dir(system.file("extdata", package="cogena"), pattern="*gmt*")`. Here
     the gene-sets can be user-defined gene-sets formatted gmt and compressed by xz, too. 
     Put it into the extdata directory in the installation directory of
     cogena, such as ~/R/x86_64-pc-linux-gnu-library/3.2/cogena/extdata in Linux). 
 
 ```{r gene_list_annotation}
+# KEGG Pathway Analysis as an example
 annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
 annofile <- system.file("extdata", annoGMT, package="cogena")
 ```
@@ -87,7 +88,7 @@ ncore <- 2
 # the clustering methods
 # clMethods <- c("hierarchical","kmeans","diana","fanny","som","model",
 # "sota","pam","clara","agnes") # All the methods can be used together.
-clMethods <- c("hierarchical","kmeans")
+clMethods <- c("hierarchical","pam")
 # the distance metric
 metric <- "correlation"
 # the agglomeration method used for hierarchical clustering 
@@ -122,9 +123,9 @@ summary(clen_res)
 
 
 ```{r enrichment}
-# Here we consider the "hierarchical" method and 6 clusters.
+# Here we consider the "pam" method and 7 clusters.
 # Always make the number as character, please!
-enrichment.table <- enrichment(clen_res, "hierarchical", "6")
+enrichment.table <- enrichment(clen_res, "pam", "7")
 ```
 
 2.  The heatmap of expression profiling with clusters is plotted by 
@@ -133,7 +134,7 @@ enrichment.table <- enrichment(clen_res, "hierarchical", "6")
 
 ```{r heatmapCluster, fig.width=10, fig.height=7, fig.cap="Heatmap of expression profiling with clusters"}
 # Always make the number as character, please!
-heatmapCluster(clen_res, "hierarchical", "6")
+heatmapCluster(clen_res, "pam", "7")
 ```
 
 3.  To show the enrichment graph, `heatmapPEI` can be used. See Figure 3. 
@@ -144,38 +145,61 @@ heatmapCluster(clen_res, "hierarchical", "6")
 # Up-regualted and All DE genes. The values shown in Figure 2 is the -log2(FDR).
 #
 # Always make the number as character, please!
-heatmapPEI(clen_res, "hierarchical", "6", printGS=FALSE)
+heatmapPEI(clen_res, "pam", "7", printGS=FALSE)
 
 #ordered by the Cluster 1.
-#heatmapPEI(cogena_result, "hierarchical", "6", orderMethod = "1")
+#heatmapPEI(cogena_result, "pam", "7", orderMethod = "4")
+```
+4. Drug repositioning based on the pathway analysis results
+```{r drp}
+# A comprehensive way
+# cmapDn100_cogena_result <- clEnrich(genecl_result, 
+# annofile=system.file("extdata", "CmapDn100.gmt.xz", package="cogena"), 
+# sampleLabel=sampleLabel)
+
+# A quick way
+cmapDn100_cogena_result <- clEnrich_one(genecl_result, "pam", "7", 
+    annofile=system.file("extdata", "CmapDn100.gmt.xz", package="cogena"), 
+    sampleLabel=sampleLabel)
 ```
 
-4.  Genes and hub genes in a certain cluster. user can obtain the genes in 
-    a certain cluster via `geneInCluster`, protein-protein interaction via
-    `PPIinfo`, hubgenes in cluster via `hubGene`.
+```{r drp_figure, fig.width=10, fig.height=6, fig.cap="Drug repositioning"}
+# Showing the results ordered by the 4th cluster
+heatmapPEI(cmapDn100_cogena_result, "pam", "7", printGS=FALSE, 
+           orderMethod = "4", maintitle="Psoriasis")
+```
+
+```{r drp_figure2, fig.width=10, fig.height=6, fig.cap="Drug repositioning (merged instances)"}
+# Showing the results ordered by the 4th cluster
+heatmapCmap(cmapDn100_cogena_result, "pam", "7", printGS=FALSE, 
+            orderMethod = "4", maintitle="Psoriasis")
+```
+
+5.  Genes in a certain cluster. User can obtain the genes in 
+    a certain cluster via `geneInCluster`.
 ```{r geneInCluster}
 # Always make the number as character, please!
-geneC <- geneInCluster(clen_res, "hierarchical", "6", "2")
+geneC <- geneInCluster(clen_res, "pam", "7", "4")
 head(geneC)
 
 ```
 
-5.  The gene expression profilings with cluster infromation could be 
+6.  The gene expression profilings with cluster infromation could be 
     obtained by `geneExpInCluster`. There are two items, `clusterGeneExp` 
     and `label`, in the returned object of `geneExpInCluster`. This can 
     be used for other application.
 ```{r geneExpInCluster}
 # Always make the number as character, please!
-gec <- geneExpInCluster(clen_res, "hierarchical", "6")
-head(gec$clusterGeneExp, 3)
-gec$label
+gec <- geneExpInCluster(clen_res, "pam", "7")
+gec$clusterGeneExp[1:3, 1:4]
+gec$label[1:4]
 ```
 
-6. The correlation among one cluster could be shown via `corInCluster`. 
-    see Figure 4.
+7. The correlation among one cluster could be shown via `corInCluster`. 
+    see Figure 6.
 ```{r corInCluster, fig.width=6, fig.height=6, fig.cap="Correlation of genes in a cluster"}
 # Always make the number as character, please!
-corInCluster(clen_res, "hierarchical", "8", "8")
+corInCluster(clen_res, "pam", "7", "7")
 ```
 
 ## Bug Report
