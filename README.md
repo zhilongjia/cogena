@@ -12,16 +12,18 @@ See vignette for the detailed workflow.
 
 The workflow of cogena
 
-![cogena_heatmapCluster](inst/figure/heatmapCluster_Kmeans8.png)
+![cogena_heatmapCluster](inst/figure/heatmapCluster.png)
 
-The heatmap of co-expressed gene set based on K-means methods with 8 clusters.
-
-
-![cogena_heatmapPEI](inst/figure/heatmapPEI_Kmeans8.png)
-
- The enrichment score for 8 clusters, together with I, II and All (Down-regulated, Up-regualted and All DE genes). The values shown is the -log2(FDR).
+The heatmap of co-expressed genes based on pam methods with 7 clusters.
 
 
+![cogena_heatmapPEI](inst/figure/heatmapPEI.png)
+
+KEGG pathway analysis for 7 clusters, together with Down-regulated, Up-regualted and All DE genes. The values shown is the -log2(FDR).
+
+![cogena_heatmapCmap](inst/figure/heatmapCmap.png)
+
+Drug repositioning analysis for the 4th cluster.
 
 Installation:
 

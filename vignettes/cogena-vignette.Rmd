@@ -134,7 +134,7 @@ enrichment.table <- enrichment(clen_res, "pam", "7")
 
 ```{r heatmapCluster, fig.width=10, fig.height=7, fig.cap="Heatmap of expression profiling with clusters"}
 # Always make the number as character, please!
-heatmapCluster(clen_res, "pam", "7")
+heatmapCluster(clen_res, "pam", "7", maintitle="Psoriasis")
 ```
 
 3.  To show the enrichment graph, `heatmapPEI` can be used. See Figure 3. 
@@ -145,7 +145,7 @@ heatmapCluster(clen_res, "pam", "7")
 # Up-regualted and All DE genes. The values shown in Figure 2 is the -log2(FDR).
 #
 # Always make the number as character, please!
-heatmapPEI(clen_res, "pam", "7", printGS=FALSE)
+heatmapPEI(clen_res, "pam", "7", printGS=FALSE, maintitle="Pathway analysis for Psoriasis")
 
 #ordered by the Cluster 1.
 #heatmapPEI(cogena_result, "pam", "7", orderMethod = "4")
@@ -166,7 +166,7 @@ cmapDn100_cogena_result <- clEnrich_one(genecl_result, "pam", "7",
 ```{r drp_figure, fig.width=10, fig.height=6, fig.cap="Drug repositioning"}
 # Showing the results ordered by the 4th cluster
 heatmapPEI(cmapDn100_cogena_result, "pam", "7", printGS=FALSE, 
-           orderMethod = "4", maintitle="Psoriasis")
+           orderMethod = "4", maintitle="Drug repositioning for Psoriasis")
 ```
 
 ```{r drp_figure2, fig.width=10, fig.height=6, fig.cap="Drug repositioning (merged instances)"}
