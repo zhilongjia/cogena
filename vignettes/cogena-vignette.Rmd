@@ -172,7 +172,7 @@ heatmapPEI(cmapDn100_cogena_result, "pam", "7", printGS=FALSE,
 ```{r drp_figure2, fig.width=10, fig.height=6, fig.cap="Drug repositioning (merged instances)"}
 # Showing the results ordered by the 4th cluster
 heatmapCmap(cmapDn100_cogena_result, "pam", "7", printGS=FALSE, 
-            orderMethod = "4", maintitle="Psoriasis")
+            orderMethod = "4", maintitle="Drug repositioning for Psoriasis")
 ```
 
 5.  Genes in a certain cluster. User can obtain the genes in 
