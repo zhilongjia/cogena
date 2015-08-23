@@ -21,7 +21,7 @@ The heatmap of co-expressed genes based on pam methods with 7 clusters.
 
 KEGG pathway analysis for 7 clusters, together with Down-regulated, Up-regualted and All DE genes. The values shown is the -log2(FDR).
 
-![cogena_heatmapCmap](inst/figure/heatmapCmap.png)
+![cogena_heatmapCmap](inst/figure/heatmapCmap1.png)
 
 Drug repositioning analysis for the 4th cluster.
 
