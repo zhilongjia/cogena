@@ -17,7 +17,7 @@
 #' @export
 #' 
 #' @examples 
-#' data(PD)
+#' data(Psoriasis)
 #' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz", 
 #' package="cogena")
 #' 

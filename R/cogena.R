@@ -17,7 +17,7 @@
 #' ## A quick start
 #' 
 #' # Loading the examplar dataseat
-#' data(PD)
+#' data(Psoriasis)
 #' 
 #' # Clustering the gene expression profiling
 #' clMethods <- c("hierarchical","kmeans","diana","fanny","som","model","sota","pam","clara","agnes")
@@ -44,44 +44,43 @@
 #' 
 NULL
 
-#' Parkinson's Disease dataset.
+#' Psoriasis dataset.
 #' 
-#' an example dataset of Parkinson's Disease. This dataset is used for 
+#' an example dataset of Psoriasis. This dataset is used for 
 #' illustration of the usage of \code{cogena} package. It has been normalised
 #' the expression profling using \code{rma} method, filtered some 
 #' non-informative genes using \code{MetaDE} package and analysed the 
 #' differentially expressed genes using \code{limma} package with 
-#' the p-value 0.05.
+#' the cut-off adjuested p-value 0.05 and abs(logFC) >=1.
 #' 
-#' @format three objects: DEexprs, sampleLabel and cogena_result.
+#' @format two objects: DEexprs and sampleLabel.
 #' \describe{
-#' \item{DEexprs}{expression of DEG. There are 1243 DEGs and 17 samples.}
-#' \item{sampleLabel}{the label of sample, There are 9 control and 8 PD.}
-#' \item{cogena_result}{an example of cogena result.}
+#' \item{DEexprs}{expression of DEG. There are 706 DEGs and 116 samples.}
+#' \item{sampleLabel}{the label of sample, There are 58 control and 58 Psoriasis.}
 #' }
 #' @docType data
 #' @keywords datasets
-#' @name PD
-#' @aliases PD,DEexprs,sampleLabel,cogena_result
-#' @source \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163}
+#' @name Psoriasis
+#' @aliases Psoriasis,DEexprs,sampleLabel,cogena_result
+#' @source \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE13355}
 NULL
 
 #' gene expression of DEG
 #' 
-#' @format matrix with 1243 DEGs (row) and 17 samples (column).
+#' @format matrix with 706 DEGs (row) and 116 samples (column).
 #' @docType data
 #' @keywords datasets
 #' @name DEexprs
-#' @source \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163}
+#' @source \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE13355}
 NULL
 
 #' label of samples
 #' 
-#' @format a vector with 17 element.
+#' @format a vector with 116 element.
 #' @docType data
 #' @keywords datasets
 #' @name sampleLabel
-#' @source \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163}
+#' @source \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE13355}
 NULL
 
 #' All the gene symbols

@@ -8,7 +8,7 @@
 #' @rdname clusterMethods
 #' @return clusterMethods: a character vector.
 #' @examples
-#' data(PD)
+#' data(Psoriasis)
 #' genecl_result <- coExp(DEexprs, nClust=2:3, 
 #' clMethods=c("hierarchical","kmeans"), metric="correlation", 
 #' method="complete", 

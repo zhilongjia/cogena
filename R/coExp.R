@@ -69,7 +69,7 @@
 #' @import amap
 #' @seealso \code{\link{clEnrich}}
 #' @examples
-#' data(PD)
+#' data(Psoriasis)
 #' 
 #' #cogena parameters
 #' # the number of clusters. A vector.
