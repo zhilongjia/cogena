@@ -14,7 +14,7 @@
 \url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE13355}
 }
 \description{
-an example dataset of Psoriasis. This dataset is used for
+An example dataset of Psoriasis. This dataset is used for
 illustration of the usage of \code{cogena} package. It has been normalised
 the expression profling using \code{rma} method, filtered some
 non-informative genes using \code{MetaDE} package and analysed the

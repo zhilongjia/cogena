@@ -26,7 +26,7 @@ data(Psoriasis)
 
 # Clustering the gene expression profiling
 clMethods <- c("hierarchical","kmeans","diana","fanny","som","model","sota","pam","clara","agnes")
-genecl_result <- coExp(DEexprs, nClust=2:6, clMethods=clMethods,
+genecl_result <- coExp(DEexprs, nClust=5:6, clMethods=clMethods,
     metric="correlation", method="complete", ncore=2, verbose=TRUE)
 
 # Gene set used
