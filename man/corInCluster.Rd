@@ -46,7 +46,7 @@ Correlation in the cluster of a cogena object. This is helpful if the number
 of genes in cluster are small.
 }
 \examples{
-data(PD)
+data(Psoriasis)
 annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz",
 package="cogena")
 

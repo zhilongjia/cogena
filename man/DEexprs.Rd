@@ -4,9 +4,9 @@
 \name{DEexprs}
 \alias{DEexprs}
 \title{gene expression of DEG}
-\format{matrix with 1243 DEGs (row) and 17 samples (column).}
+\format{matrix with 706 DEGs (row) and 116 samples (column).}
 \source{
-\url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163}
+\url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE13355}
 }
 \description{
 gene expression of DEG

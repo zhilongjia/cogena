@@ -53,7 +53,7 @@ Gene sets availiable (See vignette for more):
 annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
 annofile <- system.file("extdata", annoGMT, package="cogena")
 
-data(PD)
+data(Psoriasis)
 clMethods <- c("hierarchical","kmeans","diana","fanny","som","model","sota","pam","clara","agnes")
 genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"),
     metric="correlation", method="complete", ncore=2, verbose=TRUE)

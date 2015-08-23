@@ -29,7 +29,7 @@ Get gene names in a certain cluster. This is helpful if user want to get the
 detail of a cluster.
 }
 \examples{
-data(PD)
+data(Psoriasis)
 annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz",
 package="cogena")
 

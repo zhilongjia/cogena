@@ -22,7 +22,7 @@ visualise the results. See vignette for the detailed workflow.
 ## A quick start
 
 # Loading the examplar dataseat
-data(PD)
+data(Psoriasis)
 
 # Clustering the gene expression profiling
 clMethods <- c("hierarchical","kmeans","diana","fanny","som","model","sota","pam","clara","agnes")
