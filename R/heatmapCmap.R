@@ -110,7 +110,7 @@ setMethod("heatmapCmap", signature(object="cogena"),
               score[score==0] <- NA
               
               # the orderMethod options
-              orderMethod <- match.arg(orderMethod, c(rownames(score), "max", "mean"))
+              # orderMethod <- match.arg(orderMethod, c(rownames(score), "max", "mean"))
               if (orderMethod == "mean") {
                   score = score[,order(colMeans(score, na.rm=TRUE), decreasing=TRUE), drop=FALSE]
                   index_above_cutoffPVal <- which(suppressWarnings(
@@ -121,11 +121,21 @@ setMethod("heatmapCmap", signature(object="cogena"),
                   score = score[,order(colMax(score), decreasing=TRUE), drop=FALSE]
                   index_above_cutoffPVal <- which(suppressWarnings(
                       apply(score, 2, max, na.rm=TRUE)) > -log2(CutoffPVal))
-              } else if (orderMethod %in% rownames(score)) {
-                  score = score[, order(score[orderMethod,], decreasing=TRUE), drop=FALSE]
+              } else if (any(grepl( paste0("^", orderMethod, "#"), rownames(score) )) ) {
+                  orderMethod_with_num <- rownames(score)[grepl( paste0("^", orderMethod, "#"), rownames(score) )]
+                  if (length(orderMethod_with_num) != 1) {
+                      print (orderMethod_with_num)
+                      print (orderMethod)
+                      print (rownames(score))
+                      stop("Wrong orderMethod!!")
+                  }
+                  score = score[, order(score[orderMethod_with_num,], decreasing=TRUE), drop=FALSE]
                   index_above_cutoffPVal <- 
-                      which(score[orderMethod,] > -log2(CutoffPVal))
+                      which(score[orderMethod_with_num,] > -log2(CutoffPVal))
+              } else {
+                  stop("Wrong orderMethod!")
               }
+              
               if (length(index_above_cutoffPVal) > CutoffNumGeneset){
                   score <- score[,c(1:CutoffNumGeneset)]
               } else if (length(index_above_cutoffPVal) == 0){
