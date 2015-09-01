@@ -14,6 +14,9 @@
 \arguments{
 \item{object}{a genecl or cogena object}
 }
+\value{
+show which instance
+}
 \description{
 show: show the class of cogena or genecl object
 }

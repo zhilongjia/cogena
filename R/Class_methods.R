@@ -157,6 +157,7 @@ setMethod(f="show", signature="cogena",
 
 #' @rdname show
 #' @aliases show,cogena_methods
+#' @return show which instance
 setMethod(f="show", signature="genecl",
     function(object) { 
         cat("An instance of ", "\"", class(object), "\".", "\n", sep="")

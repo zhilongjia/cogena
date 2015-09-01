@@ -37,6 +37,7 @@ setGeneric("upDownGene",
 
 #' @rdname upDownGene
 #' @aliases upDownGene,cogena
+#' @import dplyr
 setMethod("upDownGene", signature(object="cogena"), function(
     object, method, nCluster, add2=FALSE) {
     sampleLabel <- object@sampleLabel
