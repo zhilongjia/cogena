@@ -77,11 +77,13 @@ MultiInstance:
 \examples{
 data(Psoriasis)
 annofile <- system.file("extdata", "CmapDn100.gmt.xz", package="cogena")
+\dontrun{
 genecl_result <- coExp(DEexprs, nClust=3, clMethods=c("pam"),
     metric="correlation", method="complete", ncore=2, verbose=TRUE)
 clen_res1 <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
 
 heatmapCmap(clen_res1, "pam", "3", orderMethod="2")
 heatmapCmap(clen_res1, "pam", "3", orderMethod="2", MultiInstance="concdrug")
+}
 }
 
