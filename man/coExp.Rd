@@ -86,7 +86,7 @@ which at least one is on.
 }
 }
 \examples{
-data(PD)
+data(Psoriasis)
 
 #cogena parameters
 # the number of clusters. A vector.

@@ -17,7 +17,7 @@
 #' @return a vector with P-values.
 #' @export
 #' @examples
-#' data(PD)
+#' data(Psoriasis)
 #' data(AllGeneSymbols)
 #' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz", package="cogena")
 #' annoBG <- gene2set(annofile, AllGeneSymbols)

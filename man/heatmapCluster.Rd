@@ -57,7 +57,7 @@ For example, labels are as.factor(c("ct", "Disease")), the "Disease" are
 latter compared with "ct". Usually, the order is the alphabet.
 }
 \examples{
-data(PD)
+data(Psoriasis)
 annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz",
 package="cogena")
 

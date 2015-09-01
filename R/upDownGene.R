@@ -17,7 +17,7 @@
 #' @export
 #' 
 #' @examples 
-#' data(PD)
+#' data(Psoriasis)
 #' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz", 
 #' package="cogena")
 #' 
@@ -37,6 +37,7 @@ setGeneric("upDownGene",
 
 #' @rdname upDownGene
 #' @aliases upDownGene,cogena
+#' @import dplyr
 setMethod("upDownGene", signature(object="cogena"), function(
     object, method, nCluster, add2=FALSE) {
     sampleLabel <- object@sampleLabel

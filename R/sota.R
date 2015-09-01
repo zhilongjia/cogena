@@ -74,7 +74,7 @@
 #' Bioinformatics, 17, 126-136.
 #' @examples 
 #' #please ref the manual of sota function from clValid.
-#' data(PD)
+#' data(Psoriasis)
 #' 
 #' sotaCl <- sota(as.matrix(DEexprs), 4)
 #' @export

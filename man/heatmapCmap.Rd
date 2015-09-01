@@ -29,7 +29,7 @@ heatmapCmap(object, method = clusterMethods(object),
 \item{orderMethod}{the order method, default is max, other options are
 "mean", "all", "I", "II" or a number meaning the ith cluster.}
 
-\item{MultiInstance}{merge multi instances. Options are "drug", "celldrug", "conccelldrug"}
+\item{MultiInstance}{merge multi instances. Options are "drug", "celldrug", "conccelldrug", "concdrug".}
 
 \item{CutoffNumGeneset}{the cut-off of the number of gene sets in the
 return table. The default is 20.}
@@ -75,8 +75,13 @@ MultiInstance:
 }
 }
 \examples{
-\dontrun{
-heatmapCmap(clen_res, "kmeans", "3")
-}
+data(Psoriasis)
+annofile <- system.file("extdata", "CmapDn100.gmt.xz", package="cogena")
+genecl_result <- coExp(DEexprs, nClust=3, clMethods=c("pam"),
+    metric="correlation", method="complete", ncore=2, verbose=TRUE)
+clen_res1 <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
+
+heatmapCmap(clen_res1, "pam", "3", orderMethod="2")
+heatmapCmap(clen_res1, "pam", "3", orderMethod="2", MultiInstance="concdrug")
 }
 

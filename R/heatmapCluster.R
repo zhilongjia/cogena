@@ -30,7 +30,7 @@
 #' @seealso \code{\link{clEnrich}}, \code{\link{heatmap.3}} and
 #' \code{\link{heatmapPEI}}
 #' @examples
-#' data(PD)
+#' data(Psoriasis)
 #' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz", 
 #' package="cogena")
 #' 

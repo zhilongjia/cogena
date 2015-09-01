@@ -4,9 +4,9 @@
 \name{sampleLabel}
 \alias{sampleLabel}
 \title{label of samples}
-\format{a vector with 17 element.}
+\format{a vector with 116 element.}
 \source{
-\url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE20163}
+\url{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE13355}
 }
 \description{
 label of samples

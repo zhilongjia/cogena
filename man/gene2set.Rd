@@ -27,7 +27,7 @@ Generate relationship between genes (gene SYMBOL) and gene-sets,
 such as Pathway or GO.
 }
 \examples{
-data(PD)
+data(Psoriasis)
 
 #annotaion
 annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt.xz"

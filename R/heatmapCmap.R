@@ -23,7 +23,7 @@
 #' @param nCluster as nClust in cogena function.
 #' @param orderMethod the order method, default is max, other options are 
 #' "mean", "all", "I", "II" or a number meaning the ith cluster.
-#' @param MultiInstance merge multi instances. Options are "drug", "celldrug", "conccelldrug"
+#' @param MultiInstance merge multi instances. Options are "drug", "celldrug", "conccelldrug", "concdrug".
 #' @param CutoffNumGeneset the cut-off of the number of gene sets in the 
 #' return table. The default is 20.
 #' @param CutoffPVal the cut-off of p-value. The default is 0.05.
@@ -36,9 +36,14 @@
 #' 
 #' 
 #' @examples
-#' \dontrun{
-#' heatmapCmap(clen_res, "kmeans", "3")
-#' }
+#' data(Psoriasis)
+#' annofile <- system.file("extdata", "CmapDn100.gmt.xz", package="cogena")
+#' genecl_result <- coExp(DEexprs, nClust=3, clMethods=c("pam"), 
+#'     metric="correlation", method="complete", ncore=2, verbose=TRUE)
+#' clen_res1 <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
+#' 
+#' heatmapCmap(clen_res1, "pam", "3", orderMethod="2")
+#' heatmapCmap(clen_res1, "pam", "3", orderMethod="2", MultiInstance="concdrug")
 #' 
 #' @export
 #' @import ggplot2
@@ -64,7 +69,7 @@ setMethod("heatmapCmap", signature(object="cogena"),
                    low="grey", high="red", na.value="white", maintitle="cogena",
                    printGS=TRUE, add2=TRUE) {
               
-              MultiInstance <- match.arg(MultiInstance, c("drug", "celldrug", "conccelldrug"))
+              MultiInstance <- match.arg(MultiInstance, c("drug", "celldrug", "conccelldrug", "concdrug"))
               
               enrichment_score <- enrichment(object, method, nCluster, add2=add2, 
                                              orderMethod=orderMethod, 
@@ -79,6 +84,10 @@ setMethod("heatmapCmap", signature(object="cogena"),
                   enrichment_score$name <- sapply(strsplit(rownames(enrichment_score) , "#"), "[[", 1)
               } else if (MultiInstance == "conccelldrug") {
                   enrichment_score$name <- sapply(strsplit(rownames(enrichment_score) , "_"), "[[", 1)
+              } else if (MultiInstance == "concdrug") {
+                  enrichment_score$name <- paste(sapply(strsplit(rownames(enrichment_score) , "@|#|_"), "[[", 1), 
+                                                 sapply(strsplit(rownames(enrichment_score) , "@|#|_"), "[[", 3), 
+                                                 sep="#")
               }
               
               #Multi instance merging
@@ -110,7 +119,7 @@ setMethod("heatmapCmap", signature(object="cogena"),
               score[score==0] <- NA
               
               # the orderMethod options
-              orderMethod <- match.arg(orderMethod, c(rownames(score), "max", "mean"))
+              # orderMethod <- match.arg(orderMethod, c(rownames(score), "max", "mean"))
               if (orderMethod == "mean") {
                   score = score[,order(colMeans(score, na.rm=TRUE), decreasing=TRUE), drop=FALSE]
                   index_above_cutoffPVal <- which(suppressWarnings(
@@ -121,11 +130,18 @@ setMethod("heatmapCmap", signature(object="cogena"),
                   score = score[,order(colMax(score), decreasing=TRUE), drop=FALSE]
                   index_above_cutoffPVal <- which(suppressWarnings(
                       apply(score, 2, max, na.rm=TRUE)) > -log2(CutoffPVal))
-              } else if (orderMethod %in% rownames(score)) {
-                  score = score[, order(score[orderMethod,], decreasing=TRUE), drop=FALSE]
+              } else if (any(grepl( paste0("^", orderMethod, "#"), rownames(score) )) ) {
+                  orderMethod_with_num <- rownames(score)[grepl( paste0("^", orderMethod, "#"), rownames(score) )]
+                  if (length(orderMethod_with_num) != 1) {
+                      stop("Wrong orderMethod!!")
+                  }
+                  score = score[, order(score[orderMethod_with_num,], decreasing=TRUE), drop=FALSE]
                   index_above_cutoffPVal <- 
-                      which(score[orderMethod,] > -log2(CutoffPVal))
+                      which(score[orderMethod_with_num,] > -log2(CutoffPVal))
+              } else {
+                  stop("Wrong orderMethod!")
               }
+              
               if (length(index_above_cutoffPVal) > CutoffNumGeneset){
                   score <- score[,c(1:CutoffNumGeneset)]
               } else if (length(index_above_cutoffPVal) == 0){

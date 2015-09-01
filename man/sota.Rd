@@ -106,7 +106,7 @@ Please note the 'euclidean' is the default distance metric different from
 }
 \examples{
 #please ref the manual of sota function from clValid.
-data(PD)
+data(Psoriasis)
 
 sotaCl <- sota(as.matrix(DEexprs), 4)
 }

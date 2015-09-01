@@ -28,7 +28,7 @@ Get gene names in each clusters and the expression profiling. This output
 is helpful if user want to analyse the data for other application.
 }
 \examples{
-data(PD)
+data(Psoriasis)
 annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz",
 package="cogena")
 
