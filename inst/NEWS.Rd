@@ -1,6 +1,14 @@
 \name{NEWS}
 \title{News for Package \pkg{cogena}}
 
+\section{Changes in version 1.2.0 (2015-09-01)}{
+\itemize{
+    \item update exmaple dataset.
+    \item add drug repositioning gene sets and anlaysis.
+    }
+}
+
+
 \section{Changes in version 1.1.6 (2015-07-14)}{
 \itemize{
     \item debug cutree.

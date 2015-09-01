@@ -9,7 +9,7 @@
 #' @param annotation a value returned by \code{\link{gmt2list}}.
 #' @return an gene and gene-set relationship matrix 
 #' @examples
-#' data(PD)
+#' data(Psoriasis)
 #' 
 #' #annotaion
 #' annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt.xz"

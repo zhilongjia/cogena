@@ -67,9 +67,13 @@
 #' 
 #' @return a genecl object
 #' @import amap
+#' @import apcluster
+#' @import biwt
+#' @import devtools
+#' 
 #' @seealso \code{\link{clEnrich}}
 #' @examples
-#' data(PD)
+#' data(Psoriasis)
 #' 
 #' #cogena parameters
 #' # the number of clusters. A vector.
@@ -92,7 +96,7 @@
 #' }
 #'
 #' @export
-#' @import devtools
+
 
 coExp <- function(obj, nClust, clMethods="hierarchical",metric="correlation", 
     method="complete", ncore=2, verbose=FALSE,...) {

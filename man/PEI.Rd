@@ -29,7 +29,7 @@ up-regualted genes or genes in a cluster. the gene names should be
 consistent with the genes in the gene sets.
 }
 \examples{
-data(PD)
+data(Psoriasis)
 data(AllGeneSymbols)
 annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz", package="cogena")
 annoBG <- gene2set(annofile, AllGeneSymbols)
