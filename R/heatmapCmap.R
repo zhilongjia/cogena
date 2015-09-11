@@ -190,7 +190,7 @@ setMethod("heatmapCmap", signature(object="cogena"),
                   geom_text(aes(fill=value, label=value),size=4, na.rm=TRUE) +
                   labs(list(title = maintitle, x = "Cluster", y = "Gene set")) +
                   theme(axis.text.y = element_text(size = rel(1.5), face="bold")) +
-                  theme(axis.text.x = element_text(size = rel(1.3), angle=30, 
+                  theme(axis.text.x = element_text(size = rel(1.3), angle=-90, 
                                                    face="bold", color=cl_color)) 
           }
 )
