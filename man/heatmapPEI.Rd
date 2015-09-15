@@ -9,7 +9,7 @@
 \usage{
 heatmapPEI(object, method, nCluster, CutoffNumGeneset = 20,
   CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE,
-  low = "green", high = "red", na.value = "white", maintitle = NULL,
+  low = "grey", high = "red", na.value = "white", maintitle = NULL,
   printGS = TRUE, add2 = TRUE)
 
 \S4method{heatmapPEI}{cogena}(object, method = clusterMethods(object),

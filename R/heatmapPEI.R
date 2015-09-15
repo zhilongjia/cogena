@@ -71,7 +71,7 @@
 setGeneric("heatmapPEI", 
     function(object, method, nCluster, CutoffNumGeneset=20,
         CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE,
-        low="green", high="red", na.value="white", 
+        low="grey", high="red", na.value="white", 
         maintitle=NULL, printGS=TRUE, add2=TRUE)
     standardGeneric("heatmapPEI"))
 
@@ -127,7 +127,9 @@ setMethod("heatmapPEI", signature(object="cogena"),
             labs(list(title = title, x = "Cluster", y = "Gene set")) +
             theme(axis.text.y = element_text(size = rel(1.5), face="bold")) +
             theme(axis.text.x = element_text(size = rel(1.3), angle=-90, 
-                face="bold", color=cl_color))
+                face="bold", color=cl_color)) +
+            theme(panel.grid.major.x = element_line(color = "grey", size = 5),
+                  panel.grid.major.y = element_blank())
     }
 )
 
