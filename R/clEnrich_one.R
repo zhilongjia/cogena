@@ -19,7 +19,8 @@
 #' @param method as clMethods in genecl function
 #' @param nCluster as nClust in cogena function
 #' @param annofile gene set annotation file
-#' @param sampleLabel sameple Label
+#' @param sampleLabel sameple Label. Do make the label of interest located after
+#' the control label in the order of factor. See details. 
 #' @param TermFreq a value from [0,1) to filter low-frequence gene sets
 #' 
 #' @return a list containing the enrichment score for each clustering methods 
