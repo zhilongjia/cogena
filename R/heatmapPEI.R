@@ -87,16 +87,16 @@ setMethod("heatmapPEI", signature(object="cogena"),
         method <- match.arg(method, clusterMethods(object))
         nCluster <- match.arg(nCluster, as.character(nClusters(object)))
         
-        enrichment <- enrichment(object, method, nCluster, CutoffNumGeneset, 
+        enrichment_score <- enrichment(object, method, nCluster, CutoffNumGeneset, 
             CutoffPVal, orderMethod, roundvalue, add2 =add2)
         
-        if (length(enrichment)==1 && is.na(enrichment)){
+        if (length(enrichment_score)==1 && is.na(enrichment_score)){
             return(paste("No enrichment above the cutoff for", method, 
                 "when the number of clusters is", nCluster, 
                 "with the orderMethod:", orderMethod, "!"))
         }
         if (printGS==TRUE) {
-            cat (rev(colnames(enrichment)), sep ="\t")
+            cat (rev(colnames(enrichment_score)), sep ="\t")
         }
 
         cl_color0 <- upDownGene(object, method, nCluster, add2)
@@ -105,13 +105,18 @@ setMethod("heatmapPEI", signature(object="cogena"),
         cl_color <- c(cl_color, "blue")
         
 
-        enrichment <- reshape2::melt(enrichment)
+        enrichment_score <- reshape2::melt(enrichment_score)
         #legend breaks
-        if (max(enrichment$value, na.rm=TRUE) > 15 ){
-            breaks <- seq(15, max(enrichment$value, na.rm=TRUE), 10)
+        cutoff_score <- round(-log2(CutoffPVal), 2)
+        max_score <- max(enrichment_score$value, na.rm=TRUE)
+        if (max_score/cutoff_score > 2) {
+            breaks <- round( seq(cutoff_score, max_score, length.out=5), 2)
+        } else if (max_score/cutoff_score >1) {
+            breaks <- round( seq(cutoff_score, max_score, length.out=2), 2)
         } else {
             breaks <- NULL
         }
+        
         Var1=Var2=value=NULL
         if (!is.null(title)) {
             title=paste(maintitle, "\n", "cogena:", method, nCluster)
@@ -119,10 +124,10 @@ setMethod("heatmapPEI", signature(object="cogena"),
             title=paste("cogena:", method, nCluster)
         }
 
-        ggplot2::ggplot(enrichment, aes(as.factor(Var1), Var2)) + 
+        ggplot2::ggplot(enrichment_score, aes(as.factor(Var1), Var2)) + 
             geom_tile(aes(fill = value)) + 
             scale_fill_gradient2("score",  mid=low, midpoint=4, low=low, 
-                high=high, na.value=na.value, breaks=c(4.32, breaks)) +
+                high=high, na.value=na.value, breaks=breaks) +
             geom_text(aes(fill=value, label=value),size=4, na.rm=TRUE) +
             labs(list(title = title, x = "Cluster", y = "Gene set")) +
             theme(axis.text.y = element_text(size = rel(1.5), face="bold")) +
