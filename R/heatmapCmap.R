@@ -189,7 +189,7 @@ setMethod("heatmapCmap", signature(object="cogena"),
 
               ggplot(enrich_score, aes(as.factor(Var1), Var2)) + 
                   geom_tile(aes(fill = value)) + 
-                  scale_fill_gradient2("score",  mid=low, midpoint=4, low=low, 
+                  scale_fill_gradient2("score", space="Lab", mid=low, midpoint=4, low=low, 
                                        high=high, na.value=na.value, breaks=breaks) +
                   geom_text(aes(fill=value, label=value),size=4, na.rm=TRUE) +
                   labs(list(title = maintitle, x = "Cluster", y = "Gene set")) +
