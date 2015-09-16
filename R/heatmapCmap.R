@@ -168,8 +168,8 @@ setMethod("heatmapCmap", signature(object="cogena"),
 
               enrich_score <- reshape2::melt(score)
               #legend breaks
-              if (max(enrich_score$value, na.rm=TRUE) > 15 ){
-                  breaks <- seq(15, max(enrich_score$value, na.rm=TRUE), 10)
+              if (max(enrich_score$value, na.rm=TRUE) > 6 ){
+                  breaks <- seq(6, max(enrich_score$value, na.rm=TRUE), 10)
                   breaks <- c(4.32, breaks)
               } else {
                   breaks <- NULL
