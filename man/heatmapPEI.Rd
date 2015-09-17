@@ -10,12 +10,12 @@
 heatmapPEI(object, method, nCluster, CutoffNumGeneset = 20,
   CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE,
   low = "grey", high = "red", na.value = "white", maintitle = NULL,
-  printGS = TRUE, add2 = TRUE)
+  printGS = FALSE, add2 = TRUE)
 
 \S4method{heatmapPEI}{cogena}(object, method = clusterMethods(object),
   nCluster = nClusters(object), CutoffNumGeneset = 20, CutoffPVal = 0.05,
   orderMethod = "max", roundvalue = TRUE, low = "grey", high = "red",
-  na.value = "white", maintitle = NULL, printGS = TRUE, add2 = TRUE)
+  na.value = "white", maintitle = NULL, printGS = FALSE, add2 = TRUE)
 }
 \arguments{
 \item{object}{a genecl or cogena object}
@@ -44,7 +44,7 @@ such as round(1.54, 1)=1.5}
 \item{maintitle}{a character. like GSExxx. the output of figure will like
 "cogena: kmeans 3 GSExxx" in two lines. Default is NULL}
 
-\item{printGS}{print the enriched gene set names or not. Default is TRUE.}
+\item{printGS}{print the enriched gene set names or not. Default is FALSE}
 
 \item{add2}{enrichment score for add Up and Down reuglated genes.}
 }

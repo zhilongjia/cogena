@@ -30,7 +30,7 @@
 #' @param mergeMethod max or mean. The default is mean.
 #' @inheritParams heatmapPEI
 #' @param maintitle a character. Default is null
-#' @param printGS print the enriched gene set names or not. Default is TRUE.
+#' @param printGS print the enriched gene set names or not. Default is FALSE
 #' 
 #' @return a gene set enrichment heatmap
 #' 
@@ -58,7 +58,7 @@ setGeneric("heatmapCmap",
                     nCluster=nClusters(object), orderMethod="max", MultiInstance="drug",
                     CutoffNumGeneset=20, CutoffPVal=0.05, mergeMethod="mean",
                     low="grey", high="red", na.value="white", maintitle=NULL,
-                    printGS=TRUE, add2=TRUE) 
+                    printGS=FALSE, add2=TRUE) 
                standardGeneric("heatmapCmap"))
 
 #' @rdname heatmapCmap
@@ -68,7 +68,7 @@ setMethod("heatmapCmap", signature(object="cogena"),
                    nCluster=nClusters(object), orderMethod="max", MultiInstance="drug",
                    CutoffNumGeneset=20, CutoffPVal=0.05, mergeMethod="mean",
                    low="grey", high="red", na.value="white", maintitle="cogena",
-                   printGS=TRUE, add2=TRUE) {
+                   printGS=FALSE, add2=TRUE) {
               
               MultiInstance <- match.arg(MultiInstance, c("drug", "celldrug", "conccelldrug", "concdrug"))
               

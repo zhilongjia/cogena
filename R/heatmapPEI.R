@@ -25,7 +25,7 @@
 #' @param na.value Colour to use for missing values.
 #' @param maintitle a character. like GSExxx. the output of figure will like
 #' "cogena: kmeans 3 GSExxx" in two lines. Default is NULL
-#' @param printGS print the enriched gene set names or not. Default is TRUE.
+#' @param printGS print the enriched gene set names or not. Default is FALSE
 #' @param add2 enrichment score for add Up and Down reuglated genes.
 #' 
 #' @return a gene set enrichment heatmap
@@ -72,7 +72,7 @@ setGeneric("heatmapPEI",
     function(object, method, nCluster, CutoffNumGeneset=20,
         CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE,
         low="grey", high="red", na.value="white", 
-        maintitle=NULL, printGS=TRUE, add2=TRUE)
+        maintitle=NULL, printGS=FALSE, add2=TRUE)
     standardGeneric("heatmapPEI"))
 
 #' @rdname heatmapPEI
@@ -83,7 +83,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
         CutoffNumGeneset=20, CutoffPVal=0.05,
         orderMethod="max", roundvalue=TRUE,
         low="grey", high="red", na.value="white", 
-        maintitle=NULL, printGS=TRUE, add2=TRUE) {
+        maintitle=NULL, printGS=FALSE, add2=TRUE) {
         method <- match.arg(method, clusterMethods(object))
         nCluster <- match.arg(nCluster, as.character(nClusters(object)))
         
