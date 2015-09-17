@@ -57,6 +57,12 @@ See `?Psoriasis` for more details.
 library(cogena)
 data(Psoriasis)
 # objects in the Psoriasis dataset.
+# Note: lable of interest should be behind of control label as this will affect
+# the direction of gene regulation. For instance.
+# Use factor(c("Normal", "Cancer", "Normal"), levels=c("Normal", "Cancer")), 
+# instead of factor(c("Normal", "Cancer","Normal")) since "Cancer" is the 
+# lable of interest.
+
 ```
 
 ```{r PD_data, echo=FALSE}

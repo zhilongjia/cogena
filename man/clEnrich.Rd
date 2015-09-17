@@ -19,7 +19,8 @@ clEnrich(genecl_obj, annofile = NULL, sampleLabel = NULL, TermFreq = 0,
 
 \item{annofile}{gene set annotation file}
 
-\item{sampleLabel}{sameple Label}
+\item{sampleLabel}{sameple Label. Do make the label of interest located after
+the control label in the order of factor. See details.}
 
 \item{TermFreq}{a value from [0,1) to filter low-frequence gene sets}
 
@@ -31,9 +32,14 @@ and cluster numbers included in the genecl_obj
 }
 \description{
 Gene set enrichment for clusters sourced from coExp function. the enrichment
-score are based on -log(p) with p from hyper-geometric test.
+score are based on -log2(p) with p from hyper-geometric test.
 }
 \details{
+sampleLable:
+Use factor(c("Normal", "Cancer", "Normal"), levels=c("Normal", "Cancer")),
+instead of factor(c("Normal", "Cancer","Normal")). This parameter will affect
+the direction of gene regulation in cogena.
+
 Gene sets availiable (See vignette for more):
 \itemize{
 \item c2.cp.kegg.v5.0.symbols.gmt.xz (From Msigdb)

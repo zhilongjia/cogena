@@ -11,13 +11,13 @@ heatmapCmap(object, method = clusterMethods(object),
   nCluster = nClusters(object), orderMethod = "max",
   MultiInstance = "drug", CutoffNumGeneset = 20, CutoffPVal = 0.05,
   mergeMethod = "mean", low = "grey", high = "red", na.value = "white",
-  maintitle = NULL, printGS = TRUE, add2 = TRUE)
+  maintitle = NULL, printGS = FALSE, add2 = TRUE)
 
 \S4method{heatmapCmap}{cogena}(object, method = clusterMethods(object),
   nCluster = nClusters(object), orderMethod = "max",
   MultiInstance = "drug", CutoffNumGeneset = 20, CutoffPVal = 0.05,
   mergeMethod = "mean", low = "grey", high = "red", na.value = "white",
-  maintitle = "cogena", printGS = TRUE, add2 = TRUE)
+  maintitle = "cogena", printGS = FALSE, add2 = TRUE)
 }
 \arguments{
 \item{object}{a genecl or cogena object}
@@ -46,7 +46,7 @@ return table. The default is 20.}
 
 \item{maintitle}{a character. Default is null}
 
-\item{printGS}{print the enriched gene set names or not. Default is TRUE.}
+\item{printGS}{print the enriched gene set names or not. Default is FALSE}
 
 \item{add2}{enrichment score for add Up and Down reuglated genes.}
 }

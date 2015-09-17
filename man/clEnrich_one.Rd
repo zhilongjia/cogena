@@ -24,7 +24,8 @@ clEnrich_one(genecl_obj, method, nCluster, annofile = NULL,
 
 \item{annofile}{gene set annotation file}
 
-\item{sampleLabel}{sameple Label}
+\item{sampleLabel}{sameple Label. Do make the label of interest located after
+the control label in the order of factor. See details.}
 
 \item{TermFreq}{a value from [0,1) to filter low-frequence gene sets}
 }
