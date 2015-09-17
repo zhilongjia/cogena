@@ -30,7 +30,7 @@
 #' @param mergeMethod max or mean. The default is mean.
 #' @inheritParams heatmapPEI
 #' @param maintitle a character. Default is null
-#' @param printGS print the enriched gene set names or not. Default is TRUE.
+#' @param printGS print the enriched gene set names or not. Default is FALSE
 #' 
 #' @return a gene set enrichment heatmap
 #' 
@@ -58,7 +58,7 @@ setGeneric("heatmapCmap",
                     nCluster=nClusters(object), orderMethod="max", MultiInstance="drug",
                     CutoffNumGeneset=20, CutoffPVal=0.05, mergeMethod="mean",
                     low="grey", high="red", na.value="white", maintitle=NULL,
-                    printGS=TRUE, add2=TRUE) 
+                    printGS=FALSE, add2=TRUE) 
                standardGeneric("heatmapCmap"))
 
 #' @rdname heatmapCmap
@@ -68,7 +68,7 @@ setMethod("heatmapCmap", signature(object="cogena"),
                    nCluster=nClusters(object), orderMethod="max", MultiInstance="drug",
                    CutoffNumGeneset=20, CutoffPVal=0.05, mergeMethod="mean",
                    low="grey", high="red", na.value="white", maintitle="cogena",
-                   printGS=TRUE, add2=TRUE) {
+                   printGS=FALSE, add2=TRUE) {
               
               MultiInstance <- match.arg(MultiInstance, c("drug", "celldrug", "conccelldrug", "concdrug"))
               
@@ -167,10 +167,14 @@ setMethod("heatmapCmap", signature(object="cogena"),
               cl_color <- c(cl_color, "blue")
 
               enrich_score <- reshape2::melt(score)
+              
               #legend breaks
-              if (max(enrich_score$value, na.rm=TRUE) > 15 ){
-                  breaks <- seq(15, max(enrich_score$value, na.rm=TRUE), 10)
-                  breaks <- c(4.32, breaks)
+              cutoff_score <- round(-log2(CutoffPVal), 2)
+              max_score <- max(enrich_score$value, na.rm=TRUE)
+              if (max_score/cutoff_score > 2) {
+                  breaks <- round( seq(cutoff_score, max_score, length.out=5), 2)
+              } else if (max_score/cutoff_score >1) {
+                  breaks <- round( seq(cutoff_score, max_score, length.out=2), 2)
               } else {
                   breaks <- NULL
               }
@@ -185,13 +189,15 @@ setMethod("heatmapCmap", signature(object="cogena"),
 
               ggplot(enrich_score, aes(as.factor(Var1), Var2)) + 
                   geom_tile(aes(fill = value)) + 
-                  scale_fill_gradient2("score",  mid=low, midpoint=4, low=low, 
+                  scale_fill_gradient2("score", space="Lab", mid=low, midpoint=4, low=low, 
                                        high=high, na.value=na.value, breaks=breaks) +
                   geom_text(aes(fill=value, label=value),size=4, na.rm=TRUE) +
                   labs(list(title = maintitle, x = "Cluster", y = "Gene set")) +
                   theme(axis.text.y = element_text(size = rel(1.5), face="bold")) +
                   theme(axis.text.x = element_text(size = rel(1.3), angle=-90, 
-                                                   face="bold", color=cl_color)) 
+                                                   face="bold", color=cl_color))  +
+                  theme(panel.grid.major.x = element_line(color = "grey", size = 5),
+                        panel.grid.major.y = element_blank())
           }
 )
 

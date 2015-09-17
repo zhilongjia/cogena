@@ -1,7 +1,12 @@
 #' Gene set enrichment for clusters
 #' 
 #' Gene set enrichment for clusters sourced from coExp function. the enrichment
-#' score are based on -log(p) with p from hyper-geometric test.
+#' score are based on -log2(p) with p from hyper-geometric test.
+#' 
+#' sampleLable:
+#' Use factor(c("Normal", "Cancer", "Normal"), levels=c("Normal", "Cancer")), 
+#' instead of factor(c("Normal", "Cancer","Normal")). This parameter will affect
+#' the direction of gene regulation in cogena.
 #' 
 #' Gene sets availiable (See vignette for more): 
 #' \itemize{
@@ -16,7 +21,8 @@
 #' 
 #' @param genecl_obj a genecl object
 #' @param annofile gene set annotation file
-#' @param sampleLabel sameple Label
+#' @param sampleLabel sameple Label. Do make the label of interest located after
+#' the control label in the order of factor. See details. 
 #' @param TermFreq a value from [0,1) to filter low-frequence gene sets
 #' @param ncore the number of cores used
 #' 
