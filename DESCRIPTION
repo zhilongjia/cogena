@@ -4,7 +4,7 @@ Title: co-expressed gene-set enrichment analysis
 Authors@R: c(person("Zhilong", "Jia", role =c("aut", "cre"), 
     email="zhilongjia@gmail.com"), 
     person("Michael", "Barnes", role = "aut", email="m.r.barnes@qmul.ac.uk"))
-Description: To discovery smaller scale, but highly correlated cellular events that may be of great biological relevance, co-expressed gene set enrichment analysis, cogena, aims to cluster gene expression profiles (coExp) for gene co-expression analysis and then implement enrichment analysis for each clusters (clEnrich) based on hyper-geometric test. The results can be visulised by heatmapCluster and heatmapPEI. Based on different gene sets used, cogena can be used as a tool for pathway analysis, GO enrichment analysis, drug repositioning and so on.
+Description: cogena is a workflow for co-expressed gene-set enrichment analysis. It aims to discovery smaller scale, but highly correlated cellular events that may be of great biological relevance. A novel pipeline for drug discovery and drug repositioning based on the cogena workflow is proposed. Particularly, candidate drugs can be predicted based on the gene expression of disease-related data, or other similar drugs can be identified based on the gene expression of drug-related data. Moreover, the drug mode of action can be disclosed by the associated pathway analysis. In summary, cogena is a flexible workflow for various gene set enrichment analysis for co-expressed genes, with a focus on pathway/GO analysis and drug repositioning.
 biocViews: Clustering, GeneSetEnrichment, GeneExpression, Visualization, 
     Pathways, KEGG, GO, Microarray, Sequencing, SystemsBiology, DataRepresentation, 
     DataImport
