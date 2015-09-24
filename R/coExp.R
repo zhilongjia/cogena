@@ -66,6 +66,7 @@
 #' @param ... to interal function vClusters.
 #' 
 #' @return a genecl object
+#' @importMethodsFrom Biobase exprs
 #' @import amap
 #' @import apcluster
 #' @import biwt

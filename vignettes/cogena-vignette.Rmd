@@ -1,7 +1,6 @@
 ---
-title: "cogena, a tool for co-expressed gene-set enrichment analysis and 
-    visualization"
-author: "Zhilong Jia, Michael Barnes"
+title: "cogena, a workflow for co-expressed gene-set enrichment analysis"
+author: "Zhilong Jia, Michael R. Barnes"
 date: "`r Sys.Date()`"
 output:
 #    rmarkdown::html_vignette:
@@ -19,23 +18,23 @@ vignette: >
 
 # Abstract
 
-Co-expressed gene-set enrichment analysis, cogena, can be used as gene set 
-enrichment analysis of co-expressed genes based on various clustering methods,
-together with up and down regulated genes respectively. Gene sets could 
-be Pathway, Gene Ontology, Cmap (Connectivity Map) compound or user-defined 
-gene-sets. Accordingly, this tool can be used for pathway enrichment, 
-GO enrichment, drug repositioning and so on. See the workflow
-of cogena in Figure 1.
+**Co**-expressed **g**ene-set **en**richment **a**nalysis, cogena, is a 
+workflow for gene set enrichment analysis of co-expressed genes. The 
+co-expression analysis is made based on various clustering methods. And The gene
+set analysis can be pathway analysis, GO analysis, drug repositioning and so on.
+The type of analysis cogena can is dependent on the gene set used in cogena. 
+Lots kinds of gene sets are integrated into cogena from Msigdb and Connectivity
+Map. See the workflow of cogena in Figure 1.
 
 
 ![Overview of the cogena workflow](Cogena_workflow.png)
 
 # A quick start
-See example in `?cogena` please.
+See examples in `?cogena` please.
 
 # Data Input
-    Note: all the gene names should be gene SYMBOL since it is used in the 
-    gene dataset files. Other kind of gene names could be used according to 
+    Note: all the gene names should be gene SYMBOLs since they are used in the 
+    gene set files. Other kind of gene names can be used according to 
     the kind of gene names of user-defined gene-set files.
 
 ## Input data required
@@ -71,13 +70,13 @@ ls()
 
 # Various Analyses
 
-##  What kind of analysis could be done?
+##  What kind of analysis can be done?
 
 **The gene set used determines the type of analysis.**
 
 There are a variety of gene sets in the `cogena` package, partly collected 
 from [MSigDB](http://www.broadinstitute.org/gsea/msigdb/index.jsp) 
-and [cmap](connectivitymap.org/cmap). They are 
+and [CMap](connectivitymap.org/cmap). They are 
 _**`r  dir(system.file("extdata", package="cogena"), pattern="*gmt*")`**_. Here
 the gene-sets can be user-defined gene-sets formatted gmt and compressed by
 xz, too (such as c2.cp.kegg.v5.0.symbols.gmt.xz). Copy it into the extdata 
@@ -85,7 +84,7 @@ directory in the installation directory of cogena, such as
 ~/R/x86_64-pc-linux-gnu-library/3.2/cogena/extdata in Linux),
 or kindly send to the author of cogena to share with others. 
 
-## List of analyses
+## Types of analyses
 * Pahtway Analysis
 * GO Analysis
 * Drug repositioning
@@ -93,7 +92,7 @@ or kindly send to the author of cogena to share with others.
 
 # Pathway Analysis
 
-KEGG Pathway Analysis, as an example, will be done to show the application of
+KEGG Pathway Analysis, as an example, will be done to show the utility of
 cogena.
 
 ## Parameter setting
@@ -104,9 +103,9 @@ annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
 # annoGMT <- "c5.bp.v5.0.symbols.gmt.xz"
 annofile <- system.file("extdata", annoGMT, package="cogena")
 
-# the number of clusters. It could be a vector.
+# the number of clusters. It can be a vector.
 # nClust <- 2:20
-nClust <- 2:8
+nClust <- 10
 
 # the number of cores.
 # ncore <- 8
@@ -128,11 +127,11 @@ method <- "complete"
 ## Cogena running
 
 ```{r cogena, results="hide"}
-# Clustering the genes
+# Co-expression Analysis
 genecl_result <- coExp(DEexprs, nClust=nClust, clMethods=clMethods, 
                        metric=metric, method=method, ncore=ncore, verbose=TRUE)
 
-# Enrichment analysis for the co-expressed genes
+# Enrichment (Pathway) analysis for the co-expressed genes
 clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
 ```
 
@@ -157,32 +156,32 @@ summary(clen_res)
 ```
 
 ```{r enrichment}
-# Here we consider the "pam" method and 7 clusters.
+# Here we consider the "pam" method and 10 clusters.
 # Always make the number as character, please!
-enrichment.table <- enrichment(clen_res, "pam", "7")
+enrichment.table <- enrichment(clen_res, "pam", "10")
 ```
 
 ###  Heatmap of expression profiling with clusters
     
-`heatmapCluster` can make it. See Figure 2. Based on it, which cluster
-contains up-regulated or down-regulated genes is obvious.
+`heatmapCluster` is developed to show it. Based on Figure 2, it is obvious to know 
+which cluster contains up-regulated or down-regulated genes.
 
 ```{r heatmapCluster, fig.width=10, fig.height=7, fig.cap="Heatmap of expression profiling with clusters"}
 # Always make the number as character, please!
-heatmapCluster(clen_res, "pam", "7", maintitle="Psoriasis")
+heatmapCluster(clen_res, "pam", "10", maintitle="Psoriasis")
 ```
 
 ### Enrichment heatmap of co-expressed genes 
     
-To show the enrichment graph, `heatmapPEI` can be used. See Figure 3. 
+`heatmapPEI` can be used to show the enrichment graph. See Figure 3. 
 See `?heatmapPEI` for more details.
 
-```{r heatmapPEI, fig.width=10, fig.height=6, fig.cap="KEGG pathway enrichment"}
-# The enrichment score for 7 clusters, together with Down-regulated, 
+```{r heatmapPEI, fig.width=11, fig.height=7, fig.cap="KEGG pathway enrichment"}
+# The enrichment score for 10 clusters, together with Down-regulated, 
 # Up-regualted and All DE genes. The values shown in Figure 2 is the -log2(FDR).
 #
 # Always make the number as character, please!
-heatmapPEI(clen_res, "pam", "7", printGS=FALSE, maintitle="Pathway analysis for Psoriasis")
+heatmapPEI(clen_res, "pam", "10", printGS=FALSE, maintitle="Pathway analysis for Psoriasis")
 
 ```
 
@@ -193,34 +192,49 @@ heatmapPEI(clen_res, "pam", "7", printGS=FALSE, maintitle="Pathway analysis for 
 User can obtain the genes in a certain cluster via `geneInCluster`.
 ```{r geneInCluster}
 # Always make the number as character, please!
-geneC <- geneInCluster(clen_res, "pam", "7", "4")
+geneC <- geneInCluster(clen_res, "pam", "10", "4")
 head(geneC)
 
 ```
 
 ###  Gene expression profiling with cluster infromation
 
-It could be obtained by `geneExpInCluster`. There are two items, 
+It can be obtained by `geneExpInCluster`. There are two items, 
 `clusterGeneExp` and `label`, in the returned object of `geneExpInCluster`. 
 It can be used for other application.
 ```{r geneExpInCluster}
 # Always make the number as character, please!
-gec <- geneExpInCluster(clen_res, "pam", "7")
+gec <- geneExpInCluster(clen_res, "pam", "10")
 gec$clusterGeneExp[1:3, 1:4]
 gec$label[1:4]
 ```
 
 ### The gene correlation in a cluster
 
-It could be shown by `corInCluster`. See Figure 4.
+The correlation among a cluster can be checked and shown by `corInCluster`. See Figure 4.
 ```{r corInCluster, fig.width=6, fig.height=6, fig.cap="Correlation of genes in a cluster"}
 # Always make the number as character, please!
-corInCluster(clen_res, "pam", "7", "7")
+corInCluster(clen_res, "pam", "10", "10")
 ```
 
 # Drug repositioning
 
+Drug repositioning is made based on co-expressed genes instead of all the 
+differentially expressed genes. If the input of cogena is a disease related 
+data, the drugs enriched should recovery the gene expression changed by the
+disease, while if the input is drug related, the enriched drugs should show 
+similar gene expression changes caused by the drug studied. Here we show drugs
+for treating psoriasis, an autoimmune disease.
+
 ## Drug repositioning analysis running
+
+The drug repositioning gene set choice of _CmapDn100.gmt.xz_ or 
+_CmapUp100.gmt.xz_ should be made based on
+the regulation direction of clusters. For example, as the 7th cluster contains 
+up-regulated genes for psoriasis, the _CmapDn100.gmt.xz_ is choosen for drug 
+repositioning of psoriasis to recovery the gene expression changes caused by 
+the disease.
+
 ```{r drp}
 # A comprehensive way
 # cmapDn100_cogena_result <- clEnrich(genecl_result, 
@@ -229,27 +243,35 @@ corInCluster(clen_res, "pam", "7", "7")
 
 # A quick way
 # Based on the pathway analysis results
-cmapDn100_cogena_result <- clEnrich_one(genecl_result, "pam", "7", 
+cmapDn100_cogena_result <- clEnrich_one(genecl_result, "pam", "10", 
     annofile=system.file("extdata", "CmapDn100.gmt.xz", package="cogena"), 
     sampleLabel=sampleLabel)
 ```
 
 ## Original result of drug repositioning
-    Showing the results ordered by the 4th cluster in Figure 5.
-```{r drp_figure, fig.width=10, fig.height=6, fig.cap="Drug repositioning"}
-heatmapPEI(cmapDn100_cogena_result, "pam", "7", printGS=FALSE, 
-           orderMethod = "4", maintitle="Drug repositioning for Psoriasis")
+    Showing the results ordered by the 7th cluster in Figure 5.
+```{r drp_figure, fig.width=10, fig.height=7, fig.cap="Drug repositioning"}
+heatmapPEI(cmapDn100_cogena_result, "pam", "10", printGS=FALSE, 
+           orderMethod = "7", maintitle="Drug repositioning for Psoriasis")
+
+# Results based on cluster 5.
+# heatmapPEI(cmapDn100_cogena_result, "pam", "10", printGS=FALSE, 
+#           orderMethod = "5", maintitle="Drug repositioning for Psoriasis")
+
+# Results based on cluster 9, containing down-regulated genes.
+# heatmapPEI(cmapUp100_cogena_result, "pam", "10", printGS=FALSE, 
+#           orderMethod = "9", maintitle="Drug repositioning for Psoriasis")
+
 ```
 
 ## Multi-instance merged result of drug repositioning
 
-Usually there are more than 1 instance for a drug with different dose usage
+Usually there are more than 1 instances for a drug with different doses
 or time-points in the Cmap gene set. `heatmapCmap` can merge the multi-instance
-results. Showing the multi-instance merged results ordered by the 4th cluster 
-in Figure 6.
-```{r drp_figure2, fig.width=10, fig.height=6, fig.cap="Drug repositioning (multi-instance merged)"}
-heatmapCmap(cmapDn100_cogena_result, "pam", "7", printGS=FALSE, 
-            orderMethod = "4", maintitle="Drug repositioning for Psoriasis")
+results based on parameter _mergeMethod_ ("mean" or "max"). Figure 6 shows the multi-instance merged results ordered by the 7th cluster.
+```{r drp_figure2, fig.width=10, fig.height=7, fig.cap="Drug repositioning (multi-instance merged)"}
+heatmapCmap(cmapDn100_cogena_result, "pam", "10", printGS=FALSE, 
+            orderMethod = "7", maintitle="Drug repositioning for Psoriasis")
 ```
 
 
