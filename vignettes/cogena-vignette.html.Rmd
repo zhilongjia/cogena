@@ -108,6 +108,10 @@ annofile <- system.file("extdata", annoGMT, package="cogena")
 # nClust <- 2:20
 nClust <- 10
 
+# Making factor "Psoriasis" behind factor "ct" means Psoriasis Vs Control 
+# is up-regualted
+sampleLabel <- factor(sampleLabel, levels=c("ct", "Psoriasis"))
+
 # the number of cores.
 # ncore <- 8
 ncore <- 2
