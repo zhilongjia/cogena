@@ -1,5 +1,5 @@
 Package: cogena
-Version: 1.2.0
+Version: 1.5.1
 Title: co-expressed gene-set enrichment analysis
 Authors@R: c(person("Zhilong", "Jia", role =c("aut", "cre"), 
     email="zhilongjia@gmail.com"), 
@@ -51,6 +51,7 @@ Collate:
     geneExpInCluster.R
     corInCluster.R
     gmt2list.R
+    gmtlist2file.R
     heatmap.3.R
     heatmapCluster.R
     heatmapPEI.R

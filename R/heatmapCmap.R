@@ -171,6 +171,7 @@ setMethod("heatmapCmap", signature(object="cogena"),
               #legend breaks
               cutoff_score <- round(-log2(CutoffPVal), 2)
               max_score <- max(enrich_score$value, na.rm=TRUE)
+              if (is.infinite(max_score)) {max_score <- 1000}
               if (max_score/cutoff_score > 2) {
                   breaks <- c(cutoff_score, round( seq(cutoff_score, max_score, length.out=5)[-1]))
               } else if (max_score/cutoff_score >1) {
