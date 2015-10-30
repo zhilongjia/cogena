@@ -10,6 +10,7 @@
 #' @return a gmt list
 #' @export
 #' 
+#' @seealso gmtlist2file
 #' @examples
 #' anno <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
 #' annofile <- system.file("extdata", anno, package="cogena")
