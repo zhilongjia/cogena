@@ -1,6 +1,25 @@
 \name{NEWS}
 \title{News for Package \pkg{cogena}}
 
+\section{Changes in version 1.5.1 (2015-10-30)}{
+\itemize{
+    \item add gmtlist2file function
+    }
+}
+
+\section{Changes in version 1.5.0 (2015-10-14)}{
+\itemize{
+    \item Bioconductor 3.2 Dev
+    }
+}
+
+\section{Changes in version 1.4.0 (2015-10-14)}{
+\itemize{
+    \item Bioconductor 3.2
+    }
+}
+
+
 \section{Changes in version 1.2.0 (2015-09-01)}{
 \itemize{
     \item update exmaple dataset.
