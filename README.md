@@ -11,18 +11,6 @@ The version of cogena at github is also availiable at [Bioconductor](http://www.
 ##The workflow of cogena
 ![cogena_workflow](inst/figure/Cogena_workflow.png)
 
-##The heatmap of co-expressed genes based on pam methods with 10 clusters
-![cogena_heatmapCluster](inst/figure/heatmapCluster.png)
-
-
-##KEGG pathway analysis for 10 clusters, together with Down-regulated, Up-regualted and All DE genes. The values shown are the -log2(FDR).
-![cogena_heatmapPEI](inst/figure/heatmapPEI.png)
-
-
-##Drug repositioning analysis for the 7th cluster.
-![cogena_heatmapCmap](inst/figure/heatmapCmap0.png)
-
-
 ##Installation
 devtools::install_github("zhilongjia/cogena")
 
