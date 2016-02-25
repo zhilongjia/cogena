@@ -54,6 +54,7 @@ Collate:
     coExp.R
     clEnrich.R
     clEnrich_one.R
+    clPage.R
     enrichment.R
     gene2set.R
     geneInCluster.R
@@ -65,6 +66,7 @@ Collate:
     heatmapCluster.R
     heatmapPEI.R
     heatmapCmap.R
+    simplot.R
 License: LGPL-3
 LazyData: true
 Encoding: UTF-8

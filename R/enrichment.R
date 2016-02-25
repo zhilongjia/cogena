@@ -109,7 +109,9 @@ setMethod("enrichment", signature(object="cogena"),
         #drop para used as length(index_above_cutoffPVal)==1.
         score <- score[,index_above_cutoffPVal, drop=FALSE]
     }
-
+    
+    score[score<=-log2(CutoffPVal)] <- NA
+    
     # drop para used as length(index_above_cutoffPVal)==1.
     score <- score[,ncol(score):1, drop=FALSE]
 

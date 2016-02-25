@@ -119,7 +119,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
         }
         
         Var1=Var2=value=NULL
-        if (!is.null(title)) {
+        if (!is.null(maintitle)) {
             title=paste(maintitle, "\n", "cogena:", method, nCluster)
         } else {
             title=paste("cogena:", method, nCluster)

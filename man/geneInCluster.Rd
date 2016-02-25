@@ -5,11 +5,15 @@
 \alias{geneInCluster}
 \alias{geneInCluster,cogena-method}
 \alias{geneInCluster,cogena_methods,cluster_methods}
+\alias{geneInCluster,genecl-method}
 \title{Get gene names in a certain cluster.}
 \usage{
 geneInCluster(object, method, nCluster, ith)
 
 \S4method{geneInCluster}{cogena}(object, method = clusterMethods(object),
+  nCluster = nClusters(object), ith)
+
+\S4method{geneInCluster}{genecl}(object, method = clusterMethods(object),
   nCluster = nClusters(object), ith)
 }
 \arguments{

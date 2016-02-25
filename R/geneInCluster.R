@@ -53,3 +53,20 @@ setMethod("geneInCluster", signature(object="cogena"),
     }
 )
 
+#' @rdname geneInCluster
+#' @aliases geneInCluster,cogena_methods,cluster_methods
+setMethod("geneInCluster", signature(object="genecl"),
+          function (object, method=clusterMethods(object), 
+                    nCluster=nClusters(object), ith){
+              #ith is the ith cluster enquerying
+              method <- match.arg(method, clusterMethods(object))
+              nCluster <- match.arg(nCluster, as.character(nClusters(object)))
+              
+              ith <- match.arg(ith, as.character(seq(1: as.numeric(nCluster))))
+              ith <- as.numeric(ith)
+              
+              cluster_size <- geneclusters(object, method, nCluster)
+              names(cluster_size) <- rownames(object@mat)
+              names(which(cluster_size==ith))
+          }
+)

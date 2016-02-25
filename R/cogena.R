@@ -91,3 +91,13 @@ NULL
 #' @name AllGeneSymbols
 #' @source \url{http://www.genenames.org/}
 NULL
+
+
+#' CMap rank data set with Gene Symbols
+#' 
+#' @format a matrix with gene in row
+#' @docType data
+#' @keywords datasets
+#' @name CMap_rank
+#' @source \url{http://www.connectivitymap.org/cmap/}
+#' 
