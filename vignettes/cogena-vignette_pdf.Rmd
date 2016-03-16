@@ -3,9 +3,9 @@ title: "cogena, a workflow for co-expressed gene-set enrichment analysis"
 author: "Zhilong Jia, Michael R. Barnes"
 date: "`r Sys.Date()`"
 output:
-#    rmarkdown::html_vignette:
+    # rmarkdown::html_vignette:
 #     word_document:
-    pdf_document:
+   pdf_document:
         fig_caption: yes
         number_sections: true
         toc: true
@@ -181,8 +181,10 @@ enrichment.table <- enrichment(clen_res, "pam", "10")
 
 ###  Heatmap of expression profiling with clusters
     
-`heatmapCluster` is developed to show the co-expression of differentially expressed genes. Based on Figure 2, it is obvious to know 
-which cluster contains up-regulated or down-regulated genes.
+`heatmapCluster` is developed to show the co-expression of differentially expressed genes. 
+Figure 2 produced by `heatmapCluster` is an enhenced heatmap with co-expression information.
+Moreover, it is obvious to know which cluster contains up-regulated or down-regulated genes
+based on the colour.
 
 ```{r heatmapCluster, fig.width=10, fig.height=7, fig.cap="Heatmap of expression profiling with clusters"}
 # Always make the number as character, please!
@@ -193,7 +195,7 @@ heatmapCluster(clen_res, "pam", "10", maintitle="Psoriasis")
     
 `heatmapPEI` can be used to show the enrichment graph. See Figure 3. 
 See `?heatmapPEI` for more details. Many parameters are configuable, 
-while usually the default will be fine.
+while generally the default will be fine.
 
 ```{r heatmapPEI, fig.width=11, fig.height=7, fig.cap="KEGG pathway enrichment"}
 # The enrichment score for 10 clusters, together with Down-regulated, 
@@ -203,6 +205,10 @@ while usually the default will be fine.
 heatmapPEI(clen_res, "pam", "10", printGS=FALSE, maintitle="Pathway analysis for Psoriasis")
 
 ```
+Figure 3 shows the pathway enrichment for each clusters as well as up-regualted, 
+down-regualted and all the differentially expressed genes. The enrichment scores 
+can be ranked by a certain cluster or the max or aerage scores of all the scores
+for each pathway.
 
 # Drug repositioning
 
@@ -262,7 +268,7 @@ heatmapCmap(cmapDn100_cogena_result, "pam", "10", printGS=FALSE,
             orderMethod = "7", maintitle="Drug repositioning for Psoriasis")
 ```
 
-##  Others
+##  Other useful functions
 
 ### Querying genes in a certain cluster
 
