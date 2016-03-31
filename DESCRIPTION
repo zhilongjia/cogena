@@ -40,8 +40,7 @@ Imports:
     dplyr,
     devtools
 Suggests:
-    knitr,
-    rmarkdown
+    knitr
 Collate:
     dist_class.R
     genecl_class.R
