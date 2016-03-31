@@ -1,6 +1,12 @@
 \name{NEWS}
 \title{News for Package \pkg{cogena}}
 
+\section{Changes in version 1.5.2 (2016-03-31)}{
+\itemize{
+    \item update vignette
+    }
+}
+
 \section{Changes in version 1.5.1 (2015-10-30)}{
 \itemize{
     \item add gmtlist2file function
