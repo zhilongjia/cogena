@@ -40,7 +40,8 @@ Imports:
     dplyr,
     devtools
 Suggests:
-    knitr
+    knitr,
+    rmarkdown
 Collate:
     dist_class.R
     genecl_class.R
@@ -71,5 +72,5 @@ Encoding: UTF-8
 URL: https://github.com/zhilongjia/cogena
 NeedsCompilation: no
 BugReports: https://github.com/zhilongjia/cogena/issues
-VignetteBuilder: knitr
+VignetteBuilder: rmarkdown
 RoxygenNote: 5.0.1
