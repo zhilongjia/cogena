@@ -1,5 +1,5 @@
 Package: cogena
-Version: 1.7.0
+Version: 1.7.1
 Title: co-expressed gene-set enrichment analysis
 Authors@R: c(person("Zhilong", "Jia", role =c("aut", "cre"), 
     email="zhilongjia@gmail.com"), 
