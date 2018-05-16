@@ -3,8 +3,8 @@
 \docType{methods}
 \name{heatmapPEI}
 \alias{heatmapPEI}
-\alias{heatmapPEI,cogena}
 \alias{heatmapPEI,cogena-method}
+\alias{heatmapPEI,cogena}
 \title{heatmap of the gene set enrichment from a cogena object.}
 \usage{
 heatmapPEI(object, method, nCluster, CutoffNumGeneset = 20,
@@ -107,4 +107,3 @@ heatmapPEI(clen_res, "kmeans", "3", CutoffNumGeneset=20,
 \seealso{
 \code{\link{clEnrich}} and \code{\link{heatmapCluster}}
 }
-

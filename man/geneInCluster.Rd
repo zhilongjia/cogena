@@ -53,4 +53,3 @@ g2 <- geneInCluster(clen_res, "kmeans", "2", "1")
 \seealso{
 \code{\link{clEnrich}}
 }
-

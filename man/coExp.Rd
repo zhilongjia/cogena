@@ -112,4 +112,3 @@ metric=metric, method=method, ncore=ncore, verbose=TRUE)
 \seealso{
 \code{\link{clEnrich}}
 }
-

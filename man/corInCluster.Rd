@@ -64,4 +64,3 @@ corInCluster(clen_res, "kmeans", "3", "3", plotMethod="square")
 \seealso{
 \code{\link{clEnrich}} \code{\link[corrplot]{corrplot}}
 }
-

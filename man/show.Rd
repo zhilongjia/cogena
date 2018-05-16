@@ -3,8 +3,8 @@
 \docType{methods}
 \name{show,cogena-method}
 \alias{show,cogena-method}
-\alias{show,cogena_methods}
 \alias{show,genecl-method}
+\alias{show,cogena_methods}
 \title{show: show the class of cogena or genecl object}
 \usage{
 \S4method{show}{cogena}(object)
@@ -25,4 +25,3 @@ show: show the class of cogena or genecl object
 show(genecl_result)
 }
 }
-

@@ -2,11 +2,12 @@
 % Please edit documentation in R/upDownGene.R
 \docType{methods}
 \name{upDownGene}
+\alias{upDownGene}
+\alias{upDownGene,cogena-method}
+\alias{upDownGene,cogena}
 \alias{logfc}
 \alias{logfc,}
 \alias{upDownGene}
-\alias{upDownGene,cogena}
-\alias{upDownGene,cogena-method}
 \title{Show up or down-regualted genes for a clustering method and the number of clusters.}
 \usage{
 upDownGene(object, method, nCluster, add2 = FALSE)
@@ -60,4 +61,3 @@ upDownGene(clen_res, "kmeans", "3", add2=TRUE)
 upDownGene(clen_res, "kmeans", "2", add2=FALSE)
 
 }
-

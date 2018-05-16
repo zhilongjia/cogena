@@ -3,10 +3,10 @@
 \docType{methods}
 \name{nClusters}
 \alias{nClusters}
-\alias{nClusters,cogena-method}
-\alias{nClusters,cogena_methods}
 \alias{nClusters,genecl-method}
 \alias{nClusters,genecl_methods}
+\alias{nClusters,cogena-method}
+\alias{nClusters,cogena_methods}
 \title{nClusters: get the number of clusters from a genecl object.}
 \usage{
 nClusters(object)
@@ -29,4 +29,3 @@ nClusters: get the number of clusters from a genecl object.
 nClusters(genecl_result)
 }
 }
-

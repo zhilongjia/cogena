@@ -373,8 +373,7 @@ https://github.com/zhilongjia/cogena/issues
 
 # Citation
 
-Jia Z. et al. *Cogena, a tool for co-expressed gene-set enrichment 
-analysis and visualization*.
+[Jia, Zhilong, et al. "Cogena, a novel tool for co-expressed gene-set enrichment analysis, applied to drug repositioning and drug mode of action discovery." BMC Genomics 17.1 (2016): 1.](http://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2737-8)
 
 # Other Information
 

@@ -65,4 +65,3 @@ genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans")
 clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
     
 }
-

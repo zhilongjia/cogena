@@ -36,4 +36,3 @@ annoBG <- gene2set(annofile, AllGeneSymbols)
 res <- PEI(rownames(DEexprs)[1:200], gene2set(annofile, rownames(DEexprs)[1:200]), annoBG)
 
 }
-

@@ -24,4 +24,3 @@ gmtfile <- gmtlist2file(gl, filename="")
 \seealso{
 gmt2list
 }
-

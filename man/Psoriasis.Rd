@@ -22,4 +22,3 @@ differentially expressed genes using \code{limma} package with
 the cut-off adjuested p-value 0.05 and abs(logFC) >=1.
 }
 \keyword{datasets}
-

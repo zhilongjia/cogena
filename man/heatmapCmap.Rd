@@ -3,8 +3,8 @@
 \docType{methods}
 \name{heatmapCmap}
 \alias{heatmapCmap}
-\alias{heatmapCmap,cogena}
 \alias{heatmapCmap,cogena-method}
+\alias{heatmapCmap,cogena}
 \title{heatmap designed for for CMap gene set only}
 \usage{
 heatmapCmap(object, method = clusterMethods(object),
@@ -86,4 +86,3 @@ heatmapCmap(clen_res1, "pam", "3", orderMethod="2")
 heatmapCmap(clen_res1, "pam", "3", orderMethod="2", MultiInstance="concdrug")
 }
 }
-

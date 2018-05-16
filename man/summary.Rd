@@ -2,9 +2,9 @@
 % Please edit documentation in R/Class_methods.R
 \docType{methods}
 \name{summary,genecl-method}
+\alias{summary,genecl-method}
 \alias{summary,cogena-method}
 \alias{summary,cogena_methods}
-\alias{summary,genecl-method}
 \title{summary: a summary of a genecl object.}
 \usage{
 \S4method{summary}{genecl}(object)
@@ -25,4 +25,3 @@ summary: a summary of a genecl object.
 summary(genecl_result)
 }
 }
-

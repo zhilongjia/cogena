@@ -46,4 +46,3 @@ geneExp <- geneExpInCluster(clen_res, "kmeans", "3")
 \seealso{
 \code{\link{clEnrich}}
 }
-

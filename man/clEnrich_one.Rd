@@ -64,4 +64,3 @@ clen_res <- clEnrich_one(genecl_result, "kmeans", "3", annofile=annofile, sample
 clen_res1 <- clEnrich_one(clen_res, "hierarchical", "2", annofile=annofile, sampleLabel=sampleLabel)
 
 }
-

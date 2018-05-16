@@ -3,10 +3,10 @@
 \docType{methods}
 \name{geneclusters}
 \alias{geneclusters}
-\alias{geneclusters,cogena-method}
-\alias{geneclusters,cogena_methods}
 \alias{geneclusters,genecl-method}
 \alias{geneclusters,genecl_methods}
+\alias{geneclusters,cogena-method}
+\alias{geneclusters,cogena_methods}
 \title{geneclusters: get the cluster information of a certain clustering method with
 a certain number.}
 \usage{
@@ -38,4 +38,3 @@ geneclusters(genecl_result, "kmeans", 3)
 geneclusters(genecl_result, "hierarchical", 4)
 }
 }
-

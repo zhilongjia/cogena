@@ -4,6 +4,7 @@
 \name{heatmapCluster}
 \alias{heatmapCluster}
 \alias{heatmapCluster,cogena-method}
+\alias{heatmapCluster}
 \title{heatmap of gene expression profilings with cluster indication.}
 \usage{
 heatmapCluster(object, method, nCluster, scale = "row", sampleColor = NULL,
@@ -82,4 +83,3 @@ heatmapCluster(clen_res, "hierarchical", "3", heatmapcol=heatmapcol)
 \code{\link{clEnrich}}, \code{\link{heatmap.3}} and
 \code{\link{heatmapPEI}}
 }
-

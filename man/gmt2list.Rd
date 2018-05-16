@@ -28,4 +28,3 @@ gl <- gmt2list(annofile)
 \seealso{
 gmtlist2file
 }
-

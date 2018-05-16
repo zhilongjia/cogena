@@ -3,10 +3,10 @@
 \docType{methods}
 \name{clusterMethods}
 \alias{clusterMethods}
-\alias{clusterMethods,cogena-method}
-\alias{clusterMethods,cogena_methods}
 \alias{clusterMethods,genecl-method}
 \alias{clusterMethods,genecl_methods}
+\alias{clusterMethods,cogena-method}
+\alias{clusterMethods,cogena_methods}
 \title{Basic methods for a genecl object.}
 \usage{
 clusterMethods(object)
@@ -34,4 +34,3 @@ clusterMethods(genecl_result)
 
 
 }
-

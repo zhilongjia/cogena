@@ -2,9 +2,9 @@
 % Please edit documentation in R/cogena.R
 \docType{package}
 \name{cogena_package}
-\alias{cogean_package}
-\alias{cogena}
 \alias{cogena_package}
+\alias{cogena}
+\alias{cogean_package}
 \alias{cogena_package-package}
 \title{Co-expressed gene set enrichment analysis}
 \source{
@@ -50,4 +50,3 @@ head(geneInCluster(clen_res, "hierarchical", "6", "2"))
 
 }
 \keyword{package}
-

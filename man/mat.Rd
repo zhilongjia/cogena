@@ -3,10 +3,10 @@
 \docType{methods}
 \name{mat}
 \alias{mat}
-\alias{mat,cogena-method}
-\alias{mat,cogena_methods}
 \alias{mat,genecl-method}
 \alias{mat,genecl_methods}
+\alias{mat,cogena-method}
+\alias{mat,cogena_methods}
 \title{mat: get the original data from a genecl object.}
 \usage{
 mat(object)
@@ -29,4 +29,3 @@ mat: get the original data from a genecl object.
 mat(genecl_result)
 }
 }
-
