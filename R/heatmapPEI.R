@@ -27,6 +27,7 @@
 #' "cogena: kmeans 3 GSExxx" in two lines. Default is NULL
 #' @param printGS print the enriched gene set names or not. Default is FALSE
 #' @param add2 enrichment score for add Up and Down reuglated genes.
+#' @param geom tile or circle
 #' 
 #' @return a gene set enrichment heatmap
 #' 
@@ -72,7 +73,7 @@ setGeneric("heatmapPEI",
     function(object, method, nCluster, CutoffNumGeneset=20,
         CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE,
         low="grey", high="red", na.value="white", 
-        maintitle=NULL, printGS=FALSE, add2=TRUE)
+        maintitle=NULL, printGS=FALSE, add2=TRUE, geom="tile")
     standardGeneric("heatmapPEI"))
 
 #' @rdname heatmapPEI
@@ -83,9 +84,11 @@ setMethod("heatmapPEI", signature(object="cogena"),
         CutoffNumGeneset=20, CutoffPVal=0.05,
         orderMethod="max", roundvalue=TRUE,
         low="grey", high="red", na.value="white", 
-        maintitle=NULL, printGS=FALSE, add2=TRUE) {
+        maintitle=NULL, printGS=FALSE, add2=TRUE, geom="tile") {
+        
         method <- match.arg(method, clusterMethods(object))
         nCluster <- match.arg(nCluster, as.character(nClusters(object)))
+        geom <- match.arg(geom, c("tile", "circle"))
         
         enrichment_score <- enrichment(object, method, nCluster, CutoffNumGeneset, 
             CutoffPVal, orderMethod, roundvalue, add2 =add2)
@@ -125,17 +128,33 @@ setMethod("heatmapPEI", signature(object="cogena"),
             title=paste("cogena:", method, nCluster)
         }
 
-        ggplot2::ggplot(enrichment_score, aes(as.factor(Var1), Var2)) + 
-            geom_tile(aes(fill = value)) + 
-            scale_fill_gradient2("score", space="Lab", mid=low, midpoint=4, low=low, 
-                high=high, na.value=na.value, breaks=breaks) +
-            geom_text(aes(fill=value, label=value),size=4, na.rm=TRUE) +
+        
+        p <- ggplot2::ggplot(enrichment_score, aes(as.factor(Var1), Var2)) +
             labs(list(title = title, x = "Cluster", y = "Gene set")) +
             theme(axis.text.y = element_text(size = rel(1.5), face="bold")) +
             theme(axis.text.x = element_text(size = rel(1.3), angle=-90, 
-                face="bold", color=cl_color, vjust=0.5)) +
-            theme(panel.grid.major.x = element_line(color = "grey", size = 5),
-                  panel.grid.major.y = element_blank())
+                                             face="bold", color=cl_color, vjust=0.5))
+
+        
+        if (geom =="tile") {
+            p +  geom_tile(aes(fill = value)) + 
+                scale_fill_gradient2("score", space="Lab", mid=low, midpoint=4, low=low, 
+                                     high=high, na.value=na.value, breaks=breaks) +
+                geom_text(aes(label=value),size=4, na.rm=TRUE)  +
+                theme(panel.grid.major.x = element_line(color = "grey", size = 5),
+                      panel.grid.major.y = element_blank())
+        } else if (geom =="circle") {
+            p + geom_point(aes(color=value, size = value), na.rm = TRUE, stroke = 3) + 
+                guides(size=FALSE) + 
+                scale_color_gradient2("score", space="Lab", mid=low, midpoint=4, low=low, 
+                                      high=high, na.value=na.value, breaks=breaks) +
+                theme(panel.grid.major = element_line(size = 0.25, linetype = 'solid', colour = "grey90"),
+                    panel.background = element_blank(),
+                    axis.line.x = element_line(size = 0.25, linetype = 'solid'),
+                    axis.line.y = element_line(size = 0.25, linetype = 'solid'),
+                    plot.background = element_blank() )
+        }
+        
     }
 )
 

@@ -31,6 +31,7 @@
 #' @inheritParams heatmapPEI
 #' @param maintitle a character. Default is null
 #' @param printGS print the enriched gene set names or not. Default is FALSE
+#' @param geom tile or circle
 #' 
 #' @return a gene set enrichment heatmap
 #' 
@@ -58,7 +59,7 @@ setGeneric("heatmapCmap",
                     nCluster=nClusters(object), orderMethod="max", MultiInstance="drug",
                     CutoffNumGeneset=20, CutoffPVal=0.05, mergeMethod="mean",
                     low="grey", high="red", na.value="white", maintitle=NULL,
-                    printGS=FALSE, add2=TRUE) 
+                    printGS=FALSE, add2=TRUE, geom="tile") 
                standardGeneric("heatmapCmap"))
 
 #' @rdname heatmapCmap
@@ -68,9 +69,10 @@ setMethod("heatmapCmap", signature(object="cogena"),
                    nCluster=nClusters(object), orderMethod="max", MultiInstance="drug",
                    CutoffNumGeneset=20, CutoffPVal=0.05, mergeMethod="mean",
                    low="grey", high="red", na.value="white", maintitle="cogena",
-                   printGS=FALSE, add2=TRUE) {
+                   printGS=FALSE, add2=TRUE, geom="tile") {
               
               MultiInstance <- match.arg(MultiInstance, c("drug", "celldrug", "conccelldrug", "concdrug"))
+              geom <- match.arg(geom, c("tile", "circle"))
               
               enrichment_score <- enrichment(object, method, nCluster, add2=add2, 
                                              orderMethod=orderMethod, 
@@ -109,8 +111,9 @@ setMethod("heatmapCmap", signature(object="cogena"),
               }
               name <- NULL
               score <- dplyr::group_by(enrichment_score, name)
-              score <- dplyr::summarise_each(score, funs(meanX))
-              score <- score[which(rowSums(score[,-1])!=0), ]
+              # score <- dplyr::summarise_each(score, funs(meanX))
+              score <- dplyr::summarise_all(score, funs(meanX))
+              score <- as.data.frame(score[which(rowSums(score[,-1])!=0), ])
               rownames(score) <- score$name
               if (nrow(score)==0){
                   stop(paste("No enrichment for this order Method:", orderMethod))
@@ -188,17 +191,43 @@ setMethod("heatmapCmap", signature(object="cogena"),
               
               Var1=Var2=value=NULL
 
-              ggplot(enrich_score, aes(as.factor(Var1), Var2)) + 
-                  geom_tile(aes(fill = value)) + 
-                  scale_fill_gradient2("score", space="Lab", mid=low, midpoint=4, low=low, 
-                                       high=high, na.value=na.value, breaks=breaks) +
-                  geom_text(aes(fill=value, label=value),size=4, na.rm=TRUE) +
+              # ggplot(enrich_score, aes(as.factor(Var1), Var2)) +
+              #     geom_tile(aes(fill = value)) +
+              #     scale_fill_gradient2("score", space="Lab", mid=low, midpoint=4, low=low,
+              #                          high=high, na.value=na.value, breaks=breaks) +
+              #     geom_text(aes(fill=value, label=value),size=4, na.rm=TRUE) +
+              #     labs(list(title = maintitle, x = "Cluster", y = "Gene set")) +
+              #     theme(axis.text.y = element_text(size = rel(1.5), face="bold")) +
+              #     theme(axis.text.x = element_text(size = rel(1.3), angle=-90,
+              #                                      face="bold", color=cl_color, vjust=0.5))  +
+              #     theme(panel.grid.major.x = element_line(color = "grey", size = 5),
+              #           panel.grid.major.y = element_blank())
+              
+              p <- ggplot2::ggplot(enrich_score, aes(as.factor(Var1), Var2)) +
                   labs(list(title = maintitle, x = "Cluster", y = "Gene set")) +
                   theme(axis.text.y = element_text(size = rel(1.5), face="bold")) +
                   theme(axis.text.x = element_text(size = rel(1.3), angle=-90, 
-                                                   face="bold", color=cl_color, vjust=0.5))  +
-                  theme(panel.grid.major.x = element_line(color = "grey", size = 5),
-                        panel.grid.major.y = element_blank())
+                                                   face="bold", color=cl_color, vjust=0.5))
+              
+              
+              if (geom =="tile") {
+                  p +  geom_tile(aes(fill = value)) + 
+                      scale_fill_gradient2("score", space="Lab", mid=low, midpoint=4, low=low, 
+                                           high=high, na.value=na.value, breaks=breaks) +
+                      geom_text(aes(label=value),size=4, na.rm=TRUE)  +
+                      theme(panel.grid.major.x = element_line(color = "grey", size = 5),
+                            panel.grid.major.y = element_blank())
+              } else if (geom =="circle") {
+                  p + geom_point(aes(color=value, size = value), na.rm = TRUE, stroke = 3) + 
+                      guides(size=FALSE) + 
+                      scale_color_gradient2("score", space="Lab", mid=low, midpoint=4, low=low, 
+                                            high=high, na.value=na.value, breaks=breaks) +
+                      theme(panel.grid.major = element_line(size = 0.25, linetype = 'solid', colour = "grey90"),
+                            panel.background = element_blank(),
+                            axis.line.x = element_line(size = 0.25, linetype = 'solid'),
+                            axis.line.y = element_line(size = 0.25, linetype = 'solid'),
+                            plot.background = element_blank() )
+              }
           }
 )
 
