@@ -17,6 +17,8 @@ devtools::install_github("zhilongjia/cogena")
 ##Help
 [cogena in Biostars](https://www.biostars.org/p/137330/)
 
+##Citation
+[Jia, Zhilong, et al. "Cogena, a novel tool for co-expressed gene-set enrichment analysis, applied to drug repositioning and drug mode of action discovery." BMC Genomics 17.1 (2016): 1.](http://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2737-8)
 
 ##Acknowledgement
 cogena was originally based on the [clValid](http://cran.r-project.org/web/packages/clValid/index.html) package.

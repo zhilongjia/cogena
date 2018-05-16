@@ -10,7 +10,7 @@ output:
         toc: true
         toc_depth: 3
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{cogena Tutorial}
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}
 ---
