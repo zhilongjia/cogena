@@ -1,6 +1,8 @@
 #cogena
 
-[![Travis-CI Build Status](https://travis-ci.org/zhilongjia/cogena.png?branch=master)](https://travis-ci.org/zhilongjia/cogena)
+
+ [![releaseVersion](http://img.shields.io/badge/release%20version-1.14.0-green.svg?style=flat)](http://bioconductor.org/packages/cogena) [![develVersion](http://img.shields.io/badge/devel%20version-1.15.0-green.svg?style=flat)](http://github.com/zhilnogjia/cogena) [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/cogena.svg)](https://www.bioconductor.org/packages/devel/bioc/html/cogena.html#since) [![Build](http://bioconductor.org/shields/build/devel/bioc/cogena.svg)](http://www.bioconductor.org/packages/devel/bioc/html/cogena.html) [![download](http://www.bioconductor.org/shields/downloads/cogena.svg)](http://bioconductor.org/packages/stats/bioc/cogena)
+
 
 ##Introduction
 To discovery smaller scale, but highly correlated cellular events that may be of great biological relevance, co-expressed gene set enrichment analysis, cogena, aims to cluster gene expression profiles (coExp) for gene co-expression analysis and then implement enrichment analysis for each clusters (clEnrich) based on hyper-geometric test. The results can be visulised by heatmapCluster and heatmapPEI. Based on different gene sets used, cogena can be used as a tool for pathway analysis, GO enrichment analysis, drug repositioning and so on. See [vignette](http://bioconductor.org/packages/devel/bioc/vignettes/cogena/inst/doc/cogena-vignette_html.html) for the detailed workflow. 
