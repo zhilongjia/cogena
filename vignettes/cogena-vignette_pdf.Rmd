@@ -257,11 +257,17 @@ generally the default will be fine.
 heatmapPEI(clen_res, "pam", "10", printGS=FALSE, maintitle="Pathway analysis for Psoriasis")
 
 ```
-Figure 3 shows the pathway enrichment for each cluster as well as up-regulated,
+Figure 3A shows the pathway enrichment for each cluster as well as up-regulated,
 down-regulated and all the differentially expressed genes. The enrichment scores
 can be ranked by a certain cluster or the max or average scores of all the scores for
 each pathway.
 
+```{r heatmapPEI_B, fig.width=11, fig.height=7, fig.cap="KEGG pathway enrichment circle visualization"}
+
+heatmapPEI(clen_res, "pam", "10", printGS=FALSE, maintitle="Pathway analysis for Psoriasis", geom="circle")
+
+```
+Figure 3B shows the pathway enrichment using circle plotting.
 
 # Drug repositioning
 
