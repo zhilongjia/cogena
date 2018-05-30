@@ -73,6 +73,9 @@ setMethod("upDownGene", signature(object="cogena"), function(
 #' @export
 # Add MeanA, MeanB and logFC.  
 logfc <- function(dat, sampleLabel) {
+    if (length(unique(sampleLabel)) != 2) {
+        Biobase::note(paste0("Only first two labels \"", names(table(sampleLabel))[1], " and ", names(table(sampleLabel))[2], "\" are used for Up or Down-genes labeling as more than two labels exist!"))
+    }
     dat$meanA <- apply(dat[,names(sampleLabel)[which((sampleLabel == names(table(sampleLabel))[1]))]], 1, mean)
     dat$meanB <- apply(dat[,names(sampleLabel)[which((sampleLabel == names(table(sampleLabel))[2]))]], 1, mean)
     # log2 transform

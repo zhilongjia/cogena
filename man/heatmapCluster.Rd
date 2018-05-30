@@ -74,7 +74,7 @@ summary(clen_res)
 #heatmapCluster
 
 heatmapCluster(clen_res, "hierarchical", "3")
-heatmapcol <- gplots::redgreen(75) 
+heatmapcol <- gplots::redgreen(75)
 heatmapCluster(clen_res, "hierarchical", "3", heatmapcol=heatmapcol)
 }
 
