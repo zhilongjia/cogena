@@ -58,7 +58,7 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, nc
     ############################################################################
     # Annotation data
     if (is.null(annofile)) {
-        annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz", 
+        annofile <- system.file("extdata", "c2.cp.kegg.v6.1.symbols.gmt.xz", 
                                 package="cogena")
     }
     annotation <- gene2set(annofile, genecl_obj@labels, TermFreq=TermFreq)
@@ -67,6 +67,12 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, nc
     data(AllGeneSymbols, envir = environment())
     annotationGenesPop <- gene2set(annofile, AllGeneSymbols, TermFreq=TermFreq)
     annotationGenesPop <- annotationGenesPop[,colnames(annotation)]
+    
+    # check intersect input genes and AllGeneSymbols
+    input_gene_len <- nrow(genecl_obj@mat)
+    intersect_gene_len <- length(intersect(rownames(genecl_obj@mat), AllGeneSymbols))
+    Biobase::note(paste(intersect_gene_len, "out of", input_gene_len, "exist in the genes population.") )
+    
     
     if (ncol(annotationGenesPop) ==0 || ncol(annotation)==0) {
         stop("Error in annotation as ncol equals zero. 
