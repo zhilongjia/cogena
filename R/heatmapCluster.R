@@ -21,6 +21,7 @@
 #' @param printSum print the summary of the number of genes in each cluster. 
 #' Default is TRUE.
 #' @param add2 add 2 clusters information.
+#' @param cexCol numbers, used as cex.axis in for the column axis labeling. 
 #' @param ... other parameters to heatmap.3.
 #' @return a gene expression heatmap with Cluster information figure
 #' @export
@@ -46,14 +47,14 @@
 #' #heatmapCluster
 #' 
 #' heatmapCluster(clen_res, "hierarchical", "3")
-#' heatmapcol <- gplots::redgreen(75) 
+#' heatmapcol <- gplots::redgreen(75)
 #' heatmapCluster(clen_res, "hierarchical", "3", heatmapcol=heatmapcol)
 #' }
 #' 
 setGeneric("heatmapCluster", 
     function(object, method, nCluster, scale="row", sampleColor=NULL,
         clusterColor=NULL, clusterColor2=NULL, heatmapcol=NULL, maintitle=NULL,
-        printSum=TRUE, add2=TRUE, ...) 
+        printSum=TRUE, add2=TRUE, cexCol=NULL, ...) 
     standardGeneric("heatmapCluster"))
 
 #' @rdname heatmapCluster
@@ -63,7 +64,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
         nCluster=nClusters(object), scale="row",
         sampleColor=NULL, clusterColor=NULL,
         clusterColor2=NULL, heatmapcol=NULL, maintitle=NULL, 
-        printSum=TRUE, add2=TRUE, ...){
+        printSum=TRUE, add2=TRUE, cexCol=NULL, ...){
 
     # get the parameters
     method <- match.arg(method, clusterMethods(object))
@@ -135,6 +136,10 @@ setMethod("heatmapCluster", signature(object="cogena"),
         maintitle=paste(method, nCluster, "clusters",sep="_")
     }
     
+    if (!exists("cexCol")) {
+        cexCol=0.8
+    }
+    
     heatmap.3(mat, col=heatmapcol, trace="none", scale=scale, Rowv=FALSE, 
         Colv=FALSE, dendrogram="none", labRow=NA, 
         # colsep=length(which(sampleLabel==sampleLabel[1])), 
@@ -142,8 +147,8 @@ setMethod("heatmapCluster", signature(object="cogena"),
         rowsep=cumsum( table(cluster_size)), #adjCol=c(0.8,0),
         sepcolor="white", sepwidth=c(0.05,1),
         key=TRUE, symkey=FALSE, density.info="none", keysize=1.5, 
-        main=maintitle,
-        ColSideColors=as.matrix(ColSideColors), ylab="Genes", cexCol=0.8,
+        main=maintitle, 
+        ColSideColors=as.matrix(ColSideColors), ylab=paste(nrow(mat), "Genes"), cexCol=cexCol,
         RowSideColors=RowSideColors, 
         RowSideColorsSize=ifelse(nCluster!=2,2,1),
         lhei=c(1.2, 4), ...)
@@ -157,7 +162,7 @@ setMethod("heatmapCluster", signature(object="cogena"),
                 title = "DEGs")
         }
         legend("top", legend = names(table(sampleLabel)), col = sampleColor, 
-            lty=1, lwd=20, bty = "n", title = "Type of Sample", horiz=TRUE)
+            lty=1, lwd=20, bty = "n", title = "Type of Samples", horiz=TRUE)
     # return (mat)
     })
 
