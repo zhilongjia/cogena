@@ -4,6 +4,8 @@
 #' 
 #' @param gmtlist a list containing gmt
 #' @param filename output filename
+#' @return NA
+#' 
 #' @export
 #' 
 #' @seealso gmt2list

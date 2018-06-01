@@ -332,7 +332,7 @@ head(geneC)
 
 ```
 
-###  Gene expression profiling with cluster infromation
+###  Gene expression profiling with cluster information
 
 It can be obtained by `geneExpInCluster`. There are two items, 
 `clusterGeneExp` and `label`, in the returned object of `geneExpInCluster`. 

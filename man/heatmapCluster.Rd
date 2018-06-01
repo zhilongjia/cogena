@@ -9,12 +9,12 @@
 \usage{
 heatmapCluster(object, method, nCluster, scale = "row", sampleColor = NULL,
   clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
-  maintitle = NULL, printSum = TRUE, add2 = TRUE, ...)
+  maintitle = NULL, printSum = TRUE, add2 = TRUE, cexCol = NULL, ...)
 
 \S4method{heatmapCluster}{cogena}(object, method = clusterMethods(object),
   nCluster = nClusters(object), scale = "row", sampleColor = NULL,
   clusterColor = NULL, clusterColor2 = NULL, heatmapcol = NULL,
-  maintitle = NULL, printSum = TRUE, add2 = TRUE, ...)
+  maintitle = NULL, printSum = TRUE, add2 = TRUE, cexCol = NULL, ...)
 }
 \arguments{
 \item{object}{a genecl or cogena object}
@@ -45,6 +45,8 @@ rainbow(2).}
 Default is TRUE.}
 
 \item{add2}{add 2 clusters information.}
+
+\item{cexCol}{numbers, used as cex.axis in for the column axis labeling.}
 
 \item{...}{other parameters to heatmap.3.}
 }

@@ -40,7 +40,7 @@ PEI <- function(genenames, annotation, annotationGenesPop) {
             NumGenesWithinCluster.Pathway<2){
             pei[j] = NA
         } else {
-            pei[j] <- phyper(NumGenesWithinCluster.Pathway, 
+            pei[j] <- stats::phyper(NumGenesWithinCluster.Pathway, 
                 NumGenesWithinPathway, NumGenes-NumGenesWithinPathway, 
                 NumGenesWithinCluster, lower.tail=FALSE)
         }

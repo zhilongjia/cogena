@@ -349,8 +349,8 @@ print.sota <- function(x, ...){
 #' @export
 plot.sota <- function(x, cl=0, ...){
 
-    op <- par(no.readonly=TRUE)
-    on.exit(par(op))
+    op <- graphics::par(no.readonly=TRUE)
+    on.exit(graphics::par(op))
     if(cl!=0)
         par(mfrow=c(1,1)) else
         {
@@ -381,14 +381,14 @@ plot.sota <- function(x, cl=0, ...){
     for(i in cl.to.print){
         plot(1:ncol(x$data), x$tree[i, pr], col="red", type="l",
             ylim=ylim, xlab=paste("Cluster ",i), ylab="Expr. Level", ...)
-        legend("topleft", legend=paste(x$totals[i], " Genes"), cex=.7,
+        graphics::legend("topleft", legend=paste(x$totals[i], " Genes"), cex=.7,
             text.col="navy", bty="n")
         cl <- x$data[x$clust==cl.id[i],]  ## changed
         if(is.vector(cl))
             cl <- matrix(cl, nrow=1)
         for(j in 1:x$totals[i])
-            lines(1:ncol(x$data), cl[j,], col="grey")
-        lines(1:ncol(x$data), x$tree[i, pr], col="red", ...)
+            graphics::lines(1:ncol(x$data), cl[j,], col="grey")
+        graphics::lines(1:ncol(x$data), x$tree[i, pr], col="red", ...)
         
     }
 }

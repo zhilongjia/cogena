@@ -11,6 +11,9 @@ gmtlist2file(gmtlist, filename)
 
 \item{filename}{output filename}
 }
+\value{
+NA
+}
 \description{
 write gmt list into gmt file
 }

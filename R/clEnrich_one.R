@@ -1,5 +1,5 @@
 #' Gene set enrichment for clusters (for one clustering method and a certain 
-#'	number of clusters)
+#' number of clusters)
 #' 
 #' Gene set enrichment for clusters sourced from coExp function. the enrichment
 #' score are based on -log(p) with p from hyper-geometric test.
@@ -68,7 +68,7 @@ clEnrich_one <- function(genecl_obj, method,
     annotation <- gene2set(annofile, genecl_obj@labels, TermFreq=TermFreq)
     # the background gene gene-sets matrix
     AllGeneSymbols=NULL
-    data(AllGeneSymbols, envir = environment())
+    utils::data(AllGeneSymbols, envir = environment())
     annotationGenesPop <- gene2set(annofile, AllGeneSymbols, TermFreq=TermFreq)
     annotationGenesPop <- annotationGenesPop[,colnames(annotation)]
     
@@ -115,7 +115,7 @@ clEnrich_one <- function(genecl_obj, method,
         # negative log2 p value
         logAdjPEI <- function (pei) {
             # fdr based on pval
-            pei.adjust <- matrix(p.adjust(pei, "fdr"), ncol=ncol(pei))
+            pei.adjust <- matrix(stats::p.adjust(pei, "fdr"), ncol=ncol(pei))
             dimnames(pei.adjust) <- dimnames(pei)
             pei.NeglogPval <- -log2(pei.adjust)
         }

@@ -139,7 +139,7 @@ coExp <- function(obj, nClust, clMethods="hierarchical",metric="correlation",
     ############################################################################
     # Calculating distance
     if (metric == "biwt") {
-        Distmat <- as.dist(biwt::biwt.cor(mat, output="distance"))
+        Distmat <- stats::as.dist(biwt::biwt.cor(mat, output="distance"))
     } else if (metric == "NMI") {
         #NMI from infotheo package
         #nmi <- infotheo::nMI(infotheo::discretize(t(mat)), method= "emp")

@@ -1,6 +1,12 @@
 \name{NEWS}
 \title{News for Package \pkg{cogena}}
 
+\section{Changes in version 1.15.1 (2018-05-30)}{
+\itemize{
+    \item add dotplot in heatmapPEI and vignettes
+    \item multi-group labelling
+    }
+}
 
 \section{Changes in version 1.5.2 (2016-03-31)}{
 \itemize{

@@ -10,7 +10,7 @@
 #' @importFrom mclust Mclust mclustBIC
 #' @import fastcluster
 #' @import parallel
-#' @import kohonen
+#' @importFrom kohonen som somgrid
 #' @import foreach
 #' @import doParallel
 #' @keywords internal
@@ -73,7 +73,7 @@ pClusters <- function(mat, Distmat, clMethod, nClust, method,
                 clusterObj$cluster <- clusterObj$classification
             },
             som = {
-                clusterObj <- kohonen::som(mat, grid=somgrid(1,nc), ...)
+                clusterObj <- kohonen::som(mat, grid=kohonen::somgrid(1,nc), ...)
                 clusterObj$cluster <- clusterObj$unit.classif
                 names(clusterObj$cluster) <- rownames(mat)
             },

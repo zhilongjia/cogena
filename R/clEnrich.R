@@ -44,7 +44,7 @@
 #' annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
 #' annofile <- system.file("extdata", annoGMT, package="cogena")
 #' 
-#' data(Psoriasis)
+#' utils::data(Psoriasis)
 #' clMethods <- c("hierarchical","kmeans","diana","fanny","som","model","sota","pam","clara","agnes")
 #' genecl_result <- coExp(DEexprs, nClust=2:3, clMethods=c("hierarchical","kmeans"), 
 #'     metric="correlation", method="complete", ncore=2, verbose=TRUE)
@@ -64,7 +64,7 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, nc
     annotation <- gene2set(annofile, genecl_obj@labels, TermFreq=TermFreq)
     # the background gene gene-sets matrix
     AllGeneSymbols=NULL
-    data(AllGeneSymbols, envir = environment())
+    utils::data(AllGeneSymbols, envir = environment())
     annotationGenesPop <- gene2set(annofile, AllGeneSymbols, TermFreq=TermFreq)
     annotationGenesPop <- annotationGenesPop[,colnames(annotation)]
     
@@ -120,7 +120,7 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, nc
                 # negative log2 p value
                 logAdjPEI <- function (pei) {
                     # fdr based on pval
-                    pei.adjust <- matrix(p.adjust(pei, "fdr"), ncol=ncol(pei))
+                    pei.adjust <- matrix(stats::p.adjust(pei, "fdr"), ncol=ncol(pei))
                     dimnames(pei.adjust) <- dimnames(pei)
                     pei.NeglogPval <- -log2(pei.adjust)
                 }
