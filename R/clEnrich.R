@@ -61,6 +61,11 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, nc
         annofile <- system.file("extdata", "c2.cp.kegg.v6.1.symbols.gmt.xz", 
                                 package="cogena")
     }
+    
+    if (is.null(names(sampleLabel))) {
+        stop (paste("No name for parameter sampleLabel." ))
+    }
+    
     annotation <- gene2set(annofile, genecl_obj@labels, TermFreq=TermFreq)
     # the background gene gene-sets matrix
     AllGeneSymbols=NULL
