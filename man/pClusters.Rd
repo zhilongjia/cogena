@@ -4,7 +4,8 @@
 \alias{pClusters}
 \title{paralleled clustering}
 \usage{
-pClusters(mat, Distmat, clMethod, nClust, method, metric, ncore, verbose, ...)
+pClusters(mat, Distmat, clMethod, nClust, method, metric, ncore, verbose,
+  ...)
 }
 \value{
 a list containing the cluster information

@@ -11,8 +11,8 @@ Gene sets are from
 2. http://amp.pharm.mssm.edu/Enrichr/
 }
 \usage{
-clEnrich(genecl_obj, annofile = NULL, sampleLabel = NULL, TermFreq = 0,
-  ncore = 1)
+clEnrich(genecl_obj, annofile = NULL, sampleLabel = NULL,
+  TermFreq = 0, ncore = 1)
 }
 \arguments{
 \item{genecl_obj}{a genecl object}

@@ -13,10 +13,10 @@ heatmapPEI(object, method, nCluster, CutoffNumGeneset = 20,
   printGS = FALSE, add2 = TRUE, geom = "tile")
 
 \S4method{heatmapPEI}{cogena}(object, method = clusterMethods(object),
-  nCluster = nClusters(object), CutoffNumGeneset = 20, CutoffPVal = 0.05,
-  orderMethod = "max", roundvalue = TRUE, low = "grey", high = "red",
-  na.value = "white", maintitle = NULL, printGS = FALSE, add2 = TRUE,
-  geom = "tile")
+  nCluster = nClusters(object), CutoffNumGeneset = 20,
+  CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE,
+  low = "grey", high = "red", na.value = "white", maintitle = NULL,
+  printGS = FALSE, add2 = TRUE, geom = "tile")
 }
 \arguments{
 \item{object}{a genecl or cogena object}

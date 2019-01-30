@@ -7,7 +7,6 @@
 \alias{upDownGene,cogena}
 \alias{logfc}
 \alias{logfc,}
-\alias{upDownGene}
 \title{Show up or down-regualted genes for a clustering method and the number of clusters.}
 \usage{
 upDownGene(object, method, nCluster, add2 = FALSE)
@@ -42,8 +41,6 @@ in the cluster. Return a vector with the length of nCluster if add2 is
 FALSE, or the length of nCluster + 2 if add2 is TRUE and nCluster is not 2. 
 In the latter situation, the last two itemes represent Up and Down
 reuglated genes
-
-logfc: add MeanA, MeanB and logFC to the dat
 }
 \examples{
 data(Psoriasis)

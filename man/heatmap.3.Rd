@@ -15,13 +15,13 @@ heatmap.3(x, Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE,
   na.color = par("bg"), trace = c("none", "column", "row", "both"),
   tracecol = "cyan", hline = median(breaks), vline = median(breaks),
   linecol = tracecol, margins = c(4, 2), ColSideColors, RowSideColors,
-  side.height.fraction = 0.3, cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 +
-  1/log10(nc), labRow = NULL, labCol = NULL, key = TRUE, keysize = 1.5,
-  density.info = c("none", "histogram", "density"), denscol = tracecol,
-  symkey = max(x < 0, na.rm = TRUE) || symbreaks, densadj = 0.25,
-  main = NULL, xlab = NULL, ylab = NULL, lmat = NULL, lhei = NULL,
-  lwid = NULL, ColSideColorsSize = 1, RowSideColorsSize = 1,
-  KeyValueName = "Value", ...)
+  side.height.fraction = 0.3, cexRow = 0.2 + 1/log10(nr),
+  cexCol = 0.2 + 1/log10(nc), labRow = NULL, labCol = NULL,
+  key = TRUE, keysize = 1.5, density.info = c("none", "histogram",
+  "density"), denscol = tracecol, symkey = max(x < 0, na.rm = TRUE) ||
+  symbreaks, densadj = 0.25, main = NULL, xlab = NULL, ylab = NULL,
+  lmat = NULL, lhei = NULL, lwid = NULL, ColSideColorsSize = 1,
+  RowSideColorsSize = 1, KeyValueName = "Value", ...)
 }
 \value{
 a heatmap figure

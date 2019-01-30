@@ -9,8 +9,8 @@
 \usage{
 geneExpInCluster(object, method, nCluster)
 
-\S4method{geneExpInCluster}{cogena}(object, method = clusterMethods(object),
-  nCluster = nClusters(object))
+\S4method{geneExpInCluster}{cogena}(object,
+  method = clusterMethods(object), nCluster = nClusters(object))
 }
 \arguments{
 \item{object}{a genecl or cogena object}

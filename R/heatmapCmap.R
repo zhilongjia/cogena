@@ -204,7 +204,7 @@ setMethod("heatmapCmap", signature(object="cogena"),
               #           panel.grid.major.y = element_blank())
               
               p <- ggplot2::ggplot(enrich_score, aes(as.factor(Var1), Var2)) +
-                  labs(list(title = maintitle, x = "Cluster", y = "Gene set")) +
+                  labs( title = maintitle, x = "Cluster", y = "Gene set" ) +
                   theme(axis.text.y = element_text(size = rel(1.5), face="bold")) +
                   theme(axis.text.x = element_text(size = rel(1.3), angle=-90, 
                                                    face="bold", color=cl_color, vjust=0.5))

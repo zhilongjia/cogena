@@ -10,7 +10,7 @@ output:
         toc: true
         toc_depth: 3
 vignette: >
-  %\VignetteIndexEntry{cogena Tutorial}
+  %\VignetteIndexEntry{cogena, a workflow for co-expressed gene-set enrichment analysis}
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}
 ---
