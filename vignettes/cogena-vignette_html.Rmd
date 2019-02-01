@@ -1,5 +1,5 @@
 ---
-title: "cogena, a workflow for co-expressed gene-set enrichment analysis"
+title: "cogena: a workflow for co-expressed gene-set enrichment analysis"
 author: "Zhilong Jia, Michael R. Barnes"
 date: "`r Sys.Date()`"
 output:
@@ -11,7 +11,7 @@ output:
         toc: true
         toc_depth: 3
 vignette: >
-  %\VignetteIndexEntry{cogena, a workflow for co-expressed gene-set enrichment analysis}
+  %\VignetteIndexEntry{cogena: a workflow for co-expressed gene-set enrichment analysis}
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}
 ---
