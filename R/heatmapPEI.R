@@ -28,6 +28,7 @@
 #' @param printGS print the enriched gene set names or not. Default is FALSE
 #' @param add2 enrichment score for add Up and Down reuglated genes.
 #' @param geom tile or circle
+#' @param wrap_with default 40. wrap strings
 #' 
 #' @return a gene set enrichment heatmap
 #' 
@@ -45,6 +46,7 @@
 #' 
 #' @export
 #' @import ggplot2
+#' @import stringr
 #' @import reshape2
 #' @docType methods
 #' @rdname heatmapPEI
@@ -73,7 +75,8 @@ setGeneric("heatmapPEI",
     function(object, method, nCluster, CutoffNumGeneset=20,
         CutoffPVal=0.05, orderMethod="max", roundvalue=TRUE,
         low="grey", high="red", na.value="white", 
-        maintitle=NULL, printGS=FALSE, add2=TRUE, geom="tile")
+        maintitle=NULL, printGS=FALSE, add2=TRUE, geom="tile",
+        wrap_with=40)
     standardGeneric("heatmapPEI"))
 
 #' @rdname heatmapPEI
@@ -84,7 +87,8 @@ setMethod("heatmapPEI", signature(object="cogena"),
         CutoffNumGeneset=20, CutoffPVal=0.05,
         orderMethod="max", roundvalue=TRUE,
         low="grey", high="red", na.value="white", 
-        maintitle=NULL, printGS=FALSE, add2=TRUE, geom="tile") {
+        maintitle=NULL, printGS=FALSE, add2=TRUE, geom="tile",
+        wrap_with=40) {
         
         method <- match.arg(method, clusterMethods(object))
         nCluster <- match.arg(nCluster, as.character(nClusters(object)))
@@ -128,8 +132,8 @@ setMethod("heatmapPEI", signature(object="cogena"),
             title=paste("cogena:", method, nCluster)
         }
 
-        
-        p <- ggplot2::ggplot(enrichment_score, aes(as.factor(Var1), Var2)) +
+        enrichment_score$Var3 <- stringr::str_wrap(gsub("_", " ", enrichment_score$Var2), width=wrap_with )
+        p <- ggplot2::ggplot(enrichment_score, aes(as.factor(Var1), Var3 )) +
             labs(title = title, x = "Cluster", y = "Gene set") +
             theme(axis.text.y = element_text(size = rel(1.5), face="bold")) +
             theme(axis.text.x = element_text(size = rel(1.3), angle=-90, 
