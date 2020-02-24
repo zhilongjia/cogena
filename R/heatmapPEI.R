@@ -96,6 +96,40 @@ setMethod("heatmapPEI", signature(object="cogena"),
         enrichment_score <- enrichment(object, method, nCluster, CutoffNumGeneset, 
             CutoffPVal, orderMethod, roundvalue, add2 =add2)
         
+        ########################################################################
+        # add geneCount in each cluster and pathway.
+        gene_pathway_TF <- object@annotation[,toupper(colnames(enrichment_score))]
+        gene_pathway_TF <- tidyr::gather(tibble::rownames_to_column(as.data.frame(gene_pathway_TF)), "GS", "TF", 2:(ncol(gene_pathway_TF)+1) )
+        
+        gene_cluster <- as.data.frame(object@clusterObjs[[method]][[nCluster]])
+        colnames(gene_cluster) = "clusterID"
+        gene_cluster <- tibble::rownames_to_column(gene_cluster )
+        
+        
+        if (add2) {
+            UpDnALLgene_cluster <- data.frame()
+            UpDnALLgene_cluster[object@upDn$upGene,"clusterID"] <- "Up"
+            UpDnALLgene_cluster[object@upDn$dnGene,"clusterID"] <- "Down"
+            UpDnALLgene_cluster <- tibble::rownames_to_column(UpDnALLgene_cluster)
+            UpDnALLgene_cluster[(nrow(object@annotation)+1):(nrow(object@annotation)*2),"clusterID"] <- "All"
+            UpDnALLgene_cluster[(nrow(object@annotation)+1):(nrow(object@annotation)*2),"rowname"] <- c(object@upDn$upGene, object@upDn$dnGene)
+            gene_cluster <- rbind(gene_cluster, UpDnALLgene_cluster)
+        }
+        
+        ID_num <- function(x) {
+            table(gene_cluster$clusterID)[as.character(x)]
+        }
+        gene_cluster <- dplyr::mutate(gene_cluster, geneInCluster=ID_num(clusterID), Var1=paste0(clusterID, "#", geneInCluster) ) 
+        
+        gene_pathway_TF_cluster <- dplyr::left_join(gene_pathway_TF, gene_cluster) %>% 
+            dplyr::filter(TF==TRUE) %>% 
+            dplyr::group_by(Var1, GS) %>% 
+            dplyr::summarise(GeneCount=dplyr::n()) %>% 
+            dplyr::mutate(Var2=tolower(GS)) %>% dplyr::select(-GS)
+        
+        
+        ########################################################################
+        
         if (length(enrichment_score)==1 && is.na(enrichment_score)){
             return(paste("No enrichment above the cutoff for", method, 
                 "when the number of clusters is", nCluster, 
@@ -112,8 +146,18 @@ setMethod("heatmapPEI", signature(object="cogena"),
         
 
         enrichment_score <- reshape2::melt(enrichment_score)
+        enrichment_score <- dplyr::left_join(enrichment_score, gene_pathway_TF_cluster)
+        
+        enrichment_score$Var2 <- stringr::str_wrap(gsub("_", " ", enrichment_score$Var2), width=wrap_with )
+        enrichment_score$Var2 <- factor(enrichment_score$Var2, levels=unique(enrichment_score$Var2))
         #legend breaks
         cutoff_score <- round(-log2(CutoffPVal), 2)
+        
+        ####
+        # clear non-sig values
+        enrichment_score$value[enrichment_score$value <  cutoff_score] <- NA
+        ####
+        
         max_score <- max(enrichment_score$value, na.rm=TRUE)
         if (is.infinite(max_score)) {max_score <- 1000}
         if (max_score/cutoff_score > 2) {
@@ -131,14 +175,13 @@ setMethod("heatmapPEI", signature(object="cogena"),
             title=paste("cogena:", method, nCluster)
         }
 
-        # enrichment_score$Var2 <- stringr::str_wrap(gsub("_", " ", enrichment_score$Var2), width=wrap_with )
+        
         p <- ggplot2::ggplot(enrichment_score, aes(as.factor(Var1), Var2 )) +
             labs(title = title, x = "Cluster", y = "Gene set") +
             theme(axis.text.y = element_text(size = rel(1.5), face="bold")) +
             theme(axis.text.x = element_text(size = rel(1.3), angle=-90, 
                                              face="bold", color=cl_color, vjust=0.5))
 
-        
         if (geom =="tile") {
             p +  geom_tile(aes(fill = value)) + 
                 scale_fill_gradient2("score", space="Lab", mid=low, midpoint=4, low=low, 
@@ -147,8 +190,9 @@ setMethod("heatmapPEI", signature(object="cogena"),
                 theme(panel.grid.major.x = element_line(color = "grey", size = 5),
                       panel.grid.major.y = element_blank())
         } else if (geom =="circle") {
-            p + geom_point(aes(color=value, size = value), na.rm = TRUE, stroke = 3) + 
-                guides(size=FALSE) + 
+
+            p + geom_point(aes(color=value, size = GeneCount), na.rm = TRUE, stroke = 3) + 
+                # guides(size=TRUE) + 
                 scale_color_gradient2("score", space="Lab", mid=low, midpoint=4, low=low, 
                                       high=high, na.value=na.value, breaks=breaks) +
                 theme(panel.grid.major = element_line(size = 0.25, linetype = 'solid', colour = "grey90"),
