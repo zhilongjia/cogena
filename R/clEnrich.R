@@ -126,6 +126,10 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, nc
                 logAdjPEI <- function (pei) {
                     # fdr based on pval
                     pei.adjust <- matrix(stats::p.adjust(pei, "fdr"), ncol=ncol(pei))
+                    
+                    #debug log(0)
+                    pei.adjust[pei.adjust==0] <- min( upDnPei[which(upDnPei>0)] )* 0.1
+                    
                     dimnames(pei.adjust) <- dimnames(pei)
                     pei.NeglogPval <- -log2(pei.adjust)
                 }
