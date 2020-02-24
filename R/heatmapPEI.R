@@ -46,7 +46,6 @@
 #' 
 #' @export
 #' @import ggplot2
-#' @import stringr
 #' @import reshape2
 #' @docType methods
 #' @rdname heatmapPEI
@@ -132,8 +131,8 @@ setMethod("heatmapPEI", signature(object="cogena"),
             title=paste("cogena:", method, nCluster)
         }
 
-        enrichment_score$Var3 <- stringr::str_wrap(gsub("_", " ", enrichment_score$Var2), width=wrap_with )
-        p <- ggplot2::ggplot(enrichment_score, aes(as.factor(Var1), Var3 )) +
+        # enrichment_score$Var2 <- stringr::str_wrap(gsub("_", " ", enrichment_score$Var2), width=wrap_with )
+        p <- ggplot2::ggplot(enrichment_score, aes(as.factor(Var1), Var2 )) +
             labs(title = title, x = "Cluster", y = "Gene set") +
             theme(axis.text.y = element_text(size = rel(1.5), face="bold")) +
             theme(axis.text.x = element_text(size = rel(1.3), angle=-90, 
