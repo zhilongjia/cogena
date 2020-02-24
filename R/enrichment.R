@@ -83,7 +83,7 @@ setMethod("enrichment", signature(object="cogena"),
     
 
     # the orderMethod options
-    orderMethod <- match.arg(orderMethod, c(rownames(score), "max", "mean"))
+    orderMethod <- match.arg(orderMethod, c(rownames(score), "max", "mean", "each"))
     if (orderMethod == "mean") {
         score = score[,order(colMeans(score, na.rm=TRUE), decreasing=TRUE)]
         index_above_cutoffPVal <- which(suppressWarnings(
@@ -98,6 +98,16 @@ setMethod("enrichment", signature(object="cogena"),
         score = score[, order(score[orderMethod,], decreasing=TRUE)]
         index_above_cutoffPVal <- 
         which(score[orderMethod,] > -log2(CutoffPVal))
+    } else if (orderMethod == "each") {
+        gs_per_cluster <- round(CutoffNumGeneset/as.numeric(nCluster))
+        gs_i <- list()
+        for (i in rownames(score)) {
+            # print (i)
+            gs_i[[i]] <- names(sort(score[i,], decreasing = TRUE))[1:gs_per_cluster]
+        }
+        score <- score[,unlist(gs_i)]
+        index_above_cutoffPVal <- which(suppressWarnings(
+            apply(score, 2, max, na.rm=TRUE)) > -log2(CutoffPVal))
     }
 
     if (length(index_above_cutoffPVal) > CutoffNumGeneset){
@@ -119,7 +129,8 @@ setMethod("enrichment", signature(object="cogena"),
                                  toupper(sapply(strsplit(colnames(score), "@"), "[", 2)), 
                                  sep="@")
     } else {
-        colnames(score) <- tolower(strtrim(colnames(score), 60))
+        # colnames(score) <- tolower(strtrim(colnames(score), 60))
+        colnames(score) <- tolower(colnames(score))
     }
     
     rownames(score) <- paste(rownames(score), as.character(NumGeneInCluster), sep="#")
