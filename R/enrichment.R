@@ -125,9 +125,10 @@ setMethod("enrichment", signature(object="cogena"),
 
     # Upper cell type and conc in CMAP
     if (grepl("@", colnames(score)[1])) {
-        colnames(score) <- paste(sapply(strsplit(colnames(score), "@"), "[", 1), 
-                                 toupper(sapply(strsplit(colnames(score), "@"), "[", 2)), 
-                                 sep="@")
+        colnames(score) <- colnames(score)
+        # colnames(score) <- paste(sapply(strsplit(colnames(score), "@"), "[", 1), 
+        #                          toupper(sapply(strsplit(colnames(score), "@"), "[", 2)), 
+        #                          sep="@")
     } else {
         # colnames(score) <- tolower(strtrim(colnames(score), 60))
         colnames(score) <- tolower(colnames(score))

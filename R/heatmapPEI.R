@@ -98,7 +98,14 @@ setMethod("heatmapPEI", signature(object="cogena"),
         
         ########################################################################
         # add geneCount in each cluster and pathway.
-        gene_pathway_TF <- object@annotation[,toupper(colnames(enrichment_score))]
+        
+        
+        if (grepl("Cmap", object@gmt)) {
+
+            gene_pathway_TF <- object@annotation[,colnames(enrichment_score)]
+        } else {
+            gene_pathway_TF <- object@annotation[,toupper(colnames(enrichment_score))]
+        }
         gene_pathway_TF <- tidyr::gather(tibble::rownames_to_column(as.data.frame(gene_pathway_TF)), "GS", "TF", 2:(ncol(gene_pathway_TF)+1) )
         
         gene_cluster <- as.data.frame(object@clusterObjs[[method]][[nCluster]])
