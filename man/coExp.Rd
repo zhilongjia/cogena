@@ -4,8 +4,16 @@
 \alias{coExp}
 \title{co-expressed gene-set enrichment analysis}
 \usage{
-coExp(obj, nClust, clMethods = "hierarchical", metric = "correlation",
-  method = "complete", ncore = 2, verbose = FALSE, ...)
+coExp(
+  obj,
+  nClust,
+  clMethods = "hierarchical",
+  metric = "correlation",
+  method = "complete",
+  ncore = 2,
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{obj}{Differentially expressed gene (DEG) expression profilings. Either 

@@ -20,7 +20,7 @@ column as the names of items in the list. see
 for more details.
 }
 \examples{
-anno <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
+anno <- "c2.cp.kegg.v7.01.symbols.gmt.xz"
 annofile <- system.file("extdata", anno, package="cogena")
 gl <- gmt2list(annofile)
 

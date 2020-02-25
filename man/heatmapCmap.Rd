@@ -7,19 +7,41 @@
 \alias{heatmapCmap,cogena}
 \title{heatmap designed for for CMap gene set only}
 \usage{
-heatmapCmap(object, method = clusterMethods(object),
-  nCluster = nClusters(object), orderMethod = "max",
-  MultiInstance = "drug", CutoffNumGeneset = 20, CutoffPVal = 0.05,
-  mergeMethod = "mean", low = "grey", high = "red",
-  na.value = "white", maintitle = NULL, printGS = FALSE,
-  add2 = TRUE, geom = "tile")
+heatmapCmap(
+  object,
+  method = clusterMethods(object),
+  nCluster = nClusters(object),
+  orderMethod = "max",
+  MultiInstance = "drug",
+  CutoffNumGeneset = 20,
+  CutoffPVal = 0.05,
+  mergeMethod = "mean",
+  low = "grey",
+  high = "red",
+  na.value = "white",
+  maintitle = NULL,
+  printGS = FALSE,
+  add2 = TRUE,
+  geom = "tile"
+)
 
-\S4method{heatmapCmap}{cogena}(object, method = clusterMethods(object),
-  nCluster = nClusters(object), orderMethod = "max",
-  MultiInstance = "drug", CutoffNumGeneset = 20, CutoffPVal = 0.05,
-  mergeMethod = "mean", low = "grey", high = "red",
-  na.value = "white", maintitle = "cogena", printGS = FALSE,
-  add2 = TRUE, geom = "tile")
+\S4method{heatmapCmap}{cogena}(
+  object,
+  method = clusterMethods(object),
+  nCluster = nClusters(object),
+  orderMethod = "max",
+  MultiInstance = "drug",
+  CutoffNumGeneset = 20,
+  CutoffPVal = 0.05,
+  mergeMethod = "mean",
+  low = "grey",
+  high = "red",
+  na.value = "white",
+  maintitle = "cogena",
+  printGS = FALSE,
+  add2 = TRUE,
+  geom = "tile"
+)
 }
 \arguments{
 \item{object}{a genecl or cogena object}

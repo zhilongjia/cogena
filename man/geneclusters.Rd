@@ -12,11 +12,9 @@ a certain number.}
 \usage{
 geneclusters(object, method, nClust)
 
-\S4method{geneclusters}{genecl}(object, method = clusterMethods(object),
-  nClust)
+\S4method{geneclusters}{genecl}(object, method = clusterMethods(object), nClust)
 
-\S4method{geneclusters}{cogena}(object, method = clusterMethods(object),
-  nClust)
+\S4method{geneclusters}{cogena}(object, method = clusterMethods(object), nClust)
 }
 \arguments{
 \item{object}{a genecl or cogena object}

@@ -6,16 +6,37 @@
 \alias{heatmapCluster,cogena-method}
 \title{heatmap of gene expression profilings with cluster indication.}
 \usage{
-heatmapCluster(object, method, nCluster, scale = "row",
-  sampleColor = NULL, clusterColor = NULL, clusterColor2 = NULL,
-  heatmapcol = NULL, maintitle = NULL, printSum = TRUE,
-  add2 = TRUE, cexCol = NULL, ...)
+heatmapCluster(
+  object,
+  method,
+  nCluster,
+  scale = "row",
+  sampleColor = NULL,
+  clusterColor = NULL,
+  clusterColor2 = NULL,
+  heatmapcol = NULL,
+  maintitle = NULL,
+  printSum = TRUE,
+  add2 = TRUE,
+  cexCol = NULL,
+  ...
+)
 
-\S4method{heatmapCluster}{cogena}(object,
-  method = clusterMethods(object), nCluster = nClusters(object),
-  scale = "row", sampleColor = NULL, clusterColor = NULL,
-  clusterColor2 = NULL, heatmapcol = NULL, maintitle = NULL,
-  printSum = TRUE, add2 = TRUE, cexCol = NULL, ...)
+\S4method{heatmapCluster}{cogena}(
+  object,
+  method = clusterMethods(object),
+  nCluster = nClusters(object),
+  scale = "row",
+  sampleColor = NULL,
+  clusterColor = NULL,
+  clusterColor2 = NULL,
+  heatmapcol = NULL,
+  maintitle = NULL,
+  printSum = TRUE,
+  add2 = TRUE,
+  cexCol = NULL,
+  ...
+)
 }
 \arguments{
 \item{object}{a genecl or cogena object}
@@ -62,7 +83,7 @@ latter compared with "ct". Usually, the order is the alphabet.
 }
 \examples{
 data(Psoriasis)
-annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz", 
+annofile <- system.file("extdata", "c2.cp.kegg.v7.01.symbols.gmt.xz", 
 package="cogena")
 
 \dontrun{

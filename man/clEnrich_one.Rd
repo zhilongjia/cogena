@@ -12,8 +12,14 @@ Gene sets are from
 2. http://amp.pharm.mssm.edu/Enrichr/
 }
 \usage{
-clEnrich_one(genecl_obj, method, nCluster, annofile = NULL,
-  sampleLabel = NULL, TermFreq = 0)
+clEnrich_one(
+  genecl_obj,
+  method,
+  nCluster,
+  annofile = NULL,
+  sampleLabel = NULL,
+  TermFreq = 0
+)
 }
 \arguments{
 \item{genecl_obj}{a genecl or cogena object}
@@ -40,19 +46,15 @@ score are based on -log(p) with p from hyper-geometric test.
 \details{
 Gene sets availiable (See vignette for more): 
 \itemize{
-\item c2.cp.kegg.v5.0.symbols.gmt.xz (From Msigdb)
-\item c2.cp.reactome.v5.0.symbols.gmt.xz (From Msigdb)
-\item c5.bp.v5.0.symbols.gmt.xz (From Msigdb)
-\item c2.cp.biocarta.v5.0.symbols.gmt.xz (From Msigdb)
-\item c2.all.v5.0.symbols.gmt.xz (From Msigdb)
-\item c2.cp.v5.0.symbols.gmt.xz (From Msigdb)
-\item c5.mf.v5.0.symbols.gmt.xz (From Msigdb)
+\item c2.cp.kegg.v7.01.symbols.gmt.xz (From Msigdb)
+\item c2.cp.reactome.v7.01.symbols.gmt.xz (From Msigdb)
+\item c5.bp.v7.01.symbols.gmt.xz (From Msigdb)
 }
 }
 \examples{
 
 #annotaion
-annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
+annoGMT <- "c2.cp.kegg.v7.01.symbols.gmt.xz"
 annofile <- system.file("extdata", annoGMT, package="cogena")
 
 data(Psoriasis)

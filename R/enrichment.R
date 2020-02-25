@@ -30,7 +30,7 @@
 #' @return a matrix with clusters in row and gene-sets in column.
 #' @examples
 #' data(Psoriasis)
-#' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz", 
+#' annofile <- system.file("extdata", "c2.cp.kegg.v7.01.symbols.gmt.xz", 
 #' package="cogena")
 #' 
 #' \dontrun{
@@ -124,15 +124,15 @@ setMethod("enrichment", signature(object="cogena"),
     score <- score[,ncol(score):1, drop=FALSE]
 
     # Upper cell type and conc in CMAP
-    if (grepl("@", colnames(score)[1])) {
-        colnames(score) <- colnames(score)
-        # colnames(score) <- paste(sapply(strsplit(colnames(score), "@"), "[", 1), 
-        #                          toupper(sapply(strsplit(colnames(score), "@"), "[", 2)), 
-        #                          sep="@")
-    } else {
-        # colnames(score) <- tolower(strtrim(colnames(score), 60))
-        colnames(score) <- tolower(colnames(score))
-    }
+    # if (grepl("@", colnames(score)[1])) {
+    #     colnames(score) <- colnames(score)
+    #     # colnames(score) <- paste(sapply(strsplit(colnames(score), "@"), "[", 1), 
+    #     #                          toupper(sapply(strsplit(colnames(score), "@"), "[", 2)), 
+    #     #                          sep="@")
+    # } else {
+    #     # colnames(score) <- tolower(strtrim(colnames(score), 60))
+    #     colnames(score) <- tolower(colnames(score))
+    # }
     
     rownames(score) <- paste(rownames(score), as.character(NumGeneInCluster), sep="#")
     

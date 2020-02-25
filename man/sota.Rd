@@ -6,9 +6,20 @@
 \alias{plot.sota}
 \title{Self-organizing tree algorithm (SOTA)}
 \usage{
-sota(data, maxCycles, maxEpochs = 1000, distance = "euclidean",
-  wcell = 0.01, pcell = 0.005, scell = 0.001, delta = 1e-04,
-  neighb.level = 0, maxDiversity = 0.9, unrest.growth = TRUE, ...)
+sota(
+  data,
+  maxCycles,
+  maxEpochs = 1000,
+  distance = "euclidean",
+  wcell = 0.01,
+  pcell = 0.005,
+  scell = 0.001,
+  delta = 1e-04,
+  neighb.level = 0,
+  maxDiversity = 0.9,
+  unrest.growth = TRUE,
+  ...
+)
 
 \method{print}{sota}(x, ...)
 

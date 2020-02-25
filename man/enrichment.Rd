@@ -7,13 +7,27 @@
 \alias{enrichment,cogena_methods}
 \title{get the enrichment table from a cogena object.}
 \usage{
-enrichment(object, method, nCluster, CutoffNumGeneset = Inf,
-  CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE,
-  add2 = FALSE)
+enrichment(
+  object,
+  method,
+  nCluster,
+  CutoffNumGeneset = Inf,
+  CutoffPVal = 0.05,
+  orderMethod = "max",
+  roundvalue = TRUE,
+  add2 = FALSE
+)
 
-\S4method{enrichment}{cogena}(object, method, nCluster,
-  CutoffNumGeneset = Inf, CutoffPVal = 0.05, orderMethod = "max",
-  roundvalue = TRUE, add2 = TRUE)
+\S4method{enrichment}{cogena}(
+  object,
+  method,
+  nCluster,
+  CutoffNumGeneset = Inf,
+  CutoffPVal = 0.05,
+  orderMethod = "max",
+  roundvalue = TRUE,
+  add2 = TRUE
+)
 }
 \arguments{
 \item{object}{a genecl or cogena object}
@@ -55,7 +69,7 @@ orderMethod:
 }
 \examples{
 data(Psoriasis)
-annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz", 
+annofile <- system.file("extdata", "c2.cp.kegg.v7.01.symbols.gmt.xz", 
 package="cogena")
 
 \dontrun{

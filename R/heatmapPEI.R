@@ -51,7 +51,7 @@
 #' @rdname heatmapPEI
 #' @examples
 #' data(Psoriasis)
-#' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz", 
+#' annofile <- system.file("extdata", "c2.cp.kegg.v7.01.symbols.gmt.xz", 
 #' package="cogena")
 #' 
 #' \dontrun{
@@ -99,13 +99,13 @@ setMethod("heatmapPEI", signature(object="cogena"),
         ########################################################################
         # add geneCount in each cluster and pathway.
         
-        
-        if (grepl("Cmap", object@gmt)) {
-
-            gene_pathway_TF <- object@annotation[,colnames(enrichment_score)]
-        } else {
-            gene_pathway_TF <- object@annotation[,toupper(colnames(enrichment_score))]
-        }
+        gene_pathway_TF <- object@annotation[,colnames(enrichment_score)]
+        # if (grepl("Cmap", object@gmt)) {
+        # 
+        #     gene_pathway_TF <- object@annotation[,colnames(enrichment_score)]
+        # } else {
+        #     gene_pathway_TF <- object@annotation[,toupper(colnames(enrichment_score))]
+        # }
         gene_pathway_TF <- tidyr::gather(tibble::rownames_to_column(as.data.frame(gene_pathway_TF)), "GS", "TF", 2:(ncol(gene_pathway_TF)+1) )
         
         gene_cluster <- as.data.frame(object@clusterObjs[[method]][[nCluster]])
@@ -131,13 +131,14 @@ setMethod("heatmapPEI", signature(object="cogena"),
         ID_num <- function(x) {
             table(gene_cluster$clusterID)[as.character(x)]
         }
-        gene_cluster <- dplyr::mutate(gene_cluster, geneInCluster=ID_num(clusterID), Var1=paste0(clusterID, "#", geneInCluster) ) 
+        gene_cluster <- dplyr::mutate(gene_cluster, geneInCluster=ID_num(clusterID), clusterNumGene=paste0(clusterID, "#", geneInCluster) ) 
         
         gene_pathway_TF_cluster <- dplyr::left_join(gene_pathway_TF, gene_cluster) %>% 
             dplyr::filter(TF==TRUE) %>% 
-            dplyr::group_by(Var1, GS) %>% 
-            dplyr::summarise(GeneCount=dplyr::n()) %>% 
-            dplyr::mutate(Var2=tolower(GS)) %>% dplyr::select(-GS)
+            dplyr::group_by(clusterNumGene, GS) %>% 
+            dplyr::summarise(GeneCount=dplyr::n()) 
+        # %>% 
+        #     dplyr::mutate(Var2=GS) %>% dplyr::select(-GS)
         
         
         ########################################################################
@@ -157,11 +158,18 @@ setMethod("heatmapPEI", signature(object="cogena"),
         cl_color <- c(cl_color, "blue")
         
 
-        enrichment_score <- reshape2::melt(enrichment_score)
+        # enrichment_score <- reshape2::melt(enrichment_score)
+        enrichment_score <- tidyr::gather( tibble::rownames_to_column(as.data.frame(enrichment_score), var="clusterNumGene"), "GS", "value", 2:(ncol(enrichment_score)+1) )
+        
+        # tidyr::gather(tibble::rownames_to_column(as.data.frame(gene_pathway_TF)), "GS", "TF", 2:(ncol(gene_pathway_TF)+1) )
+        
         enrichment_score <- dplyr::left_join(enrichment_score, gene_pathway_TF_cluster)
         
-        enrichment_score$Var2 <- stringr::str_wrap(gsub("_", " ", enrichment_score$Var2), width=wrap_with )
-        enrichment_score$Var2 <- factor(enrichment_score$Var2, levels=unique(enrichment_score$Var2))
+        enrichment_score$GS <- stringr::str_wrap(gsub("_", " ", enrichment_score$GS), width=wrap_with )
+        enrichment_score$GS <- factor(enrichment_score$GS, levels=unique(enrichment_score$GS))
+        enrichment_score$clusterNumGene <- factor(enrichment_score$clusterNumGene, levels=unique(enrichment_score$clusterNumGene))
+        
+        
         #legend breaks
         cutoff_score <- round(-log2(CutoffPVal), 2)
         
@@ -180,7 +188,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
             breaks <- NULL
         }
         
-        Var1=Var2=value=NULL
+        # Var1=Var2=value=NULL
         if (!is.null(title)) {
             title=paste(maintitle, "\n", "cogena:", method, nCluster)
         } else {
@@ -188,7 +196,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
         }
 
         
-        p <- ggplot2::ggplot(enrichment_score, aes(as.factor(Var1), Var2 )) +
+        p <- ggplot2::ggplot(enrichment_score, aes(as.factor(clusterNumGene), GS )) +
             labs(title = title, x = "Cluster", y = "Gene set") +
             theme(axis.text.y = element_text(size = rel(1.5), face="bold")) +
             theme(axis.text.x = element_text(size = rel(1.3), angle=-90, 
@@ -196,7 +204,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
 
         if (geom =="tile") {
             p +  geom_tile(aes(fill = value)) + 
-                scale_fill_gradient2("score", space="Lab", mid=low, midpoint=4, low=low, 
+                scale_fill_gradient2("-log(q-value)", space="Lab", mid=low, midpoint=4, low=low, 
                                      high=high, na.value=na.value, breaks=breaks) +
                 geom_text(aes(label=value),size=4, na.rm=TRUE)  +
                 theme(panel.grid.major.x = element_line(color = "grey", size = 5),
@@ -205,7 +213,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
 
             p + geom_point(aes(color=value, size = GeneCount), na.rm = TRUE, stroke = 3) + 
                 # guides(size=TRUE) + 
-                scale_color_gradient2("score", space="Lab", mid=low, midpoint=4, low=low, 
+                scale_color_gradient2("-log(q-value)", space="Lab", mid=low, midpoint=4, low=low, 
                                       high=high, na.value=na.value, breaks=breaks) +
                 theme(panel.grid.major = element_line(size = 0.25, linetype = 'solid', colour = "grey90"),
                     panel.background = element_blank(),

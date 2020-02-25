@@ -12,13 +12,14 @@
 #' 
 #' @seealso gmtlist2file
 #' @examples
-#' anno <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
+#' anno <- "c2.cp.kegg.v7.01.symbols.gmt.xz"
 #' annofile <- system.file("extdata", anno, package="cogena")
 #' gl <- gmt2list(annofile)
 #' 
 gmt2list <- function(annofile){
+    print (annofile)
     if (!file.exists(annofile)) {
-        stop("There is no such gmt file.")
+        stop("There is no such a gmt file!")
     }
     
     if (tools::file_ext(annofile) == "xz") {
@@ -35,5 +36,6 @@ gmt2list <- function(annofile){
     names(y) <- sapply(y, `[[`, 1)
     
     annoList <- lapply(y, `[`, c(-1,-2))
+    retunr(annoList)
 }
 

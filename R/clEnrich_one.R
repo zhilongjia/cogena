@@ -6,13 +6,9 @@
 #' 
 #' Gene sets availiable (See vignette for more): 
 #' \itemize{
-#' \item c2.cp.kegg.v5.0.symbols.gmt.xz (From Msigdb)
-#' \item c2.cp.reactome.v5.0.symbols.gmt.xz (From Msigdb)
-#' \item c5.bp.v5.0.symbols.gmt.xz (From Msigdb)
-#' \item c2.cp.biocarta.v5.0.symbols.gmt.xz (From Msigdb)
-#' \item c2.all.v5.0.symbols.gmt.xz (From Msigdb)
-#' \item c2.cp.v5.0.symbols.gmt.xz (From Msigdb)
-#' \item c5.mf.v5.0.symbols.gmt.xz (From Msigdb)
+#' \item c2.cp.kegg.v7.01.symbols.gmt.xz (From Msigdb)
+#' \item c2.cp.reactome.v7.01.symbols.gmt.xz (From Msigdb)
+#' \item c5.bp.v7.01.symbols.gmt.xz (From Msigdb)
 #' }
 #' 
 #' @param genecl_obj a genecl or cogena object
@@ -37,7 +33,7 @@
 #' @examples 
 #' 
 #' #annotaion
-#' annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
+#' annoGMT <- "c2.cp.kegg.v7.01.symbols.gmt.xz"
 #' annofile <- system.file("extdata", annoGMT, package="cogena")
 #' 
 #' data(Psoriasis)
@@ -62,7 +58,7 @@ clEnrich_one <- function(genecl_obj, method,
     ############################################################################
     # Annotation data
     if (is.null(annofile)) {
-        annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz", 
+        annofile <- system.file("extdata", "c2.cp.kegg.v7.01.symbols.gmt.xz", 
                                 package="cogena")
     }
     
@@ -121,6 +117,10 @@ clEnrich_one <- function(genecl_obj, method,
         logAdjPEI <- function (pei) {
             # fdr based on pval
             pei.adjust <- matrix(stats::p.adjust(pei, "fdr"), ncol=ncol(pei))
+            
+            #debug log(0)
+            pei.adjust[pei.adjust==0] <- min( upDnPei[which(upDnPei>0)] )* 0.1
+            
             dimnames(pei.adjust) <- dimnames(pei)
             pei.NeglogPval <- -log2(pei.adjust)
         }

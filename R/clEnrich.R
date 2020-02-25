@@ -10,13 +10,9 @@
 #' 
 #' Gene sets availiable (See vignette for more): 
 #' \itemize{
-#' \item c2.cp.kegg.v5.0.symbols.gmt.xz (From Msigdb)
-#' \item c2.cp.reactome.v5.0.symbols.gmt.xz (From Msigdb)
-#' \item c5.bp.v5.0.symbols.gmt.xz (From Msigdb)
-#' \item c2.cp.biocarta.v5.0.symbols.gmt.xz (From Msigdb)
-#' \item c2.all.v5.0.symbols.gmt.xz (From Msigdb)
-#' \item c2.cp.v5.0.symbols.gmt.xz (From Msigdb)
-#' \item c5.mf.v5.0.symbols.gmt.xz (From Msigdb)
+#' \item c2.cp.kegg.v7.01.symbols.gmt.xz (From Msigdb)
+#' \item c2.cp.reactome.v7.01.symbols.gmt.xz (From Msigdb)
+#' \item c5.bp.v7.01.symbols.gmt.xz (From Msigdb)
 #' }
 #' 
 #' @param genecl_obj a genecl object
@@ -41,7 +37,7 @@
 #' @examples 
 #' 
 #' #annotaion
-#' annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
+#' annoGMT <- "c2.cp.kegg.v7.01.symbols.gmt.xz"
 #' annofile <- system.file("extdata", annoGMT, package="cogena")
 #' 
 #' utils::data(Psoriasis)
@@ -58,7 +54,7 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, nc
     ############################################################################
     # Annotation data
     if (is.null(annofile)) {
-        annofile <- system.file("extdata", "c2.cp.kegg.v6.1.symbols.gmt.xz", 
+        annofile <- system.file("extdata", "c2.cp.kegg.v7.01.symbols.gmt.xz", 
                                 package="cogena")
     }
     

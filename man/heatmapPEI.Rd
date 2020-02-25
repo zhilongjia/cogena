@@ -7,16 +7,41 @@
 \alias{heatmapPEI,cogena}
 \title{heatmap of the gene set enrichment from a cogena object.}
 \usage{
-heatmapPEI(object, method, nCluster, CutoffNumGeneset = 20,
-  CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE,
-  low = "grey", high = "red", na.value = "white", maintitle = NULL,
-  printGS = FALSE, add2 = TRUE, geom = "tile", wrap_with = 40)
+heatmapPEI(
+  object,
+  method,
+  nCluster,
+  CutoffNumGeneset = 20,
+  CutoffPVal = 0.05,
+  orderMethod = "max",
+  roundvalue = TRUE,
+  low = "grey",
+  high = "red",
+  na.value = "white",
+  maintitle = NULL,
+  printGS = FALSE,
+  add2 = TRUE,
+  geom = "tile",
+  wrap_with = 40
+)
 
-\S4method{heatmapPEI}{cogena}(object, method = clusterMethods(object),
-  nCluster = nClusters(object), CutoffNumGeneset = 20,
-  CutoffPVal = 0.05, orderMethod = "max", roundvalue = TRUE,
-  low = "grey", high = "red", na.value = "white", maintitle = NULL,
-  printGS = FALSE, add2 = TRUE, geom = "tile", wrap_with = 40)
+\S4method{heatmapPEI}{cogena}(
+  object,
+  method = clusterMethods(object),
+  nCluster = nClusters(object),
+  CutoffNumGeneset = 20,
+  CutoffPVal = 0.05,
+  orderMethod = "max",
+  roundvalue = TRUE,
+  low = "grey",
+  high = "red",
+  na.value = "white",
+  maintitle = NULL,
+  printGS = FALSE,
+  add2 = TRUE,
+  geom = "tile",
+  wrap_with = 40
+)
 }
 \arguments{
 \item{object}{a genecl or cogena object}
@@ -68,7 +93,7 @@ red means cluster containing up-regulated genes, green means down-regulated
 genes, black means there are up and 
 down regulated genes in this cluster and blue means all DEGs. If parameter
 add2 is true, another two columns will be shown as well, representing the
-up and down regulated genes.
+up and down regulated genes. 
 
 The direction of DEGs are based on latter Vs
 former from sample labels. For example, labels are 
@@ -89,7 +114,7 @@ orderMethod:
 }
 \examples{
 data(Psoriasis)
-annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz", 
+annofile <- system.file("extdata", "c2.cp.kegg.v7.01.symbols.gmt.xz", 
 package="cogena")
 
 \dontrun{

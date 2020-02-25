@@ -18,7 +18,7 @@
 #' 
 #' @examples 
 #' data(Psoriasis)
-#' annofile <- system.file("extdata", "c2.cp.kegg.v5.0.symbols.gmt.xz", 
+#' annofile <- system.file("extdata", "c2.cp.kegg.v7.01.symbols.gmt.xz", 
 #' package="cogena")
 #' 
 #' 
