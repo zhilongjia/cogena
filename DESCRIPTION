@@ -1,5 +1,5 @@
 Package: cogena
-Version: 1.17.0
+Version: 1.18.0
 Title: co-expressed gene-set enrichment analysis
 Authors@R: c(person("Zhilong", "Jia", role =c("aut", "cre"), 
     email="zhilongjia@gmail.com"), 
@@ -18,7 +18,7 @@ biocViews: Clustering, GeneSetEnrichment, GeneExpression, Visualization,
     Pathways, KEGG, GO, Microarray, Sequencing, SystemsBiology, DataRepresentation,
     DataImport
 Depends:
-    R (>= 3.4),
+    R (>= 3.6),
     cluster,
     ggplot2,
     kohonen
@@ -37,6 +37,9 @@ Imports:
     biwt,
     Biobase,
     reshape2,
+    stringr,
+    tibble,
+    tidyr,
     dplyr,
     devtools
 Suggests:
@@ -73,4 +76,4 @@ URL: https://github.com/zhilongjia/cogena
 NeedsCompilation: no
 BugReports: https://github.com/zhilongjia/cogena/issues
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2

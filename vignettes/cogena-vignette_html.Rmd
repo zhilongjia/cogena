@@ -11,9 +11,11 @@ output:
         toc: true
         toc_depth: 3
 vignette: >
+  %\usepackage[utf8]{inputenc}
   %\VignetteIndexEntry{cogena: a workflow for co-expressed gene-set enrichment analysis}
   %\VignetteEngine{knitr::rmarkdown}
-  %\usepackage[utf8]{inputenc}
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Abstract
@@ -68,7 +70,8 @@ See `?Psoriasis` for more details.
 
 
 ```{r import_data, message=FALSE}
-library(cogena)
+# library(cogena)
+devtools::load_all("./")
 data(Psoriasis)
 # objects in the Psoriasis dataset.
 # Note: label of interest should follow the control label as this
@@ -98,19 +101,18 @@ Table 2. Cogena Gene Sets
 
 Gene Set                           | Description
 -----------------------------------|---------------
-c2.cp.biocarta.v5.0.symbols.gmt.xz | Biocarta gene sets
-c2.cp.kegg.v5.0.symbols.gmt.xz     | KEGG gene sets
-c2.cp.reactome.v5.0.symbols.gmt.xz | Reactome gene sets
-c2.cp.v5.0.symbols.gmt.xz          | all canonical pathways
-c5.bp.v5.0.symbols.gmt.xz          | GO biological processes
-c5.mf.v5.0.symbols.gmt.xz          | GO molecular functions
+c2.cp.kegg.v7.1.symbols.gmt.xz     | KEGG gene sets
+c2.cp.reactome.v7.1.symbols.gmt.xz | Reactome gene sets
+c2.cp.v7.0.symbols.gmt.xz          | all canonical pathways
+c5.bp.v7.0.symbols.gmt.xz          | GO biological processes
+c5.mf.v7.0.symbols.gmt.xz          | GO molecular functions
 CmapDn100.gmt.xz                   | Connectivity map gene sets: top 100 down regulated per drug
 CmapUp100.gmt.xz                   | Connectivity map gene sets: top 100 up regulated per drug
 
 
 
 User-defined gene-sets must be formatted gmt and/or compressed by xz, (such as
-c2.cp.kegg.v5.0.symbols.gmt or c2.cp.kegg.v5.0.symbols.gmt.xz). 
+c2.cp.kegg.v7.01.symbols.gmt or c2.cp.kegg.v7.01.symbols.gmt.xz). 
 Gene sets should be copied to the extdata directory
 in the installation directory of cogena, such as ~/R/x86_64-pc-linux-gnu-
 library/3.2/cogena/extdata in Linux), or kindly send to the author of cogena to
@@ -128,7 +130,7 @@ share with others.
 
 Firstly, KEGG Pathway Analysis, will be demonstrated to show the utility of cogena.
 The other analyses based on cogena are similar to the process of pathway analysis.
-Here we used the KEGG pathway gene set (c2.cp.kegg.v5.0.symbols.gmt.xz),
+Here we used the KEGG pathway gene set (c2.cp.kegg.v7.01.symbols.gmt.xz),
 hierarchical and Pam clustering methods, 10 clusters, 2 CPU cores and "correlation"
 distance metric to set up the pathway analysis.
 
@@ -137,9 +139,9 @@ distance metric to set up the pathway analysis.
 ```{r gene_list_annotation}
 
 # KEGG Pathway gene set
-annoGMT <- "c2.cp.kegg.v5.0.symbols.gmt.xz"
+annoGMT <- "c2.cp.kegg.v7.01.symbols.gmt.xz"
 # GO biological process gene set
-# annoGMT <- "c5.bp.v5.0.symbols.gmt.xz"
+# annoGMT <- "c5.bp.v7.0.symbols.gmt.xz"
 annofile <- system.file("extdata", annoGMT, package="cogena")
 
 # the number of clusters. It can be a vector.
@@ -174,13 +176,15 @@ There are two steps for cogena analysis, co-expression analysis and then
 gene set enrichment analysis (here is pathway anlysis).
 
 
-```{r cogena, results="hide"}
+```{r cogena, message=TRUE, warning=TRUE, paged.print=TRUE}
 # Co-expression Analysis
 genecl_result <- coExp(DEexprs, nClust=nClust, clMethods=clMethods, 
                        metric=metric, method=method, ncore=ncore)
 
 # Enrichment (Pathway) analysis for the co-expressed genes
 clen_res <- clEnrich(genecl_result, annofile=annofile, sampleLabel=sampleLabel)
+summary(clen_res)
+
 ```
 
 

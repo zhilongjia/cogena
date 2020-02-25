@@ -1,0 +1,7 @@
+# rename gene set name
+gawk 'BEGIN{FS=OFS="\t"} {sub("KEGG_","", $1); $1=tolower($1); print $0} ' c2.cp.kegg.v7.0.symbols.gmt > c2.cp.kegg.v7.01.symbols.gmt
+
+gawk 'BEGIN{FS=OFS="\t"} {sub("REACTOME_","", $1); $1=tolower($1); print $0} ' c2.cp.reactome.v7.0.symbols.gmt > c2.cp.reactome.v7.01.symbols.gmt
+
+# compress
+xz -k c2.cp.kegg.v7.01.symbols.gmt
