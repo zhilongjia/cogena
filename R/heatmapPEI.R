@@ -103,16 +103,21 @@ setMethod("heatmapPEI", signature(object="cogena"),
         
         gene_cluster <- as.data.frame(object@clusterObjs[[method]][[nCluster]])
         colnames(gene_cluster) = "clusterID"
+        
         gene_cluster <- tibble::rownames_to_column(gene_cluster )
         
+        cluster_all <- tibble::tibble()
+        cluster_all[1: nrow(gene_cluster), "rowname"] <- gene_cluster$rowname
+        cluster_all[1: nrow(gene_cluster), "clusterID"] <- "All"
+        gene_cluster <- rbind(gene_cluster, cluster_all)
         
         if (add2) {
             UpDnALLgene_cluster <- data.frame()
             UpDnALLgene_cluster[object@upDn$upGene,"clusterID"] <- "Up"
             UpDnALLgene_cluster[object@upDn$dnGene,"clusterID"] <- "Down"
             UpDnALLgene_cluster <- tibble::rownames_to_column(UpDnALLgene_cluster)
-            UpDnALLgene_cluster[(nrow(object@annotation)+1):(nrow(object@annotation)*2),"clusterID"] <- "All"
-            UpDnALLgene_cluster[(nrow(object@annotation)+1):(nrow(object@annotation)*2),"rowname"] <- c(object@upDn$upGene, object@upDn$dnGene)
+            # UpDnALLgene_cluster[(nrow(object@annotation)+1):(nrow(object@annotation)*2),"clusterID"] <- "All"
+            # UpDnALLgene_cluster[(nrow(object@annotation)+1):(nrow(object@annotation)*2),"rowname"] <- c(object@upDn$upGene, object@upDn$dnGene)
             gene_cluster <- rbind(gene_cluster, UpDnALLgene_cluster)
         }
         
