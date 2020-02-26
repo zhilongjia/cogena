@@ -3,7 +3,10 @@
 
 \section{Changes in version 1.18.0 (2020-02-25)}{
 \itemize{
-    \item add gene number in dotplot in heatmapPEI and vignettes
+    \item dotplot shows gene number and -log2(q-value) heatmapPEI.
+    \item update vignettes using rmarkdown v2.
+    \item update gene sets and rename gene sets name.
+    \item update AllGeneSymbol using gene symbols from https://www.genenames.org/ (accessed  at Feb. 26, 2020)
     }
 }
 
