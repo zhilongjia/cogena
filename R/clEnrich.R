@@ -54,7 +54,7 @@ clEnrich <- function(genecl_obj, annofile=NULL, sampleLabel=NULL, TermFreq=0, nc
     ############################################################################
     # Annotation data
     if (is.null(annofile)) {
-        annofile <- system.file("extdata", "c2.cp.kegg.v7.01.symbols.gmt.xz", 
+        annofile <- system.file("extdata", "c2.cp.kegg.v7.01.symbols.gmt.xz",
                                 package="cogena")
     }
     

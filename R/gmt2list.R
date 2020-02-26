@@ -36,6 +36,6 @@ gmt2list <- function(annofile){
     names(y) <- sapply(y, `[[`, 1)
     
     annoList <- lapply(y, `[`, c(-1,-2))
-    retunr(annoList)
+    return(annoList)
 }
 
