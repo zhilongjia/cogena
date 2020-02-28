@@ -17,7 +17,7 @@
 #' gl <- gmt2list(annofile)
 #' 
 gmt2list <- function(annofile){
-    print (annofile)
+    
     if (!file.exists(annofile)) {
         stop("There is no such a gmt file!")
     }
