@@ -165,7 +165,8 @@ setMethod("heatmapPEI", signature(object="cogena"),
         
         enrichment_score <- dplyr::left_join(enrichment_score, gene_pathway_TF_cluster)
         
-        enrichment_score$GS <- stringr::str_wrap(gsub("_", " ", enrichment_score$GS), width=wrap_with )
+        # enrichment_score$GS <- stringr::str_wrap(gsub("_", " ", enrichment_score$GS), width=wrap_with )
+        enrichment_score$GS <- stringr::str_wrap(enrichment_score$GS, width=wrap_with )
         enrichment_score$GS <- factor(enrichment_score$GS, levels=unique(enrichment_score$GS))
         enrichment_score$clusterNumGene <- factor(enrichment_score$clusterNumGene, levels=unique(enrichment_score$clusterNumGene))
         
@@ -203,7 +204,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
                                              face="bold", color=cl_color, vjust=0.5))
 
         if (geom =="tile") {
-            p +  geom_tile(aes(fill = value)) + 
+            p1 <- p +  geom_tile(aes(fill = value)) + 
                 scale_fill_gradient2("-log(q-value)", space="Lab", mid=low, midpoint=4, low=low, 
                                      high=high, na.value=na.value, breaks=breaks) +
                 geom_text(aes(label=value),size=4, na.rm=TRUE)  +
@@ -211,7 +212,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
                       panel.grid.major.y = element_blank())
         } else if (geom =="circle") {
 
-            p + geom_point(aes(color=value, size = GeneCount), na.rm = TRUE, stroke = 3) + 
+            p1 <- p + geom_point(aes(color=value, size = GeneCount), na.rm = TRUE, stroke = 3) + 
                 # guides(size=TRUE) + 
                 scale_color_gradient2("-log(q-value)", space="Lab", mid=low, midpoint=4, low=low, 
                                       high=high, na.value=na.value, breaks=breaks) +
@@ -221,6 +222,14 @@ setMethod("heatmapPEI", signature(object="cogena"),
                     axis.line.y = element_line(size = 0.25, linetype = 'solid'),
                     plot.background = element_blank() )
         }
+        print(p1)
+        if (printGS) {
+            # output formatted enrichment_score
+            enrich_score <- tidyr::pivot_wider(enrichment_score, GS, clusterNumGene)
+            enrich_score <- enrich_score[nrow(enrich_score):1,]
+            return(enrich_score) 
+        }
+        
         
     }
 )
