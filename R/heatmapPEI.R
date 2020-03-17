@@ -87,7 +87,7 @@ setMethod("heatmapPEI", signature(object="cogena"),
         orderMethod="max", roundvalue=TRUE,
         low="grey", high="red", na.value="white", 
         maintitle=NULL, printGS=FALSE, add2=TRUE, geom="tile",
-        wrap_with=40) {
+        wrap_with=60) {
         
         method <- match.arg(method, clusterMethods(object))
         nCluster <- match.arg(nCluster, as.character(nClusters(object)))
