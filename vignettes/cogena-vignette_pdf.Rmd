@@ -1,14 +1,17 @@
 ---
-title: "cogena: a workflow for co-expressed gene-set enrichment analysis"
+title: "a workflow of cogena"
 author: "Zhilong Jia, Michael R. Barnes"
 date: "`r Sys.Date()`"
 output:
-    pdf_document:
+    rmarkdown::pdf_document:
         fig_caption: yes
         number_sections: true
         toc: true
         toc_depth: 3
-
+vignette: >
+  %\VignetteIndexEntry{a workflow of cogena}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 # Abstract

@@ -40,7 +40,7 @@ heatmapPEI(
   printGS = FALSE,
   add2 = TRUE,
   geom = "tile",
-  wrap_with = 40
+  wrap_with = 60
 )
 }
 \arguments{
