@@ -44,7 +44,7 @@ Imports:
     devtools
 Suggests:
     knitr,
-    rmarkdown
+    rmarkdown (>= 2.1)
 Collate:
     dist_class.R
     genecl_class.R
