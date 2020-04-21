@@ -120,7 +120,7 @@ coExp <- function(obj, nClust, clMethods="hierarchical",metric="correlation",
     ## for hclust, agnes
     method <- match.arg(method,c("ward", "single", "complete", "average")) 
 
-    switch(class(obj),
+    switch(class(obj)[1],
         matrix = mat <- obj,
         ExpressionSet = mat <- Biobase::exprs(obj),
         data.frame = {

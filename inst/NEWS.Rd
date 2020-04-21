@@ -1,6 +1,13 @@
 \name{NEWS}
 \title{News for Package \pkg{cogena}}
 
+\section{Changes in version 1.21.2 (2020-04-21)}{
+\itemize{
+    \item update coExp for R4.0 due to Matrix is now Array.
+    }
+}
+
+
 \section{Changes in version 1.18.0 (2020-02-25)}{
 \itemize{
     \item dotplot shows gene number and -log2(q-value) heatmapPEI.
