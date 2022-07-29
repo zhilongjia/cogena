@@ -3,7 +3,6 @@
 
  [![releaseVersion](http://img.shields.io/badge/release%20version-1.14.0-green.svg?style=flat)](http://bioconductor.org/packages/cogena) [![develVersion](http://img.shields.io/badge/devel%20version-1.15.0-green.svg?style=flat)](http://github.com/zhilnogjia/cogena) [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/cogena.svg)](https://www.bioconductor.org/packages/devel/bioc/html/cogena.html#since) [![Build](http://bioconductor.org/shields/build/devel/bioc/cogena.svg)](http://www.bioconductor.org/packages/devel/bioc/html/cogena.html)
 [![download_Fromconda](https://anaconda.org/bioconda/bioconductor-cogena/badges/downloads.svg)](https://anaconda.org/bioconda/bioconductor-cogena/badges)
-[![download](http://www.bioconductor.org/shields/downloads/cogena.svg)](http://bioconductor.org/packages/stats/bioc/cogena)
 [![download_FromBioc](https://img.shields.io/badge/download-14692/total-blue.svg)](https://bioconductor.org/packages/stats/bioc/cogena)
 
 ## Introduction
