@@ -36,6 +36,7 @@ jobs:
           cache-version: 2
           extra-packages: |
             any::remotes
+            any::rmarkdown
             any::rcmdcheck
       - uses: r-lib/actions/check-r-package@v2
         with:
